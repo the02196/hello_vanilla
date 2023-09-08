@@ -1,9 +1,9 @@
 import React from 'react'
-
+import Test from '../components/Detail_Test'
 
 function Detail() {
   return (
-    <>캬캬캬캬캬캬 배고파 잠와 ㅡㅡ;;;</>
+    <Test />
   )
 }
 
