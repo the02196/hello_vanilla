@@ -24,7 +24,7 @@ const Pupil = styled.div`
   height: 70px;
   border-radius: 50%;
   background-image: url("./images/eye/pupil.png"); 
-  filter: saturate(0) brightness(1.2);
+  filter: saturate(2) brightness(1.2);
   background-size: cover;
   background-position: center;
   border: 10px solid rgb(23, 21, 18);
