@@ -37,15 +37,18 @@ const TextRight = styled(Text)`
     text-align: right;
 `
 const CardWrap = styled.div`
-    display: flex;
     width: 800px;
     margin: 0 auto;
-    justify-content: space-between;
+    ul{
+        display: flex;
+        justify-content: space-between;
+    }
 `
-const Card = styled.div`
+const Card = styled.li`
     background-color: #ddd;
     width: 250px;
     height: 300px;
+    text-align: center;
     &.on{
         background-color: #fff;
         color: blueviolet;
@@ -65,7 +68,7 @@ const Typing = styled.div`
 
 
 function Detail_Test() {
-    const [isHovering, setIsHovering] = useState(false);
+    const [isHovering, setIsHovering] = useState(0);
 
   return (
     <MainBg>
@@ -77,19 +80,40 @@ function Detail_Test() {
             </Text>
         </TextBg>
         <CardWrap>
-            <Card className={isHovering === true ? 'on' : ''} onMouseEnter={()=>{setIsHovering(!isHovering)}} onMouseLeave={() => {setIsHovering(false)}}>
-                {isHovering === true ? (
-                    <>
-                        <p>answer1</p>
-                        <span>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam, iusto?</span>
-                    </>) 
-                    : 
-                    <>
-                        <p>quiz1</p>
-                        <span>Lorem ipsum dolor sit amet.</span>
-                    </>
+            <ul>
+                {/* <Card className={isHovering === true ? 'on' : ''} onMouseEnter={()=>{setIsHovering(!isHovering)}} onMouseLeave={() => {setIsHovering(false)}}>
+                    {isHovering === true ?
+                        <>
+                            <p>answer1</p>
+                            <span>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam, iusto?</span>
+                        </>
+                        : 
+                        <>
+                            <p>quiz1</p>
+                            <span>Lorem ipsum dolor sit amet.</span>
+                        </>
+                    }
+                </Card> */}
+                {
+                    Array(3).fill().map((e,i)=>{
+                        return (
+                            <Card key={i} className={isHovering === i ? 'on' : ''} onMouseEnter={()=>{setIsHovering(i)}} onMouseLeave={() => {setIsHovering(false)}}>
+                                {isHovering === i ?
+                                    <>
+                                        <p>answer{i+1}</p>
+                                        <span>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam, iusto?</span>
+                                    </>
+                                    : 
+                                    <>
+                                        <p>quiz{i+1}</p>
+                                        <span>Lorem ipsum dolor sit amet.</span>
+                                    </>
+                                }
+                            </Card>
+                        )
+                    })
                 }
-            </Card>
+            </ul>
         </CardWrap>
         <TextBg>
             <TextRight>
@@ -112,6 +136,12 @@ function Detail_Test() {
                 repeat={Infinity}
             />
         </Typing>
+        <TextBg>
+            <Text>
+                <p>#abc</p>
+                <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Itaque libero dicta nulla nihil commodi suscipit quae dolores eius praesentium eveniet?</p>
+            </Text>
+        </TextBg>
     </MainBg>
   )
 }
