@@ -34,15 +34,24 @@ function Nav() {
     margin-right: 30px;
     cursor: pointer;
   `
+  
+    const WelcomeTextWrap = styled.div`
+      width: 1810px;
+      display: flex;
+      justify-content: flex-end;
+      position: absolute;
+      bottom: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      margin: 0 auto;
+    `
+
     const WelcomeText = styled.span`
     font-family: 'Inter', sans-serif;
     display: inline-block;
     font-size: 30px;
     color: white;
     background-color: transparent;
-    position: absolute;
-    bottom: 20px;
-    right: 105px; 
     `
 
   return (
@@ -50,7 +59,7 @@ function Nav() {
       <NavWrap>
         <LogoText>Hello Vanilla</LogoText>
         <ProfileImg />
-        <WelcomeText>안녕하세요, 여행자 <code>#love5820</code> 님!</WelcomeText>
+        <WelcomeTextWrap><WelcomeText>안녕하세요, 여행자 <code>#love5820</code> 님!</WelcomeText></WelcomeTextWrap>
       </NavWrap>
     </>
   );

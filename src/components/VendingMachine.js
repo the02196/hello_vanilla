@@ -24,7 +24,7 @@ const move3 = keyframes`
 const Machine = styled.div`
     width: 230px;
     height: 350px;
-    background-color: rgb(220, 220, 220);
+    background-color: #D1E8DE;
     border: 4px solid rgb(225, 225, 225);
     margin: 0 auto;
     position: relative;
@@ -47,7 +47,7 @@ const DrinkArea = styled.div`
 const Drink = styled.div`
     display: flex;
     justify-content: space-around;
-    background-color: #bbb;
+    background-color: #A8CBB9;
 `;
 
 const Can = styled.div`
@@ -55,7 +55,7 @@ const Can = styled.div`
     height: 30px;
     margin: 10px;
     border-radius: 3px;
-    background-color: gray;
+    background-color: #4C9A9C;
 
     &.on {
         animation: ${refill} 1s linear;
@@ -96,7 +96,7 @@ const Paid = styled.div`
     width: 30px;
     height: 13px;
     border-radius: 2px;
-    background-color: gray;
+    background-color: #4C9A9C;
     position: absolute;
     bottom: 10px;
     left: 50%;

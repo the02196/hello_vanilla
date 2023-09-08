@@ -69,7 +69,7 @@ const Li = styled.li`
 const Planet = styled.div`
   width: 13px;
   height: 13px;
-  background-color: rgb(58, 58, 58);
+  background-color: rgb(70, 70, 70);
   border-radius: 50%;
   position: absolute;
   top: 50%;

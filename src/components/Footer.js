@@ -1,5 +1,6 @@
 import React from 'react'
 import { styled } from 'styled-components'
+import Greeting from "../components/Greeting";
 
 
 function Footer() {
@@ -69,6 +70,7 @@ function Footer() {
   return (
     <>
         <FooterWrap>
+          <Greeting />
           <Mountain />
           <Mountain />
           <Mountain />

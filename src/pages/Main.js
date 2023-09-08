@@ -9,7 +9,6 @@ import Nav from "../components/Nav";
 import TrueOrFalse from "../components/TrueOrFalse";
 import Footer from "../components/Footer";
 import Walk from "../components/Walk";
-import Greeting from "../components/Greeting";
 
 function Main() {
   const MainWrap = styled.div`
@@ -17,13 +16,12 @@ function Main() {
     position: relative;
     top: 0;
     left: 0;
-    filter: grayscale(1);
+    filter: grayscale(0.7) contrast(0.95) brightness(1.);
   `;
   const MainBottomWrap = styled.div`
     width: 100%;
     height: 1280px;
     position: relative;
-    filter: grayscale(1);
     background-size: contain;
     background-image: url("../images/main/main_bottom_background.avif");
   `;
@@ -58,7 +56,7 @@ function Main() {
     background-size: cover;
     background-position: center;
     cursor: pointer;
-    filter: grayscale(1) contrast(0.9);
+    filter: contrast(0.9);
     &:hover {
       z-index: 500;
       transform: scale(1.03);
@@ -67,7 +65,7 @@ function Main() {
     }
     &:nth-child(1) {
       margin-top: 300px;
-      background-image: url("../images/main/true_or_false_background.avif");
+      background-image: url("../images/main/TFbackground.png");
       filter: brightness(1.15) contrast(1);
       &:hover {
         filter: brightness(1.25) contrast(1);
@@ -81,11 +79,12 @@ function Main() {
       background-image: url("../images/main/eye_background.avif");
     }
     &:nth-child(4) {
-      background-color: #f9f9f9;
+      background-color: #EDF9ED;
     }
     &:nth-child(5) {
       width: 1810px;
       height: 300px;
+      background-color: #F3FEFD;
     }
     &:nth-child(6) {
       width: 1810px;
@@ -134,13 +133,13 @@ function Main() {
   const GrayFloor = styled.div`
     flex-basis: 12.5%;
     height: 50%;
-    background-color: gray;
+    background-color: #473F51;
     position: relative;
   `;
   const WhiteFloor = styled.div`
     flex-basis: 12.5%;
     height: 50%;
-    background-color: whitesmoke;
+    background-color: #FEF7EB;
     position: relative;
   `;
   const TestBoxTitle = styled.p`
@@ -207,7 +206,7 @@ function Main() {
             <TestBoxDesc style={{ color: "black", left: "120px" }}>
               바닐라 스크립트로 자판기 만들기
             </TestBoxDesc>
-            <TestBoxCode style={{ color: "darkgray" }}>
+            <TestBoxCode style={{ color: "#4C4A4D" }}>
               Click Event{" "}
             </TestBoxCode>
           </TestBox>
@@ -232,7 +231,7 @@ function Main() {
               <TestBoxTitle
                 style={{
                   width: "100%",
-                  left: "5%",
+                  left: "7%",
                   fontSize: "30px",
                   color: "white",
                 }}

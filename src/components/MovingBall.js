@@ -24,13 +24,14 @@ const BallWrap = styled.div`
 const Ball = styled.div`
   width: 150px;
   height: 150px;
-  background-image: url("../images/ball/ball_background.png");
+  background-image: url("../images/ball/ball_background_pupple.png");
   background-position: center;
   background-size: cover;
   border-radius: 50%;
   position: relative;
   animation: ${MoveBall} 5s forwards ease-in-out infinite;
   z-index: 100;
+  filter: contrast(1.2) grayscale(0.3);
 `;
 
 const TriangleWrap = styled.div`
