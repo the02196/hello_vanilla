@@ -2,8 +2,8 @@ import React, { useEffect, useRef } from "react";
 import styled from "styled-components";
 
 const EyeContainer = styled.div`
-  width: 200px;
-  height: 200px;
+  width: 160px;
+  height: 160px;
   border-radius: 50%;
   border: 1px solid rgb(240, 234, 232);
   background: radial-gradient(circle, rgba(251, 251, 250, 1) 0%, rgba(251, 251, 251, 1) 34%, rgba(233, 228, 225, 1) 100%);
@@ -20,8 +20,8 @@ const EyeContainer = styled.div`
 `;
 
 const Pupil = styled.div`
-  width: 90px;
-  height: 90px;
+  width: 70px;
+  height: 70px;
   border-radius: 50%;
   background-image: url("./images/eye/pupil.png"); 
   filter: saturate(0) brightness(1.2);
@@ -47,7 +47,7 @@ const Reflection = styled.div`
   height: 10px;
   border-radius: 50%;
   top: 35%; 
-  right: 65%;
+  right: 40%;
   transform: skewX(30deg);
   position: absolute;
   background-color: aliceblue;

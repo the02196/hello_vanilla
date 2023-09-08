@@ -16,7 +16,7 @@ function Nav() {
   
   const LogoText = styled.span`
     font-family: "Monofett", monospace;
-    font-size: 50px;
+    font-size: 40px;
     color: whitesmoke;
     display: inline-block;
     cursor: pointer;
@@ -25,8 +25,8 @@ function Nav() {
   `;
   
   const ProfileImg = styled.div`
-    width: 65px;
-    height: 65px;
+    width: 55px;
+    height: 55px;
     border-radius: 50%;
     background-image: url("../images/nav/profile_img.png");
     background-size: cover;
@@ -42,7 +42,7 @@ function Nav() {
     background-color: transparent;
     position: absolute;
     bottom: 20px;
-    right: 50px; 
+    right: 105px; 
     `
 
   return (

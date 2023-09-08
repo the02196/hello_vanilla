@@ -22,8 +22,8 @@ const move3 = keyframes`
 `;
 
 const Machine = styled.div`
-    width: 260px;
-    height: 400px;
+    width: 230px;
+    height: 350px;
     background-color: rgb(220, 220, 220);
     border: 4px solid rgb(225, 225, 225);
     margin: 0 auto;
@@ -32,8 +32,8 @@ const Machine = styled.div`
 `;
 
 const DrinkArea = styled.div`
-    width: 180px;
-    height: 150px;
+    width: 160px;
+    height: 120px;
     position: absolute;
     top: 50px;
     left: 50%;
@@ -51,10 +51,10 @@ const Drink = styled.div`
 `;
 
 const Can = styled.div`
-    width: 20px;
-    height: 40px;
+    width: 13px;
+    height: 30px;
     margin: 10px;
-    border-radius: 5px;
+    border-radius: 3px;
     background-color: gray;
 
     &.on {
@@ -64,7 +64,7 @@ const Can = styled.div`
 
 
 const BtnArea = styled.div`
-    width: 180px;
+    width: 150px;
     height: 20px;
     display: flex;
     justify-content: space-around;
@@ -72,8 +72,8 @@ const BtnArea = styled.div`
 `;
 
 const Btn = styled.div`
-    width: 8px;
-    height: 8px;
+    width: 6px;
+    height: 6px;
     border-radius: 50%;
     background-color: darkgray;
 
@@ -83,7 +83,7 @@ const Btn = styled.div`
 `;
 
 const Output = styled.div`
-    width: 180px;
+    width: 160px;
     height: 60px;
     background-color: #bbb;
     position: absolute;
@@ -93,9 +93,9 @@ const Output = styled.div`
 `;
 
 const Paid = styled.div`
-    width: 50px;
-    height: 20px;
-    border-radius: 5px;
+    width: 30px;
+    height: 13px;
+    border-radius: 2px;
     background-color: gray;
     position: absolute;
     bottom: 10px;
