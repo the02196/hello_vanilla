@@ -9,6 +9,7 @@ import Nav from "../components/Nav";
 import TrueOrFalse from "../components/TrueOrFalse";
 import Footer from "../components/Footer";
 import Walk from "../components/Walk";
+import Greeting from "../components/Greeting";
 
 function Main() {
   const MainWrap = styled.div`
@@ -35,15 +36,16 @@ function Main() {
     box-sizing: border-box;
     flex-wrap: wrap;
     row-gap: 10px;
+    column-gap: 10px;
     background-size: contain;
     position: relative;
     background-image: url("../images/main/main_top_background.avif");
-    justify-content: space-between;
+    justify-content: center;
   `;
 
   const TestBox = styled.div`
-    flex-basis: 49.8%;
-    height: 500px;
+    width: 900px;
+    height: 450px;
     border: 1px solid black;
     display: flex;
     justify-content: center;
@@ -82,11 +84,11 @@ function Main() {
       background-color: #f9f9f9;
     }
     &:nth-child(5) {
-      flex-basis: 100%;
+      width: 1810px;
       height: 300px;
     }
     &:nth-child(6) {
-      flex-basis: 100%;
+      width: 1810px;
       flex-wrap: wrap;
       height: 450px;
     }
@@ -94,8 +96,8 @@ function Main() {
     &:nth-child(8),
     &:nth-child(9),
     &:nth-child(10) {
-      flex-basis: 24.55%;
-      height: 405px;
+      width: 445px;
+      height: 445px;
     }
     &:nth-child(9) {
       background-image: url("../images/main/dummy_background.avif");
@@ -142,7 +144,7 @@ function Main() {
     position: relative;
   `;
   const TestBoxTitle = styled.p`
-    font-size: 35px;
+    font-size: 33px;
     position: absolute;
     font-weight: 600;
     top: 40px;
@@ -230,7 +232,7 @@ function Main() {
               <TestBoxTitle
                 style={{
                   width: "100%",
-                  left: "7%",
+                  left: "5%",
                   fontSize: "30px",
                   color: "white",
                 }}
@@ -257,9 +259,9 @@ function Main() {
           </TestBox>
           <TestBox>
             <Dog />
-            <TestBoxTitle style={{ left: "230px" }}>무한한 식량</TestBoxTitle>
+            <TestBoxTitle style={{ left: "200px" }}>무한한 식량</TestBoxTitle>
             <TestBoxDesc
-              style={{ left: "440px", color: "black", width: "100%" }}
+              style={{ left: "400px", color: "black", width: "100%" }}
             >
               바닐라 스크립트로 무한히 사료 주기
             </TestBoxDesc>

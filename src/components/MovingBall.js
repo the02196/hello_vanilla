@@ -9,7 +9,7 @@ const MoveBall = keyframes`
 
 const ShowSpeed = keyframes`
     0% { left: -42%; opacity: 0.1; }
-    100% { left: 3%; opacity: 1; }
+    100% { left: 6%; opacity: 1; }
 `
 
 const BallWrap = styled.div`
@@ -22,8 +22,8 @@ const BallWrap = styled.div`
 `;
 
 const Ball = styled.div`
-  width: 180px;
-  height: 180px;
+  width: 150px;
+  height: 150px;
   background-image: url("../images/ball/ball_background.png");
   background-position: center;
   background-size: cover;

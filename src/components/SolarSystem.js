@@ -67,8 +67,8 @@ const Li = styled.li`
 `;
 
 const Planet = styled.div`
-  width: 15px;
-  height: 15px;
+  width: 13px;
+  height: 13px;
   background-color: rgb(58, 58, 58);
   border-radius: 50%;
   position: absolute;
@@ -83,7 +83,7 @@ const SolarSystem = () => {
   const areaArray = [];
 
   for (let i = 1; i < 10; i++) {
-    areaArray.push(50 * i);
+    areaArray.push(42 * i);
   }
 
   return (
