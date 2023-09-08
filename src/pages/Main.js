@@ -16,7 +16,7 @@ function Main() {
     position: relative;
     top: 0;
     left: 0;
-    filter: grayscale(0.7) contrast(0.95) brightness(1.);
+    filter: grayscale(0.6) contrast(0.95) brightness(1.05);
   `;
   const MainBottomWrap = styled.div`
     width: 100%;
@@ -24,6 +24,7 @@ function Main() {
     position: relative;
     background-size: contain;
     background-image: url("../images/main/main_bottom_background.avif");
+    background-repeat: no-repeat;
   `;
   const MainTopWrap = styled.div`
     display: flex;
@@ -39,6 +40,7 @@ function Main() {
     position: relative;
     background-image: url("../images/main/main_top_background.avif");
     justify-content: center;
+    
   `;
 
   const TestBox = styled.div`

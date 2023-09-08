@@ -32,7 +32,7 @@ const Machine = styled.div`
 `;
 
 const DrinkArea = styled.div`
-    width: 160px;
+    width: 170px;
     height: 120px;
     position: absolute;
     top: 50px;
