@@ -29,7 +29,7 @@ function Main() {
   `;
   const MainTopWrap = styled.div`
     display: flex;
-    padding: 0 50px;
+    padding: 300px 50px 0;
     width: 100%;
     align-items: center;
     justify-content: center;
@@ -41,7 +41,6 @@ function Main() {
     position: relative;
     background-image: url("../images/main/main_top_background.avif");
     justify-content: center;
-    
   `;
   const MiniBoxWrap = styled.div`
     width: 1810px;
@@ -84,7 +83,7 @@ function Main() {
       box-shadow: rgba(0, 0, 0, 0.4) 0px 30px 90px;
     }
     &:nth-child(1) {
-      margin-top: 300px;
+      
       background-image: url("../images/main/TFbackground.png");
       filter: brightness(1.15) contrast(1);
       &:hover {
@@ -92,7 +91,7 @@ function Main() {
       }
     }
     &:nth-child(2) {
-      margin-top: 300px;
+
       background-image: url("../images/main/solar_system_background.avif");
     }
     &:nth-child(3) {
