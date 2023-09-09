@@ -22,14 +22,15 @@ function Main() {
     width: 100%;
     height: 1280px;
     position: relative;
-    background-size: contain;
+    background-size: cover;
     background-image: url("../images/main/main_bottom_background.avif");
     background-repeat: no-repeat;
+    background-position: center;
   `;
   const MainTopWrap = styled.div`
     display: flex;
     padding: 0 50px;
-    width: 1920px;
+    width: 100%;
     align-items: center;
     justify-content: center;
     box-sizing: border-box;
@@ -42,7 +43,24 @@ function Main() {
     justify-content: center;
     
   `;
-
+  const MiniBoxWrap = styled.div`
+    width: 1810px;
+    display: flex;
+    justify-content: space-between;
+    div {
+      &:nth-child(1),
+      &:nth-child(2),
+      &:nth-child(3),
+      &:nth-child(4) {
+      width: 445px;
+      height: 445px;
+      margin: 0;
+    }
+    &:nth-child(3) {
+      background-image: url("../images/main/dummy_background.avif");
+    }
+    }
+  `
   const TestBox = styled.div`
     width: 900px;
     height: 450px;
@@ -92,16 +110,6 @@ function Main() {
       width: 1810px;
       flex-wrap: wrap;
       height: 450px;
-    }
-    &:nth-child(7),
-    &:nth-child(8),
-    &:nth-child(9),
-    &:nth-child(10) {
-      width: 445px;
-      height: 445px;
-    }
-    &:nth-child(9) {
-      background-image: url("../images/main/dummy_background.avif");
     }
   `;
 
@@ -172,6 +180,8 @@ function Main() {
     color: rgb(44, 44, 44);
     z-index: 200;
   `;
+
+  
 
   return (
     <>
@@ -258,11 +268,12 @@ function Main() {
             </TestBoxCode>
             <Walk />
           </TestBox>
+          <MiniBoxWrap>
           <TestBox>
             <Dog />
-            <TestBoxTitle style={{ left: "200px" }}>무한한 식량</TestBoxTitle>
+            <TestBoxTitle style={{ left: "250px" }}>무한한 식량</TestBoxTitle>
             <TestBoxDesc
-              style={{ left: "400px", color: "black", width: "100%" }}
+              style={{ left: "450px", color: "black", width: "100%" }}
             >
               바닐라 스크립트로 무한히 사료 주기
             </TestBoxDesc>
@@ -273,6 +284,7 @@ function Main() {
           <TestBox></TestBox>
           <TestBox></TestBox>
           <TestBox></TestBox>
+          </MiniBoxWrap>
           <WhiteGradientToTop />
         </MainTopWrap>
         <MainBottomWrap>
