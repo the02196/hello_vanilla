@@ -5,14 +5,14 @@ import styled from 'styled-components'
 Person 
 */
 
-const PersonLeft = styled.div`
+const PersonRight = styled.div`
     position: absolute;
     top: -35px;
     display: flex;
     flex-direction: column;
 `
 
-const PersonRight = styled.div`
+const PersonLeft = styled.div`
     position: absolute;
     top: -35px;
     display: flex;
@@ -34,7 +34,7 @@ const PersonBody = styled.div`
     background-color: lightgray;
 `
 
-function CreatePersonLookRight({position}) {
+function CreatePersonLookLeft({position}) {
   return(
     <PersonRight style={{left: `${position * 100}px`}}>
       <PersonHead></PersonHead>
@@ -43,7 +43,7 @@ function CreatePersonLookRight({position}) {
   )
 }
 
-function CreatePersonLookLeft({position}) {
+function CreatePersonLookRight({position}) {
   return(
     <PersonLeft style={{right: `${position * 100}px`}}>
       <PersonHead></PersonHead>
