@@ -1,6 +1,9 @@
 import React, { useState } from 'react'
 import { styled } from 'styled-components'
 import { TypeAnimation } from 'react-type-animation';
+import { Slider } from './Slider';
+import Aos from './Aos';
+import RequestAnimation from './RequestAnimation';
 
 const MainBg = styled.div`
     background-color: #d9d9d9;
@@ -71,8 +74,10 @@ function Detail_Test() {
     const [isHovering, setIsHovering] = useState(0);
 
   return (
-    <MainBg>
-        <Ball></Ball>
+    <>
+        <Slider />
+        <Aos />
+        <RequestAnimation />
         <TextBg>
             <Text>
                 <p>#abc</p>
@@ -142,7 +147,7 @@ function Detail_Test() {
                 <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Itaque libero dicta nulla nihil commodi suscipit quae dolores eius praesentium eveniet?</p>
             </Text>
         </TextBg>
-    </MainBg>
+    </>
   )
 }
 
