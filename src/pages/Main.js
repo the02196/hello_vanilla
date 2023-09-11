@@ -30,7 +30,7 @@ function Main() {
   const MainTopWrap = styled.div`
     display: flex;
     padding: 300px 50px 0;
-    width: 100%;
+    max-width: 100%;
     align-items: center;
     justify-content: center;
     box-sizing: border-box;
