@@ -30,7 +30,7 @@ function Main() {
   const MainTopWrap = styled.div`
     display: flex;
     padding: 300px 50px 0;
-    width: 100%;
+    max-width: 100%;
     align-items: center;
     justify-content: center;
     box-sizing: border-box;
@@ -54,6 +54,9 @@ function Main() {
       width: 445px;
       height: 445px;
       margin: 0;
+      @media (max-width: 1910px){
+        width: 300px;
+      }
     }
     &:nth-child(3) {
       background-image: url("../images/main/dummy_background.avif");
