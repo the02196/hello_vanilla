@@ -7,146 +7,290 @@ import RequestAnimation from './RequestAnimation';
 
 const MainBg = styled.div`
     background-color: #d9d9d9;
+    height: 100%;
+`
+const Creator = styled.div`
+    span{
+        font-size: 17px;
+        margin-right: 50px;
+        color: #9d9d9d;
+    }
 `
 const Ball = styled.div`
     width: 200px;
     height: 200px;
     border-radius: 50%;
-    background-image: url("./images/ball/ball_background.png");
+    background-image: url("./images/ball/ball_detail.png");
     background-size: cover;
     background-position: center;
-    margin: 0 auto;
+    margin: 300px auto;
+`
+const ExampleImg = styled.div`
+    width: 1400px;
+    height: 800px;
+    margin: 100px auto;
+    background-color: #fff;
 `
 const TextBg = styled.div`
-    background-color: #fff;
-    color: #000;
-    width: 800px;
+    background-color: #FFF9EB;
+    width: 1400px;
     display: flex;
-    justify-content: space-between;
-    margin: 20px auto;
+    justify-content: space-around;
+    margin: 200px auto;
     align-items: center;
-    padding: 20px;
+    padding: 50px 0;
+`
+const Picture = styled.div`
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    background-color: #ddd;
 `
 const Text = styled.div`
     font-family: 'Inter';
+    flex-basis: 80%;
     p:nth-child(1){
-        font-size: 20px;
+        font-size: 30px;
     }
     p:nth-child(2){
-        font-size: 14px;
+        font-size: 24px;
     }
 `
 const TextRight = styled(Text)`
     text-align: right;
 `
 const CardWrap = styled.div`
-    width: 800px;
-    margin: 0 auto;
+    width: 1400px;
+    margin: 300px auto;
     ul{
         display: flex;
         justify-content: space-between;
     }
 `
 const Card = styled.li`
-    background-color: #ddd;
-    width: 250px;
-    height: 300px;
+    background-color: #E5F1E8;
+    width: 400px;
+    height: 350px;
     text-align: center;
+    font-size: 45px;
+    transition: 1s;
     &.on{
-        background-color: #fff;
-        color: blueviolet;
-        transition: 0.5s;
+        background-color: #fff;       
     }
+    &.on span{
+        font-size: 30px;
+    }
+
+`
+const Desc = styled.div`
+    width: 1400px;
+    margin: 100px auto;
     p{
-        font-size: 24px;
+        font-size: 60px;
+        margin-bottom: 50px;
+    }
+    span{
+        font-size: 36px;
     }
 `
-const Typing = styled.div`
-    width: 800px;
-    height: 300px;
-    overflow: hidden;
-    margin: 0 auto;
+const MovingBall = styled.div`
+    width: 1400px;
+    height: 250px;
+    margin: 100px auto;
     background-color: #fff;
+`
+const CodeDesc = styled.div`
+    width: 1400px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 300px auto;
+`
+const DescLeft = styled.div`
+    font-size: 36px;
+    flex-basis: 30%;
+    height: 200px;
+`
+const Typing = styled.div`
+    flex-basis: 60%;
+    height: 400px;
+    overflow: hidden;
+    background-color: #fff;
+`
+const GithubIcon = styled.div`
+    width: 100%;
+    background-color: #25292F;
+    height: 100px;
+`
+const CommentBox = styled.div`
+    width: 1400px;
+    margin: 200px auto;
+    display: flex;
+    justify-content: space-between;
+`
+const CommentWrap = styled.div`
+    width: 1200px;
+    div:nth-child(1){
+        display: flex;
+        justify-content: space-between;
+    }    
+`
+const WirterPicture = styled.div`
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background-color: #fff;
+`
+const Recommend = styled.div`
+    background-color: #eaeaea;
+    width: 200px;
+    height: 40px;
+    font-size: 18px;
+    text-align: center;
+`
+const WriterId = styled.div`
+    font-size: 40px;
+`
+const Comment = styled.div`
+    font-size: 30px;
+    margin: 50px 0;
+`
+const Share = styled.div`
+    font-size: 30px;
+    color: #808080;
 `
 
 
 function Detail_Test() {
-    const [isHovering, setIsHovering] = useState(0);
+    const [isHovering, setIsHovering] = useState(-1);
 
+    const CardContent = [
+        {
+            quiz: "quiz1",
+            answer: "Lorem ipsum dolor sit amet."
+        },
+        {
+            quiz: "quiz2",
+            answer: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Odio, minus."
+        },
+        {
+            quiz: "quiz3",
+            answer: "Lorem ipsum dolor sit amet. Lorem ipsum dolor, sit amet consectetur adipisicing elit. Odio, minus."
+        }
+    ]
   return (
+    <MainBg>
+        <Creator>
+            <span>creator. #dh3308 & #romi6342</span>
+            <span>How we can move ball with js?</span>
+        </Creator>
+        <Ball></Ball>
     <>
         {/* <Slider /> */}
         <Aos />
         {/* <RequestAnimation /> */}
         <TextBg>
+            <Picture></Picture>
             <Text>
                 <p>#abc</p>
                 <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Itaque libero dicta nulla nihil commodi suscipit quae dolores eius praesentium eveniet?</p>
             </Text>
         </TextBg>
+        <ExampleImg></ExampleImg>
+        <TextBg>
+            <TextRight>
+                <p>#def</p>
+                <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Itaque libero dicta nulla nihil commodi suscipit quae dolores eius praesentium eveniet?</p>
+            </TextRight>
+            <Picture></Picture>
+        </TextBg>
         <CardWrap>
             <ul>
-                {/* <Card className={isHovering === true ? 'on' : ''} onMouseEnter={()=>{setIsHovering(!isHovering)}} onMouseLeave={() => {setIsHovering(false)}}>
-                    {isHovering === true ?
-                        <>
-                            <p>answer1</p>
-                            <span>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam, iusto?</span>
-                        </>
-                        : 
-                        <>
-                            <p>quiz1</p>
-                            <span>Lorem ipsum dolor sit amet.</span>
-                        </>
-                    }
-                </Card> */}
                 {
-                    Array(3).fill().map((e,i)=>{
+                    CardContent.map((e,i)=>{
                         return (
-                            <Card key={i} className={isHovering === i ? 'on' : ''} onMouseEnter={()=>{setIsHovering(i)}} onMouseLeave={() => {setIsHovering(false)}}>
-                                {isHovering === i ?
-                                    <>
-                                        <p>answer{i+1}</p>
-                                        <span>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam, iusto?</span>
-                                    </>
-                                    : 
-                                    <>
-                                        <p>quiz{i+1}</p>
-                                        <span>Lorem ipsum dolor sit amet.</span>
-                                    </>
-                                }
+                            <Card
+                            className={isHovering === i ? 'on' : ''}
+                            onMouseOver={()=>{
+                                setIsHovering(i)
+                            }} onMouseOut={()=>{
+                                setIsHovering(-1);
+                            }} 
+                            key={i}>
+                                <span>
+                                    {
+                                        isHovering === i ? e.answer : e.quiz
+                                    }
+                                </span>
                             </Card>
                         )
                     })
                 }
             </ul>
         </CardWrap>
+        <Desc>
+            <p>lorem</p>
+            <span>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa.Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa.Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa.</span>
+        </Desc>
+        <MovingBall></MovingBall>
+        <CodeDesc>
+            <DescLeft>Lorem ipsum dolor, sit amet consectetur adipisicing elit.</DescLeft>
+            <Typing>
+                <TypeAnimation
+                    sequence={[
+                        // Same substring at the start will only be typed out once, initially
+                        `className={isActive === true ? 'on' : ''} onClick={()=>{setIsActive(isActive === false ? true : false)}}`,
+                        1000, // wait 1s before replacing "Mice" with "Hamsters"
+                        'onClick={()=>{setIsActive(!isActive)}}',
+                        1000
+                    ]}
+                    wrapper="span"
+                    speed={50}
+                    style={{ fontSize: '1.5em', display: 'inline-block' }}
+                    repeat={Infinity}
+                />
+            </Typing>
+        </CodeDesc>
+        <MovingBall></MovingBall>
+        <CodeDesc>
+            <Typing>
+                
+            </Typing>
+            <DescLeft>Lorem ipsum dolor, sit amet consectetur adipisicing elit.</DescLeft>
+        </CodeDesc>
         <TextBg>
-            <TextRight>
-                <p>#def</p>
-                <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Itaque libero dicta nulla nihil commodi suscipit quae dolores eius praesentium eveniet?</p>
-            </TextRight>
-        </TextBg>
-        <Typing>
-            <TypeAnimation
-                sequence={[
-                    // Same substring at the start will only be typed out once, initially
-                    `className={isActive === true ? 'on' : ''} onClick={()=>{setIsActive(isActive === false ? true : false)}}`,
-                    1000, // wait 1s before replacing "Mice" with "Hamsters"
-                    'onClick={()=>{setIsActive(!isActive)}}',
-                    1000
-                ]}
-                wrapper="span"
-                speed={50}
-                style={{ fontSize: '1.5em', display: 'inline-block' }}
-                repeat={Infinity}
-            />
-        </Typing>
-        <TextBg>
+            <Picture></Picture>
             <Text>
                 <p>#abc</p>
                 <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Itaque libero dicta nulla nihil commodi suscipit quae dolores eius praesentium eveniet?</p>
             </Text>
         </TextBg>
+        <CodeDesc>
+            <DescLeft>Lorem ipsum dolor, sit amet consectetur adipisicing elit.</DescLeft>
+            <Typing>
+                
+            </Typing>
+        </CodeDesc>
+        <TextBg>
+            <TextRight>
+                <p>#def</p>
+                <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Itaque libero dicta nulla nihil commodi suscipit quae dolores eius praesentium eveniet?</p>
+            </TextRight>
+            <Picture></Picture>
+        </TextBg>
+        <GithubIcon></GithubIcon>
+        <CommentBox>
+            <WirterPicture></WirterPicture>
+            <CommentWrap>
+                <div>
+                    <WriterId>lorem</WriterId>
+                    <Recommend>Top Comment</Recommend>
+                </div>
+                <Comment>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Inventore quae perferendis similique a ad expedita ex accusamus aperiam laborum! Vel, ipsum! Non, deserunt error repudiandae magni consequuntur quos provident cumque?</Comment>
+                <Share>share code</Share>
+            </CommentWrap>
+        </CommentBox>
+    </MainBg>
     </>
   )
 }

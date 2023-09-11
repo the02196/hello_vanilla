@@ -54,9 +54,6 @@ function Main() {
       width: 445px;
       height: 445px;
       margin: 0;
-      @media (max-width: 1910px){
-        width: 300px;
-      }
     }
     &:nth-child(3) {
       background-image: url("../images/main/dummy_background.avif");
