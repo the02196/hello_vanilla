@@ -75,9 +75,9 @@ function Detail_Test() {
 
   return (
     <>
-        <Slider />
+        {/* <Slider /> */}
         <Aos />
-        <RequestAnimation />
+        {/* <RequestAnimation /> */}
         <TextBg>
             <Text>
                 <p>#abc</p>
