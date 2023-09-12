@@ -55,9 +55,13 @@ function Main() {
       height: 445px;
       margin: 0;
     }
+    &:nth-child(2) {
+      background-image: url("../images/main/dog_foots.png");
+    }
     &:nth-child(3) {
       background-image: url("../images/main/dummy_background.avif");
     }
+    
     }
   `
   const TestBox = styled.div`
@@ -272,7 +276,7 @@ function Main() {
             <Dog />
             <TestBoxTitle style={{ left: "250px" }}>무한한 식량</TestBoxTitle>
             <TestBoxDesc
-              style={{ left: "450px", color: "black", width: "100%" }}
+              style={{ left: "435px", color: "black", width: "100%" }}
             >
               바닐라 스크립트로 무한히 사료 주기
             </TestBoxDesc>
