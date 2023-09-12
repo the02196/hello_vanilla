@@ -21,10 +21,15 @@ const Profile = styled.span`
 /* 
 Like
 */
+
+const LikeCount = styled.span`
+
+`
+
 const Like = styled.span`
     font-family: 'Inter';
-    width: 20px;
-    height: 20px;
+    width: 18px;
+    height: 18px;
     display: inline-block;
     position: absolute;
     bottom: 6px;
@@ -50,7 +55,7 @@ const Message = styled.p`
 `
 
 const MessageBoxLeft = styled.div`
-    width: 200px;
+    width: 220px;
     height: 70px;
     border-radius: 5px;
     display: flex;
@@ -63,7 +68,7 @@ const MessageBoxLeft = styled.div`
     left: -94px;
 `
 const MessageBoxRight = styled.div`
-    width: 200px;
+    width: 220px;
     height: 70px;
     border-radius: 5px;
     display: flex;
@@ -137,13 +142,13 @@ const PersonBody = styled.div`
     background-color: lightgray;
 `
 
-function CreatePersonLookLeft({position, message}) {
+function CreatePersonLookLeft({position, message, bgImage}) {
   return(
     <PersonRight style={{left: `${position * 100}px`}}>
       <PersonHead>
         <TriangleLeft></TriangleLeft>
         <MessageBoxLeft>
-          <Profile></Profile>
+          <Profile style={{backgroundImage: `url("../images/greeting/${bgImage}")`}}></Profile>
           <Message>{`"${message}"`}</Message>
           <Like></Like>
         </MessageBoxLeft>   
@@ -153,13 +158,13 @@ function CreatePersonLookLeft({position, message}) {
   )
 }
 
-function CreatePersonLookRight({position, message}) {
+function CreatePersonLookRight({position, message, bgImage}) {
   return(
     <PersonLeft style={{right: `${position * 100}px`}}>
       <PersonHead>
         <TriangleRight ></TriangleRight>
         <MessageBoxRight>
-          <Profile></Profile>
+          <Profile style={{backgroundImage: `url("../images/greeting/${bgImage}")`}}></Profile>
           <Message>{`"${message}"`}</Message>
           <Like></Like>
         </MessageBoxRight>   
@@ -174,9 +179,9 @@ function CreatePersonLookRight({position, message}) {
 function Greeting() {
   return (
     <>
-      <CreatePersonLookRight position={"1.5"} message={"반가워요!"}/>
-      <CreatePersonLookRight position={"5.6"} message={"바닐라 유니버스로!"}  />
-      <CreatePersonLookLeft position={"2"} message={"자, 모두 출발!"} />
+      <CreatePersonLookRight position={"1.5"} message={"반가워요!"}  bgImage={"man_2.png"}/>
+      <CreatePersonLookRight position={"5.6"} message={"바닐라 유니버스로!"} bgImage={"woman_1.png"} />
+      <CreatePersonLookLeft position={"2"} message={"자, 모두 출발!"} bgImage={"man_1.png"} />
     </>
   )
 }
