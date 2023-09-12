@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import { styled } from 'styled-components'
 
 const WaitingText = styled.p`
+    font-family: 'Fira Code', monospace;
     margin: 0;
     position: absolute;
     text-align: center;

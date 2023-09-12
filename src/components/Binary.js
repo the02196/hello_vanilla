@@ -16,6 +16,7 @@ const BinaryWrap = styled.div`
 `
 
 const BinaryCode = styled.span`
+    font-family: 'Fira Code', monospace;
     margin-right: 15px;
     font-size: 25px;
     font-weight: 400;

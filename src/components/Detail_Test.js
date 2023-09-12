@@ -1,6 +1,9 @@
 import React, { useState } from 'react'
 import { styled } from 'styled-components'
 import { TypeAnimation } from 'react-type-animation';
+import { Slider } from './Slider';
+import Aos from './Aos';
+import RequestAnimation from './RequestAnimation';
 
 const MainBg = styled.div`
     background-color: #d9d9d9;
@@ -246,12 +249,16 @@ function Detail_Test() {
 
     
   return (
+    <>
     <MainBg>
         <Creator>
             <span>creator. #dh3308 & #romi6342</span>
             <span>How we can move ball with js?</span>
         </Creator>
         <Ball></Ball>
+        {/* <Slider /> */}
+        <Aos />
+        {/* <RequestAnimation /> */}
         <TextBg>
             <Picture></Picture>
             <Text>
@@ -398,6 +405,7 @@ function Detail_Test() {
         }
         <CodeView></CodeView>
     </MainBg>
+    </>
   )
 }
 
