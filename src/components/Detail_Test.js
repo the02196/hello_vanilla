@@ -143,7 +143,9 @@ const Recommend = styled.div`
     width: 200px;
     height: 40px;
     font-size: 18px;
+    font-weight: bold;
     text-align: center;
+    border-radius: 30px;
 `
 const WriterId = styled.div`
     font-size: 40px;
@@ -156,11 +158,77 @@ const Share = styled.div`
     font-size: 30px;
     color: #808080;
 `
-
+const PostComment = styled.div`
+    width: 1400px;
+    margin: 200px auto;
+    display: flex;
+    justify-content: space-between;
+`
+const InputWrap = styled.div`
+    width: 1200px;
+    textarea{
+        width: 1200px;
+        height: 300px;
+        background-color: #fff;
+        border: 0;
+        outline: none;
+        font-size: 24px;
+        box-sizing: border-box;
+    }
+    button{
+        width: 1200px;
+        padding: 20px 0;
+        background-color: #C5CDEB;
+        font-size: 30px;
+        font-weight: bold;
+        &:focus{
+            border: none;
+            outline:none;
+        }
+    }
+`
+const CodeView = styled.div`
+    width: 1400px;
+    height: 500px;
+    margin: 0 auto;
+    background-color: #F0F1EC;
+    overflow: hidden;
+    font-size: 25px;
+    padding: 100px 50px;
+    box-sizing: border-box;
+`
 
 function Detail_Test() {
     const [isHovering, setIsHovering] = useState(-1);
 
+    const [userName, setUserName] = useState("#001235");
+    const [userProfile, setUserProfile] = useState();
+    const [comment, setComment] = useState('');
+    const [feedComments, setFeedComments] = useState([]);
+    const [isValid, setIsValid] = useState(false);
+
+    const post = (e) => {
+        const copyFeedComments = [...feedComments];
+        copyFeedComments.push(comment);
+        setFeedComments(copyFeedComments);
+        setComment('');
+    }
+
+    const CommentList = props => {
+        return (
+            <CommentBox>
+                <WirterPicture className='userProfile'>{props.userProfile}</WirterPicture>
+                <CommentWrap className="userCommentBox">
+                    <div>
+                        <WriterId className="userName">{props.userName}</WriterId>
+                        {/* <Recommend>Top Comment</Recommend> */}
+                    </div>
+                    <Comment className='userComment'>{props.userComment}</Comment>
+                    <Share>share code</Share>
+                </CommentWrap>
+            </CommentBox>
+        )
+    }
     const CardContent = [
         {
             quiz: "quiz1",
@@ -175,6 +243,8 @@ function Detail_Test() {
             answer: "Lorem ipsum dolor sit amet. Lorem ipsum dolor, sit amet consectetur adipisicing elit. Odio, minus."
         }
     ]
+
+    
   return (
     <MainBg>
         <Creator>
@@ -272,17 +342,61 @@ function Detail_Test() {
             <Picture></Picture>
         </TextBg>
         <GithubIcon></GithubIcon>
+        <PostComment>
+            <WirterPicture></WirterPicture>
+            <InputWrap>
+                <textarea 
+                    type="text"
+                    className="inputComment"
+                    placeholder="댓글 달기..."
+                    onChange={e =>{
+                        setComment(e.target.value);
+                    }}
+                    onKeyUp={e =>{
+                        e.target.value.length > 0
+                        ? setIsValid(true)
+                        : setIsValid(false);
+                    }}
+                    value={comment}
+                />
+                <button
+                    type="button"
+                    className={
+                        comment.length > 0
+                        ? 'submitCommentActive'
+                        : 'submitCommentInactive'
+                    }
+                    onClick={post}
+                    disabled={isValid ? false : true}
+                >
+                    Post
+                </button>
+            </InputWrap>
+        </PostComment>
         <CommentBox>
             <WirterPicture></WirterPicture>
             <CommentWrap>
                 <div>
                     <WriterId>lorem</WriterId>
-                    <Recommend>Top Comment</Recommend>
+                    <Recommend>Top Comment ★</Recommend>
                 </div>
                 <Comment>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Inventore quae perferendis similique a ad expedita ex accusamus aperiam laborum! Vel, ipsum! Non, deserunt error repudiandae magni consequuntur quos provident cumque?</Comment>
                 <Share>share code</Share>
             </CommentWrap>
         </CommentBox>
+        {
+            feedComments.map((el,i) => {
+                return (
+                    <CommentList 
+                        userProfile={userProfile}
+                        userName={userName}
+                        userComment={el}
+                        key={i}
+                    />
+                );
+            })
+        }
+        <CodeView></CodeView>
     </MainBg>
   )
 }
