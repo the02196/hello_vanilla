@@ -179,13 +179,13 @@ function Detail_Test() {
         }
     ]
   return (
+    <>
     <MainBg>
         <Creator>
             <span>creator. #dh3308 & #romi6342</span>
             <span>How we can move ball with js?</span>
         </Creator>
         <Ball></Ball>
-    <>
         {/* <Slider /> */}
         <Aos />
         {/* <RequestAnimation /> */}
