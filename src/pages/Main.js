@@ -51,19 +51,32 @@ function Main() {
       &:nth-child(2),
       &:nth-child(3),
       &:nth-child(4) {
-      width: 445px;
-      height: 445px;
-      margin: 0;
+        width: 445px;
+        height: 445px;
+        margin: 0;
+      }
+      &:nth-child(2) {
+        background-image: url("../images/main/dog_foots.png");
+      }
+      &:nth-child(3) {
+        background-image: url("../images/main/dummy_background.avif");
+      }
     }
-    &:nth-child(2) {
-      background-image: url("../images/main/dog_foots.png");
+    @media screen and (max-width: 1920px) {
+      width: 1430px;
+      div {
+      &:nth-child(1),
+      &:nth-child(2),
+      &:nth-child(3),
+      &:nth-child(4) {
+        width: 350px;
+        height: 350px;
+        margin: 0;
+      }
     }
-    &:nth-child(3) {
-      background-image: url("../images/main/dummy_background.avif");
-    }
-    
-    }
-  `
+  }
+  `;
+
   const TestBox = styled.div`
     width: 900px;
     height: 450px;
@@ -87,7 +100,6 @@ function Main() {
       box-shadow: rgba(0, 0, 0, 0.4) 0px 30px 90px;
     }
     &:nth-child(1) {
-      
       background-image: url("../images/main/TFbackground.png");
       filter: brightness(1.15) contrast(1);
       &:hover {
@@ -95,24 +107,37 @@ function Main() {
       }
     }
     &:nth-child(2) {
-
       background-image: url("../images/main/solar_system_background.avif");
     }
     &:nth-child(3) {
       background-image: url("../images/main/eye_background.avif");
     }
     &:nth-child(4) {
-      background-color: #EDF9ED;
+      background-color: #edf9ed;
     }
     &:nth-child(5) {
       width: 1810px;
       height: 300px;
-      background-color: #F3FEFD;
+      background-color: #f3fefd;
     }
     &:nth-child(6) {
       width: 1810px;
       flex-wrap: wrap;
       height: 450px;
+    }
+    @media screen and (max-width: 1920px) {
+      width: 710px;
+      height: 370px;
+      &:nth-child(5) {
+        width: 1430px;
+        height: 280px;
+        background-color: #f3fefd;
+      }
+      &:nth-child(6) {
+        width: 1430px;
+        flex-wrap: wrap;
+        height: 360px;
+      }
     }
   `;
 
@@ -146,13 +171,13 @@ function Main() {
   const GrayFloor = styled.div`
     flex-basis: 12.5%;
     height: 50%;
-    background-color: #473F51;
+    background-color: #473f51;
     position: relative;
   `;
   const WhiteFloor = styled.div`
     flex-basis: 12.5%;
     height: 50%;
-    background-color: #FEF7EB;
+    background-color: #fef7eb;
     position: relative;
   `;
   const TestBoxTitle = styled.p`
@@ -162,6 +187,10 @@ function Main() {
     top: 40px;
     left: 40px;
     font-family: "Inter", sans-serif;
+    @media screen and (max-width: 1920px) {
+      font-size: 30px;
+    }
+    
   `;
 
   const TestBoxDesc = styled.p`
@@ -172,6 +201,14 @@ function Main() {
     transform: translate(-50%, 0);
     font-family: "Inter", sans-serif;
     color: white;
+    &.desc_seventh_default {
+      left: 450px;
+    }
+    @media screen and (max-width: 1920px) {
+      &.desc_seventh_1920{
+        left: 320px;
+      }
+    }
   `;
 
   const TestBoxCode = styled.p`
@@ -183,8 +220,6 @@ function Main() {
     color: rgb(44, 44, 44);
     z-index: 200;
   `;
-
-  
 
   return (
     <>
@@ -221,9 +256,7 @@ function Main() {
             <TestBoxDesc style={{ color: "black", left: "120px" }}>
               바닐라 스크립트로 자판기 만들기
             </TestBoxDesc>
-            <TestBoxCode style={{ color: "#4C4A4D" }}>
-              Click Event{" "}
-            </TestBoxCode>
+            <TestBoxCode style={{ color: "#4C4A4D" }}>Click Event </TestBoxCode>
           </TestBox>
           <TestBox>
             <MovingBall />
@@ -272,21 +305,21 @@ function Main() {
             <Walk />
           </TestBox>
           <MiniBoxWrap>
-          <TestBox>
-            <Dog />
-            <TestBoxTitle style={{ left: "250px" }}>무한한 식량</TestBoxTitle>
-            <TestBoxDesc
-              style={{ left: "435px", color: "black", width: "100%" }}
-            >
-              바닐라 스크립트로 무한히 사료 주기
-            </TestBoxDesc>
-            <TestBoxCode style={{ color: "darkgray", left: "20px" }}>
-              setinterval
-            </TestBoxCode>
-          </TestBox>
-          <TestBox></TestBox>
-          <TestBox></TestBox>
-          <TestBox></TestBox>
+            <TestBox>
+              <Dog />
+              <TestBoxTitle>무한한 식량</TestBoxTitle>
+              <TestBoxDesc className="desc_seventh_default desc_seventh_1920"
+                style={{color: "black", width: "100%" }}
+              >
+                바닐라 스크립트로 무한히 사료 주기
+              </TestBoxDesc>
+              <TestBoxCode style={{ color: "darkgray", left: "20px" }}>
+                setinterval
+              </TestBoxCode>
+            </TestBox>
+            <TestBox></TestBox>
+            <TestBox></TestBox>
+            <TestBox></TestBox>
           </MiniBoxWrap>
           <WhiteGradientToTop />
         </MainTopWrap>
