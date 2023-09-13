@@ -15,6 +15,10 @@ const Profile = styled.span`
   background-image: url("../images/greeting/man_1.png");
   background-position: center;
   background-size: cover;
+  @media screen and (max-width: 1920px) {
+          width: 27px;
+          height: 27px;
+      }
 `
 
 
@@ -58,6 +62,9 @@ const Message = styled.p`
     font-size: 14px;
     font-weight: 600;
     margin-right: 10px;
+    @media screen and (max-width: 1920px) {
+          font-size: 12px;
+      }
 `
 
 const MessageBoxLeft = styled.div`
@@ -72,6 +79,11 @@ const MessageBoxLeft = styled.div`
     top: -100px;
     opacity: 1;
     left: -94px;
+    @media screen and (max-width: 1920px) {
+          width: 190px;
+          height: 60px;
+          top: -90px;
+      }
 `
 const MessageBoxRight = styled.div`
     width: 220px;
@@ -85,6 +97,11 @@ const MessageBoxRight = styled.div`
     top: -100px;
     opacity: 1;
     left: -92px;
+    @media screen and (max-width: 1920px) {
+          width: 190px;
+          height: 60px;
+          top: -90px;
+      }
 `
 const TriangleLeft = styled.div`
   width: 0;
@@ -124,6 +141,8 @@ const PersonRight = styled.div`
     top: -35px;
     display: flex;
     flex-direction: column;
+    transform: scale(0.9);
+      
 `
 
 const PersonLeft = styled.div`
@@ -132,6 +151,8 @@ const PersonLeft = styled.div`
     display: flex;
     flex-direction: column;
     align-items: flex-end;
+    transform: scale(0.9);
+
 `
 
 const PersonHead = styled.div`
@@ -189,7 +210,7 @@ function Greeting() {
 
   return (
     <>
-      <CreatePersonLookRight position={"1.5"} message={"반가워요!"}  bgImage={"man_2.png"} heartCount={heart} plusHeart={setHeart}/>
+      <CreatePersonLookRight position={"1.5"} message={"모두 반가워요!"}  bgImage={"man_2.png"} heartCount={heart} plusHeart={setHeart}/>
       <CreatePersonLookRight position={"5.6"} message={"바닐라 유니버스로!"} bgImage={"woman_1.png"} heartCount={heart_2} plusHeart={setHeart_2}/>
       <CreatePersonLookLeft position={"2"} message={"자, 모두 출발!"} bgImage={"man_1.png"} heartCount={heart_3} plusHeart={setHeart_3}/>
     </>

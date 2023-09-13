@@ -20,7 +20,7 @@ const Ul = styled.ul`
   margin-left: 800px;
   @media screen and (max-width: 1920px) {
     margin-left: 600px;
-    transform: scale(0.85);
+    transform: scale(0.8);
 }
 `;
 
