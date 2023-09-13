@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import styled, { keyframes } from 'styled-components'
+import styled from 'styled-components'
 
 /* 
 profile
@@ -30,19 +30,18 @@ const LikeCount = styled.span`
   font-size: 11px;
   color: gray;
   margin-right: 3px;
-  line-height: 18px;
+  line-height: 20px;
 `
 
 const Like = styled.span`
-    width: 18px;
-    height: 18px;
+    width: 20px;
+    height: 20px;
     display: inline-block;
-    background-color: pink;
     border-radius: 50%;
     background-image: url("../images/greeting/heart.png");
     filter: saturate(2);
     background-position: center;
-    background-size: contain;
+    background-size: cover;
     cursor: pointer;
 `
 
