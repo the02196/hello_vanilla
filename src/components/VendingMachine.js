@@ -67,7 +67,7 @@ const Can = styled.div`
 
 
 const BtnArea = styled.div`
-    width: 150px;
+    width: 170px;
     height: 20px;
     display: flex;
     justify-content: space-around;
