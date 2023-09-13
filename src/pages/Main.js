@@ -187,8 +187,15 @@ function Main() {
     top: 40px;
     left: 40px;
     font-family: "Inter", sans-serif;
+    &.box_sixth_default{
+      left: 7%;
+    }
     @media screen and (max-width: 1920px) {
       font-size: 30px;
+      &.box_sixth_1920{
+        left: 9%;
+        font-size: 26px !important;
+      }
     }
     
   `;
@@ -207,6 +214,9 @@ function Main() {
     @media screen and (max-width: 1920px) {
       &.desc_seventh_1920{
         left: 320px;
+      }
+      &.box_sixth_1920{
+        left: 6.3% !important;
       }
     }
   `;
@@ -261,7 +271,7 @@ function Main() {
           <TestBox>
             <MovingBall />
             <TestBoxTitle>움직임</TestBoxTitle>
-            <TestBoxDesc style={{ color: "black", left: "150px" }}>
+            <TestBoxDesc style={{ color: "black", left: "145px" }}>
               바닐라 스크립트로 움직이는 공 만들기
             </TestBoxDesc>
             <TestBoxCode style={{ color: "darkgray" }}>
@@ -276,10 +286,9 @@ function Main() {
             <GrayFloor />
             <WhiteFloor />
             <GrayFloor>
-              <TestBoxTitle
+              <TestBoxTitle className="box_sixth_default box_sixth_1920"
                 style={{
                   width: "100%",
-                  left: "7%",
                   fontSize: "30px",
                   color: "white",
                 }}
@@ -296,7 +305,7 @@ function Main() {
             <GrayFloor />
             <WhiteFloor />
             <GrayFloor />
-            <TestBoxDesc style={{ color: "black", left: "115px" }}>
+            <TestBoxDesc className="box_sixth_1920" style={{ color: "black", left: "115px" }}>
               바닐라 스크립트로 걷기
             </TestBoxDesc>
             <TestBoxCode style={{ color: "lightgray" }}>
