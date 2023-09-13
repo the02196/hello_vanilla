@@ -12,7 +12,7 @@ const Ball = styled.div`
   border-radius: 50%;
   background-image: url("./images/ball/ball_background.png");
   background-size: cover;
-  margin: 50px auto;
+  margin: 0 auto;
   p{
     font-weight: bold;
     font-size: 25px;
@@ -21,34 +21,42 @@ const Ball = styled.div`
     top: 220px;
   }
 `
-const Left = styled.div`
-    width: 100px;
-    height: 200px;
+const Soccer = styled.div`
+    width: 350px;
+    height: 400px;
     background-size: cover;
-    background-image: url('./images/walk/left_foot.png');
-    margin-left: 30%;
+    background-image: url('./images/detail/soccer.png');
+    margin-left: 20%;
 `
-const Right = styled.div`
-  width: 100px;
-  height: 200px;
+const Elephant = styled.div`
+  width: 570px;
+  height: 420px;
   background-size: cover;
-  background-image: url('./images/walk/right_foot.png');
+  background-image: url('./images/detail/elephant.png');
   position: absolute;
-  margin-left: 70%;
+  left: 60%;
 `
-const Eye = styled.div`
-  width: 300px;
-  height: 200px;
+const Canon = styled.div`
+  width: 400px;
+  height: 320px;
   background-size: cover;
-  background-image: url('./images/eye/pupil.png');
-  margin-left: 18%;
+  background-image: url('./images/detail/canon.png');
+  position: absolute;
 `
-const True = styled.div`
-  width: 200px;
-  height: 200px;
+const Wand = styled.div`
+  width: 400px;
+  height: 400px;
   background-size: cover;
-  background-image: url('./images/true_or_false/spy.png');
-  margin-left: 700px;
+  background-image: url('./images/detail/wand.png');
+  left: 30%;
+  position: absolute;
+`
+const Push = styled.div`
+  width: 500px;
+  height: 500px;
+  background-size: cover;
+  background-image: url('./images/detail/push.png');
+  margin-left: 50%;
 `
 function Aos() {
 
@@ -59,17 +67,19 @@ function Aos() {
 
   return (
     <MainBg>
-        <Ball data-aos='zoom-in' data-aos-duration='3000'>
-          <p>함께 공을 움직여볼까요?</p>
+        <Ball data-aos='zoom-in' data-aos-duration='1000'>
+          <p></p>
         </Ball>
-        <Left data-aos='fade-down-right' data-aos-duration='3000'>
-        </Left>
-        <Right data-aos='zoom-out' data-aos-duration='2200'>
-        </Right>
-        <True data-aos="flip-down" data-aos-duration="2000">
-        </True>
-        <Eye data-aos="zoom-in-up" data-aos-duration='2000'>
-        </Eye>
+        <Elephant data-aos='fade-down-right' data-aos-duration='3000'>
+        </Elephant>
+        <Soccer data-aos='fade-down-right' data-aos-duration='3000'>
+        </Soccer>
+        <Canon data-aos='zoom-out' data-aos-duration='2200'>
+        </Canon>
+        <Wand data-aos="flip-down" data-aos-duration="2000">
+        </Wand>
+        <Push data-aos="zoom-in-up" data-aos-duration='2000'>
+        </Push>
     </MainBg>
   )
 }
