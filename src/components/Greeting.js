@@ -148,7 +148,7 @@ const PersonBody = styled.div`
     background-color: lightgray;
 `
 
-function CreatePersonLookLeft({position, message, bgImage, heartCount, setHeart}) {
+function CreatePersonLookLeft({position, message, bgImage, heartCount, plusHeart}) {
   return(
     <PersonRight style={{left: `${position * 100}px`}}>
       <PersonHead>
@@ -156,7 +156,7 @@ function CreatePersonLookLeft({position, message, bgImage, heartCount, setHeart}
         <MessageBoxLeft>
           <Profile style={{backgroundImage: `url("../images/greeting/${bgImage}")`}}></Profile>
           <Message>{`"${message}"`}</Message>
-          <LikeWrap><LikeCount>{heartCount}</LikeCount><Like onClick={()=>{setHeart(heartCount + 1)}}></Like></LikeWrap>
+          <LikeWrap><LikeCount>{heartCount}</LikeCount><Like onClick={()=>{plusHeart(heartCount + 1)}}></Like></LikeWrap>
         </MessageBoxLeft>   
       </PersonHead>
       <PersonBody></PersonBody>
@@ -164,7 +164,7 @@ function CreatePersonLookLeft({position, message, bgImage, heartCount, setHeart}
   )
 }
 
-function CreatePersonLookRight({position, message, bgImage, heartCount, setHeart}) {
+function CreatePersonLookRight({position, message, bgImage, heartCount, plusHeart}) {
   return(
     <PersonLeft style={{right: `${position * 100}px`}}>
       <PersonHead>
@@ -172,7 +172,7 @@ function CreatePersonLookRight({position, message, bgImage, heartCount, setHeart
         <MessageBoxRight>
           <Profile style={{backgroundImage: `url("../images/greeting/${bgImage}")`}}></Profile>
           <Message>{`"${message}"`}</Message>
-          <LikeWrap><LikeCount>{heartCount}</LikeCount><Like onClick={()=>{setHeart(heartCount + 1)}}></Like></LikeWrap>
+          <LikeWrap><LikeCount>{heartCount}</LikeCount><Like onClick={()=>{plusHeart(heartCount + 1)}}></Like></LikeWrap>
         </MessageBoxRight>   
       </PersonHead>
       <PersonBody></PersonBody>
@@ -183,13 +183,15 @@ function CreatePersonLookRight({position, message, bgImage, heartCount, setHeart
 
 function Greeting() {
 
-  const [heart, setHeart] = useState(0);
+  const [heart, setHeart] = useState(542);
+  const [heart_2, setHeart_2] = useState(264);
+  const [heart_3, setHeart_3] = useState(894);
 
   return (
     <>
-      <CreatePersonLookRight position={"1.5"} message={"반가워요!"}  bgImage={"man_2.png"} heartCount={heart} setHeart={setHeart}/>
-      <CreatePersonLookRight position={"5.6"} message={"바닐라 유니버스로!"} bgImage={"woman_1.png"} heartCount={heart} setHeart={setHeart}/>
-      <CreatePersonLookLeft position={"2"} message={"자, 모두 출발!"} bgImage={"man_1.png"} heartCount={heart} setHeart={setHeart}/>
+      <CreatePersonLookRight position={"1.5"} message={"반가워요!"}  bgImage={"man_2.png"} heartCount={heart} plusHeart={setHeart}/>
+      <CreatePersonLookRight position={"5.6"} message={"바닐라 유니버스로!"} bgImage={"woman_1.png"} heartCount={heart_2} plusHeart={setHeart_2}/>
+      <CreatePersonLookLeft position={"2"} message={"자, 모두 출발!"} bgImage={"man_1.png"} heartCount={heart_3} plusHeart={setHeart_3}/>
     </>
   )
 }
