@@ -85,6 +85,12 @@ p{
 input{
     width: 400px;
     margin-top: 30px;
+    border: none;
+    outline: none;
+    background-color: transparent;
+    position: relative;
+    border-bottom: 1px solid white;
+    padding-bottom: 10px;
 }
 `
 const Email = styled.div`
@@ -97,12 +103,31 @@ p{
 input{
     width: 400px;
     margin-top: 30px;
+    border: none;
+    outline: none;
+    background-color: transparent;
+    position: relative;
+    border-bottom: 1px solid white;
+    padding-bottom: 10px;
 }
 `
 const Yourjob = styled.div`
 
-
+        color: whitesmoke;
+        margin-top: 30px;
+        display: flex;
+        
 ` 
+const YourjobBox = styled.div`
+    width: 70px; height: 20px; background-color: hotpink;
+
+ul{
+    
+}
+li{
+    
+}
+`
 const NextButton = styled.button`
     
     
@@ -128,10 +153,33 @@ function Login_test() {
             
 
             <FormBox>
+               
                 <Id><p>사용할 아이디를 입력하세요.</p><input type="text" placeholder='#' name='user_id' id='user_id'></input></Id>
+               
                 <Password><p>비밀번호를 입력하세요.</p><input type='text' name='user_password' id='user_password'></input></Password>
+                
                 <Email><p>이메일을 입력하세요.</p><input type placeholder='example@gmail.com' name='user_email' id='user_email'></input></Email>
-                <Yourjob><p>당신의 직업은 무엇입니까?</p></Yourjob>
+                
+                <Yourjob><p>당신의 직업은 무엇입니까?</p>
+                    <ul>
+                        <li>
+                            <YourjobBox>탐구자</YourjobBox>
+                        </li>
+                        <li>
+                            <YourjobBox>학생</YourjobBox>
+                        </li>
+                        <li>
+                            <YourjobBox>교육자</YourjobBox>
+                        </li>
+                        <li>
+                            <YourjobBox>개발자</YourjobBox>
+                        </li>
+                        <li>
+                            <YourjobBox>기업인</YourjobBox>
+                        </li>
+                    </ul>
+                   
+                    </Yourjob>
 
 
 
