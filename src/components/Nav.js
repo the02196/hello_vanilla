@@ -22,6 +22,9 @@ function Nav() {
     cursor: pointer;
     margin-top: 40px;
     margin-left: 30px;
+    @media screen and (max-width: 1920px) {
+          font-size: 32px;
+      }
   `;
   
   const ProfileImg = styled.div`
@@ -55,7 +58,9 @@ function Nav() {
     font-size: 30px;
     color: white;
     background-color: transparent;
-    
+    @media screen and (max-width: 1920px) {
+          font-size: 27px;
+      }
     `
 
   return (

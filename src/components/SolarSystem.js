@@ -79,6 +79,10 @@ const Planet = styled.div`
   top: 50%;
   left: 100%;
   transform: translate(-50%, -50%);
+  @media screen and (max-width: 1920px) {
+    width: 14px;
+    height: 14px;
+  }
 `;
 
 
