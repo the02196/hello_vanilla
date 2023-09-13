@@ -1,5 +1,5 @@
-import React from 'react'
-import styled from 'styled-components'
+import React, { useState } from 'react'
+import styled, { keyframes } from 'styled-components'
 
 /* 
 profile
@@ -23,25 +23,31 @@ Like
 */
 
 const LikeCount = styled.span`
-
+  font-size: 11px;
+  color: gray;
+  margin-right: 3px;
+  line-height: 18px;
 `
 
 const Like = styled.span`
-    font-family: 'Inter';
     width: 18px;
     height: 18px;
     display: inline-block;
-    position: absolute;
-    bottom: 6px;
-    right: 8px;
     background-color: pink;
     border-radius: 50%;
     background-image: url("../images/greeting/heart.png");
     filter: saturate(2);
     background-position: center;
     background-size: contain;
+    cursor: pointer;
 `
 
+const LikeWrap = styled.span`
+  display: flex;
+  bottom: 6px;
+  right: 8px;
+  position: absolute;
+`
 
 /* 
 Message-Box
@@ -142,7 +148,7 @@ const PersonBody = styled.div`
     background-color: lightgray;
 `
 
-function CreatePersonLookLeft({position, message, bgImage}) {
+function CreatePersonLookLeft({position, message, bgImage, heartCount, setHeart}) {
   return(
     <PersonRight style={{left: `${position * 100}px`}}>
       <PersonHead>
@@ -150,7 +156,7 @@ function CreatePersonLookLeft({position, message, bgImage}) {
         <MessageBoxLeft>
           <Profile style={{backgroundImage: `url("../images/greeting/${bgImage}")`}}></Profile>
           <Message>{`"${message}"`}</Message>
-          <Like></Like>
+          <LikeWrap><LikeCount>{heartCount}</LikeCount><Like onClick={()=>{setHeart(heartCount + 1)}}></Like></LikeWrap>
         </MessageBoxLeft>   
       </PersonHead>
       <PersonBody></PersonBody>
@@ -158,7 +164,7 @@ function CreatePersonLookLeft({position, message, bgImage}) {
   )
 }
 
-function CreatePersonLookRight({position, message, bgImage}) {
+function CreatePersonLookRight({position, message, bgImage, heartCount, setHeart}) {
   return(
     <PersonLeft style={{right: `${position * 100}px`}}>
       <PersonHead>
@@ -166,7 +172,7 @@ function CreatePersonLookRight({position, message, bgImage}) {
         <MessageBoxRight>
           <Profile style={{backgroundImage: `url("../images/greeting/${bgImage}")`}}></Profile>
           <Message>{`"${message}"`}</Message>
-          <Like></Like>
+          <LikeWrap><LikeCount>{heartCount}</LikeCount><Like onClick={()=>{setHeart(heartCount + 1)}}></Like></LikeWrap>
         </MessageBoxRight>   
       </PersonHead>
       <PersonBody></PersonBody>
@@ -175,13 +181,15 @@ function CreatePersonLookRight({position, message, bgImage}) {
 }
 
 
-
 function Greeting() {
+
+  const [heart, setHeart] = useState(0);
+
   return (
     <>
-      <CreatePersonLookRight position={"1.5"} message={"반가워요!"}  bgImage={"man_2.png"}/>
-      <CreatePersonLookRight position={"5.6"} message={"바닐라 유니버스로!"} bgImage={"woman_1.png"} />
-      <CreatePersonLookLeft position={"2"} message={"자, 모두 출발!"} bgImage={"man_1.png"} />
+      <CreatePersonLookRight position={"1.5"} message={"반가워요!"}  bgImage={"man_2.png"} heartCount={heart} setHeart={setHeart}/>
+      <CreatePersonLookRight position={"5.6"} message={"바닐라 유니버스로!"} bgImage={"woman_1.png"} heartCount={heart} setHeart={setHeart}/>
+      <CreatePersonLookLeft position={"2"} message={"자, 모두 출발!"} bgImage={"man_1.png"} heartCount={heart} setHeart={setHeart}/>
     </>
   )
 }
