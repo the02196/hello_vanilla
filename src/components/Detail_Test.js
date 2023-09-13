@@ -3,7 +3,7 @@ import { styled } from 'styled-components'
 import { TypeAnimation } from 'react-type-animation';
 import { Slider } from './Slider';
 import Aos from './Aos';
-import RequestAnimation from './RequestAnimation';
+import Animation from './Animation';
 
 const MainBg = styled.div`
     background-color: #d9d9d9;
@@ -23,7 +23,7 @@ const Ball = styled.div`
     background-image: url("./images/ball/ball_detail.png");
     background-size: cover;
     background-position: center;
-    margin: 300px auto;
+    margin: 500px auto;
 `
 const ExampleImg = styled.div`
     width: 1400px;
@@ -258,7 +258,7 @@ function Detail_Test() {
         <Ball></Ball>
         {/* <Slider /> */}
         <Aos />
-        {/* <RequestAnimation /> */}
+        <Animation />
         <TextBg>
             <Picture></Picture>
             <Text>
