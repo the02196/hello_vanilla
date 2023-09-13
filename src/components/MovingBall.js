@@ -8,8 +8,14 @@ const MoveBall = keyframes`
 `;
 
 const ShowSpeed = keyframes`
-    0% { left: -42%; opacity: 0.1; }
-    100% { left: 6%; opacity: 1; }
+    0% { left: -42%; opacity: 0.1; 
+    }
+    100% { left: 6%; opacity: 1; 
+      @media screen and (max-width: 1920px) {
+          left: -42%
+      }
+    }
+    
 `
 
 const BallWrap = styled.div`
@@ -32,6 +38,10 @@ const Ball = styled.div`
   animation: ${MoveBall} 5s forwards ease-in-out infinite;
   z-index: 100;
   filter: contrast(1.2) grayscale(0.3);
+  @media screen and (max-width: 1920px) {
+          transform: scale(0.9);
+      }
+  
 `;
 
 const TriangleWrap = styled.div`

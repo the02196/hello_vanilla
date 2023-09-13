@@ -29,6 +29,9 @@ const Machine = styled.div`
     margin: 0 auto;
     position: relative;
     margin-top: 100px;
+    @media screen and (max-width: 1920px) {
+          transform: scale(0.9);
+      }
 `;
 
 const DrinkArea = styled.div`

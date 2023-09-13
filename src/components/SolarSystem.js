@@ -18,6 +18,10 @@ const Ul = styled.ul`
   height: 100vh;
   position: relative;
   margin-left: 800px;
+  @media screen and (max-width: 1920px) {
+    margin-left: 600px;
+    transform: scale(0.85);
+}
 `;
 
 const Li = styled.li`

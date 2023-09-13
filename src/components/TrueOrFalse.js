@@ -8,6 +8,7 @@ const MysteryMan = styled.div`
   background-image: url(../images/true_or_false/spy.png);
   background-size: cover;
   background-position: center;
+  
 
 `
 
