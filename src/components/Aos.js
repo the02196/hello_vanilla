@@ -26,7 +26,6 @@ const Soccer = styled.div`
     height: 400px;
     background-size: cover;
     background-image: url('./images/detail/soccer.png');
-    margin-left: 20%;
 `
 const Elephant = styled.div`
   width: 570px;
@@ -34,7 +33,6 @@ const Elephant = styled.div`
   background-size: cover;
   background-image: url('./images/detail/elephant.png');
   position: absolute;
-  left: 60%;
 `
 const Canon = styled.div`
   width: 400px;
@@ -48,7 +46,6 @@ const Wand = styled.div`
   height: 400px;
   background-size: cover;
   background-image: url('./images/detail/wand.png');
-  left: 30%;
   position: absolute;
 `
 const Push = styled.div`
@@ -56,7 +53,6 @@ const Push = styled.div`
   height: 500px;
   background-size: cover;
   background-image: url('./images/detail/push.png');
-  margin-left: 50%;
 `
 function Aos() {
 
@@ -66,21 +62,18 @@ function Aos() {
   }, []);
 
   return (
-    <MainBg>
-        <Ball data-aos='zoom-in' data-aos-duration='1000'>
-          <p></p>
-        </Ball>
-        <Elephant data-aos='fade-down-right' data-aos-duration='3000'>
-        </Elephant>
-        <Soccer data-aos='fade-down-right' data-aos-duration='3000'>
-        </Soccer>
-        <Canon data-aos='zoom-out' data-aos-duration='2200'>
-        </Canon>
-        <Wand data-aos="flip-down" data-aos-duration="2000">
-        </Wand>
-        <Push data-aos="zoom-in-up" data-aos-duration='2000'>
-        </Push>
-    </MainBg>
+    <>
+      <Elephant data-aos='fade-down-right' data-aos-duration='3000'>
+      </Elephant>
+      <Soccer data-aos='fade-down-right' data-aos-duration='3000'>
+      </Soccer>
+      <Canon data-aos='zoom-out' data-aos-duration='2200'>
+      </Canon>
+      <Wand data-aos="flip-down" data-aos-duration="2000">
+      </Wand>
+      <Push data-aos="zoom-in-up" data-aos-duration='2000'>
+      </Push>
+    </>
   )
 }
 

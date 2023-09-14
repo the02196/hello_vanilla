@@ -255,10 +255,6 @@ function Detail_Test() {
             <span>creator. #dh3308 & #romi6342</span>
             <span>How we can move ball with js?</span>
         </Creator>
-        <Ball></Ball>
-        {/* <Slider /> */}
-        <Aos />
-        <Animation />
         <TextBg>
             <Picture></Picture>
             <Text>
