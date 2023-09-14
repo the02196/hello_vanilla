@@ -209,7 +209,7 @@ function Greeting() {
 
   return (
     <>
-      <CreatePersonLookRight position={"1.5"} message={"모두 반가워요!"}  bgImage={"man_2.png"} heartCount={heart} plusHeart={setHeart}/>
+      <CreatePersonLookRight position={"1.5"} message={"모두 반가워요!"}  bgImage={"man_3.png"} heartCount={heart} plusHeart={setHeart}/>
       <CreatePersonLookRight position={"5.6"} message={"바닐라 유니버스로!"} bgImage={"woman_1.png"} heartCount={heart_2} plusHeart={setHeart_2}/>
       <CreatePersonLookLeft position={"2"} message={"자, 모두 출발!"} bgImage={"man_1.png"} heartCount={heart_3} plusHeart={setHeart_3}/>
     </>

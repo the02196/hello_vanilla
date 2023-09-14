@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import VendingMachine from "../components/VendingMachine";
 import { styled } from "styled-components";
 import Eye from "../components/Eye";
@@ -11,6 +11,11 @@ import Footer from "../components/Footer";
 import Walk from "../components/Walk";
 
 function Main() {
+
+  const [work_VendingMachine, setWork_VendingMachine] = useState(false);
+
+
+
   const MainWrap = styled.div`
     width: 100%;
     position: relative;
@@ -76,6 +81,7 @@ function Main() {
     }
   }
   `;
+
 
   const TestBox = styled.div`
     width: 900px;
@@ -260,8 +266,8 @@ function Main() {
               Math.cos와 Math.sin{" "}
             </TestBoxCode>
           </TestBox>
-          <TestBox>
-            <VendingMachine />
+          <TestBox onMouseEnter={() => {setWork_VendingMachine(!work_VendingMachine)}}>
+            <VendingMachine Work={work_VendingMachine} />
             <TestBoxTitle>무엇이 들었을까?</TestBoxTitle>
             <TestBoxDesc style={{ color: "black", left: "120px" }}>
               바닐라 스크립트로 자판기 만들기
