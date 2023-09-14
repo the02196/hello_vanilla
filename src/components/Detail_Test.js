@@ -267,8 +267,6 @@ function Detail_Test() {
                 <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Itaque libero dicta nulla nihil commodi suscipit quae dolores eius praesentium eveniet?</p>
             </Text>
         </TextBg>
-        <Aos />
-        <Animation />
         <TextBg>
             <TextRight>
                 <p>#def</p>
