@@ -321,7 +321,7 @@ function Detail_Test() {
         <LeftTextBox text={"아무 글이나 넘겨봅니다."}></LeftTextBox>
         <RightTextBox text={"아무 글이나 넘겨봅니다."}></RightTextBox>
     
-     
+    
         <CardWrap>
             <ul>
                 {BallLefttoRight()}
