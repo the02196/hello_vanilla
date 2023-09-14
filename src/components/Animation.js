@@ -25,20 +25,41 @@ function Animation() {
     left: 80%
   }
   `
+  const boxAnimation2 = keyframes`
+  0%{
+    transform:translate3d(0,0,0);
+  }
+  100%{
+    transform: translate3d(0,100px,0);
+  }
+  `
   const Ball = styled.div`
-  width: 200px;
-  height: 200px;
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    background-image: url("./images/ball/ball_detail.png");
+    background-size: cover;
+    background-position: center;
+    margin: 0px auto;
+    position: absolute;
+    animation: ${boxAnimation} 3s infinite linear;
+  `
+  const Ball2 = styled.div`
+  width: 300px;
+  height: 300px;
   border-radius: 50%;
   background-image: url("./images/ball/ball_detail.png");
   background-size: cover;
   background-position: center;
-  margin: 500px auto;
-  position: absolute;
-  animation: ${boxAnimation} 3s infinite linear;
+  margin: 0 auto;
+  animation: ${boxAnimation2} 0.5s infinite alternate cubic-bezier(.5, 0.05, 1, .5) ;
 `
   return (
+    <>
     <Ball>
     </Ball>
+    <Ball2></Ball2>
+    </>
   )
 }
 
