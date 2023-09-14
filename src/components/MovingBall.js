@@ -8,8 +8,14 @@ const MoveBall = keyframes`
 `;
 
 const ShowSpeed = keyframes`
-    0% { left: -42%; opacity: 0.1; }
+    0% { left: -42%; opacity: 0.1; 
+    }
     100% { left: 6%; opacity: 1; }
+`
+
+const ShowSpeed_1920 = keyframes`
+  0% { left: -42%; opacity: 0.1;}
+  100% {left: 2.5%; opacity: 1}
 `
 
 const BallWrap = styled.div`
@@ -32,12 +38,21 @@ const Ball = styled.div`
   animation: ${MoveBall} 5s forwards ease-in-out infinite;
   z-index: 100;
   filter: contrast(1.2) grayscale(0.3);
+  @media screen and (max-width: 1920px) {
+          transform: scale(0.9);
+      }
+      
+  
 `;
 
 const TriangleWrap = styled.div`
   position: relative;
   animation: ${ShowSpeed} 5s forwards ease-in-out infinite;
   z-index: 1;
+  @media screen and (max-width: 1920px) {
+          transform: scale(0.9);
+          animation: ${ShowSpeed_1920} 5s forwards ease-in-out infinite;
+      }
 `;
 
 const Triangle = styled.div`
