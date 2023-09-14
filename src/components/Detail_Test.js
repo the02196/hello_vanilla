@@ -220,24 +220,38 @@ const CodeView = styled.div`
     padding: 100px 50px;
     box-sizing: border-box;
 `
-const boxAnimation2 = keyframes`
-0%{
-  transform:translate3d(0,0,0);
-}
-100%{
-  transform: translate3d(0,100px,0);
-}
-`
-const Ball2 = styled.div`
-  width: 150px;
-  height: 150px;
-  border-radius: 50%;
-  background-image: url("./images/detail/ball.png");
-  background-size: cover;
-  background-position: center;
-  margin: 250px auto 0;
-  animation: ${boxAnimation2} 0.5s infinite alternate cubic-bezier(.5, 0.05, 1, .5) ;
-`
+function Animation() {
+    const boxAnimation2 = keyframes`
+    0%{
+      transform:translate3d(0,-50px,0);
+    }
+    40%{
+      transform: translate3d(0,100px,0);
+    }
+    45%{
+      transform: translate3d(0,80px,0);
+    }
+    100%{
+      transform: translate3d(0,100px,0);
+    }
+    `
+    const Ball2 = styled.div`
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    background-image: url("./images/detail/ball.png");
+    background-size: cover;
+    background-position: center;
+    margin: 200px auto;
+    animation: ${boxAnimation2} 1s forwards alternate cubic-bezier(.5, 0.05, 1, .5) ;
+  `
+    return (
+      <>
+  
+      <Ball2></Ball2>
+      </>
+    )
+  }
 
 function Detail_Test() {
   
@@ -317,7 +331,7 @@ function Detail_Test() {
             <span>How we can move ball with js?</span>
         </Creator>
     <MainBg>
-        <Ball2></Ball2>
+        <Animation></Animation>
         <LeftTextBox text={"아무 글이나 넘겨봅니다."}></LeftTextBox>
         <RightTextBox text={"아무 글이나 넘겨봅니다."}></RightTextBox>
     
