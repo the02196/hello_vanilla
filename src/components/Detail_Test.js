@@ -4,6 +4,7 @@ import { TypeAnimation } from 'react-type-animation';
 import { Slider } from './Slider';
 import Aos from './Aos';
 import BallLefttoRight from './Animation';
+import CodeEditor from '@uiw/react-textarea-code-editor';
 
 const GlobalWrap = styled.div`
     width: 100%;
@@ -309,6 +310,11 @@ function Detail_Test() {
         </TextBg>
         )
     }
+
+    const [code, setCode] = React.useState(
+        `function add(a, b) {\n  return a + b;\n}`
+    );
+
   return (
     <>
     <GlobalWrap>
@@ -457,7 +463,20 @@ function Detail_Test() {
                 );
             })
         }
-        <CodeView></CodeView>
+        <CodeView>
+            <CodeEditor
+            value={code}
+            language="js"
+            placeholder="Please enter JS code."
+            onChange={(evn) => setCode(evn.target.value)}
+            padding={15}
+            style={{
+                fontSize: 14,
+                backgroundColor: "#f5f5f5",
+                fontFamily: 'ui-monospace,SFMono-Regular,SF Mono,Consolas,Liberation Mono,Menlo,monospace',
+            }}
+            />
+        </CodeView>
     
     </GlobalWrap>
     </>
