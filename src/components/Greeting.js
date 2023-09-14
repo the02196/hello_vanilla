@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import styled, { keyframes } from 'styled-components'
+import styled from 'styled-components'
 
 /* 
 profile
@@ -15,6 +15,10 @@ const Profile = styled.span`
   background-image: url("../images/greeting/man_1.png");
   background-position: center;
   background-size: cover;
+  @media screen and (max-width: 1920px) {
+          width: 27px;
+          height: 27px;
+      }
 `
 
 
@@ -26,19 +30,18 @@ const LikeCount = styled.span`
   font-size: 11px;
   color: gray;
   margin-right: 3px;
-  line-height: 18px;
+  line-height: 20px;
 `
 
 const Like = styled.span`
-    width: 18px;
-    height: 18px;
+    width: 20px;
+    height: 20px;
     display: inline-block;
-    background-color: pink;
     border-radius: 50%;
     background-image: url("../images/greeting/heart.png");
     filter: saturate(2);
     background-position: center;
-    background-size: contain;
+    background-size: cover;
     cursor: pointer;
 `
 
@@ -58,6 +61,9 @@ const Message = styled.p`
     font-size: 14px;
     font-weight: 600;
     margin-right: 10px;
+    @media screen and (max-width: 1920px) {
+          font-size: 12px;
+      }
 `
 
 const MessageBoxLeft = styled.div`
@@ -72,6 +78,11 @@ const MessageBoxLeft = styled.div`
     top: -100px;
     opacity: 1;
     left: -94px;
+    @media screen and (max-width: 1920px) {
+          width: 190px;
+          height: 60px;
+          top: -90px;
+      }
 `
 const MessageBoxRight = styled.div`
     width: 220px;
@@ -85,6 +96,11 @@ const MessageBoxRight = styled.div`
     top: -100px;
     opacity: 1;
     left: -92px;
+    @media screen and (max-width: 1920px) {
+          width: 190px;
+          height: 60px;
+          top: -90px;
+      }
 `
 const TriangleLeft = styled.div`
   width: 0;
@@ -124,6 +140,8 @@ const PersonRight = styled.div`
     top: -35px;
     display: flex;
     flex-direction: column;
+    transform: scale(0.9);
+      
 `
 
 const PersonLeft = styled.div`
@@ -132,6 +150,8 @@ const PersonLeft = styled.div`
     display: flex;
     flex-direction: column;
     align-items: flex-end;
+    transform: scale(0.9);
+
 `
 
 const PersonHead = styled.div`
@@ -148,7 +168,7 @@ const PersonBody = styled.div`
     background-color: lightgray;
 `
 
-function CreatePersonLookLeft({position, message, bgImage, heartCount, setHeart}) {
+function CreatePersonLookLeft({position, message, bgImage, heartCount, plusHeart}) {
   return(
     <PersonRight style={{left: `${position * 100}px`}}>
       <PersonHead>
@@ -156,7 +176,7 @@ function CreatePersonLookLeft({position, message, bgImage, heartCount, setHeart}
         <MessageBoxLeft>
           <Profile style={{backgroundImage: `url("../images/greeting/${bgImage}")`}}></Profile>
           <Message>{`"${message}"`}</Message>
-          <LikeWrap><LikeCount>{heartCount}</LikeCount><Like onClick={()=>{setHeart(heartCount + 1)}}></Like></LikeWrap>
+          <LikeWrap><LikeCount>{heartCount}</LikeCount><Like onClick={()=>{plusHeart(heartCount + 1)}}></Like></LikeWrap>
         </MessageBoxLeft>   
       </PersonHead>
       <PersonBody></PersonBody>
@@ -164,7 +184,7 @@ function CreatePersonLookLeft({position, message, bgImage, heartCount, setHeart}
   )
 }
 
-function CreatePersonLookRight({position, message, bgImage, heartCount, setHeart}) {
+function CreatePersonLookRight({position, message, bgImage, heartCount, plusHeart}) {
   return(
     <PersonLeft style={{right: `${position * 100}px`}}>
       <PersonHead>
@@ -172,7 +192,7 @@ function CreatePersonLookRight({position, message, bgImage, heartCount, setHeart
         <MessageBoxRight>
           <Profile style={{backgroundImage: `url("../images/greeting/${bgImage}")`}}></Profile>
           <Message>{`"${message}"`}</Message>
-          <LikeWrap><LikeCount>{heartCount}</LikeCount><Like onClick={()=>{setHeart(heartCount + 1)}}></Like></LikeWrap>
+          <LikeWrap><LikeCount>{heartCount}</LikeCount><Like onClick={()=>{plusHeart(heartCount + 1)}}></Like></LikeWrap>
         </MessageBoxRight>   
       </PersonHead>
       <PersonBody></PersonBody>
@@ -183,13 +203,15 @@ function CreatePersonLookRight({position, message, bgImage, heartCount, setHeart
 
 function Greeting() {
 
-  const [heart, setHeart] = useState(0);
+  const [heart, setHeart] = useState(542);
+  const [heart_2, setHeart_2] = useState(264);
+  const [heart_3, setHeart_3] = useState(894);
 
   return (
     <>
-      <CreatePersonLookRight position={"1.5"} message={"반가워요!"}  bgImage={"man_2.png"} heartCount={heart} setHeart={setHeart}/>
-      <CreatePersonLookRight position={"5.6"} message={"바닐라 유니버스로!"} bgImage={"woman_1.png"} heartCount={heart} setHeart={setHeart}/>
-      <CreatePersonLookLeft position={"2"} message={"자, 모두 출발!"} bgImage={"man_1.png"} heartCount={heart} setHeart={setHeart}/>
+      <CreatePersonLookRight position={"1.5"} message={"모두 반가워요!"}  bgImage={"man_3.png"} heartCount={heart} plusHeart={setHeart}/>
+      <CreatePersonLookRight position={"5.6"} message={"바닐라 유니버스로!"} bgImage={"woman_1.png"} heartCount={heart_2} plusHeart={setHeart_2}/>
+      <CreatePersonLookLeft position={"2"} message={"자, 모두 출발!"} bgImage={"man_1.png"} heartCount={heart_3} plusHeart={setHeart_3}/>
     </>
   )
 }

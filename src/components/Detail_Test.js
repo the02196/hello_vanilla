@@ -7,12 +7,12 @@ import Animation from './Animation';
 
 const MainBg = styled.div`
     background-color: #d9d9d9;
-    height: 100%;
 `
 const Creator = styled.div`
+    padding-top: 20px;
     span{
         font-size: 17px;
-        margin-right: 50px;
+        margin: 50px;
         color: #9d9d9d;
     }
 `
@@ -23,34 +23,29 @@ const Ball = styled.div`
     background-image: url("./images/ball/ball_detail.png");
     background-size: cover;
     background-position: center;
-    margin: 500px auto;
-`
-const ExampleImg = styled.div`
-    width: 1400px;
-    height: 800px;
-    margin: 100px auto;
-    background-color: #fff;
+    margin: 400px auto;
 `
 const TextBg = styled.div`
     background-color: #FFF9EB;
-    width: 1400px;
+    width: 1000px;
     display: flex;
     justify-content: space-around;
     margin: 200px auto;
     align-items: center;
-    padding: 50px 0;
+    padding: 40px 0;
 `
 const Picture = styled.div`
     width: 90px;
     height: 90px;
     border-radius: 50%;
     background-color: #ddd;
+    margin: 0 50px;
 `
 const Text = styled.div`
-    font-family: 'Inter';
-    flex-basis: 80%;
+    width: 700px;
     p:nth-child(1){
         font-size: 30px;
+        margin-bottom: 30px;
     }
     p:nth-child(2){
         font-size: 24px;
@@ -60,7 +55,8 @@ const TextRight = styled(Text)`
     text-align: right;
 `
 const CardWrap = styled.div`
-    width: 1400px;
+    width: 1000px;
+    overflow: hidden;
     margin: 300px auto;
     ul{
         display: flex;
@@ -69,67 +65,76 @@ const CardWrap = styled.div`
 `
 const Card = styled.li`
     background-color: #E5F1E8;
-    width: 400px;
-    height: 350px;
+    width: 270px;
+    height: 270px;
+    font-size: 40px;
     text-align: center;
-    font-size: 45px;
-    transition: 1s;
+    
+    padding: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: 0.5s;
+    box-sizing: border-box;
+    position: relative;
     &.on{
         background-color: #fff;       
     }
     &.on span{
-        font-size: 30px;
+        position: absolute;
+        font-size: 23px;
     }
-
 `
 const Desc = styled.div`
-    width: 1400px;
+    width: 1000px;
     margin: 100px auto;
     p{
-        font-size: 60px;
+        font-size: 30px;
         margin-bottom: 50px;
     }
     span{
-        font-size: 36px;
+        font-size: 20px;
     }
 `
 const MovingBall = styled.div`
-    width: 1400px;
+    width: 1000px;
     height: 250px;
     margin: 100px auto;
     background-color: #fff;
 `
-const CodeDesc = styled.div`
-    width: 1400px;
+const CodeDescWrap = styled.div`
+    width: 1000px;
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin: 300px auto;
 `
-const DescLeft = styled.div`
-    font-size: 36px;
-    flex-basis: 30%;
-    height: 200px;
+const CodeDesc = styled.div`
+    font-size: 24px;
+    width: 350px;
+    height: 300px;
+    display: flex;
+    align-items: center;
 `
 const Typing = styled.div`
-    flex-basis: 60%;
-    height: 400px;
+    width: 550px;
+    height: 300px;
     overflow: hidden;
     background-color: #fff;
 `
 const GithubIcon = styled.div`
     width: 100%;
     background-color: #25292F;
-    height: 100px;
+    height: 70px;
 `
 const CommentBox = styled.div`
-    width: 1400px;
-    margin: 200px auto;
+    width: 1000px;
+    margin: 70px auto;
     display: flex;
     justify-content: space-between;
 `
 const CommentWrap = styled.div`
-    width: 1200px;
+    width: 800px;
     div:nth-child(1){
         display: flex;
         justify-content: space-between;
@@ -141,48 +146,48 @@ const WirterPicture = styled.div`
     border-radius: 50%;
     background-color: #fff;
 `
-const Recommend = styled.div`
+const TopComment = styled.div`
     background-color: #eaeaea;
     width: 200px;
-    height: 40px;
-    font-size: 18px;
+    height: 30px;
+    font-size: 16px;
     font-weight: bold;
     text-align: center;
     border-radius: 30px;
 `
 const WriterId = styled.div`
-    font-size: 40px;
+    font-size: 22px;
 `
 const Comment = styled.div`
-    font-size: 30px;
-    margin: 50px 0;
+    font-size: 18px;
+    margin: 30px 0;
 `
 const Share = styled.div`
-    font-size: 30px;
+    font-size: 16px;
     color: #808080;
 `
 const PostComment = styled.div`
-    width: 1400px;
-    margin: 200px auto;
+    width: 1000px;
+    margin: 150px auto;
     display: flex;
     justify-content: space-between;
 `
 const InputWrap = styled.div`
-    width: 1200px;
+    width: 800px;
     textarea{
-        width: 1200px;
-        height: 300px;
+        width: 800px;
+        height: 160px;
         background-color: #fff;
         border: 0;
         outline: none;
-        font-size: 24px;
+        font-size: 20px;
         box-sizing: border-box;
     }
     button{
-        width: 1200px;
-        padding: 20px 0;
+        width: 800px;
+        padding: 15px 0;
         background-color: #C5CDEB;
-        font-size: 30px;
+        font-size: 18px;
         font-weight: bold;
         &:focus{
             border: none;
@@ -191,7 +196,7 @@ const InputWrap = styled.div`
     }
 `
 const CodeView = styled.div`
-    width: 1400px;
+    width: 1000px;
     height: 500px;
     margin: 0 auto;
     background-color: #F0F1EC;
@@ -224,7 +229,7 @@ function Detail_Test() {
                 <CommentWrap className="userCommentBox">
                     <div>
                         <WriterId className="userName">{props.userName}</WriterId>
-                        {/* <Recommend>Top Comment</Recommend> */}
+                        {/* <TopComment>Top Comment</TopComment> */}
                     </div>
                     <Comment className='userComment'>{props.userComment}</Comment>
                     <Share>share code</Share>
@@ -235,7 +240,7 @@ function Detail_Test() {
     const CardContent = [
         {
             quiz: "quiz1",
-            answer: "Lorem ipsum dolor sit amet."
+            answer: "Lorem ipsum dolor sit amet. "
         },
         {
             quiz: "quiz2",
@@ -262,7 +267,8 @@ function Detail_Test() {
                 <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Itaque libero dicta nulla nihil commodi suscipit quae dolores eius praesentium eveniet?</p>
             </Text>
         </TextBg>
-        <ExampleImg></ExampleImg>
+        <Aos />
+        <Animation />
         <TextBg>
             <TextRight>
                 <p>#def</p>
@@ -299,8 +305,8 @@ function Detail_Test() {
             <span>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa.Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa.Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa.</span>
         </Desc>
         <MovingBall></MovingBall>
-        <CodeDesc>
-            <DescLeft>Lorem ipsum dolor, sit amet consectetur adipisicing elit.</DescLeft>
+        <CodeDescWrap>
+            <CodeDesc>Lorem ipsum dolor, sit amet consectetur adipisicing elit. libero dicta nulla nihil commodi suscipit quae dolores eius praesentium eveniet</CodeDesc>
             <Typing>
                 <TypeAnimation
                     sequence={[
@@ -316,14 +322,14 @@ function Detail_Test() {
                     repeat={Infinity}
                 />
             </Typing>
-        </CodeDesc>
+        </CodeDescWrap>
         <MovingBall></MovingBall>
-        <CodeDesc>
+        <CodeDescWrap>
             <Typing>
                 
             </Typing>
-            <DescLeft>Lorem ipsum dolor, sit amet consectetur adipisicing elit.</DescLeft>
-        </CodeDesc>
+            <CodeDesc>Lorem ipsum dolor, sit amet consectetur adipisicing elit. libero dicta nulla nihil commodi suscipit quae dolores eius praesentium eveniet</CodeDesc>
+        </CodeDescWrap>
         <TextBg>
             <Picture></Picture>
             <Text>
@@ -331,12 +337,12 @@ function Detail_Test() {
                 <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Itaque libero dicta nulla nihil commodi suscipit quae dolores eius praesentium eveniet?</p>
             </Text>
         </TextBg>
-        <CodeDesc>
-            <DescLeft>Lorem ipsum dolor, sit amet consectetur adipisicing elit.</DescLeft>
+        <CodeDescWrap>
+            <CodeDesc>Lorem ipsum dolor, sit amet consectetur adipisicing elit. libero dicta nulla nihil commodi suscipit quae dolores eius praesentium eveniet</CodeDesc>
             <Typing>
                 
             </Typing>
-        </CodeDesc>
+        </CodeDescWrap>
         <TextBg>
             <TextRight>
                 <p>#def</p>
@@ -381,20 +387,20 @@ function Detail_Test() {
             <CommentWrap>
                 <div>
                     <WriterId>lorem</WriterId>
-                    <Recommend>Top Comment ★</Recommend>
+                    <TopComment>Top Comment ★</TopComment>
                 </div>
                 <Comment>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Inventore quae perferendis similique a ad expedita ex accusamus aperiam laborum! Vel, ipsum! Non, deserunt error repudiandae magni consequuntur quos provident cumque?</Comment>
                 <Share>share code</Share>
             </CommentWrap>
         </CommentBox>
         {
-            feedComments.map((el,i) => {
+            feedComments.map((el,index) => {
                 return (
                     <CommentList 
                         userProfile={userProfile}
                         userName={userName}
                         userComment={el}
-                        key={i}
+                        key={index}
                     />
                 );
             })
