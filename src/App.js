@@ -6,6 +6,7 @@ import Detail from "./pages/Detail";
 import Quick from "./pages/Quick";
 import Login from "./pages/Login";
 import AnimationTest from "./pages/AnimationTest";
+import Test from "./pages/Test";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         <Route path="/quick" element={<Quick />}></Route>
         <Route path="/login" element={<Login />}></Route>
         <Route path="/animation" element={<AnimationTest />}></Route>
+        <Route path="/test" element={<Test />}></Route>
       </Routes>
     </>
   );

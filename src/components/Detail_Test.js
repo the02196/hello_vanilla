@@ -1,12 +1,20 @@
 import React, { useState } from 'react'
-import { styled } from 'styled-components'
+import { keyframes, styled } from 'styled-components'
 import { TypeAnimation } from 'react-type-animation';
 import { Slider } from './Slider';
 import Aos from './Aos';
-import Animation from './Animation';
+import BallLefttoRight from './Animation';
+
+const GlobalWrap = styled.div`
+    width: 100%;
+    height: 100%;
+    background-color: #fefefe;
+
+`
 
 const MainBg = styled.div`
-    background-color: #d9d9d9;
+    max-width: 1400px;
+    margin: 0 auto;  
 `
 const Creator = styled.div`
     padding-top: 20px;
@@ -16,60 +24,60 @@ const Creator = styled.div`
         color: #9d9d9d;
     }
 `
-// const Ball = styled.div`
-//     width: 200px;
-//     height: 200px;
-//     border-radius: 50%;
-//     background-image: url("./images/ball/ball_detail.png");
-//     background-size: cover;
-//     background-position: center;
-//     margin: 400px auto;
-// `
+
 const TextBg = styled.div`
-    background-color: #FFF9EB;
-    width: 1000px;
+    background-color: white;
+    box-shadow: rgba(17, 17, 26, 0.05) 0px 1px 0px, rgba(17, 17, 26, 0.1) 0px 0px 8px;
+    width: 1400px;
     display: flex;
-    justify-content: space-around;
-    margin: 200px auto;
+    margin: 300px auto;
     align-items: center;
-    padding: 40px 0;
+    padding: 30px 0;
 `
 const Picture = styled.div`
-    width: 90px;
-    height: 90px;
+    width: 70px;
+    height: 70px;
     border-radius: 50%;
     background-color: #ddd;
-    margin: 0 50px;
+    background-image: url('./../images/detail/profiles/${props => props.bgImage}');
+    background-size: cover;
+    margin-left: 20px;
 `
 const Text = styled.div`
-    width: 700px;
-    p:nth-child(1){
-        font-size: 30px;
-        margin-bottom: 30px;
+    display: flex;
+    flex-direction: column;
+    
+    h3{
+        font-weight: 600;
+        font-size: 20px;
+        margin-bottom: 10px;
     }
-    p:nth-child(2){
-        font-size: 24px;
+    p{
+        font-size: 16px;
     }
 `
-const TextRight = styled(Text)`
-    text-align: right;
-`
+
+
 const CardWrap = styled.div`
-    width: 1000px;
+    width: 100%;
     overflow: hidden;
     margin: 300px auto;
     ul{
         display: flex;
         justify-content: space-between;
+        position: relative;
     }
+
 `
+
+
 const Card = styled.li`
-    background-color: #E5F1E8;
-    width: 270px;
-    height: 270px;
-    font-size: 40px;
+    background-color: #efefef;
+    width: 300px;
+    height: 300px;
+    font-size: 20px;
     text-align: center;
-    
+    z-index: 100;
     padding: 50px;
     display: flex;
     justify-content: center;
@@ -80,7 +88,7 @@ const Card = styled.li`
     &.on{
         background-color: #fff;       
     }
-    &.on span{
+    span{
         position: absolute;
         font-size: 23px;
     }
@@ -96,6 +104,12 @@ const Desc = styled.div`
         font-size: 20px;
     }
 `
+
+const BallLefttoRightWrap = styled.div`
+    width: 100%;
+    position: relative;
+`
+
 const MovingBall = styled.div`
     width: 1000px;
     height: 250px;
@@ -172,6 +186,7 @@ const PostComment = styled.div`
     display: flex;
     justify-content: space-between;
 `
+
 const InputWrap = styled.div`
     width: 800px;
     textarea{
@@ -205,8 +220,27 @@ const CodeView = styled.div`
     padding: 100px 50px;
     box-sizing: border-box;
 `
+const boxAnimation2 = keyframes`
+0%{
+  transform:translate3d(0,0,0);
+}
+100%{
+  transform: translate3d(0,100px,0);
+}
+`
+const Ball2 = styled.div`
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  background-image: url("./images/detail/ball.png");
+  background-size: cover;
+  background-position: center;
+  margin: 250px auto 0;
+  animation: ${boxAnimation2} 0.5s infinite alternate cubic-bezier(.5, 0.05, 1, .5) ;
+`
 
 function Detail_Test() {
+  
     const [isHovering, setIsHovering] = useState(-1);
 
     const [userName, setUserName] = useState("#001235");
@@ -251,34 +285,47 @@ function Detail_Test() {
             answer: "Lorem ipsum dolor sit amet. Lorem ipsum dolor, sit amet consectetur adipisicing elit. Odio, minus."
         }
     ]
-
     
+    
+    const LeftTextBox = ({text, bgImage}) => {
+        return(
+        <TextBg>
+        <Picture style={{marginLeft: "30px", marginRight: "30px" , backgroundImage: `url("../images/detail/profiles/Woman_1.png")` }}></Picture>
+        <Text>
+            <h3>#gd5933</h3>
+            <p>{text}</p>
+        </Text>
+        </TextBg>
+        )
+    }
+    const RightTextBox = ({text, bgImage}) => {
+        return(
+        <TextBg style={{justifyContent: "flex-end"}}>
+        <Text style={{alignItems: "flex-end"}}>
+            <h3>#hg5362</h3>
+            <p>{text}</p>
+        </Text>
+        <Picture style={{marginLeft: "30px", marginRight: "30px", backgroundImage: `url("../images/detail/profiles/Man_3.png")`}}></Picture>
+        </TextBg>
+        )
+    }
   return (
     <>
-    <MainBg>
+    <GlobalWrap>
         <Creator>
             <span>creator. #dh3308 & #romi6342</span>
             <span>How we can move ball with js?</span>
         </Creator>
-        <TextBg>
-            <Picture></Picture>
-            <Text>
-                <p>#abc</p>
-                <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Itaque libero dicta nulla nihil commodi suscipit quae dolores eius praesentium eveniet?</p>
-            </Text>
-        </TextBg>
-        <Aos />
-        <Animation />
-        <TextBg>
-            <TextRight>
-                <p>#def</p>
-                <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Itaque libero dicta nulla nihil commodi suscipit quae dolores eius praesentium eveniet?</p>
-            </TextRight>
-            <Picture></Picture>
-        </TextBg>
+    <MainBg>
+        <Ball2></Ball2>
+        <LeftTextBox text={"아무 글이나 넘겨봅니다."}></LeftTextBox>
+        <RightTextBox text={"아무 글이나 넘겨봅니다."}></RightTextBox>
+    
+    
         <CardWrap>
             <ul>
-                {
+                {BallLefttoRight()}
+                {/* {
                     CardContent.map((e,i)=>{
                         return (
                             <Card
@@ -297,7 +344,11 @@ function Detail_Test() {
                             </Card>
                         )
                     })
-                }
+                } */}
+                {CardContent.map((e,i)=>{
+                        return (
+                                <Card>{e.answer}</Card>
+                )})}
             </ul>
         </CardWrap>
         <Desc>
@@ -343,13 +394,14 @@ function Detail_Test() {
                 
             </Typing>
         </CodeDescWrap>
-        <TextBg>
+        {/* <TextBg>
             <TextRight>
                 <p>#def</p>
                 <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Itaque libero dicta nulla nihil commodi suscipit quae dolores eius praesentium eveniet?</p>
             </TextRight>
             <Picture></Picture>
-        </TextBg>
+        </TextBg> */}
+        </MainBg>
         <GithubIcon></GithubIcon>
         <PostComment>
             <WirterPicture></WirterPicture>
@@ -406,7 +458,8 @@ function Detail_Test() {
             })
         }
         <CodeView></CodeView>
-    </MainBg>
+    
+    </GlobalWrap>
     </>
   )
 }
