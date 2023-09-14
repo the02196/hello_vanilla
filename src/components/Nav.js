@@ -22,6 +22,9 @@ function Nav() {
     cursor: pointer;
     margin-top: 40px;
     margin-left: 30px;
+    @media screen and (max-width: 1920px) {
+          font-size: 32px;
+      }
   `;
   
   const ProfileImg = styled.div`
@@ -44,6 +47,9 @@ function Nav() {
       left: 50%;
       transform: translateX(-50%);
       margin: 0 auto;
+      @media screen and (max-width: 1920px) {
+          width: 1430px;
+      }
     `
 
     const WelcomeText = styled.span`
@@ -52,6 +58,9 @@ function Nav() {
     font-size: 30px;
     color: white;
     background-color: transparent;
+    @media screen and (max-width: 1920px) {
+          font-size: 27px;
+      }
     `
 
   return (

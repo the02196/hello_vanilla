@@ -29,6 +29,9 @@ const Machine = styled.div`
     margin: 0 auto;
     position: relative;
     margin-top: 100px;
+    @media screen and (max-width: 1920px) {
+          transform: scale(0.9);
+      }
 `;
 
 const DrinkArea = styled.div`
@@ -64,7 +67,7 @@ const Can = styled.div`
 
 
 const BtnArea = styled.div`
-    width: 150px;
+    width: 170px;
     height: 20px;
     display: flex;
     justify-content: space-around;
@@ -117,9 +120,9 @@ const Paid = styled.div`
     }
 `;
 
-const VendingMachine = () => {
+const VendingMachine = ({work_VendingMachine}) => {
     return (
-        <Machine>
+        <Machine className={work_VendingMachine === false ? "" : "on"}>
             <DrinkArea>
                 <Drink>
                     <Can className="on" />

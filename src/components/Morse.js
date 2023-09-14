@@ -12,6 +12,7 @@ const MorseWrap = styled.div`
 `;
 
 const MorseCode = styled.span`
+font-family: 'Fira Code', monospace;
   width: 20px;
   display: flex;
   justify-content: center;

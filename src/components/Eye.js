@@ -17,6 +17,9 @@ const EyeContainer = styled.div`
   position: relative;
   opacity: 1;
   z-index: 2;
+  @media screen and (max-width: 1920px) {
+    transform: scale(0.9);
+}
 `;
 
 const Pupil = styled.div`

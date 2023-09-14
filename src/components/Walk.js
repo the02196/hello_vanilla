@@ -12,6 +12,10 @@ function Walk() {
         bottom: 80px;
         right: 40px;
         transform: rotate(-90deg);
+        @media screen and (max-width: 1920px) {
+          transform: rotate(-90deg) scale(0.9);
+        }
+    
     ` 
 
     const RightFoot = styled.div`
@@ -23,6 +27,11 @@ function Walk() {
         top: 100px;
         right: 290px;
         transform: rotate(-90deg);
+        @media screen and (max-width: 1920px) {
+          top: 80px;
+          right: 255px;
+          transform: rotate(-90deg) scale(0.9);
+        }
     ` 
 
   return (

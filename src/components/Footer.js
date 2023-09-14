@@ -67,6 +67,27 @@ function Footer() {
       position: absolute;
     `
 
+    const InfoWrap = styled.div`
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-end;
+        padding-bottom: 30px;
+    `
+
+    const Copyright = styled.div`
+      color: #B6B6B6;
+      font-size: 10px;
+      margin-bottom: 10px;
+    `
+
+    const InfoDetail = styled.div`
+      color: #B6B6B6;
+      font-size: 10px;
+    `
+
   return (
     <>
         <FooterWrap>
@@ -77,7 +98,11 @@ function Footer() {
           <Mountain />   
           <Mountain />
           <HouseRoof />
-          <HouseBody />           
+          <HouseBody />
+          <InfoWrap>
+            <Copyright>Copyright © 2023 Hello Vanilla 모든 권리 보유.</Copyright>
+            <InfoDetail>사업자등록번호 : 120-81-OOOOO | 통신판매업신고번호 : 제 2011-OOOO-00810호 | 대표이사 : OOO OOOOO | 주소 : 서울 특별시 OOO OOOOO | 대표전화 : OO-OOO-OOOO | 팩스 : OO-OOO-OOOO</InfoDetail>
+          </InfoWrap>           
         </FooterWrap>
     </>
   )

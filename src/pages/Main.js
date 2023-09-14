@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import VendingMachine from "../components/VendingMachine";
 import { styled } from "styled-components";
 import Eye from "../components/Eye";
@@ -11,6 +11,11 @@ import Footer from "../components/Footer";
 import Walk from "../components/Walk";
 
 function Main() {
+
+  const [work_VendingMachine, setWork_VendingMachine] = useState(false);
+
+
+
   const MainWrap = styled.div`
     width: 100%;
     position: relative;
@@ -22,14 +27,15 @@ function Main() {
     width: 100%;
     height: 1280px;
     position: relative;
-    background-size: contain;
+    background-size: cover;
     background-image: url("../images/main/main_bottom_background.avif");
     background-repeat: no-repeat;
+    background-position: center;
   `;
   const MainTopWrap = styled.div`
     display: flex;
-    padding: 0 50px;
-    width: 1920px;
+    padding: 300px 50px 0;
+    max-width: 100%;
     align-items: center;
     justify-content: center;
     box-sizing: border-box;
@@ -40,8 +46,42 @@ function Main() {
     position: relative;
     background-image: url("../images/main/main_top_background.avif");
     justify-content: center;
-    
   `;
+  const MiniBoxWrap = styled.div`
+    width: 1810px;
+    display: flex;
+    justify-content: space-between;
+    div {
+      &:nth-child(1),
+      &:nth-child(2),
+      &:nth-child(3),
+      &:nth-child(4) {
+        width: 445px;
+        height: 445px;
+        margin: 0;
+      }
+      &:nth-child(2) {
+        background-image: url("../images/main/dog_foots.png");
+      }
+      &:nth-child(3) {
+        background-image: url("../images/main/dummy_background.avif");
+      }
+    }
+    @media screen and (max-width: 1920px) {
+      width: 1430px;
+      div {
+      &:nth-child(1),
+      &:nth-child(2),
+      &:nth-child(3),
+      &:nth-child(4) {
+        width: 350px;
+        height: 350px;
+        margin: 0;
+      }
+    }
+  }
+  `;
+
 
   const TestBox = styled.div`
     width: 900px;
@@ -66,7 +106,6 @@ function Main() {
       box-shadow: rgba(0, 0, 0, 0.4) 0px 30px 90px;
     }
     &:nth-child(1) {
-      margin-top: 300px;
       background-image: url("../images/main/TFbackground.png");
       filter: brightness(1.15) contrast(1);
       &:hover {
@@ -74,34 +113,37 @@ function Main() {
       }
     }
     &:nth-child(2) {
-      margin-top: 300px;
       background-image: url("../images/main/solar_system_background.avif");
     }
     &:nth-child(3) {
       background-image: url("../images/main/eye_background.avif");
     }
     &:nth-child(4) {
-      background-color: #EDF9ED;
+      background-color: #edf9ed;
     }
     &:nth-child(5) {
       width: 1810px;
       height: 300px;
-      background-color: #F3FEFD;
+      background-color: #f3fefd;
     }
     &:nth-child(6) {
       width: 1810px;
       flex-wrap: wrap;
       height: 450px;
     }
-    &:nth-child(7),
-    &:nth-child(8),
-    &:nth-child(9),
-    &:nth-child(10) {
-      width: 445px;
-      height: 445px;
-    }
-    &:nth-child(9) {
-      background-image: url("../images/main/dummy_background.avif");
+    @media screen and (max-width: 1920px) {
+      width: 710px;
+      height: 370px;
+      &:nth-child(5) {
+        width: 1430px;
+        height: 280px;
+        background-color: #f3fefd;
+      }
+      &:nth-child(6) {
+        width: 1430px;
+        flex-wrap: wrap;
+        height: 360px;
+      }
     }
   `;
 
@@ -135,13 +177,13 @@ function Main() {
   const GrayFloor = styled.div`
     flex-basis: 12.5%;
     height: 50%;
-    background-color: #473F51;
+    background-color: #473f51;
     position: relative;
   `;
   const WhiteFloor = styled.div`
     flex-basis: 12.5%;
     height: 50%;
-    background-color: #FEF7EB;
+    background-color: #fef7eb;
     position: relative;
   `;
   const TestBoxTitle = styled.p`
@@ -151,6 +193,17 @@ function Main() {
     top: 40px;
     left: 40px;
     font-family: "Inter", sans-serif;
+    &.box_sixth_default{
+      left: 7%;
+    }
+    @media screen and (max-width: 1920px) {
+      font-size: 30px;
+      &.box_sixth_1920{
+        left: 9%;
+        font-size: 26px !important;
+      }
+    }
+    
   `;
 
   const TestBoxDesc = styled.p`
@@ -161,6 +214,17 @@ function Main() {
     transform: translate(-50%, 0);
     font-family: "Inter", sans-serif;
     color: white;
+    &.desc_seventh_default {
+      left: 450px;
+    }
+    @media screen and (max-width: 1920px) {
+      &.desc_seventh_1920{
+        left: 320px;
+      }
+      &.box_sixth_1920{
+        left: 6.3% !important;
+      }
+    }
   `;
 
   const TestBoxCode = styled.p`
@@ -202,20 +266,18 @@ function Main() {
               Math.cos와 Math.sin{" "}
             </TestBoxCode>
           </TestBox>
-          <TestBox>
-            <VendingMachine />
+          <TestBox onMouseEnter={() => {setWork_VendingMachine(!work_VendingMachine)}}>
+            <VendingMachine Work={work_VendingMachine} />
             <TestBoxTitle>무엇이 들었을까?</TestBoxTitle>
             <TestBoxDesc style={{ color: "black", left: "120px" }}>
               바닐라 스크립트로 자판기 만들기
             </TestBoxDesc>
-            <TestBoxCode style={{ color: "#4C4A4D" }}>
-              Click Event{" "}
-            </TestBoxCode>
+            <TestBoxCode style={{ color: "#4C4A4D" }}>Click Event </TestBoxCode>
           </TestBox>
           <TestBox>
             <MovingBall />
             <TestBoxTitle>움직임</TestBoxTitle>
-            <TestBoxDesc style={{ color: "black", left: "150px" }}>
+            <TestBoxDesc style={{ color: "black", left: "145px" }}>
               바닐라 스크립트로 움직이는 공 만들기
             </TestBoxDesc>
             <TestBoxCode style={{ color: "darkgray" }}>
@@ -230,10 +292,9 @@ function Main() {
             <GrayFloor />
             <WhiteFloor />
             <GrayFloor>
-              <TestBoxTitle
+              <TestBoxTitle className="box_sixth_default box_sixth_1920"
                 style={{
                   width: "100%",
-                  left: "7%",
                   fontSize: "30px",
                   color: "white",
                 }}
@@ -250,7 +311,7 @@ function Main() {
             <GrayFloor />
             <WhiteFloor />
             <GrayFloor />
-            <TestBoxDesc style={{ color: "black", left: "115px" }}>
+            <TestBoxDesc className="box_sixth_1920" style={{ color: "black", left: "115px" }}>
               바닐라 스크립트로 걷기
             </TestBoxDesc>
             <TestBoxCode style={{ color: "lightgray" }}>
@@ -258,21 +319,23 @@ function Main() {
             </TestBoxCode>
             <Walk />
           </TestBox>
-          <TestBox>
-            <Dog />
-            <TestBoxTitle style={{ left: "200px" }}>무한한 식량</TestBoxTitle>
-            <TestBoxDesc
-              style={{ left: "400px", color: "black", width: "100%" }}
-            >
-              바닐라 스크립트로 무한히 사료 주기
-            </TestBoxDesc>
-            <TestBoxCode style={{ color: "darkgray", left: "20px" }}>
-              setinterval
-            </TestBoxCode>
-          </TestBox>
-          <TestBox></TestBox>
-          <TestBox></TestBox>
-          <TestBox></TestBox>
+          <MiniBoxWrap>
+            <TestBox>
+              <Dog />
+              <TestBoxTitle>무한한 식량</TestBoxTitle>
+              <TestBoxDesc className="desc_seventh_default desc_seventh_1920"
+                style={{color: "black", width: "100%" }}
+              >
+                바닐라 스크립트로 무한히 사료 주기
+              </TestBoxDesc>
+              <TestBoxCode style={{ color: "darkgray", left: "20px" }}>
+                setinterval
+              </TestBoxCode>
+            </TestBox>
+            <TestBox></TestBox>
+            <TestBox></TestBox>
+            <TestBox></TestBox>
+          </MiniBoxWrap>
           <WhiteGradientToTop />
         </MainTopWrap>
         <MainBottomWrap>

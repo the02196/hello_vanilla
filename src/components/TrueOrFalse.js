@@ -9,6 +9,9 @@ const MysteryMan = styled.div`
   background-size: cover;
   background-position: center;
 
+  @media screen and (max-width: 1920px) {
+          transform: scale(0.95);
+      }
 `
 
 function TrueOrFalse() {
