@@ -1,10 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
 import Login from '../pages/Login'
-import { faEye, faFontAwesome } from '@fortawesome/free-regular-svg-icons'
-import { faFonticons } from '@fortawesome/free-brands-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-
 
 
 
@@ -305,9 +301,9 @@ function Login_test() {
 
                 <Email><p>이메일을 입력하세요.</p><input type='text' placeholder='example@gmail.com' name='user_email' id='user_email'></input></Email>
                
-                <Password><p>비밀번호를 입력하세요.</p><input type='password' name='user_password' id='user_password'></input><FontAwesomeIcon icon={faEye} color='#cccccc'/></Password><span>6자 에서 18자사이 특수문자 포함</span>
+                <Password><p>비밀번호를 입력하세요.</p><input type='password' name='user_password' id='user_password'></input></Password><span>6자 에서 18자사이 특수문자 포함</span>
                
-                <RePassword><p>비밀번호를 한번 더 입력해주세요.</p><input type='password' name='user_password' id='user_password'></input><FontAwesomeIcon icon={faEye} color='#cccccc'/></RePassword><span>6자 에서 18자사이 특수문자 포함</span>
+                <RePassword><p>비밀번호를 한번 더 입력해주세요.</p><input type='password' name='user_password' id='user_password'></input></RePassword><span>6자 에서 18자사이 특수문자 포함</span>
 
                 <AnotherService><p>또 다른 서비스 계정으로 가입</p><input type='checkbox' id="news"></input><label for='news'> 뉴스레터를 구독하겠습니까?</label>
                     
