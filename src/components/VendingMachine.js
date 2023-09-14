@@ -120,9 +120,9 @@ const Paid = styled.div`
     }
 `;
 
-const VendingMachine = () => {
+const VendingMachine = ({work_VendingMachine}) => {
     return (
-        <Machine>
+        <Machine className={work_VendingMachine === false ? "" : "on"}>
             <DrinkArea>
                 <Drink>
                     <Can className="on" />
