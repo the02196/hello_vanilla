@@ -120,7 +120,7 @@ function Quick_Links_Test() {
   {
     Array(5).fill().map((e,i)=>{
       return(
-        <ContentList id="1">
+        <ContentList >
      
         <h3>{i+1}</h3>
         <div>          
