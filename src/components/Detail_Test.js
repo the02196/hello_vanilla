@@ -16,15 +16,15 @@ const Creator = styled.div`
         color: #9d9d9d;
     }
 `
-const Ball = styled.div`
-    width: 200px;
-    height: 200px;
-    border-radius: 50%;
-    background-image: url("./images/ball/ball_detail.png");
-    background-size: cover;
-    background-position: center;
-    margin: 400px auto;
-`
+// const Ball = styled.div`
+//     width: 200px;
+//     height: 200px;
+//     border-radius: 50%;
+//     background-image: url("./images/ball/ball_detail.png");
+//     background-size: cover;
+//     background-position: center;
+//     margin: 400px auto;
+// `
 const TextBg = styled.div`
     background-color: #FFF9EB;
     width: 1000px;
