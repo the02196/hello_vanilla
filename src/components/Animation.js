@@ -1,7 +1,8 @@
 import React from 'react'
 import styled, { keyframes } from 'styled-components'
 
-function Animation() {
+function BallLefttoRight(){
+
   const boxAnimation = keyframes`
   0%{
     left: 5%;
@@ -25,6 +26,26 @@ function Animation() {
     left: 80%
   }
   `
+
+const Ball = styled.div`
+  width: 130px;
+  height: 130px;
+  border-radius: 50%;
+  background-image: url("./images/detail/ball.png");
+  background-size: cover;
+  top: 50%;
+  transform: translateY(-50%);
+  background-position: center;
+  position: absolute;
+  animation: ${boxAnimation} 2s infinite linear;
+`
+  
+  return(
+    <Ball></Ball>
+  )
+}
+
+function Animation() {
   const boxAnimation2 = keyframes`
   0%{
     transform:translate3d(0,0,0);
@@ -32,17 +53,6 @@ function Animation() {
   100%{
     transform: translate3d(0,100px,0);
   }
-  `
-  const Ball = styled.div`
-    width: 200px;
-    height: 200px;
-    border-radius: 50%;
-    background-image: url("./images/ball/ball_detail.png");
-    background-size: cover;
-    background-position: center;
-    margin: 0px auto;
-    position: absolute;
-    animation: ${boxAnimation} 3s infinite linear;
   `
   const Ball2 = styled.div`
   width: 300px;
@@ -63,4 +73,4 @@ function Animation() {
   )
 }
 
-export default Animation
+export default BallLefttoRight;
