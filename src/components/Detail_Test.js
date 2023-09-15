@@ -213,13 +213,8 @@ const InputWrap = styled.div`
 `
 const CodeView = styled.div`
     width: 1000px;
-    height: 500px;
-    margin: 0 auto;
+    margin: 50px auto;
     background-color: #F0F1EC;
-    overflow: hidden;
-    font-size: 25px;
-    padding: 100px 50px;
-    box-sizing: border-box;
 `
 const boxAnimation2 = keyframes`
 0%{
@@ -239,10 +234,18 @@ const Ball2 = styled.div`
   margin: 250px auto 0;
   animation: ${boxAnimation2} 0.5s infinite alternate cubic-bezier(.5, 0.05, 1, .5) ;
 `
+const ChangeBtn = styled.btn`
+    width: 50px;
+    height: 50px;
+    background-color: #ddd;
+`
+const DeleteBtn = styled(ChangeBtn)`
+
+`
 
 function Detail_Test() {
   
-    const [isHovering, setIsHovering] = useState(-1);
+    // const [isHovering, setIsHovering] = useState(-1);
 
     const [userName, setUserName] = useState("#001235");
     const [userProfile, setUserProfile] = useState();
@@ -288,6 +291,22 @@ function Detail_Test() {
     ]
     
     
+    const LeftTypingBox = ({text, bgImage}) => {
+        return(
+        <TextBg>
+        <Picture style={{marginLeft: "30px", marginRight: "30px" , backgroundImage: `url("../images/detail/profiles/Woman_1.png")` }}></Picture>
+        <Text>
+            <h3>#gd5933</h3>
+            <TypeAnimation sequence={[
+            text,1000, 
+            ]}
+            wrapper="span"
+            speed={50}
+            style={{ fontSize: '16px', display: 'inline-block'}}/>
+        </Text>
+        </TextBg>
+        )
+    }
     const LeftTextBox = ({text, bgImage}) => {
         return(
         <TextBg>
@@ -324,7 +343,7 @@ function Detail_Test() {
         </Creator>
     <MainBg>
         <Ball2></Ball2>
-        <LeftTextBox text={"아무 글이나 넘겨봅니다."}></LeftTextBox>
+        <LeftTypingBox text={"How we can move ball with js?"}></LeftTypingBox>
         <RightTextBox text={"아무 글이나 넘겨봅니다."}></RightTextBox>
     
     
@@ -376,7 +395,7 @@ function Detail_Test() {
                     wrapper="span"
                     speed={50}
                     style={{ fontSize: '1.5em', display: 'inline-block' }}
-                    repeat={Infinity}
+                    // repeat={Infinity}
                 />
             </Typing>
         </CodeDescWrap>
@@ -469,9 +488,9 @@ function Detail_Test() {
             language="js"
             placeholder="Please enter JS code."
             onChange={(evn) => setCode(evn.target.value)}
-            padding={15}
+            padding={30}
             style={{
-                fontSize: 14,
+                fontSize: 16,
                 backgroundColor: "#f5f5f5",
                 fontFamily: 'ui-monospace,SFMono-Regular,SF Mono,Consolas,Liberation Mono,Menlo,monospace',
             }}
