@@ -258,14 +258,19 @@ const InputWrap = styled.div`
 `
 const CodeView = styled.div`
     width: 1000px;
-    height: 500px;
-    margin: 0 auto;
+    margin: 50px auto;
     background-color: #F0F1EC;
-    overflow: hidden;
-    font-size: 25px;
-    padding: 100px 50px;
-    box-sizing: border-box;
 `
+
+const ChangeBtn = styled.btn`
+    width: 50px;
+    height: 50px;
+    background-color: #ddd;
+`
+const DeleteBtn = styled(ChangeBtn)`
+
+`
+
 function Animation() {
     const boxAnimation2 = keyframes`
     0%{
@@ -299,9 +304,10 @@ function Animation() {
     )
   }
 
+
 function Detail_Test() {
   
-    const [isHovering, setIsHovering] = useState(-1);
+    // const [isHovering, setIsHovering] = useState(-1);
 
     const [userName, setUserName] = useState("#001235");
     const [userProfile, setUserProfile] = useState();
@@ -347,7 +353,26 @@ function Detail_Test() {
     ]
     
     
+
+    const LeftTypingBox = ({text, bgImage}) => {
+        return(
+        <TextBg>
+        <Picture style={{marginLeft: "30px", marginRight: "30px" , backgroundImage: `url("../images/detail/profiles/Woman_1.png")` }}></Picture>
+        <Text>
+            <h3>#gd5933</h3>
+            <TypeAnimation sequence={[
+            text,1000, 
+            ]}
+            wrapper="span"
+            speed={50}
+            style={{ fontSize: '16px', display: 'inline-block'}}/>
+        </Text>
+        </TextBg>
+        )
+    }
+
     const LeftTextBox = ({text, marginTop, marginBtm}) => {
+
         return(
         <TextBg style={{margin: `${marginTop}px auto ${marginBtm}px` }}>
         <Picture style={{marginLeft: "30px", marginRight: "30px" , backgroundImage: `url("../images/detail/profiles/Woman_1.png")` }}></Picture>
@@ -385,11 +410,18 @@ function Detail_Test() {
             <span>메인 페이지로 가기</span>
         </Creator>
     <MainBg>
+
+        <Ball2></Ball2>
+        <LeftTypingBox text={"How we can move ball with js?"}></LeftTypingBox>
+        <RightTextBox text={"아무 글이나 넘겨봅니다."}></RightTextBox>
+    
+    
         <Animation></Animation>
         <LeftTextBox text={"여기에 공이 있습니다. 공을 옮기는 방법을 상상해 보세요!"} marginTop={400} marginBtm={350}></LeftTextBox>
         <HowMoveBall />
         <RightTextBox marginTop={550} marginBtm={0}  text={"와, 저렇게나 다양한 방법이 있는지 몰랐어요!"} ></RightTextBox>
         <LeftTextBox marginTop={100} marginBtm={500}  text={"이렇듯 틀린 방법은 없습니다. 다른 방법들만이 있을 뿐이죠! 이번에는 코드로 한 번 옮겨볼까요?"}></LeftTextBox>
+
         <CardWrap>
             <ul>
                 {BallLefttoRight()}
@@ -420,7 +452,7 @@ function Detail_Test() {
                     wrapper="span"
                     speed={50}
                     style={{ fontSize: '1.5em', display: 'inline-block' }}
-                    repeat={Infinity}
+                    // repeat={Infinity}
                 />
             </Typing>
         </CodeDescWrap>
@@ -506,9 +538,9 @@ function Detail_Test() {
             language="js"
             placeholder="Please enter JS code."
             onChange={(evn) => setCode(evn.target.value)}
-            padding={15}
+            padding={30}
             style={{
-                fontSize: 14,
+                fontSize: 16,
                 backgroundColor: "#f5f5f5",
                 fontFamily: 'ui-monospace,SFMono-Regular,SF Mono,Consolas,Liberation Mono,Menlo,monospace',
             }}
