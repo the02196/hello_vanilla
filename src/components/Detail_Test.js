@@ -4,6 +4,7 @@ import { TypeAnimation } from 'react-type-animation';
 import { Slider } from './Slider';
 import Aos from './Aos';
 import BallLefttoRight from './Animation';
+import Codemirror from './Codemirror';
 
 const GlobalWrap = styled.div`
     width: 100%;
@@ -11,7 +12,6 @@ const GlobalWrap = styled.div`
     background-color: #fefefe;
 
 `
-
 const MainBg = styled.div`
     max-width: 1400px;
     margin: 0 auto;  
@@ -309,6 +309,14 @@ function Detail_Test() {
         </TextBg>
         )
     }
+    const handleCopyClipBoard = async (text: string) => {
+        try {
+          await navigator.clipboard.writeText(text);
+          alert('클립보드에 링크가 복사되었습니다.');
+        } catch (e) {
+          alert('복사에 실패하였습니다');
+        }
+    };
   return (
     <>
     <GlobalWrap>
@@ -443,8 +451,10 @@ function Detail_Test() {
                 </div>
                 <Comment>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Inventore quae perferendis similique a ad expedita ex accusamus aperiam laborum! Vel, ipsum! Non, deserunt error repudiandae magni consequuntur quos provident cumque?</Comment>
                 <Share>share code</Share>
+                <button onClick={() => {handleCopyClipBoard()}}>Copy</button>
             </CommentWrap>
         </CommentBox>
+        <Codemirror/>
         {
             feedComments.map((el,index) => {
                 return (
@@ -457,7 +467,6 @@ function Detail_Test() {
                 );
             })
         }
-        <CodeView></CodeView>
     
     </GlobalWrap>
     </>
