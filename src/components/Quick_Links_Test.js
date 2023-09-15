@@ -1,11 +1,25 @@
 import React, { useState } from 'react'
-import { Link, NavLink } from 'react-router-dom'
+import {NavLink} from 'react-router-dom'
 import { styled } from 'styled-components'
+import {Link, Element, Events, animateScroll as scroll, scrollSpy, scroller} from 'react-scroll'
+
+
+
+  // 스크롤 이벤트 핸들러
+  const handleScroll = (i) => {
+    // ContentList 아이템의 ID로 스크롤 이동
+    scroller.scrollTo(`content${i}`, {
+      duration: 800,
+      delay: 0,
+      smooth: "easeInOutQuart",
+    });
+  };
+
 
 
 
   const Content = styled.div`
-  a{text-decoration:none; color:#000;}
+  
   margin-top: 90px;
   display: flex;
   `
@@ -24,16 +38,16 @@ import { styled } from 'styled-components'
   
   text-align: center;
   line-height: 2;
-  }
-  a{
+  >a{
     color:#fff;
+  }
   }
   `
   const AccordionCnt = styled.div`
   font-size: 14px;
   color: #e9e9e9;
   `
-  const ContentList = styled.div`
+  const List = styled.div`
    margin: 0 auto;
    max-width: 1200px;  
    position: relative;
@@ -120,7 +134,7 @@ function Quick_Links_Test() {
   {
     Array(5).fill().map((e,i)=>{
       return(
-        <ContentList id="1">
+        <List>
      
         <h3>{i+1}</h3>
         <div>          
@@ -130,7 +144,7 @@ function Quick_Links_Test() {
           
         
           
-      </ContentList>
+      </List>
       )
 
     })
@@ -143,6 +157,7 @@ function Quick_Links_Test() {
     
     </>
   )
-}
+};
+
 
 export default Quick_Links_Test
