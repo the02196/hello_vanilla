@@ -1,4 +1,5 @@
 import React from "react";
+import { NavLink } from "react-router-dom";
 import { styled } from "styled-components";
 
 function Nav() {
@@ -51,6 +52,28 @@ function Nav() {
           width: 1430px;
       }
     `
+    const LoginSigninWrap = styled.span`
+      margin-top: 40px;
+      margin-right: 30px;
+      span{
+        font-size: 20px;
+      color: white;
+      font-weight: 600;
+       &:nth-child(2){
+        font-weight: 400;
+        font-size: 14px;
+       }
+       a{
+        font-size: 20px;
+        color: white;
+        font-weight: 600;
+        &:visited{
+          color:white;
+        }
+       }
+      }
+    `
+
 
     const WelcomeText = styled.span`
     font-family: 'Inter', sans-serif;
@@ -67,8 +90,11 @@ function Nav() {
     <>
       <NavWrap>
         <LogoText>Hello Vanilla</LogoText>
-        <ProfileImg />
-        <WelcomeTextWrap><WelcomeText>안녕하세요, 여행자 <code>#love5820</code> 님!</WelcomeText></WelcomeTextWrap>
+        <LoginSigninWrap>
+        <span>Log in</span><span> &nbsp; | &nbsp;  </span><span><NavLink to={"/login"}>Sign In</NavLink></span>
+        </LoginSigninWrap>
+        {/* <ProfileImg /> */}
+        <WelcomeTextWrap><WelcomeText>안녕하세요, 여행자님!</WelcomeText></WelcomeTextWrap>
       </NavWrap>
     </>
   );

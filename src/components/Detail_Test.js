@@ -274,8 +274,8 @@ const DeleteBtn = styled(ChangeBtn)`
 
 `
 
-function Animation() {
-    const boxAnimation2 = keyframes`
+
+const boxAnimation2 = keyframes`
     0%{
       transform:translate3d(0,-50px,0);
     }
@@ -288,26 +288,20 @@ function Animation() {
     100%{
       transform: translate3d(0,100px,0);
     }
-    `
-    const Ball2 = styled.div`
-    width: 150px;
-    height: 150px;
-    border-radius: 50%;
-    background-image: url("./images/detail/ball.png");
-    background-size: cover;
-    background-position: center;
-    margin: 280px auto 250px;
-    animation: ${boxAnimation2} 1s forwards alternate cubic-bezier(.5, 0.05, 1, .5) ;
+`
+  const Ball2 = styled.div`
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  background-image: url("./images/detail/ball.png");
+  background-size: cover;
+  background-position: center;
+  margin: 280px auto 250px;
+  animation: ${boxAnimation2} 1s forwards alternate cubic-bezier(.5, 0.05, 1, .5) ;
   `
-    return (
-        <>
 
-            <Ball2></Ball2>
-        </>
-    )
-}
-
-
+    
+    
 function Detail_Test() {
 
     // const [isHovering, setIsHovering] = useState(-1);
@@ -410,11 +404,10 @@ function Detail_Test() {
                         <span>&lt;&gt; creator. #dh3308 & #romi6342</span>
                         <span>how we can move ball with js?</span>
                     </div>
-                    <span><NavLink to={"main"}>메인 페이지로 가기</NavLink></span>
+                    <span><NavLink to={"/main"}>메인 페이지로 가기</NavLink></span>
                 </Creator>
                 <MainBg>
-
-                    <Animation></Animation>
+                    <Ball2></Ball2>
                     <LeftTypingBox text={"여기에 '공'이 있습니다! 공을 옮기는 방법을 상상해 보세요."}></LeftTypingBox>
 
 

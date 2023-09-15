@@ -9,6 +9,7 @@ import Nav from "../components/Nav";
 import TrueOrFalse from "../components/TrueOrFalse";
 import Footer from "../components/Footer";
 import Walk from "../components/Walk";
+import { NavLink } from "react-router-dom";
 
 function Main() {
 
@@ -275,6 +276,7 @@ function Main() {
             <TestBoxCode style={{ color: "#4C4A4D" }}>Click Event </TestBoxCode>
           </TestBox>
           <TestBox>
+          <NavLink style={{display: "inline", width: "100%", height: "100%"}} to={"/detail"}>
             <MovingBall />
             <TestBoxTitle>움직임</TestBoxTitle>
             <TestBoxDesc style={{ color: "black", left: "145px" }}>
@@ -283,6 +285,7 @@ function Main() {
             <TestBoxCode style={{ color: "darkgray" }}>
               Keypress Event
             </TestBoxCode>
+          </NavLink>
           </TestBox>
           <TestBox>
             <GrayFloor />
