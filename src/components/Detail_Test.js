@@ -6,6 +6,7 @@ import Aos from './Aos';
 import BallLefttoRight from './Animation';
 import CodeEditor from '@uiw/react-textarea-code-editor';
 import HowMoveBall from './HowMoveBall';
+import { NavLink } from 'react-router-dom';
 
 const GlobalWrap = styled.div`
     width: 100%;
@@ -39,23 +40,25 @@ const Creator = styled.div`
         }
     }
     span{
+        a{
             font-size: 16px;
             margin-right: 20px;
             color: #9f9f9f;
-            
+            text-decoration: none;
+        }      
         }
 `
 
 const DetailFooter = styled.div`
     width: 100%;
-    height: 20px;
+    height: 30px;
     background-color: #f1f1f1;
     display: flex;
     position: fixed;
     bottom: 0;
     z-index: 999;
     div{
-        font-size: 10px;
+        font-size: 15px;
         padding: 2px 0;
         color: #9d9d9d;
         width: 100%;
@@ -262,7 +265,7 @@ const CodeView = styled.div`
     background-color: #F0F1EC;
 `
 
-const ChangeBtn = styled.btn`
+const ChangeBtn = styled.button`
     width: 50px;
     height: 50px;
     background-color: #ddd;
@@ -297,16 +300,16 @@ function Animation() {
     animation: ${boxAnimation2} 1s forwards alternate cubic-bezier(.5, 0.05, 1, .5) ;
   `
     return (
-      <>
-  
-      <Ball2></Ball2>
-      </>
+        <>
+
+            <Ball2></Ball2>
+        </>
     )
-  }
+}
 
 
 function Detail_Test() {
-  
+
     // const [isHovering, setIsHovering] = useState(-1);
 
     const [userName, setUserName] = useState("#001235");
@@ -351,47 +354,47 @@ function Detail_Test() {
             answer: "Lorem ipsum dolor sit amet. Lorem ipsum dolor, sit amet consectetur adipisicing elit. Odio, minus."
         }
     ]
-    
-    
 
-    const LeftTypingBox = ({text, bgImage}) => {
-        return(
-        <TextBg>
-        <Picture style={{marginLeft: "30px", marginRight: "30px" , backgroundImage: `url("../images/detail/profiles/Woman_1.png")` }}></Picture>
-        <Text>
-            <h3>#gd5933</h3>
-            <TypeAnimation sequence={[
-            text,1000, 
-            ]}
-            wrapper="span"
-            speed={50}
-            style={{ fontSize: '16px', display: 'inline-block'}}/>
-        </Text>
-        </TextBg>
+
+
+    const LeftTypingBox = ({ text, bgImage }) => {
+        return (
+            <TextBg style={{ marginTop: "320px" }}>
+                <Picture style={{ marginLeft: "30px", marginRight: "30px", backgroundImage: `url("../images/detail/profiles/Woman_1.png")` }}></Picture>
+                <Text>
+                    <h3>#gd5933</h3>
+                    <TypeAnimation sequence={[
+                        text, 1000,
+                    ]}
+                        wrapper="span"
+                        speed={50}
+                        style={{ fontSize: '16px', display: 'inline-block' }} />
+                </Text>
+            </TextBg>
         )
     }
 
-    const LeftTextBox = ({text, marginTop, marginBtm}) => {
+    const LeftTextBox = ({ text, marginTop, marginBtm }) => {
 
-        return(
-        <TextBg style={{margin: `${marginTop}px auto ${marginBtm}px` }}>
-        <Picture style={{marginLeft: "30px", marginRight: "30px" , backgroundImage: `url("../images/detail/profiles/Woman_1.png")` }}></Picture>
-        <Text>
-            <h3>#dh3308</h3>
-            <p>{text}</p>
-        </Text>
-        </TextBg>
+        return (
+            <TextBg style={{ margin: `${marginTop}px auto ${marginBtm}px` }}>
+                <Picture style={{ marginLeft: "30px", marginRight: "30px", backgroundImage: `url("../images/detail/profiles/Woman_1.png")` }}></Picture>
+                <Text>
+                    <h3>#dh3308</h3>
+                    <p>{text}</p>
+                </Text>
+            </TextBg>
         )
     }
-    const RightTextBox = ({text, marginTop, marginBtm}) => {
-        return(
-        <TextBg style={{justifyContent: "flex-end", margin: `${marginTop}px auto ${marginBtm}px` }}>
-        <Text style={{alignItems: "flex-end"}}>
-            <h3>#romi6342</h3>
-            <p>{text}</p>
-        </Text>
-        <Picture style={{marginLeft: "30px", marginRight: "30px", backgroundImage: `url("../images/detail/profiles/Man_3.png")`}}></Picture>
-        </TextBg>
+    const RightTextBox = ({ text, marginTop, marginBtm }) => {
+        return (
+            <TextBg style={{ justifyContent: "flex-end", margin: `${marginTop}px auto ${marginBtm}px` }}>
+                <Text style={{ alignItems: "flex-end" }}>
+                    <h3>#romi6342</h3>
+                    <p>{text}</p>
+                </Text>
+                <Picture style={{ marginLeft: "30px", marginRight: "30px", backgroundImage: `url("../images/detail/profiles/Man_3.png")` }}></Picture>
+            </TextBg>
         )
     }
 
@@ -399,165 +402,164 @@ function Detail_Test() {
         `function add(a, b) {\n  return a + b;\n}`
     );
 
-  return (
-    <>
-    <GlobalWrap>
-        <Creator>
-            <div>
-                <span>&lt;&gt; creator. #dh3308 & #romi6342</span>
-                <span>how we can move ball with js?</span>
-            </div>
-            <span>메인 페이지로 가기</span>
-        </Creator>
-    <MainBg>
+    return (
+        <>
+            <GlobalWrap>
+                <Creator>
+                    <div>
+                        <span>&lt;&gt; creator. #dh3308 & #romi6342</span>
+                        <span>how we can move ball with js?</span>
+                    </div>
+                    <span><NavLink to={"main"}>메인 페이지로 가기</NavLink></span>
+                </Creator>
+                <MainBg>
 
-        <Ball2></Ball2>
-        <LeftTypingBox text={"How we can move ball with js?"}></LeftTypingBox>
-        <RightTextBox text={"아무 글이나 넘겨봅니다."}></RightTextBox>
-    
-    
-        <Animation></Animation>
-        <LeftTextBox text={"여기에 공이 있습니다. 공을 옮기는 방법을 상상해 보세요!"} marginTop={400} marginBtm={350}></LeftTextBox>
-        <HowMoveBall />
-        <RightTextBox marginTop={550} marginBtm={0}  text={"와, 저렇게나 다양한 방법이 있는지 몰랐어요!"} ></RightTextBox>
-        <LeftTextBox marginTop={100} marginBtm={500}  text={"이렇듯 틀린 방법은 없습니다. 다른 방법들만이 있을 뿐이죠! 이번에는 코드로 한 번 옮겨볼까요?"}></LeftTextBox>
+                    <Animation></Animation>
+                    <LeftTypingBox text={"여기에 '공'이 있습니다! 공을 옮기는 방법을 상상해 보세요."}></LeftTypingBox>
 
-        <CardWrap>
-            <ul>
-                {BallLefttoRight()}
-                {CardContent.map((e,i)=>{
-                        return (
-                                <Card key={i}>{e.answer}</Card>
-                )})}
-            </ul>
-        </CardWrap>
-        
-        <Desc>
-            <p>lorem</p>
-            <span>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa.Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa.Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa.</span>
-        </Desc>
-        <MovingBall></MovingBall>
 
-        <CodeDescWrap>
-            <CodeDesc>Lorem ipsum dolor, sit amet consectetur adipisicing elit. libero dicta nulla nihil commodi suscipit quae dolores eius praesentium eveniet</CodeDesc>
-            <Typing>
-                <TypeAnimation
-                    sequence={[
-                        // Same substring at the start will only be typed out once, initially
-                        `className={isActive === true ? 'on' : ''} onClick={()=>{setIsActive(isActive === false ? true : false)}}`,
-                        1000, // wait 1s before replacing "Mice" with "Hamsters"
-                        'onClick={()=>{setIsActive(!isActive)}}',
-                        1000
-                    ]}
-                    wrapper="span"
-                    speed={50}
-                    style={{ fontSize: '1.5em', display: 'inline-block' }}
-                    // repeat={Infinity}
-                />
-            </Typing>
-        </CodeDescWrap>
-        <MovingBall></MovingBall>
-        <CodeDescWrap>
-            <Typing>
-                
-            </Typing>
-            <CodeDesc>Lorem ipsum dolor, sit amet consectetur adipisicing elit. libero dicta nulla nihil commodi suscipit quae dolores eius praesentium eveniet</CodeDesc>
-        </CodeDescWrap>
-        <CodeDescWrap>
-            <CodeDesc>Lorem ipsum dolor, sit amet consectetur adipisicing elit. libero dicta nulla nihil commodi suscipit quae dolores eius praesentium eveniet</CodeDesc>
-            <Typing>
-                
-            </Typing>
-        </CodeDescWrap>
-        {/* <TextBg>
+                    <LeftTextBox text={"여기에 공이 있습니다. 공을 옮기는 방법을 상상해 보세요!"} marginTop={400} marginBtm={350}></LeftTextBox>
+                    <HowMoveBall />
+                    <RightTextBox marginTop={550} marginBtm={0} text={"와, 저렇게나 다양한 방법이 있는지 몰랐어요!"} ></RightTextBox>
+                    <LeftTextBox marginTop={100} marginBtm={500} text={"이렇듯 틀린 방법은 없습니다. 다른 방법들만이 있을 뿐이죠! 이번에는 코드로 한 번 옮겨볼까요?"}></LeftTextBox>
+
+                    <CardWrap>
+                        <ul>
+                            {BallLefttoRight()}
+                            {CardContent.map((e, i) => {
+                                return (
+                                    <Card key={i}>{e.answer}</Card>
+                                )
+                            })}
+                        </ul>
+                    </CardWrap>
+
+                    <Desc>
+                        <p>lorem</p>
+                        <span>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa.Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa.Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa.</span>
+                    </Desc>
+                    <MovingBall></MovingBall>
+
+                    <CodeDescWrap>
+                        <CodeDesc>Lorem ipsum dolor, sit amet consectetur adipisicing elit. libero dicta nulla nihil commodi suscipit quae dolores eius praesentium eveniet</CodeDesc>
+                        <Typing>
+                            <TypeAnimation
+                                sequence={[
+                                    // Same substring at the start will only be typed out once, initially
+                                    `className={isActive === true ? 'on' : ''} onClick={()=>{setIsActive(isActive === false ? true : false)}}`,
+                                    1000, // wait 1s before replacing "Mice" with "Hamsters"
+                                    'onClick={()=>{setIsActive(!isActive)}}',
+                                    1000
+                                ]}
+                                wrapper="span"
+                                speed={50}
+                                style={{ fontSize: '1.5em', display: 'inline-block' }}
+                            // repeat={Infinity}
+                            />
+                        </Typing>
+                    </CodeDescWrap>
+                    <MovingBall></MovingBall>
+                    <CodeDescWrap>
+                        <Typing>
+
+                        </Typing>
+                        <CodeDesc>Lorem ipsum dolor, sit amet consectetur adipisicing elit. libero dicta nulla nihil commodi suscipit quae dolores eius praesentium eveniet</CodeDesc>
+                    </CodeDescWrap>
+                    <CodeDescWrap>
+                        <CodeDesc>Lorem ipsum dolor, sit amet consectetur adipisicing elit. libero dicta nulla nihil commodi suscipit quae dolores eius praesentium eveniet</CodeDesc>
+                        <Typing>
+
+                        </Typing>
+                    </CodeDescWrap>
+                    {/* <TextBg>
             <TextRight>
                 <p>#def</p>
                 <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Itaque libero dicta nulla nihil commodi suscipit quae dolores eius praesentium eveniet?</p>
             </TextRight>
             <Picture></Picture>
         </TextBg> */}
-        </MainBg>
-        <GithubIcon></GithubIcon>
-        <PostComment>
-            <WirterPicture></WirterPicture>
-            <InputWrap>
-                <textarea 
-                    type="text"
-                    className="inputComment"
-                    placeholder="댓글 달기..."
-                    onChange={e =>{
-                        setComment(e.target.value);
-                    }}
-                    onKeyUp={e =>{
-                        e.target.value.length > 0
-                        ? setIsValid(true)
-                        : setIsValid(false);
-                    }}
-                    value={comment}
-                />
-                <button
-                    type="button"
-                    className={
-                        comment.length > 0
-                        ? 'submitCommentActive'
-                        : 'submitCommentInactive'
-                    }
-                    onClick={post}
-                    disabled={isValid ? false : true}
-                >
-                    Post
-                </button>
-            </InputWrap>
-        </PostComment>
-        <CommentBox>
-            <WirterPicture></WirterPicture>
-            <CommentWrap>
-                <div>
-                    <WriterId>lorem</WriterId>
-                    <TopComment>Top Comment ★</TopComment>
-                </div>
-                <Comment>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Inventore quae perferendis similique a ad expedita ex accusamus aperiam laborum! Vel, ipsum! Non, deserunt error repudiandae magni consequuntur quos provident cumque?</Comment>
-                <Share>share code</Share>
-            </CommentWrap>
-        </CommentBox>
-        {
-            feedComments.map((el,index) => {
-                return (
-                    <CommentList 
-                        userProfile={userProfile}
-                        userName={userName}
-                        userComment={el}
-                        key={index}
+                </MainBg>
+                <GithubIcon></GithubIcon>
+                <PostComment>
+                    <WirterPicture></WirterPicture>
+                    <InputWrap>
+                        <textarea
+                            type="text"
+                            className="inputComment"
+                            placeholder="댓글 달기..."
+                            onChange={e => {
+                                setComment(e.target.value);
+                            }}
+                            onKeyUp={e => {
+                                e.target.value.length > 0
+                                    ? setIsValid(true)
+                                    : setIsValid(false);
+                            }}
+                            value={comment}
+                        />
+                        <button
+                            type="button"
+                            className={
+                                comment.length > 0
+                                    ? 'submitCommentActive'
+                                    : 'submitCommentInactive'
+                            }
+                            onClick={post}
+                            disabled={isValid ? false : true}
+                        >
+                            Post
+                        </button>
+                    </InputWrap>
+                </PostComment>
+                <CommentBox>
+                    <WirterPicture></WirterPicture>
+                    <CommentWrap>
+                        <div>
+                            <WriterId>lorem</WriterId>
+                            <TopComment>Top Comment ★</TopComment>
+                        </div>
+                        <Comment>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Inventore quae perferendis similique a ad expedita ex accusamus aperiam laborum! Vel, ipsum! Non, deserunt error repudiandae magni consequuntur quos provident cumque?</Comment>
+                        <Share>share code</Share>
+                    </CommentWrap>
+                </CommentBox>
+                {
+                    feedComments.map((el, index) => {
+                        return (
+                            <CommentList
+                                userProfile={userProfile}
+                                userName={userName}
+                                userComment={el}
+                                key={index}
+                            />
+                        );
+                    })
+                }
+                <CodeView>
+                    <CodeEditor
+                        value={code}
+                        language="js"
+                        placeholder="Please enter JS code."
+                        onChange={(evn) => setCode(evn.target.value)}
+                        padding={30}
+                        style={{
+                            fontSize: 16,
+                            backgroundColor: "#f5f5f5",
+                            fontFamily: 'ui-monospace,SFMono-Regular,SF Mono,Consolas,Liberation Mono,Menlo,monospace',
+                        }}
                     />
-                );
-            })
-        }
-        <CodeView>
-            <CodeEditor
-            value={code}
-            language="js"
-            placeholder="Please enter JS code."
-            onChange={(evn) => setCode(evn.target.value)}
-            padding={30}
-            style={{
-                fontSize: 16,
-                backgroundColor: "#f5f5f5",
-                fontFamily: 'ui-monospace,SFMono-Regular,SF Mono,Consolas,Liberation Mono,Menlo,monospace',
-            }}
-            />
-        </CodeView>
-    <DetailFooter>
-        {
-            Array(10).fill().map((e,i)=>{
-                return(
-                    <div key={i}>목차{i}</div>
-                )
-            })
-        }
-    </DetailFooter>
-    </GlobalWrap>
-    </>
-  )
+                </CodeView>
+                <DetailFooter>
+                    {
+                        Array(10).fill().map((e, i) => {
+                            return (
+                                <div key={i}>Page {i + 1}</div>
+                            )
+                        })
+                    }
+                </DetailFooter>
+            </GlobalWrap>
+        </>
+    )
 }
 
 export default Detail_Test
