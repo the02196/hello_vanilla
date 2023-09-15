@@ -4,12 +4,14 @@ import { TypeAnimation } from 'react-type-animation';
 import { Slider } from './Slider';
 import Aos from './Aos';
 import BallLefttoRight from './Animation';
+import CodeEditor from '@uiw/react-textarea-code-editor';
+import HowMoveBall from './HowMoveBall';
+import { NavLink } from 'react-router-dom';
 
 const GlobalWrap = styled.div`
     width: 100%;
     height: 100%;
-    background-color: #fefefe;
-
+    background-color: #Fefefe;
 `
 
 const MainBg = styled.div`
@@ -17,12 +19,58 @@ const MainBg = styled.div`
     margin: 0 auto;  
 `
 const Creator = styled.div`
-    padding-top: 20px;
-    span{
-        font-size: 17px;
-        margin: 50px;
-        color: #9d9d9d;
+    padding: 10px 0;
+    background-color: black;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: fixed;
+    z-index: 999;
+    top: 0;
+    div{
+        span{
+            font-family: Fira Code;
+            font-size: 16px;
+            margin-left: 20px;
+            color: #9d9d9d;
+            &:nth-child(2){
+                margin-left: 20px;
+            }
+        }
     }
+    span{
+        a{
+            font-size: 16px;
+            margin-right: 20px;
+            color: #9f9f9f;
+            text-decoration: none;
+        }      
+        }
+`
+
+const DetailFooter = styled.div`
+    width: 100%;
+    height: 30px;
+    background-color: #f1f1f1;
+    display: flex;
+    position: fixed;
+    bottom: 0;
+    z-index: 999;
+    div{
+        font-size: 15px;
+        padding: 2px 0;
+        color: #9d9d9d;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        &:nth-child(1){
+            background-color: black;
+        }
+    }
+
 `
 
 const TextBg = styled.div`
@@ -30,9 +78,9 @@ const TextBg = styled.div`
     box-shadow: rgba(17, 17, 26, 0.05) 0px 1px 0px, rgba(17, 17, 26, 0.1) 0px 0px 8px;
     width: 1400px;
     display: flex;
-    margin: 300px auto;
     align-items: center;
     padding: 30px 0;
+
 `
 const Picture = styled.div`
     width: 70px;
@@ -48,12 +96,13 @@ const Text = styled.div`
     flex-direction: column;
     
     h3{
+        font-family: Fira Code;
         font-weight: 600;
-        font-size: 20px;
+        font-size: 18px;
         margin-bottom: 10px;
     }
     p{
-        font-size: 16px;
+        font-size: 17px;
     }
 `
 
@@ -94,7 +143,7 @@ const Card = styled.li`
     }
 `
 const Desc = styled.div`
-    width: 1000px;
+    width: 100%;
     margin: 100px auto;
     p{
         font-size: 30px;
@@ -212,36 +261,56 @@ const InputWrap = styled.div`
 `
 const CodeView = styled.div`
     width: 1000px;
-    height: 500px;
-    margin: 0 auto;
+    margin: 50px auto;
     background-color: #F0F1EC;
-    overflow: hidden;
-    font-size: 25px;
-    padding: 100px 50px;
-    box-sizing: border-box;
-`
-const boxAnimation2 = keyframes`
-0%{
-  transform:translate3d(0,0,0);
-}
-100%{
-  transform: translate3d(0,100px,0);
-}
-`
-const Ball2 = styled.div`
-  width: 150px;
-  height: 150px;
-  border-radius: 50%;
-  background-image: url("./images/detail/ball.png");
-  background-size: cover;
-  background-position: center;
-  margin: 250px auto 0;
-  animation: ${boxAnimation2} 0.5s infinite alternate cubic-bezier(.5, 0.05, 1, .5) ;
 `
 
+const ChangeBtn = styled.button`
+    width: 50px;
+    height: 50px;
+    background-color: #ddd;
+`
+const DeleteBtn = styled(ChangeBtn)`
+
+`
+
+function Animation() {
+    const boxAnimation2 = keyframes`
+    0%{
+      transform:translate3d(0,-50px,0);
+    }
+    40%{
+      transform: translate3d(0,100px,0);
+    }
+    53%{
+      transform: translate3d(0,50px,0);
+    }
+    100%{
+      transform: translate3d(0,100px,0);
+    }
+    `
+    const Ball2 = styled.div`
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    background-image: url("./images/detail/ball.png");
+    background-size: cover;
+    background-position: center;
+    margin: 280px auto 250px;
+    animation: ${boxAnimation2} 1s forwards alternate cubic-bezier(.5, 0.05, 1, .5) ;
+  `
+    return (
+        <>
+
+            <Ball2></Ball2>
+        </>
+    )
+}
+
+
 function Detail_Test() {
-  
-    const [isHovering, setIsHovering] = useState(-1);
+
+    // const [isHovering, setIsHovering] = useState(-1);
 
     const [userName, setUserName] = useState("#001235");
     const [userProfile, setUserProfile] = useState();
@@ -285,183 +354,212 @@ function Detail_Test() {
             answer: "Lorem ipsum dolor sit amet. Lorem ipsum dolor, sit amet consectetur adipisicing elit. Odio, minus."
         }
     ]
-    
-    
-    const LeftTextBox = ({text, bgImage}) => {
-        return(
-        <TextBg>
-        <Picture style={{marginLeft: "30px", marginRight: "30px" , backgroundImage: `url("../images/detail/profiles/Woman_1.png")` }}></Picture>
-        <Text>
-            <h3>#gd5933</h3>
-            <p>{text}</p>
-        </Text>
-        </TextBg>
-        )
-    }
-    const RightTextBox = ({text, bgImage}) => {
-        return(
-        <TextBg style={{justifyContent: "flex-end"}}>
-        <Text style={{alignItems: "flex-end"}}>
-            <h3>#hg5362</h3>
-            <p>{text}</p>
-        </Text>
-        <Picture style={{marginLeft: "30px", marginRight: "30px", backgroundImage: `url("../images/detail/profiles/Man_3.png")`}}></Picture>
-        </TextBg>
-        )
-    }
-  return (
-    <>
-    <GlobalWrap>
-        <Creator>
-            <span>creator. #dh3308 & #romi6342</span>
-            <span>How we can move ball with js?</span>
-        </Creator>
-    <MainBg>
-        <Ball2></Ball2>
-        <LeftTextBox text={"아무 글이나 넘겨봅니다."}></LeftTextBox>
-        <RightTextBox text={"아무 글이나 넘겨봅니다."}></RightTextBox>
-    
-    
-        <CardWrap>
-            <ul>
-                {BallLefttoRight()}
-                {/* {
-                    CardContent.map((e,i)=>{
-                        return (
-                            <Card
-                            className={isHovering === i ? 'on' : ''}
-                            onMouseOver={()=>{
-                                setIsHovering(i)
-                            }} onMouseOut={()=>{
-                                setIsHovering(-1);
-                            }} 
-                            key={i}>
-                                <span>
-                                    {
-                                        isHovering === i ? e.answer : e.quiz
-                                    }
-                                </span>
-                            </Card>
-                        )
-                    })
-                } */}
-                {CardContent.map((e,i)=>{
-                        return (
-                                <Card>{e.answer}</Card>
-                )})}
-            </ul>
-        </CardWrap>
-        <Desc>
-            <p>lorem</p>
-            <span>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa.Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa.Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa.</span>
-        </Desc>
-        <MovingBall></MovingBall>
-        <CodeDescWrap>
-            <CodeDesc>Lorem ipsum dolor, sit amet consectetur adipisicing elit. libero dicta nulla nihil commodi suscipit quae dolores eius praesentium eveniet</CodeDesc>
-            <Typing>
-                <TypeAnimation
-                    sequence={[
-                        // Same substring at the start will only be typed out once, initially
-                        `className={isActive === true ? 'on' : ''} onClick={()=>{setIsActive(isActive === false ? true : false)}}`,
-                        1000, // wait 1s before replacing "Mice" with "Hamsters"
-                        'onClick={()=>{setIsActive(!isActive)}}',
-                        1000
+
+
+
+    const LeftTypingBox = ({ text, bgImage }) => {
+        return (
+            <TextBg style={{ marginTop: "320px" }}>
+                <Picture style={{ marginLeft: "30px", marginRight: "30px", backgroundImage: `url("../images/detail/profiles/Woman_1.png")` }}></Picture>
+                <Text>
+                    <h3>#gd5933</h3>
+                    <TypeAnimation sequence={[
+                        text, 1000,
                     ]}
-                    wrapper="span"
-                    speed={50}
-                    style={{ fontSize: '1.5em', display: 'inline-block' }}
-                    repeat={Infinity}
-                />
-            </Typing>
-        </CodeDescWrap>
-        <MovingBall></MovingBall>
-        <CodeDescWrap>
-            <Typing>
-                
-            </Typing>
-            <CodeDesc>Lorem ipsum dolor, sit amet consectetur adipisicing elit. libero dicta nulla nihil commodi suscipit quae dolores eius praesentium eveniet</CodeDesc>
-        </CodeDescWrap>
-        <TextBg>
-            <Picture></Picture>
-            <Text>
-                <p>#abc</p>
-                <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Itaque libero dicta nulla nihil commodi suscipit quae dolores eius praesentium eveniet?</p>
-            </Text>
-        </TextBg>
-        <CodeDescWrap>
-            <CodeDesc>Lorem ipsum dolor, sit amet consectetur adipisicing elit. libero dicta nulla nihil commodi suscipit quae dolores eius praesentium eveniet</CodeDesc>
-            <Typing>
-                
-            </Typing>
-        </CodeDescWrap>
-        {/* <TextBg>
+                        wrapper="span"
+                        speed={50}
+                        style={{ fontSize: '16px', display: 'inline-block' }} />
+                </Text>
+            </TextBg>
+        )
+    }
+
+    const LeftTextBox = ({ text, marginTop, marginBtm }) => {
+
+        return (
+            <TextBg style={{ margin: `${marginTop}px auto ${marginBtm}px` }}>
+                <Picture style={{ marginLeft: "30px", marginRight: "30px", backgroundImage: `url("../images/detail/profiles/Woman_1.png")` }}></Picture>
+                <Text>
+                    <h3>#dh3308</h3>
+                    <p>{text}</p>
+                </Text>
+            </TextBg>
+        )
+    }
+    const RightTextBox = ({ text, marginTop, marginBtm }) => {
+        return (
+            <TextBg style={{ justifyContent: "flex-end", margin: `${marginTop}px auto ${marginBtm}px` }}>
+                <Text style={{ alignItems: "flex-end" }}>
+                    <h3>#romi6342</h3>
+                    <p>{text}</p>
+                </Text>
+                <Picture style={{ marginLeft: "30px", marginRight: "30px", backgroundImage: `url("../images/detail/profiles/Man_3.png")` }}></Picture>
+            </TextBg>
+        )
+    }
+
+    const [code, setCode] = React.useState(
+        `function add(a, b) {\n  return a + b;\n}`
+    );
+
+    return (
+        <>
+            <GlobalWrap>
+                <Creator>
+                    <div>
+                        <span>&lt;&gt; creator. #dh3308 & #romi6342</span>
+                        <span>how we can move ball with js?</span>
+                    </div>
+                    <span><NavLink to={"main"}>메인 페이지로 가기</NavLink></span>
+                </Creator>
+                <MainBg>
+
+                    <Animation></Animation>
+                    <LeftTypingBox text={"여기에 '공'이 있습니다! 공을 옮기는 방법을 상상해 보세요."}></LeftTypingBox>
+
+
+                    <LeftTextBox text={"여기에 공이 있습니다. 공을 옮기는 방법을 상상해 보세요!"} marginTop={400} marginBtm={350}></LeftTextBox>
+                    <HowMoveBall />
+                    <RightTextBox marginTop={550} marginBtm={0} text={"와, 저렇게나 다양한 방법이 있는지 몰랐어요!"} ></RightTextBox>
+                    <LeftTextBox marginTop={100} marginBtm={500} text={"이렇듯 틀린 방법은 없습니다. 다른 방법들만이 있을 뿐이죠! 이번에는 코드로 한 번 옮겨볼까요?"}></LeftTextBox>
+
+                    <CardWrap>
+                        <ul>
+                            {BallLefttoRight()}
+                            {CardContent.map((e, i) => {
+                                return (
+                                    <Card key={i}>{e.answer}</Card>
+                                )
+                            })}
+                        </ul>
+                    </CardWrap>
+
+                    <Desc>
+                        <p>lorem</p>
+                        <span>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa.Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa.Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa.</span>
+                    </Desc>
+                    <MovingBall></MovingBall>
+
+                    <CodeDescWrap>
+                        <CodeDesc>Lorem ipsum dolor, sit amet consectetur adipisicing elit. libero dicta nulla nihil commodi suscipit quae dolores eius praesentium eveniet</CodeDesc>
+                        <Typing>
+                            <TypeAnimation
+                                sequence={[
+                                    // Same substring at the start will only be typed out once, initially
+                                    `className={isActive === true ? 'on' : ''} onClick={()=>{setIsActive(isActive === false ? true : false)}}`,
+                                    1000, // wait 1s before replacing "Mice" with "Hamsters"
+                                    'onClick={()=>{setIsActive(!isActive)}}',
+                                    1000
+                                ]}
+                                wrapper="span"
+                                speed={50}
+                                style={{ fontSize: '1.5em', display: 'inline-block' }}
+                            // repeat={Infinity}
+                            />
+                        </Typing>
+                    </CodeDescWrap>
+                    <MovingBall></MovingBall>
+                    <CodeDescWrap>
+                        <Typing>
+
+                        </Typing>
+                        <CodeDesc>Lorem ipsum dolor, sit amet consectetur adipisicing elit. libero dicta nulla nihil commodi suscipit quae dolores eius praesentium eveniet</CodeDesc>
+                    </CodeDescWrap>
+                    <CodeDescWrap>
+                        <CodeDesc>Lorem ipsum dolor, sit amet consectetur adipisicing elit. libero dicta nulla nihil commodi suscipit quae dolores eius praesentium eveniet</CodeDesc>
+                        <Typing>
+
+                        </Typing>
+                    </CodeDescWrap>
+                    {/* <TextBg>
             <TextRight>
                 <p>#def</p>
                 <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Itaque libero dicta nulla nihil commodi suscipit quae dolores eius praesentium eveniet?</p>
             </TextRight>
             <Picture></Picture>
         </TextBg> */}
-        </MainBg>
-        <GithubIcon></GithubIcon>
-        <PostComment>
-            <WirterPicture></WirterPicture>
-            <InputWrap>
-                <textarea 
-                    type="text"
-                    className="inputComment"
-                    placeholder="댓글 달기..."
-                    onChange={e =>{
-                        setComment(e.target.value);
-                    }}
-                    onKeyUp={e =>{
-                        e.target.value.length > 0
-                        ? setIsValid(true)
-                        : setIsValid(false);
-                    }}
-                    value={comment}
-                />
-                <button
-                    type="button"
-                    className={
-                        comment.length > 0
-                        ? 'submitCommentActive'
-                        : 'submitCommentInactive'
-                    }
-                    onClick={post}
-                    disabled={isValid ? false : true}
-                >
-                    Post
-                </button>
-            </InputWrap>
-        </PostComment>
-        <CommentBox>
-            <WirterPicture></WirterPicture>
-            <CommentWrap>
-                <div>
-                    <WriterId>lorem</WriterId>
-                    <TopComment>Top Comment ★</TopComment>
-                </div>
-                <Comment>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Inventore quae perferendis similique a ad expedita ex accusamus aperiam laborum! Vel, ipsum! Non, deserunt error repudiandae magni consequuntur quos provident cumque?</Comment>
-                <Share>share code</Share>
-            </CommentWrap>
-        </CommentBox>
-        {
-            feedComments.map((el,index) => {
-                return (
-                    <CommentList 
-                        userProfile={userProfile}
-                        userName={userName}
-                        userComment={el}
-                        key={index}
+                </MainBg>
+                <GithubIcon></GithubIcon>
+                <PostComment>
+                    <WirterPicture></WirterPicture>
+                    <InputWrap>
+                        <textarea
+                            type="text"
+                            className="inputComment"
+                            placeholder="댓글 달기..."
+                            onChange={e => {
+                                setComment(e.target.value);
+                            }}
+                            onKeyUp={e => {
+                                e.target.value.length > 0
+                                    ? setIsValid(true)
+                                    : setIsValid(false);
+                            }}
+                            value={comment}
+                        />
+                        <button
+                            type="button"
+                            className={
+                                comment.length > 0
+                                    ? 'submitCommentActive'
+                                    : 'submitCommentInactive'
+                            }
+                            onClick={post}
+                            disabled={isValid ? false : true}
+                        >
+                            Post
+                        </button>
+                    </InputWrap>
+                </PostComment>
+                <CommentBox>
+                    <WirterPicture></WirterPicture>
+                    <CommentWrap>
+                        <div>
+                            <WriterId>lorem</WriterId>
+                            <TopComment>Top Comment ★</TopComment>
+                        </div>
+                        <Comment>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Inventore quae perferendis similique a ad expedita ex accusamus aperiam laborum! Vel, ipsum! Non, deserunt error repudiandae magni consequuntur quos provident cumque?</Comment>
+                        <Share>share code</Share>
+                    </CommentWrap>
+                </CommentBox>
+                {
+                    feedComments.map((el, index) => {
+                        return (
+                            <CommentList
+                                userProfile={userProfile}
+                                userName={userName}
+                                userComment={el}
+                                key={index}
+                            />
+                        );
+                    })
+                }
+                <CodeView>
+                    <CodeEditor
+                        value={code}
+                        language="js"
+                        placeholder="Please enter JS code."
+                        onChange={(evn) => setCode(evn.target.value)}
+                        padding={30}
+                        style={{
+                            fontSize: 16,
+                            backgroundColor: "#f5f5f5",
+                            fontFamily: 'ui-monospace,SFMono-Regular,SF Mono,Consolas,Liberation Mono,Menlo,monospace',
+                        }}
                     />
-                );
-            })
-        }
-        <CodeView></CodeView>
-    
-    </GlobalWrap>
-    </>
-  )
+                </CodeView>
+                <DetailFooter>
+                    {
+                        Array(10).fill().map((e, i) => {
+                            return (
+                                <div key={i}>Page {i + 1}</div>
+                            )
+                        })
+                    }
+                </DetailFooter>
+            </GlobalWrap>
+        </>
+    )
 }
 
 export default Detail_Test
