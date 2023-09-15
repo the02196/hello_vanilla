@@ -37,7 +37,7 @@ const Ball = styled.div`
   transform: translateY(-50%);
   background-position: center;
   position: absolute;
-  animation: ${boxAnimation} 2s infinite linear;
+  animation: ${boxAnimation} 2s linear forwards;
 `
   
   return(
@@ -50,8 +50,14 @@ function Animation() {
   0%{
     transform:translate3d(0,0,0);
   }
-  100%{
+  50%{
     transform: translate3d(0,100px,0);
+  }
+  75%{
+    transform: translate3d(0,50px,0);
+  }
+  100%{
+    transform: translate3d(0,0px,0);
   }
   `
   const Ball2 = styled.div`
@@ -66,8 +72,7 @@ function Animation() {
 `
   return (
     <>
-    <Ball>
-    </Ball>
+
     <Ball2></Ball2>
     </>
   )
