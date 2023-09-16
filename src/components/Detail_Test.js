@@ -7,6 +7,8 @@ import BallLefttoRight from './Animation';
 import CodeEditor from '@uiw/react-textarea-code-editor';
 import HowMoveBall from './HowMoveBall';
 import { NavLink } from 'react-router-dom';
+import CodeBlock from './CodeBlock';
+
 
 const GlobalWrap = styled.div`
     width: 100%;
@@ -353,7 +355,7 @@ function Detail_Test() {
 
     const LeftTypingBox = ({ text, bgImage }) => {
         return (
-            <TextBg style={{ marginTop: "320px" }}>
+            <TextBg style={{ marginTop: "400px", marginBottom: "400px" }}>
                 <Picture style={{ marginLeft: "30px", marginRight: "30px", backgroundImage: `url("../images/detail/profiles/Woman_1.png")` }}></Picture>
                 <Text>
                     <h3>#gd5933</h3>
@@ -408,14 +410,13 @@ function Detail_Test() {
                 </Creator>
                 <MainBg>
                     <Ball2></Ball2>
-                    <LeftTypingBox text={"여기에 '공'이 있습니다! 공을 옮기는 방법을 상상해 보세요."}></LeftTypingBox>
+                    <LeftTypingBox text={"여기에 '공'이 있습니다! 공을 옮기는 방법을 한 번 상상해 보세요."}></LeftTypingBox>
 
 
-                    <LeftTextBox text={"여기에 공이 있습니다. 공을 옮기는 방법을 상상해 보세요!"} marginTop={400} marginBtm={350}></LeftTextBox>
+                    {/* <LeftTextBox text={"여기에 공이 있습니다. 공을 옮기는 방법을 상상해 보세요!"} marginTop={400} marginBtm={350}></LeftTextBox> */}
                     <HowMoveBall />
                     <RightTextBox marginTop={550} marginBtm={0} text={"와, 저렇게나 다양한 방법이 있는지 몰랐어요!"} ></RightTextBox>
                     <LeftTextBox marginTop={100} marginBtm={500} text={"이렇듯 틀린 방법은 없습니다. 다른 방법들만이 있을 뿐이죠! 이번에는 코드로 한 번 옮겨볼까요?"}></LeftTextBox>
-
                     <CardWrap>
                         <ul>
                             {BallLefttoRight()}
