@@ -1,6 +1,9 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 import Login from '../pages/Login'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons'
+
 
 
 
@@ -49,6 +52,7 @@ const FacebookIcon = styled.img`
     background-repeat: no-repeat;
     background-size: cover;
     margin-top: 10px;
+    background-color: #3A589B;
 `
 const GitIcon = styled.img`
     width: 50px;
@@ -66,6 +70,7 @@ const GoogleIcon = styled.img`
     background-repeat: no-repeat;
     background-size: cover;
     margin-top: 10px;
+    background-color: #f5f5f5;
     
 `
 const LoginBtn = styled.span`
@@ -85,8 +90,8 @@ const FormBox = styled.div`
  height: 500px;
  padding-left: 50px;
  position: absolute;
-bottom: 200px;
-right: 50px;
+bottom: 230px;
+right: 100px;
 
 span{
     width: 400px;
@@ -95,12 +100,8 @@ span{
     justify-content: end;
     color: #cccccc;
     margin-top: 10px;
-    
-    
+ 
 }
-
-
-
 `
 
 const Id = styled.div`
@@ -136,20 +137,8 @@ input{
  
 }
 `
-const IdSharp = styled.span`
-position: absolute;
-margin-left: 10px;
-color: #cccccc;
-left: 0;
-`
-const Password = styled.div`
-    position: relative;
-   svg{
-    position: absolute;
-    left: 380px;
-    bottom: 30px;
 
-    }
+const Password = styled.div`
 
 p{
     margin-top: 30px;
@@ -192,7 +181,7 @@ input{
     padding-bottom: 10px;
     box-sizing: border-box;
     transition: border color 0.4s;
-}
+}  
   &:focus{
     border-color: #d7d7d7;   
     outline: none;
@@ -247,6 +236,22 @@ input{
 }
 `
 
+const Input = styled.div`
+    position: relative;
+    width: 400px;
+svg{  
+    position: absolute;
+    color: #cccccc;
+    top: 20px;
+    right: 10px;
+    cursor: pointer;
+    
+    
+   
+} 
+`
+
+
 // const Yourjob = styled.div`
 //         width: 100%;  
 //         margin-top: 30px;
@@ -285,27 +290,44 @@ const loginHuman = styled.img`
 
 
 function Login_test() {
+   
+    const [eye,setEye] = useState([0,0]);
+
+    const toggleEye = (index) =>{
+        const newEye = [...eye];
+        newEye[index] = !newEye[index];
+        setEye(newEye)
+    }
+
   return (
     <>
+    
+    
         <LoginBg>
             
             <LoginNav>
-                <Logo>HeLL VanILLa</Logo>
+                <Logo>HeLLO VanILLa</Logo>
                 <LoginBtn>로그인</LoginBtn>
+                
             </LoginNav>
+            
             
 
             <FormBox>
                
-                <Id><p><span>#</span>사용할 아이디를 입력하세요.</p><input type="text" name='user_id' id='user_id' /></Id><span>6자 에서 12자사이 특수문자 사용 X</span>
-
+                
+                <Id><p>사용할 아이디를 입력하세요.</p><input type="text" name='user_id' id='user_id' /></Id><span>6자 에서 12자사이 특수문자 사용 X</span>
+              
+                
                 <Email><p>이메일을 입력하세요.</p><input type='text' placeholder='example@gmail.com' name='user_email' id='user_email'></input></Email>
                
-                <Password><p>비밀번호를 입력하세요.</p><input type='password' name='user_password' id='user_password'></input></Password><span>6자 에서 18자사이 특수문자 포함</span>
+                <Password><p>비밀번호를 입력하세요.</p><Input><input type={eye[0] ? 'text' : "Password"  }  name='user_password' id='user_password'></input><FontAwesomeIcon icon={eye[0] ? faEye : faEyeSlash} onClick={()=> toggleEye(0)}/></Input></Password><span>6자 에서 18자사이 특수문자 포함</span>
                
-                <RePassword><p>비밀번호를 한번 더 입력해주세요.</p><input type='password' name='user_password' id='user_password'></input></RePassword><span>6자 에서 18자사이 특수문자 포함</span>
+                <RePassword><p>비밀번호를 한번 더 입력해주세요.</p><Input><input type={eye[1] ? 'text' : 'password'} name='user_password' id='user_password'></input><FontAwesomeIcon icon={eye[1] ? faEye : faEyeSlash} onClick={()=> toggleEye(1)}/></Input></RePassword><span>6자 에서 18자사이 특수문자 포함</span>
 
                 <AnotherService><p>또 다른 서비스 계정으로 가입</p><input type='checkbox' id="news"></input><label for='news'> 뉴스레터를 구독하겠습니까?</label>
+
+               
                     
                 
                 </AnotherService>
