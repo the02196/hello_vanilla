@@ -53,7 +53,7 @@ function Nav() {
       }
     `
     const TextWrap = styled.span`
-      margin-top: 40px;
+      margin-top: 47px;
       margin-right: 30px;
       span{
         font-size: 20px;
