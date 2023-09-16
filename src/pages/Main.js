@@ -267,7 +267,8 @@ function Main() {
               Math.cos와 Math.sin{" "}
             </TestBoxCode>
           </TestBox>
-          <TestBox onMouseEnter={() => {setWork_VendingMachine(!work_VendingMachine)}} onMouseOut={() => {setWork_VendingMachine(!work_VendingMachine)}} >
+          {/* <TestBox onMouseEnter={() => {setWork_VendingMachine(!work_VendingMachine)}} onMouseOut={() => {setWork_VendingMachine(!work_VendingMachine)}} > */}
+          <TestBox>
             <VendingMachine Work={work_VendingMachine} />
             <TestBoxTitle>무엇이 들었을까?</TestBoxTitle>
             <TestBoxDesc style={{ color: "black", left: "120px" }}>

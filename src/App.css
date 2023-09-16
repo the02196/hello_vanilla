@@ -21,6 +21,9 @@ html {
 a{
   text-decoration: none;
 }
+a:focus {
+    outline: none;
+}
 abbr,
 blockquote,
 body,
