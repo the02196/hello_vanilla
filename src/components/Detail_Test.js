@@ -398,6 +398,15 @@ function Detail_Test() {
         `function add(a, b) {\n  return a + b;\n}`
     );
 
+    const handleCopyClipBoard = async (text: string) => {
+        try {
+          await navigator.clipboard.writeText(text);
+          alert('클립보드에 링크가 복사되었습니다.');
+        } catch (e) {
+          alert('복사에 실패하였습니다');
+        }
+    };
+
     return (
         <>
             <GlobalWrap>
@@ -514,6 +523,7 @@ function Detail_Test() {
                         </div>
                         <Comment>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Inventore quae perferendis similique a ad expedita ex accusamus aperiam laborum! Vel, ipsum! Non, deserunt error repudiandae magni consequuntur quos provident cumque?</Comment>
                         <Share>share code</Share>
+                        <button onClick={handleCopyClipBoard}>Click to Copy</button>
                     </CommentWrap>
                 </CommentBox>
                 {
