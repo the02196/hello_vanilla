@@ -8,10 +8,9 @@ import { abcdef } from '@uiw/codemirror-theme-abcdef';function CodeBlock() {
     <CodeMirror  
       value="console.log('hello world!');"  
       height="200px"  
-      width='500px'  
+      width='500px'
       onChange={onChange}  
       theme={abcdef}  
-    
     />  
   );  
 }  
