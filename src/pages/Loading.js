@@ -11,7 +11,7 @@ const SkipBtn = styled.span`
   position: fixed;
   bottom: 45px;
   right: 50px;
-  border: 1px solid darkgray;
+  border: 1px solid lightgray;
   padding: 10px;
   border-radius: 10px;
   a{
