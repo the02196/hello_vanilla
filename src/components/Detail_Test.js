@@ -538,20 +538,7 @@ function Detail_Test() {
                         );
                     })
                 }
-                <CodeView>
-                    <CodeEditor
-                        value={code}
-                        language="js"
-                        placeholder="Please enter JS code."
-                        onChange={(evn) => setCode(evn.target.value)}
-                        padding={30}
-                        style={{
-                            fontSize: 16,
-                            backgroundColor: "#f5f5f5",
-                            fontFamily: 'ui-monospace,SFMono-Regular,SF Mono,Consolas,Liberation Mono,Menlo,monospace',
-                        }}
-                    />
-                </CodeView>
+                <CodeBlock></CodeBlock>
                 <DetailFooter>
                     {
                         Array(10).fill().map((e, i) => {
