@@ -52,21 +52,21 @@ function Nav() {
           width: 1430px;
       }
     `
-    const LoginSigninWrap = styled.span`
+    const TextWrap = styled.span`
       margin-top: 40px;
       margin-right: 30px;
       span{
         font-size: 20px;
       color: white;
-      font-weight: 600;
-       &:nth-child(2){
+      font-weight: 500;
+       &:nth-child(3){
         font-weight: 400;
         font-size: 14px;
        }
        a{
         font-size: 20px;
         color: white;
-        font-weight: 600;
+        font-weight: 500;
         &:visited{
           color:white;
         }
@@ -90,9 +90,9 @@ function Nav() {
     <>
       <NavWrap>
         <LogoText>Hello Vanilla</LogoText>
-        <LoginSigninWrap>
-        <span>Log in</span><span> &nbsp; | &nbsp;  </span><span><NavLink to={"/login"}>Sign In</NavLink></span>
-        </LoginSigninWrap>
+        <TextWrap>
+        <span><NavLink to={"/quick"}>퀵링크 &nbsp;&nbsp;&nbsp;&nbsp;</NavLink></span><span>로그인</span><span> &nbsp; | &nbsp;  </span><span><NavLink to={"/login"}>회원가입</NavLink></span>
+        </TextWrap>
         {/* <ProfileImg /> */}
         <WelcomeTextWrap><WelcomeText>안녕하세요, 여행자님!</WelcomeText></WelcomeTextWrap>
       </NavWrap>
