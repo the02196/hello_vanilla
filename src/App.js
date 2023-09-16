@@ -12,7 +12,6 @@ function App() {
   return (
     <>
       <Routes>
-        
         <Route path="/" element={<Loading />}></Route>
         <Route path="/main" element={<Main />}></Route>
         <Route path="/detail" element={<Detail />}></Route>

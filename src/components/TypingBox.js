@@ -95,10 +95,5 @@ const RightTextBox = ({ text, marginTop, marginBtm }) => {
         </TextBg>
     )
 }
-function TypingBox() {
-  return (
-    <></>
-  )
-}
 
 export {LeftTypingBox, RightTypingBox};

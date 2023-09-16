@@ -439,7 +439,7 @@ function Detail_Test() {
                         );
                     })
                 }
-                <CodeBlock></CodeBlock>
+                <CodeBlock width={"300"} height={"300"} value={"test"}></CodeBlock>
                 <DetailFooter>
                     {
                         Array(10).fill().map((e, i) => {

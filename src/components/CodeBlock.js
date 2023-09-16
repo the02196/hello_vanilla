@@ -1,16 +1,16 @@
 import React from 'react';  
 import CodeMirror from '@uiw/react-codemirror';  
-import { abcdef } from '@uiw/codemirror-theme-abcdef';function CodeBlock() {  
+import { abcdef } from '@uiw/codemirror-theme-abcdef';function CodeBlock({width, height, value}) {  
   const onChange = React.useCallback((value, viewUpdate) => {  
     console.log('value:', value);  
   }, []);  
   return (  
     <CodeMirror  
-      value="console.log('hello world!');"  
-      height="200px"  
-      width='500px'
-      onChange={onChange}  
-      theme={abcdef}  
+      value={value}
+      height={`${height}px`}
+      width={`${width}px`}
+      onChange={onChange}
+      theme={abcdef}
     />  
   );  
 }  
