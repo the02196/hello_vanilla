@@ -291,7 +291,12 @@ const boxAnimation2 = keyframes`
       transform: translate3d(0,100px,0);
     }
 `
-  const Ball2 = styled.div`
+
+const TopBallWrap = styled.div`
+
+`
+
+  const TopBall = styled.div`
   width: 150px;
   height: 150px;
   border-radius: 50%;
@@ -418,7 +423,7 @@ function Detail_Test() {
                     <span><NavLink to={"/main"}>메인 페이지로 가기</NavLink></span>
                 </Creator>
                 <MainBg>
-                    <Ball2></Ball2>
+                    <TopBallWrap><TopBall></TopBall></TopBallWrap>
                     <LeftTypingBox text={"여기에 '공'이 있습니다! 공을 옮기는 방법을 한 번 상상해 보세요."}></LeftTypingBox>
 
 
