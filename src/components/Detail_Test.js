@@ -8,6 +8,8 @@ import CodeEditor from '@uiw/react-textarea-code-editor';
 import HowMoveBall from './HowMoveBall';
 import { NavLink } from 'react-router-dom';
 import CodeBlock from './CodeBlock';
+import TopBall from './TopBall';
+import {LeftTypingBox, RightTypingBox} from './TypingBox'
 
 
 const GlobalWrap = styled.div`
@@ -75,39 +77,6 @@ const DetailFooter = styled.div`
 
 `
 
-const TextBg = styled.div`
-    background-color: white;
-    box-shadow: rgba(17, 17, 26, 0.05) 0px 1px 0px, rgba(17, 17, 26, 0.1) 0px 0px 8px;
-    width: 1400px;
-    display: flex;
-    align-items: center;
-    padding: 30px 0;
-
-`
-const Picture = styled.div`
-    width: 70px;
-    height: 70px;
-    border-radius: 50%;
-    background-color: #ddd;
-    background-image: url('./../images/detail/profiles/${props => props.bgImage}');
-    background-size: cover;
-    margin-left: 20px;
-`
-const Text = styled.div`
-    display: flex;
-    flex-direction: column;
-    
-    h3{
-        font-family: Fira Code;
-        font-weight: 600;
-        font-size: 18px;
-        margin-bottom: 10px;
-    }
-    p{
-        font-size: 17px;
-    }
-`
-
 
 const CardWrap = styled.div`
     width: 100%;
@@ -156,10 +125,6 @@ const Desc = styled.div`
     }
 `
 
-const BallLefttoRightWrap = styled.div`
-    width: 100%;
-    position: relative;
-`
 
 const MovingBall = styled.div`
     width: 1000px;
@@ -277,36 +242,6 @@ const DeleteBtn = styled(ChangeBtn)`
 `
 
 
-const boxAnimation2 = keyframes`
-    0%{
-      transform:translate3d(0,-50px,0);
-    }
-    40%{
-      transform: translate3d(0,100px,0);
-    }
-    53%{
-      transform: translate3d(0,50px,0);
-    }
-    100%{
-      transform: translate3d(0,100px,0);
-    }
-`
-
-const TopBallWrap = styled.div`
-
-`
-
-  const TopBall = styled.div`
-  width: 150px;
-  height: 150px;
-  border-radius: 50%;
-  background-image: url("./images/detail/ball.png");
-  background-size: cover;
-  background-position: center;
-  margin: 280px auto 250px;
-  animation: ${boxAnimation2} 1s forwards alternate cubic-bezier(.5, 0.05, 1, .5) ;
-  `
-
     
     
 function Detail_Test() {
@@ -356,49 +291,6 @@ function Detail_Test() {
         }
     ]
 
-
-
-    const LeftTypingBox = ({ text, bgImage }) => {
-        return (
-            <TextBg style={{ marginTop: "400px", marginBottom: "400px" }}>
-                <Picture style={{ marginLeft: "30px", marginRight: "30px", backgroundImage: `url("../images/detail/profiles/Woman_1.png")` }}></Picture>
-                <Text>
-                    <h3>#gd5933</h3>
-                    <TypeAnimation sequence={[
-                        text, 1000,
-                    ]}
-                        wrapper="span"
-                        speed={50}
-                        style={{ fontSize: '16px', display: 'inline-block' }} />
-                </Text>
-            </TextBg>
-        )
-    }
-
-    const LeftTextBox = ({ text, marginTop, marginBtm }) => {
-
-        return (
-            <TextBg style={{ margin: `${marginTop}px auto ${marginBtm}px` }}>
-                <Picture style={{ marginLeft: "30px", marginRight: "30px", backgroundImage: `url("../images/detail/profiles/Woman_1.png")` }}></Picture>
-                <Text>
-                    <h3>#dh3308</h3>
-                    <p>{text}</p>
-                </Text>
-            </TextBg>
-        )
-    }
-    const RightTextBox = ({ text, marginTop, marginBtm }) => {
-        return (
-            <TextBg style={{ justifyContent: "flex-end", margin: `${marginTop}px auto ${marginBtm}px` }}>
-                <Text style={{ alignItems: "flex-end" }}>
-                    <h3>#romi6342</h3>
-                    <p>{text}</p>
-                </Text>
-                <Picture style={{ marginLeft: "30px", marginRight: "30px", backgroundImage: `url("../images/detail/profiles/Man_3.png")` }}></Picture>
-            </TextBg>
-        )
-    }
-
     const [code, setCode] = React.useState(
         `function add(a, b) {\n  return a + b;\n}`
     );
@@ -423,14 +315,18 @@ function Detail_Test() {
                     <span><NavLink to={"/main"}>메인 페이지로 가기</NavLink></span>
                 </Creator>
                 <MainBg>
-                    <TopBallWrap><TopBall></TopBall></TopBallWrap>
-                    <LeftTypingBox text={"여기에 '공'이 있습니다! 공을 옮기는 방법을 한 번 상상해 보세요."}></LeftTypingBox>
-
-
-                    {/* <LeftTextBox text={"여기에 공이 있습니다. 공을 옮기는 방법을 상상해 보세요!"} marginTop={400} marginBtm={350}></LeftTextBox> */}
+                    <TopBall></TopBall>
+                    <LeftTypingBox 
+                    text={"여기에 '공'이 있습니다! 공을 옮기는 방법을 한 번 상상해 보세요."}
+                    marginTop={0}
+                    marginBtm={100}
+                    ></LeftTypingBox>
+                    <RightTypingBox
+                    text={"RightTypingBox에 테스트용 글을 작성합니다."}
+                    marginTop={0}
+                    marginBtm={400}>
+                    </RightTypingBox>
                     <HowMoveBall />
-                    <RightTextBox marginTop={550} marginBtm={0} text={"와, 저렇게나 다양한 방법이 있는지 몰랐어요!"} ></RightTextBox>
-                    <LeftTextBox marginTop={100} marginBtm={500} text={"이렇듯 틀린 방법은 없습니다. 다른 방법들만이 있을 뿐이죠! 이번에는 코드로 한 번 옮겨볼까요?"}></LeftTextBox>
                     <CardWrap>
                         <ul>
                             {BallLefttoRight()}
