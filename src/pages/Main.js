@@ -126,6 +126,11 @@ function Main() {
       width: 1810px;
       height: 300px;
       background-color: #f3fefd;
+      a{
+        &:visited{
+          color: black;
+        }
+      }
     }
     &:nth-child(6) {
       width: 1810px;
@@ -238,18 +243,69 @@ function Main() {
     z-index: 200;
   `;
 
+ const VeryEasy = styled.div`
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    padding: 5px 20px;
+    background-color: purple;
+    z-index: 500;
+    font-size: 15px;
+    color: white;
+ `
+
+  const Easy = styled.div`
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    padding: 5px 20px;
+    background-color: black;
+    color: white;
+    z-index: 500;
+    font-size: 15px;
+    box-sizing: border-box;
+  `
+
+  const Normal = styled.div`
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    padding: 5px 20px;
+    background-color: #515151;
+    color: white;
+    z-index: 500;
+    font-size: 15px;
+    box-sizing: border-box;
+  `
+
+  const Hard = styled.div`
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    padding: 5px 20px;
+    background-color: white;
+    color: black;
+    z-index: 500;
+    font-size: 15px;
+    font-weight: 500;
+    box-sizing: border-box;
+  `
+
+
   return (
     <>
       <MainWrap>
         <Nav />
         <MainTopWrap>
           <TestBox>
+            <Easy>초급</Easy>
             <TrueOrFalse />
             <TestBoxTitle>진실 혹은 거짓?</TestBoxTitle>
             <TestBoxDesc>바닐라 스크립트로 진실과 거짓 구별하기</TestBoxDesc>
             <TestBoxCode>true와 false</TestBoxCode>
           </TestBox>
           <TestBox>
+            <Normal>중급</Normal>
             <SolarSystem />
             <TestBoxTitle style={{ color: "white" }}>광활한 우주</TestBoxTitle>
             <TestBoxDesc style={{ left: "120px" }}>
@@ -258,6 +314,7 @@ function Main() {
             {/* <TestBoxCode>array와 for문</TestBoxCode> */}
           </TestBox>
           <TestBox>
+            <Hard>고급</Hard>
             <Eye />
             <TestBoxTitle style={{ color: "white" }}>더 깊이 보기</TestBoxTitle>
             <TestBoxDesc>
@@ -269,6 +326,7 @@ function Main() {
           </TestBox>
           {/* <TestBox onMouseEnter={() => {setWork_VendingMachine(!work_VendingMachine)}} onMouseOut={() => {setWork_VendingMachine(!work_VendingMachine)}} > */}
           <TestBox>
+            <Easy>초급</Easy>
             <VendingMachine Work={work_VendingMachine} />
             <TestBoxTitle>무엇이 들었을까?</TestBoxTitle>
             <TestBoxDesc style={{ color: "black", left: "120px" }}>
@@ -277,6 +335,7 @@ function Main() {
             <TestBoxCode style={{ color: "#4C4A4D" }}>Click Event </TestBoxCode>
           </TestBox>
           <TestBox>
+            <VeryEasy>입문</VeryEasy>
           <NavLink style={{display: "inline", width: "100%", height: "100%"}} to={"/detail"}>
             <MovingBall />
             <TestBoxTitle>움직임</TestBoxTitle>
@@ -284,11 +343,12 @@ function Main() {
               바닐라 스크립트로 움직이는 공 만들기
             </TestBoxDesc>
             <TestBoxCode style={{ color: "darkgray" }}>
-              Keypress Event
+              querySelector
             </TestBoxCode>
           </NavLink>
           </TestBox>
           <TestBox>
+            <Easy>초급</Easy>
             <GrayFloor />
             <WhiteFloor />
             <GrayFloor />
@@ -335,6 +395,7 @@ function Main() {
               <TestBoxCode style={{ color: "darkgray", left: "20px" }}>
                 setinterval
               </TestBoxCode>
+              <Hard style={{border: "1px solid black"}}>고급</Hard>
             </TestBox>
             <TestBox></TestBox>
             <TestBox></TestBox>

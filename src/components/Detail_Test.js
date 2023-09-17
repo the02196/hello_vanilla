@@ -133,7 +133,7 @@ const MovingBall = styled.div`
     background-color: #fff;
 `
 const CodeDescWrap = styled.div`
-    width: 1000px;
+    width: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -141,7 +141,7 @@ const CodeDescWrap = styled.div`
 `
 const CodeDesc = styled.div`
     font-size: 24px;
-    width: 350px;
+    width: 50%;
     height: 300px;
     display: flex;
     align-items: center;
@@ -317,16 +317,16 @@ function Detail_Test() {
                 <MainBg>
                     <TopBall></TopBall>
                     <LeftTypingBox 
-                    text={"여기에 '공'이 있습니다! 공을 옮기는 방법을 한 번 상상해 보세요."}
+                    text={"여기에 '공'이 있습니다. 공을 옮기는 방법을 한 번 상상해 보세요!"}
                     marginTop={0}
-                    marginBtm={100}
+                    marginBtm={400}
                     ></LeftTypingBox>
-                    <RightTypingBox
-                    text={"RightTypingBox에 테스트용 글을 작성합니다."}
+                    <HowMoveBall />
+                     <RightTypingBox
+                    text={"와, 다양한 방법이 있네요!"}
                     marginTop={0}
                     marginBtm={400}>
                     </RightTypingBox>
-                    <HowMoveBall />
                     <CardWrap>
                         <ul>
                             {BallLefttoRight()}
@@ -337,7 +337,6 @@ function Detail_Test() {
                             })}
                         </ul>
                     </CardWrap>
-
                     <Desc>
                         <p>lorem</p>
                         <span>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa.Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa.Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa.</span>

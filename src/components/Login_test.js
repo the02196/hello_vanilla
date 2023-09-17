@@ -306,7 +306,7 @@ function Login_test() {
         <LoginBg>
             
             <LoginNav>
-                <Logo>HeLLO VanILLa</Logo>
+                <Logo>Hello Vanilla</Logo>
                 <LoginBtn>로그인</LoginBtn>
                 
             </LoginNav>
@@ -323,7 +323,7 @@ function Login_test() {
                
                 <Password><p>비밀번호를 입력하세요.</p><Input><input type={eye[0] ? 'text' : "Password"  }  name='user_password' id='user_password'></input><FontAwesomeIcon icon={eye[0] ? faEye : faEyeSlash} onClick={()=> toggleEye(0)}/></Input></Password><span>6자 에서 18자사이 특수문자 포함</span>
                
-                <RePassword><p>비밀번호를 한번 더 입력해주세요.</p><Input><input type={eye[1] ? 'text' : 'password'} name='user_password' id='user_password'></input><FontAwesomeIcon icon={eye[1] ? faEye : faEyeSlash} onClick={()=> toggleEye(1)}/></Input></RePassword><span>6자 에서 18자사이 특수문자 포함</span>
+                <RePassword><p>비밀번호를 한 번 더 입력해주세요.</p><Input><input type={eye[1] ? 'text' : 'password'} name='user_password' id='user_password'></input><FontAwesomeIcon icon={eye[1] ? faEye : faEyeSlash} onClick={()=> toggleEye(1)}/></Input></RePassword><span>6자 에서 18자사이 특수문자 포함</span>
 
                 <AnotherService><p>또 다른 서비스 계정으로 가입</p><input type='checkbox' id="news"></input><label for='news'> 뉴스레터를 구독하겠습니까?</label>
 
