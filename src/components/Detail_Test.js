@@ -259,26 +259,136 @@ const InputWrap = styled.div`
   }
 `;
 const CodeView = styled.div`
-  width: 1000px;
-  margin: 50px auto;
-  background-color: #f0f1ec;
-`;
-
+    width: 1000px;
+    margin: 50px auto;
+    background-color: #F0F1EC;
+`
+const BtnWrap = styled.div`
+    display: flex;
+    justify-content: space-between;
+`
 const ChangeBtn = styled.button`
-  width: 50px;
-  height: 50px;
-  background-color: #ddd;
-`;
-const DeleteBtn = styled(ChangeBtn)``;
+    width: 50px;
+    height: 50px;
+    background-color: #ddd;
+`
+const DeleteBtn = styled(ChangeBtn)`
+    background-color: #C5CDEB;
+`
+const Confirm = styled.div`
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background-color: #fff;
+    z-index: 9999;
+    display: flex; justify-content: center;
+    align-items: center;
+    font-size: 24px;
+    >button:nth-of-type(1){
+        width: 100px;
+        height: 50px;
+    }
+    >button:nth-of-type(2){
+        width: 100px;
+        height: 50px;
+    }
+`
 
+ 
 function Detail_Test() {
   // const [isHovering, setIsHovering] = useState(-1);
+    const [idNumber, setIdNumber] = useState(0);
+    const [userName, setUserName] = useState("#001235");
+    const [userProfile, setUserProfile] = useState();
+    const [comment, setComment] = useState('');
+    const [feedComments, setFeedComments] = useState([]);
+
+    const [isSelect, setIsSelect] = useState(0);
+    const [isSelect2, setIsSelect2] = useState([false, 0]);
+    
+    const [isValid, setIsValid] = useState(false);
+
+    
+    const post = (e) => {
+        const copyFeedComments = [...feedComments];
+        copyFeedComments.push(comment);
+        setFeedComments(copyFeedComments);
+        setComment('');
+        setIsSelect2(false);
+    }
+    const editComment = (index) => {
+        setIsSelect(index);
+        setComment(feedComments[index]);
+        setIsSelect2(false);
+    }
+    const deleteComment = (index) =>{
+        const newfeedComments = [...feedComments];
+        newfeedComments.splice(index, 1);
+        setFeedComments(newfeedComments);
+        setIsSelect2(false);
+    }
+    const Modal = ({onDelete, onClose, index}) => {
+        return (
+            <Confirm>
+                <p>삭제하시겠습니까?</p>
+                <button onClick={() => onDelete(index)}>삭제</button>
+                <button onClick={onClose}>취소</button>
+            </Confirm>
+        )
+    }
+
+    const CommentList = (e) => {
+        return (
+            <CommentBox>
+                <WirterPicture className='userProfile'>{e.userProfile}</WirterPicture>
+                <CommentWrap className="userCommentBox">
+                    <div>
+                        <WriterId className="userName">{e.userName}</WriterId>
+                        {/* <TopComment>Top Comment</TopComment> */}
+                    </div>
+                    <Comment className='userComment'>{e.userComment}</Comment>
+                    <BtnWrap>
+                        <Share>share code</Share>
+                        {
+                            <div>
+                                <ChangeBtn onClick={()=>setIsSelect2(true)}>수정</ChangeBtn>
+                                <DeleteBtn onClick={()=>setIsSelect2(true)}>삭제</DeleteBtn>
+                            </div>   
+                        }
+                    </BtnWrap>
+                </CommentWrap>
+                {
+                    isSelect2 && 
+                    <Modal onDelete={() => deleteComment()} onClose={() => setIsSelect2(false)}
+                    />
+                }
+            </CommentBox>
+        )
+    }
+    const CardContent = [
+        {
+            quiz: "quiz1",
+            answer: "Lorem ipsum dolor sit amet. "
+        },
+        {
+            quiz: "quiz2",
+            answer: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Odio, minus."
+        },
+        {
+            quiz: "quiz3",
+            answer: "Lorem ipsum dolor sit amet. Lorem ipsum dolor, sit amet consectetur adipisicing elit. Odio, minus."
+        }
+    ]
+
+    // const [code, setCode] = React.useState(
+    //     `function add(a, b) {\n  return a + b;\n}`
+    // );
 
   const [userName, setUserName] = useState("#001235");
   const [userProfile, setUserProfile] = useState();
   const [comment, setComment] = useState("");
   const [feedComments, setFeedComments] = useState([]);
   const [isValid, setIsValid] = useState(false);
+
 
   const post = (e) => {
     const copyFeedComments = [...feedComments];
@@ -413,74 +523,75 @@ function Detail_Test() {
             <GithubDownloadLink>깃허브로 가서 코드 다운 받기 &nbsp; &gt;</GithubDownloadLink>
         </GithubWrap>
         <PostComment>
-          <WirterPicture></WirterPicture>
-          <InputWrap>
-            <textarea
-              type="text"
-              className="inputComment"
-              placeholder="댓글 달기..."
-              onChange={(e) => {
-                setComment(e.target.value);
-              }}
-              onKeyUp={(e) => {
-                e.target.value.length > 0
-                  ? setIsValid(true)
-                  : setIsValid(false);
-              }}
-              value={comment}
-            />
-            <button
-              type="button"
-              className={
-                comment.length > 0
-                  ? "submitCommentActive"
-                  : "submitCommentInactive"
-              }
-              onClick={post}
-              disabled={isValid ? false : true}
-            >
-              Post
-            </button>
-          </InputWrap>
-        </PostComment>
-        <CommentBox>
-          <WirterPicture></WirterPicture>
-          <CommentWrap>
-            <div>
-              <WriterId>lorem</WriterId>
-              <TopComment>Top Comment ★</TopComment>
-            </div>
-            <Comment>
-              Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-              Inventore quae perferendis similique a ad expedita ex accusamus
-              aperiam laborum! Vel, ipsum! Non, deserunt error repudiandae magni
-              consequuntur quos provident cumque?
-            </Comment>
-            <Share>share code</Share>
-            <button onClick={handleCopyClipBoard}>Click to Copy</button>
-          </CommentWrap>
-        </CommentBox>
-        {feedComments.map((el, index) => {
-          return (
-            <CommentList
-              userProfile={userProfile}
-              userName={userName}
-              userComment={el}
-              key={index}
-            />
-          );
-        })}
-        <CodeBlock width={"300"} height={"300"} value={"test"}></CodeBlock>
-        <DetailFooter>
-          {Array(10)
-            .fill()
-            .map((e, i) => {
-              return <div key={i}>Page {i + 1}</div>;
-            })}
-        </DetailFooter>
-      </GlobalWrap>
-    </>
-  );
-}
+                    <WirterPicture></WirterPicture>
+                    <InputWrap>
+                        <textarea
+                            type="text"
+                            className="inputComment"
+                            placeholder="댓글 달기..."
+                            onChange={e => {
+                                setComment(e.target.value);
+                            }}
+                            onKeyUp={e => {
+                                e.target.value.length > 0
+                                    ? setIsValid(true)
+                                    : setIsValid(false);
+                            }}
+                            value={comment}
+                        />
+                        <button
+                            type="button"
+                            className={
+                                comment.length > 0
+                                    ? 'submitCommentActive'
+                                    : 'submitCommentInactive'
+                            }
+                            onClick={post}
+                            disabled={isValid ? false : true}
+                        >
+                            Post
+                        </button>
+                    </InputWrap>
+                </PostComment>
+                <CommentBox>
+                    <WirterPicture></WirterPicture>
+                    <CommentWrap>
+                        <div>
+                            <WriterId>lorem</WriterId>
+                            <TopComment>Top Comment ★</TopComment>
+                        </div>
+                        <Comment>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Inventore quae perferendis similique a ad expedita ex accusamus aperiam laborum! Vel, ipsum! Non, deserunt error repudiandae magni consequuntur quos provident cumque?</Comment>
+                        <Share>share code</Share>
+                        <button onClick={handleCopyClipBoard}>Click to Copy</button>
+                    </CommentWrap>
+                </CommentBox>
+                {
+                    feedComments.map((el, index) => {
+                        return (
+                            <CommentList
+                                userProfile={userProfile}
+                                userName={userName}
+                                userComment={el}
+                                key={index}
+                                index={index}
+                                onDelete={() => deleteComment(index)}
+                                onEdit={() => editComment(index)}                 
+                            />
+                        );
+                    })
+                }
+                <CodeBlock width={"300"} height={"300"} value={"test"}></CodeBlock>
+                <DetailFooter>
+                    {
+                        Array(10).fill().map((e, i) => {
+                            return (
+                                <div key={i}>Page {i + 1}</div>
+                            )
+                        })
+                    }
+                </DetailFooter>
+            </GlobalWrap>
+        </>
+    )
 
 export default Detail_Test;
