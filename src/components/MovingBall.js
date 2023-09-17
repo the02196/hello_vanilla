@@ -35,7 +35,7 @@ const Ball = styled.div`
   background-size: cover;
   border-radius: 50%;
   position: relative;
-  animation: ${MoveBall} 5s forwards ease-in-out infinite;
+  animation: ${MoveBall} 7s forwards ease-in-out ;
   z-index: 100;
   filter: contrast(1.2) grayscale(0.3);
   @media screen and (max-width: 1920px) {
@@ -47,11 +47,11 @@ const Ball = styled.div`
 
 const TriangleWrap = styled.div`
   position: relative;
-  animation: ${ShowSpeed} 5s forwards ease-in-out infinite;
+  animation: ${ShowSpeed} 7s forwards ease-in-out ;
   z-index: 1;
   @media screen and (max-width: 1920px) {
           transform: scale(0.9);
-          animation: ${ShowSpeed_1920} 5s forwards ease-in-out infinite;
+          animation: ${ShowSpeed_1920} 7s forwards ease-in-out;
       }
 `;
 

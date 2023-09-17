@@ -383,53 +383,7 @@ function Detail_Test() {
     //     `function add(a, b) {\n  return a + b;\n}`
     // );
 
-  const [userName, setUserName] = useState("#001235");
-  const [userProfile, setUserProfile] = useState();
-  const [comment, setComment] = useState("");
-  const [feedComments, setFeedComments] = useState([]);
-  const [isValid, setIsValid] = useState(false);
-
-
-  const post = (e) => {
-    const copyFeedComments = [...feedComments];
-    copyFeedComments.push(comment);
-    setFeedComments(copyFeedComments);
-    setComment("");
-  };
-
-  const CommentList = (props) => {
-    return (
-      <CommentBox>
-        <WirterPicture className="userProfile">
-          {props.userProfile}
-        </WirterPicture>
-        <CommentWrap className="userCommentBox">
-          <div>
-            <WriterId className="userName">{props.userName}</WriterId>
-            {/* <TopComment>Top Comment</TopComment> */}
-          </div>
-          <Comment className="userComment">{props.userComment}</Comment>
-          <Share>share code</Share>
-        </CommentWrap>
-      </CommentBox>
-    );
-  };
-  const CardContent = [
-    {
-      quiz: "quiz1",
-      answer: "Lorem ipsum dolor sit amet. ",
-    },
-    {
-      quiz: "quiz2",
-      answer:
-        "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Odio, minus.",
-    },
-    {
-      quiz: "quiz3",
-      answer:
-        "Lorem ipsum dolor sit amet. Lorem ipsum dolor, sit amet consectetur adipisicing elit. Odio, minus.",
-    },
-  ];
+  
 
   const [code, setCode] = React.useState(
     `function add(a, b) {\n  return a + b;\n}`
@@ -580,7 +534,7 @@ function Detail_Test() {
                         );
                     })
                 }
-                <CodeBlock width={"300"} height={"300"} value={"test"}></CodeBlock>
+
                 <DetailFooter>
                     {
                         Array(10).fill().map((e, i) => {
@@ -593,5 +547,5 @@ function Detail_Test() {
             </GlobalWrap>
         </>
     )
-
+}
 export default Detail_Test;
