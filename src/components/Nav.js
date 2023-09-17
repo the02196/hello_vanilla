@@ -56,17 +56,15 @@ function Nav() {
       margin-top: 47px;
       margin-right: 30px;
       span{
-        font-size: 20px;
-      color: white;
-      font-weight: 500;
+        font-size: 17px;
+        color: white;
        &:nth-child(3){
         font-weight: 400;
-        font-size: 14px;
+        font-size: 13px;
        }
        a{
-        font-size: 20px;
+        font-size: 17px;
         color: white;
-        font-weight: 500;
         &:visited{
           color:white;
         }

@@ -290,7 +290,38 @@ function Main() {
     font-weight: 500;
     box-sizing: border-box;
   `
-
+function PutSixthTestBox(){
+  return(
+    <>
+     <GrayFloor />
+            <WhiteFloor />
+            <GrayFloor />
+            <WhiteFloor />
+            <GrayFloor />
+            <WhiteFloor />
+            <GrayFloor>
+              <TestBoxTitle className="box_sixth_default box_sixth_1920"
+                style={{
+                  width: "100%",
+                  fontSize: "30px",
+                  color: "white",
+                }}
+              >
+                위대한 첫 걸음
+              </TestBoxTitle>
+            </GrayFloor>
+            <WhiteFloor />
+            <WhiteFloor />
+            <GrayFloor />
+            <WhiteFloor />
+            <GrayFloor />
+            <WhiteFloor />
+            <GrayFloor />
+            <WhiteFloor />
+            <GrayFloor />
+    </>
+  )
+}
 
   return (
     <>
@@ -349,32 +380,7 @@ function Main() {
           </TestBox>
           <TestBox>
             <Easy>초급</Easy>
-            <GrayFloor />
-            <WhiteFloor />
-            <GrayFloor />
-            <WhiteFloor />
-            <GrayFloor />
-            <WhiteFloor />
-            <GrayFloor>
-              <TestBoxTitle className="box_sixth_default box_sixth_1920"
-                style={{
-                  width: "100%",
-                  fontSize: "30px",
-                  color: "white",
-                }}
-              >
-                위대한 첫 걸음
-              </TestBoxTitle>
-            </GrayFloor>
-            <WhiteFloor />
-            <WhiteFloor />
-            <GrayFloor />
-            <WhiteFloor />
-            <GrayFloor />
-            <WhiteFloor />
-            <GrayFloor />
-            <WhiteFloor />
-            <GrayFloor />
+            <PutSixthTestBox />
             <TestBoxDesc className="box_sixth_1920" style={{ color: "black", left: "115px" }}>
               바닐라 스크립트로 걷기
             </TestBoxDesc>
