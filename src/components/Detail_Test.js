@@ -231,14 +231,17 @@ const CodeView = styled.div`
     margin: 50px auto;
     background-color: #F0F1EC;
 `
-
+const BtnWrap = styled.div`
+    display: flex;
+    justify-content: space-between;
+`
 const ChangeBtn = styled.button`
     width: 50px;
     height: 50px;
     background-color: #ddd;
 `
 const DeleteBtn = styled(ChangeBtn)`
-
+    background-color: #C5CDEB;
 `
 
 
@@ -246,12 +249,14 @@ const DeleteBtn = styled(ChangeBtn)`
     
 function Detail_Test() {
 
-    // const [isHovering, setIsHovering] = useState(-1);
-
+    const [idNumber, setIdNumber] = useState(0);
     const [userName, setUserName] = useState("#001235");
     const [userProfile, setUserProfile] = useState();
     const [comment, setComment] = useState('');
     const [feedComments, setFeedComments] = useState([]);
+
+    const [isSelect, setIsSelect] = useState();
+    
     const [isValid, setIsValid] = useState(false);
 
     const post = (e) => {
@@ -260,6 +265,11 @@ function Detail_Test() {
         setFeedComments(copyFeedComments);
         setComment('');
     }
+    const deletComment = (index) =>{
+        const newfeedComments = [...feedComments];
+        newfeedComments.splice(index, 1);
+        newfeedComments(newfeedComments);
+    }
 
     const CommentList = props => {
         return (
@@ -267,11 +277,18 @@ function Detail_Test() {
                 <WirterPicture className='userProfile'>{props.userProfile}</WirterPicture>
                 <CommentWrap className="userCommentBox">
                     <div>
+                        {props.idNumber}
                         <WriterId className="userName">{props.userName}</WriterId>
                         {/* <TopComment>Top Comment</TopComment> */}
                     </div>
                     <Comment className='userComment'>{props.userComment}</Comment>
-                    <Share>share code</Share>
+                    <BtnWrap>
+                        <Share>share code</Share>
+                        <div>
+                            <ChangeBtn>수정</ChangeBtn>
+                            <DeleteBtn>삭제</DeleteBtn>
+                        </div>
+                    </BtnWrap>
                 </CommentWrap>
             </CommentBox>
         )
@@ -435,6 +452,7 @@ function Detail_Test() {
                                 userName={userName}
                                 userComment={el}
                                 key={index}
+                                idNumber={index}
                             />
                         );
                     })
