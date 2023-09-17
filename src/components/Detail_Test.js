@@ -243,7 +243,23 @@ const ChangeBtn = styled.button`
 const DeleteBtn = styled(ChangeBtn)`
     background-color: #C5CDEB;
 `
-
+const Confirm = styled.div`
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background-color: #fff;
+    z-index: 9999;
+    display: flex; justify-content: center;
+    align-items: center;
+    font-size: 24px;
+    >button:nth-of-type(1){
+        width: 100px;
+        height: 50px;
+    }
+    >button:nth-of-type(2){
+        width: 100px;
+        height: 50px;
+    }
+`
 
     
     
@@ -255,41 +271,65 @@ function Detail_Test() {
     const [comment, setComment] = useState('');
     const [feedComments, setFeedComments] = useState([]);
 
-    const [isSelect, setIsSelect] = useState();
+    const [isSelect, setIsSelect] = useState(0);
+    const [isSelect2, setIsSelect2] = useState([false, 0]);
     
     const [isValid, setIsValid] = useState(false);
 
+    
     const post = (e) => {
         const copyFeedComments = [...feedComments];
         copyFeedComments.push(comment);
         setFeedComments(copyFeedComments);
         setComment('');
+        setIsSelect2(false);
     }
-    const deletComment = (index) =>{
+    const editComment = (index) => {
+        setIsSelect(index);
+        setComment(feedComments[index]);
+        setIsSelect2(false);
+    }
+    const deleteComment = (index) =>{
         const newfeedComments = [...feedComments];
         newfeedComments.splice(index, 1);
-        newfeedComments(newfeedComments);
+        setFeedComments(newfeedComments);
+        setIsSelect2(false);
+    }
+    const Modal = ({onDelete, onClose, index}) => {
+        return (
+            <Confirm>
+                <p>삭제하시겠습니까?</p>
+                <button onClick={() => onDelete(index)}>삭제</button>
+                <button onClick={onClose}>취소</button>
+            </Confirm>
+        )
     }
 
-    const CommentList = props => {
+    const CommentList = (e) => {
         return (
             <CommentBox>
-                <WirterPicture className='userProfile'>{props.userProfile}</WirterPicture>
+                <WirterPicture className='userProfile'>{e.userProfile}</WirterPicture>
                 <CommentWrap className="userCommentBox">
                     <div>
-                        {props.idNumber}
-                        <WriterId className="userName">{props.userName}</WriterId>
+                        <WriterId className="userName">{e.userName}</WriterId>
                         {/* <TopComment>Top Comment</TopComment> */}
                     </div>
-                    <Comment className='userComment'>{props.userComment}</Comment>
+                    <Comment className='userComment'>{e.userComment}</Comment>
                     <BtnWrap>
                         <Share>share code</Share>
-                        <div>
-                            <ChangeBtn>수정</ChangeBtn>
-                            <DeleteBtn>삭제</DeleteBtn>
-                        </div>
+                        {
+                            <div>
+                                <ChangeBtn onClick={()=>setIsSelect2(true)}>수정</ChangeBtn>
+                                <DeleteBtn onClick={()=>setIsSelect2(true)}>삭제</DeleteBtn>
+                            </div>   
+                        }
                     </BtnWrap>
                 </CommentWrap>
+                {
+                    isSelect2 && 
+                    <Modal onDelete={() => deleteComment()} onClose={() => setIsSelect2(false)}
+                    />
+                }
             </CommentBox>
         )
     }
@@ -308,9 +348,9 @@ function Detail_Test() {
         }
     ]
 
-    const [code, setCode] = React.useState(
-        `function add(a, b) {\n  return a + b;\n}`
-    );
+    // const [code, setCode] = React.useState(
+    //     `function add(a, b) {\n  return a + b;\n}`
+    // );
 
     const handleCopyClipBoard = async (text: string) => {
         try {
@@ -451,7 +491,9 @@ function Detail_Test() {
                                 userName={userName}
                                 userComment={el}
                                 key={index}
-                                idNumber={index}
+                                index={index}
+                                onDelete={() => deleteComment(index)}
+                                onEdit={() => editComment(index)}                 
                             />
                         );
                     })
