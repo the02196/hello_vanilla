@@ -6,10 +6,12 @@ const HowMoveBallWrap = styled.div`
   width: 100%;
   height: 600px;
   filter: saturate(0.7) contrast(0.7);
+  margin-bottom: 500px;
 `;
 
 const ContentText = styled.span`
-  font-size: 100px;
+  width: 200px;
+  font-size: 15px;
   position: absolute;
   left: ${(props) => props.left}px;
   top: ${(props) => props.top}px;
@@ -95,15 +97,21 @@ const Wand = styled.div`
   transform: rotate(90deg);
 `;
 
+const Twinkle = styled.span`
+  font-size: 20px;
+  position: absolute;
+  left: ${(props) => props.left}px;
+  top: ${(props) => props.top}px;
+  right: ${(props) => props.right}px;
+  bottom: ${(props) => props.bottom}px;
+`
+
 function PutContentText({ text, left, top, right, bottom }) {
-  <ContentText
-    left={left}
-    top={top}
-    right={right}
-    bottom={bottom}
-  >
-    {text}
-  </ContentText>;
+  return (
+    <ContentText left={left} top={top} right={right} bottom={bottom}>
+      {text}
+    </ContentText>
+  );
 }
 
 function HowMoveBall() {
@@ -111,75 +119,77 @@ function HowMoveBall() {
     <>
       <HowMoveBallWrap>
         <ContentWrap left="-20" top="" right="" bottom="42">
+          <PutContentText
+            text={"코끼리 보고 끌라고 시키기"}
+            left={"140"}
+            top={"-40"}
+            right={""}
+            bottom={""}
+          />
           <Elephant>
             <Ball left="" top="" right="-20" bottom="2" />
-            <PutContentText
-              text={"코끼리 보고 끌라고 시키기"}
-              left={""}
-              top={""}
-              right={""}
-              bottom={""}
-            />
           </Elephant>
         </ContentWrap>
-        <ContentWrap left="" top="" right="50" bottom="15">
+        <ContentWrap left="" top="" right="50" bottom="10">
+          <PutContentText
+            text={"차기"}
+            left={"0"}
+            top={"-20"}
+            right={""}
+            bottom={""}
+          />
           <Player>
             <Ball left="" top="" right="10" bottom="0" />
-            <PutContentText
-              text={"차기"}
-              left={""}
-              top={""}
-              right={""}
-              bottom={""}
-            />
           </Player>
         </ContentWrap>
         <ContentWrap left="-2" top="-30" right="" bottom="">
+          <PutContentText
+            text={"산에서 굴리기"}
+            left={"0"}
+            top={"30"}
+            right={""}
+            bottom={""}
+          />
           <Mountain>
             <Ball left="" top="" right="10" bottom="25" />
-            <PutContentText
-              text={"산에서 굴리기"}
-              left={"100"}
-              top={"100"}
-              right={""}
-              bottom={""}
-            />
           </Mountain>
         </ContentWrap>
-        <ContentWrap left="" top="" right="15" bottom="30">
+        <ContentWrap left="" top="" right="10" bottom="30">
+          <PutContentText
+            text={"대포로 쏘기"}
+            left={"-10"}
+            top={"-35"}
+            right={""}
+            bottom={""}
+          />
           <Canon>
             <Ball left="" top="-50" right="-210" bottom="" />
-            <PutContentText
-              text={"대포로 쏘기"}
-              left={""}
-              top={""}
-              right={""}
-              bottom={""}
-            />
           </Canon>
         </ContentWrap>
         <ContentWrap left="32" top="33" right="" bottom="">
-          <Push>
-            <PutContentText
-              text={"밀기"}
-              left={""}
-              top={""}
-              right={""}
-              bottom={""}
-            />
-          </Push>
+          <PutContentText
+            text={"밀기"}
+            left={"-5"}
+            top={"-65"}
+            right={""}
+            bottom={""}
+          />
+          <Push></Push>
           <Ball left="-18" top="-6" right="" bottom="" />
         </ContentWrap>
         <ContentWrap left="" top="0" right="23" bottom="">
+          <PutContentText
+            text={"마법 쓰기"}
+            left={"0"}
+            top={"0"}
+            right={""}
+            bottom={""}
+          />
           <Wand>
+            <Twinkle left="-20" top="0" right="" bottom="" >*</Twinkle>
+            <Twinkle left="10" top="-20" right="" bottom="" >*</Twinkle>
+            <Twinkle left="0" top="35" right="" bottom="" >*</Twinkle>
             <Ball left="-70" top="-100" right="" bottom="" />
-            <PutContentText
-              text={"마법 쓰기"}
-              left={""}
-              top={""}
-              right={""}
-              bottom={""}
-            />
           </Wand>
         </ContentWrap>
       </HowMoveBallWrap>
