@@ -17,7 +17,7 @@ const AlphabetWrap = styled.div`
 
 const AlphabetLogo =  styled.p`
   font-family: 'Monofett', monospace;
-  font-size: 75px;
+  font-size: 70px;
 
 `
 
