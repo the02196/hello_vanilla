@@ -32,7 +32,6 @@ const Ball = styled.div`
   transform: translate(0, -50%);
 `;
 
-
 const MainBg = styled.div`
   max-width: 1400px;
   margin: 0 auto;
@@ -161,12 +160,7 @@ const CodeDesc = styled.div`
   align-items: center;
   line-height: 30px;
 `;
-const Typing = styled.div`
-  width: 550px;
-  height: 300px;
-  overflow: hidden;
-  background-color: #fff;
-`;
+
 const GithubWrap = styled.div`
   width: 100%;
   background-color: black;
@@ -177,226 +171,40 @@ const GithubWrap = styled.div`
 `;
 
 const GithubLogo = styled.div`
-    width: 40px;
-    height: 40px;
-    background-image: url("../images/detail/github.png");
-    background-size: cover;
-    margin-right: 20px;
-`
+  width: 40px;
+  height: 40px;
+  background-image: url("../images/detail/github.png");
+  background-size: cover;
+  margin-right: 20px;
+`;
 
 const GithubDownloadLink = styled.span`
-    color: white;
-    margin-right: 40px;
-`
-
-const CommentBox = styled.div`
-  width: 1000px;
-  margin: 70px auto;
-  display: flex;
-  justify-content: space-between;
-`;
-const CommentWrap = styled.div`
-  width: 800px;
-  div:nth-child(1) {
-    display: flex;
-    justify-content: space-between;
-  }
-`;
-const WirterPicture = styled.div`
-  width: 80px;
-  height: 80px;
-  border-radius: 50%;
-  background-color: #fff;
-`;
-const TopComment = styled.div`
-  background-color: #eaeaea;
-  width: 200px;
-  height: 30px;
-  font-size: 16px;
-  font-weight: bold;
-  text-align: center;
-  border-radius: 30px;
-`;
-const WriterId = styled.div`
-  font-size: 22px;
-`;
-const Comment = styled.div`
-  font-size: 18px;
-  margin: 30px 0;
-`;
-const Share = styled.div`
-  font-size: 16px;
-  color: #808080;
-`;
-const PostComment = styled.div`
-  width: 1000px;
-  margin: 150px auto;
-  display: flex;
-  justify-content: space-between;
+  color: white;
+  margin-right: 40px;
 `;
 
-const InputWrap = styled.div`
-  width: 800px;
-  textarea {
-    width: 800px;
-    height: 160px;
-    background-color: #fff;
-    border: 0;
-    outline: none;
-    font-size: 20px;
-    box-sizing: border-box;
-  }
-  button {
-    width: 800px;
-    padding: 15px 0;
-    background-color: #c5cdeb;
-    font-size: 18px;
-    font-weight: bold;
-    &:focus {
-      border: none;
-      outline: none;
-    }
-  }
-`;
-const CodeView = styled.div`
-    width: 1000px;
-    margin: 50px auto;
-    background-color: #F0F1EC;
-`
-const BtnWrap = styled.div`
-    display: flex;
-    justify-content: space-between;
-`
-const ChangeBtn = styled.button`
-    width: 50px;
-    height: 50px;
-    background-color: #ddd;
-`
-const DeleteBtn = styled(ChangeBtn)`
-    background-color: #C5CDEB;
-`
-const Confirm = styled.div`
-    position: fixed;
-    top: 0; left: 0; width: 100%; height: 100%;
-    background-color: #fff;
-    z-index: 9999;
-    display: flex; justify-content: center;
-    align-items: center;
-    font-size: 24px;
-    >button:nth-of-type(1){
-        width: 100px;
-        height: 50px;
-    }
-    >button:nth-of-type(2){
-        width: 100px;
-        height: 50px;
-    }
-`
 
- 
 function Detail_Test() {
-  // const [isHovering, setIsHovering] = useState(-1);
-    const [idNumber, setIdNumber] = useState(0);
-    const [userName, setUserName] = useState("#001235");
-    const [userProfile, setUserProfile] = useState();
-    const [comment, setComment] = useState('');
-    const [feedComments, setFeedComments] = useState([]);
 
-    const [isSelect, setIsSelect] = useState(0);
-    const [isSelect2, setIsSelect2] = useState([false, 0]);
-    
-    const [isValid, setIsValid] = useState(false);
 
-    
-    const post = (e) => {
-        const copyFeedComments = [...feedComments];
-        copyFeedComments.push(comment);
-        setFeedComments(copyFeedComments);
-        setComment('');
-        setIsSelect2(false);
-    }
-    const editComment = (index) => {
-        setIsSelect(index);
-        setComment(feedComments[index]);
-        setIsSelect2(false);
-    }
-    const deleteComment = (index) =>{
-        const newfeedComments = [...feedComments];
-        newfeedComments.splice(index, 1);
-        setFeedComments(newfeedComments);
-        setIsSelect2(false);
-    }
-    const Modal = ({onDelete, onClose, index}) => {
-        return (
-            <Confirm>
-                <p>삭제하시겠습니까?</p>
-                <button onClick={() => onDelete(index)}>삭제</button>
-                <button onClick={onClose}>취소</button>
-            </Confirm>
-        )
-    }
+  const CardContent = [
+    {
+      quiz: "quiz1",
+      answer: "Lorem ipsum dolor sit amet. ",
+    },
+    {
+      quiz: "quiz2",
+      answer:
+        "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Odio, minus.",
+    },
+    {
+      quiz: "quiz3",
+      answer:
+        "Lorem ipsum dolor sit amet. Lorem ipsum dolor, sit amet consectetur adipisicing elit. Odio, minus.",
+    },
+  ];
 
-    const CommentList = (e) => {
-        return (
-            <CommentBox>
-                <WirterPicture className='userProfile'>{e.userProfile}</WirterPicture>
-                <CommentWrap className="userCommentBox">
-                    <div>
-                        <WriterId className="userName">{e.userName}</WriterId>
-                        {/* <TopComment>Top Comment</TopComment> */}
-                    </div>
-                    <Comment className='userComment'>{e.userComment}</Comment>
-                    <BtnWrap>
-                        <Share>share code</Share>
-                        {
-                            <div>
-                                <ChangeBtn onClick={()=>setIsSelect2(true)}>수정</ChangeBtn>
-                                <DeleteBtn onClick={()=>setIsSelect2(true)}>삭제</DeleteBtn>
-                            </div>   
-                        }
-                    </BtnWrap>
-                </CommentWrap>
-                {
-                    isSelect2 && 
-                    <Modal onDelete={() => deleteComment()} onClose={() => setIsSelect2(false)}
-                    />
-                }
-            </CommentBox>
-        )
-    }
-    const CardContent = [
-        {
-            quiz: "quiz1",
-            answer: "Lorem ipsum dolor sit amet. "
-        },
-        {
-            quiz: "quiz2",
-            answer: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Odio, minus."
-        },
-        {
-            quiz: "quiz3",
-            answer: "Lorem ipsum dolor sit amet. Lorem ipsum dolor, sit amet consectetur adipisicing elit. Odio, minus."
-        }
-    ]
 
-    // const [code, setCode] = React.useState(
-    //     `function add(a, b) {\n  return a + b;\n}`
-    // );
-
-  
-
-  const [code, setCode] = React.useState(
-    `function add(a, b) {\n  return a + b;\n}`
-  );
-
-  const handleCopyClipBoard = async (text: string) => {
-    try {
-      await navigator.clipboard.writeText(text);
-      alert("클립보드에 링크가 복사되었습니다.");
-    } catch (e) {
-      alert("복사에 실패하였습니다");
-    }
-  };
 
   return (
     <>
@@ -444,7 +252,9 @@ function Detail_Test() {
             <h1>바닐라 스크립트로 공 옮기기</h1>
             <h2>1 : 공의 모험 시작 </h2>
             <span>
-            한 번에 한 발자국씩, 공이 어떻게 움직일 수 있는지 알아보도록 해봅시다. 웹 페이지에 공을 그리기 위해 HTML을 사용할 거에요. 아래 예시와 코드를 보세요.
+              한 번에 한 발자국씩, 공이 어떻게 움직일 수 있는지 알아보도록
+              해봅시다. 웹 페이지에 공을 그리기 위해 HTML을 사용할 거에요. 아래
+              예시와 코드를 보세요.
             </span>
           </Desc>
           <ExampleBallWrap>
@@ -452,90 +262,37 @@ function Detail_Test() {
           </ExampleBallWrap>
           <CodeDescWrap>
             <CodeDesc>
-            여기서 &lt;div&gt; 엘리먼트를 사용해 우리의 공을 만들었습니다. <br/>이제 이 공을 움직이려면 JavaScript를 사용해야 해요.
+              여기서 &lt;div&gt; 엘리먼트를 사용해 우리의 공을 만들었습니다.{" "}
+              <br />
+              이제 이 공을 움직이려면 JavaScript를 사용해야 해요.
             </CodeDesc>
             <CodeBlock width={"650"} height={"400"} value={"test"}></CodeBlock>
           </CodeDescWrap>
           <CodeDescWrap>
             <CodeBlock width={"650"} height={"400"} value={"test"}></CodeBlock>
-            <CodeDesc style={{justifyContent: "flex-end"}}>
-            우리가 만든 HTML에 JavaScript를 연결해보겠습니다.<br /> "script.js" 파일을 만들고 아래 코드를 추가하세요.
+            <CodeDesc style={{ justifyContent: "flex-end" }}>
+              우리가 만든 HTML에 JavaScript를 연결해보겠습니다.
+              <br /> "script.js" 파일을 만들고 아래 코드를 추가하세요.
             </CodeDesc>
           </CodeDescWrap>
           <CodeDescWrap>
             <CodeDesc>
-            이제 "script.js" 파일을 통해 공을 움직일 수 있게 되었습니다.
+              이제 "script.js" 파일을 통해 공을 움직일 수 있게 되었습니다.
             </CodeDesc>
             <CodeBlock width={"650"} height={"400"} value={"test"}></CodeBlock>
           </CodeDescWrap>
-          <ExampleBallWrap style={{marginBottom: "200px"}}>
+          <ExampleBallWrap style={{ marginBottom: "200px" }}>
             <Ball left="" top="50" right="2" bottom="" />
           </ExampleBallWrap>
         </MainBg>
         <GithubWrap>
-            <GithubLogo />
-            <GithubDownloadLink>깃허브로 가서 코드 다운 받기 &nbsp; &gt;</GithubDownloadLink>
+          <GithubLogo />
+          <GithubDownloadLink>
+            깃허브로 가서 코드 다운 받기 &nbsp; &gt;
+          </GithubDownloadLink>
         </GithubWrap>
-        <PostComment>
-                    <WirterPicture></WirterPicture>
-                    <InputWrap>
-                        <textarea
-                            type="text"
-                            className="inputComment"
-                            placeholder="댓글 달기..."
-                            onChange={e => {
-                                setComment(e.target.value);
-                            }}
-                            onKeyUp={e => {
-                                e.target.value.length > 0
-                                    ? setIsValid(true)
-                                    : setIsValid(false);
-                            }}
-                            value={comment}
-                        />
-                        <button
-                            type="button"
-                            className={
-                                comment.length > 0
-                                    ? 'submitCommentActive'
-                                    : 'submitCommentInactive'
-                            }
-                            onClick={post}
-                            disabled={isValid ? false : true}
-                        >
-                            Post
-                        </button>
-                    </InputWrap>
-                </PostComment>
-                <CommentBox>
-                    <WirterPicture></WirterPicture>
-                    <CommentWrap>
-                        <div>
-                            <WriterId>lorem</WriterId>
-                            <TopComment>Top Comment ★</TopComment>
-                        </div>
-                        <Comment>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Inventore quae perferendis similique a ad expedita ex accusamus aperiam laborum! Vel, ipsum! Non, deserunt error repudiandae magni consequuntur quos provident cumque?</Comment>
-                        <Share>share code</Share>
-                        <button onClick={handleCopyClipBoard}>Click to Copy</button>
-                    </CommentWrap>
-                </CommentBox>
-                {
-                    feedComments.map((el, index) => {
-                        return (
-                            <CommentList
-                                userProfile={userProfile}
-                                userName={userName}
-                                userComment={el}
-                                key={index}
-                                index={index}
-                                onDelete={() => deleteComment(index)}
-                                onEdit={() => editComment(index)}                 
-                            />
-                        );
-                    })
-                }
-
-                <DetailFooter>
+      </GlobalWrap>
+      <DetailFooter>
                     {
                         Array(10).fill().map((e, i) => {
                             return (
@@ -544,8 +301,7 @@ function Detail_Test() {
                         })
                     }
                 </DetailFooter>
-            </GlobalWrap>
-        </>
-    )
+    </>
+  );
 }
 export default Detail_Test;
