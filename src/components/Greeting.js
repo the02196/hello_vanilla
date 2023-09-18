@@ -102,6 +102,11 @@ const MessageBoxRight = styled.div`
           top: -90px;
       }
 `
+
+/*
+Mountain
+*/
+
 const TriangleLeft = styled.div`
   width: 0;
   height: 0;
