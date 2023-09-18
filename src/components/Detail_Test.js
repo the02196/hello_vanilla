@@ -50,11 +50,8 @@ const Creator = styled.div`
     span {
       font-family: Fira Code;
       font-size: 16px;
-      margin-left: 20px;
+      margin-left: 25px;
       color: #9d9d9d;
-      &:nth-child(2) {
-        margin-left: 20px;
-      }
     }
   }
   span {
@@ -221,6 +218,7 @@ function Detail_Test() {
           <div>
             <span>&lt;&gt; creator. #dh3308 & #romi6342</span>
             <span>how we can move ball with js?</span>
+            <span>"querySelector"</span>
           </div>
           <span>
             <NavLink to={"/main"}>메인 페이지로 가기</NavLink>
