@@ -5,7 +5,7 @@ import { styled } from "styled-components";
 function Nav() {
   const NavWrap = styled.div`
     width: 100%;
-    height: 300px;
+    height: 400px;
     position: absolute;
     top: 0;
     left: 0;
@@ -16,16 +16,18 @@ function Nav() {
 
   
   const LogoText = styled.span`
-    font-family: "Monofett", monospace;
-    font-size: 40px;
-    color: whitesmoke;
-    display: inline-block;
-    cursor: pointer;
-    margin-top: 40px;
-    margin-left: 30px;
-    @media screen and (max-width: 1920px) {
+    a{
+      font-family: "Monofett", monospace;
+      font-size: 40px;
+      color: whitesmoke;
+      display: inline-block;
+        cursor: pointer;
+      margin-top: 40px;
+      margin-left: 30px;
+      @media screen and (max-width: 1920px) {
           font-size: 32px;
       }
+    }
   `;
   
   const ProfileImg = styled.div`
@@ -87,7 +89,7 @@ function Nav() {
   return (
     <>
       <NavWrap>
-        <LogoText>Hello Vanilla</LogoText>
+        <LogoText><NavLink to={"/main"}>Hello Vanilla</NavLink></LogoText>
         <TextWrap>
         <span><NavLink to={"/quick"}>퀵링크 &nbsp;&nbsp;&nbsp;&nbsp;</NavLink></span><span>로그인</span><span> &nbsp; | &nbsp;  </span><span><NavLink to={"/login"}>회원가입</NavLink></span>
         </TextWrap>

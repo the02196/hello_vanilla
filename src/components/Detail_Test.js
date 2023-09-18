@@ -18,8 +18,8 @@ const GlobalWrap = styled.div`
 `;
 
 const Ball = styled.div`
-  width: 150px;
-  height: 150px;
+  width: 130px;
+  height: 130px;
   position: absolute;
   border-radius: 0;
   background-position: center;
@@ -140,7 +140,7 @@ const Desc = styled.div`
 
 const ExampleBallWrap = styled.div`
   width: 100%;
-  height: 250px;
+  height: 220px;
   background-color: #fff;
   border: 1px solid black;
   position: relative;
