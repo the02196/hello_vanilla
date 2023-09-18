@@ -234,13 +234,14 @@ function Main() {
     left: 40px;
     font-family: "Inter", sans-serif;
     &.box_sixth_default{
-      left: 7%;
+      left: 50%;
+      transform: translateX(-50%);
+      text-align: center;
     }
     @media screen and (max-width: 1920px) {
       font-size: 30px;
       &.box_sixth_1920{
-        left: 9%;
-        font-size: 26px !important;
+        font-size: 24px !important;
       }
     }
     
