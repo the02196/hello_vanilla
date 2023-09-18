@@ -26,6 +26,17 @@ const LoginNav = styled.div`
     justify-content: space-between;
     background: linear-gradient(black, white);
 `
+const LoginNav2 = styled.div`
+    width: 100%;
+    position: absolute;
+    height: 50px;
+    bottom: 0;
+    left: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    background: linear-gradient(transparent, lightgray );
+`
 
 const Logo = styled.nav`
 
@@ -363,6 +374,7 @@ const [eye,setEye] = useState([0,0]);
                                                                         */}
                     
             </FormBox>
+            <LoginNav2></LoginNav2>
         </LoginBg>
             
 

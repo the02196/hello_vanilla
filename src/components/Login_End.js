@@ -25,6 +25,17 @@ const LoginNav = styled.div`
     justify-content: space-between;
     background: linear-gradient(black, white);
 `
+const LoginNav2 = styled.div`
+    width: 100%;
+    position: absolute;
+    height: 50px;
+    bottom: 0;
+    left: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    background: linear-gradient(transparent, lightgray );
+`
 const Logo = styled.nav`
 
     font-family: "Monofett", monospace;
@@ -81,7 +92,7 @@ const CheckButton =styled.div`
 svg{
     position: absolute;
     right: -12px;
-    bottom: 1px;
+    bottom: 2px;
     color: #838383;
     
 }
@@ -106,8 +117,10 @@ function Login_End() {
             <CheckButton>로그인 페이지로 바로가기<FontAwesomeIcon icon={faChevronRight}></FontAwesomeIcon></CheckButton>
 
 
-            </FormBox>
-    
+                </FormBox>
+           
+            <LoginNav2/>
+        
         </LoginBg> 
     
     </>
