@@ -27,8 +27,8 @@ const WirterPicture = styled.div`
   width: 100px;
   height: 100px;
   border-radius: 50%;
-  background-color: #fff;
-  background-image: url(../images/detail/profiles/woman_1.png);
+  background-image: url(../images/portraits/woman_1.png);
+  background-size: cover;
 `;
 const TopComment = styled.div`
   background-color: #eaeaea;
@@ -142,7 +142,7 @@ function Comments() {
   };
   const editComment = (index) => {
     // setIsSelect(index);
-    setComment(feedComments[index]);
+    // setComment(feedComments[index]);
     setIsSelect(false);
     setIsSelect2(false);
   };
@@ -171,20 +171,9 @@ function Comments() {
       </Confirm>
     );
   };
-  const EditWindow = (e) => {
+  const EditWindow = (el) => {
     return (
-      <textarea
-          type="text"
-          className="editComment"
-          placeholder="내용 수정"
-          onChange={(e) => {
-            setEditValue(e.target.value);
-          }}
-          onKeyUp={(e) => {
-            e.target.value.length > 0 ? setIsValid(true) : setIsValid(false);
-          }}
-          value={editValue}
-        />
+      <></>
     )
   }
 
@@ -210,7 +199,7 @@ function Comments() {
         </CommentWrap>
         {isSelect && (
           <Modal
-            onEdit={() => editComment(idNumber)}
+            onEdit={() => {setIsSelect(false); editComment(idNumber); setIsEdit(true);}}
             onClose={() => setIsSelect(false)}
           />
         )}
@@ -266,7 +255,7 @@ function Comments() {
         </InputWrap>
       </PostComment>
       <CommentBox>
-        <WirterPicture></WirterPicture>
+        <WirterPicture style={{backgroundImage : `url("../images/portraits/man_1.png")`}}></WirterPicture>
         <CommentWrap>
           <div>
             <WriterId>lorem</WriterId>
