@@ -9,25 +9,26 @@ const GlobalWrap = styled.div`
   align-items: center;
   flex-direction: column;
 `;
-
 const CommentBox = styled.div`
-  width: 1000px;
+  width: 1400px;
   margin: 70px auto;
   display: flex;
   justify-content: flex-end;
 `;
 const CommentWrap = styled.div`
-  width: 800px;
+  width: 1000px;
+  margin: 0 100px;
   div:nth-child(1) {
     display: flex;
     justify-content: space-between;
   }
 `;
 const WirterPicture = styled.div`
-  width: 80px;
-  height: 80px;
+  width: 100px;
+  height: 100px;
   border-radius: 50%;
   background-color: #fff;
+  background-image: url(../images/detail/profiles/woman_1.png);
 `;
 const TopComment = styled.div`
   background-color: #eaeaea;
@@ -53,15 +54,13 @@ const PostComment = styled.div`
   width: 1400px;
   margin: 150px auto;
   display: flex;
-  align-items: flex-end;
-  flex-direction: column;
-
+  justify-content: space-between;
 `;
 
 const InputWrap = styled.div`
-  width: 800px;
+  width: 1200px;
   textarea {
-    width: 800px;
+    width: 1200px;
     height: 160px;
     background-color: #fff;
     border: 0;
@@ -70,7 +69,7 @@ const InputWrap = styled.div`
     box-sizing: border-box;
   }
   button {
-    width: 800px;
+    width: 1200px;
     padding: 15px 0;
     background-color: #c5cdeb;
     font-size: 18px;
@@ -118,15 +117,18 @@ const Confirm = styled.div`
 `;
 
 function Comments() {
-  // const [isHovering, setIsHovering] = useState(-1);
+  
   const [idNumber, setIdNumber] = useState(0);
   const [userName, setUserName] = useState("#001235");
   const [userProfile, setUserProfile] = useState();
   const [comment, setComment] = useState("");
   const [feedComments, setFeedComments] = useState([]);
 
-  const [isSelect, setIsSelect] = useState(0);
-  const [isSelect2, setIsSelect2] = useState([false, 0]);
+  const [isSelect, setIsSelect] = useState(false);
+  const [isSelect2, setIsSelect2] = useState(false);
+
+  const [editValue, setEditValue] = useState(comment);
+  const [isEdit, setIsEdit] = useState(false);
 
   const [isValid, setIsValid] = useState(false);
 
@@ -135,20 +137,32 @@ function Comments() {
     copyFeedComments.push(comment);
     setFeedComments(copyFeedComments);
     setComment("");
+    setIsSelect(false);
     setIsSelect2(false);
   };
   const editComment = (index) => {
-    setIsSelect(index);
+    // setIsSelect(index);
     setComment(feedComments[index]);
+    setIsSelect(false);
     setIsSelect2(false);
   };
   const deleteComment = (index) => {
     const newfeedComments = [...feedComments];
     newfeedComments.splice(index, 1);
     setFeedComments(newfeedComments);
+    setIsSelect(false);
     setIsSelect2(false);
   };
-  const Modal = ({ onDelete, onClose, index }) => {
+  const Modal = ({onEdit, onClose, index}) => {
+    return (
+      <Confirm>
+        <p>수정하시겠습니까?</p>
+        <button onClick={() => onEdit(index)}>수정</button>
+        <button onClick={onClose}>취소</button>
+      </Confirm>
+    );
+  };
+  const Modal2 = ({onDelete, onClose, index}) => {
     return (
       <Confirm>
         <p>삭제하시겠습니까?</p>
@@ -157,6 +171,22 @@ function Comments() {
       </Confirm>
     );
   };
+  const EditWindow = (e) => {
+    return (
+      <textarea
+          type="text"
+          className="editComment"
+          placeholder="내용 수정"
+          onChange={(e) => {
+            setEditValue(e.target.value);
+          }}
+          onKeyUp={(e) => {
+            e.target.value.length > 0 ? setIsValid(true) : setIsValid(false);
+          }}
+          value={editValue}
+        />
+    )
+  }
 
   const CommentList = (e) => {
     return (
@@ -172,15 +202,21 @@ function Comments() {
             <Share>share code</Share>
             {
               <div>
-                <ChangeBtn onClick={() => setIsSelect2(true)}>수정</ChangeBtn>
-                <DeleteBtn onClick={() => setIsSelect2(true)}>삭제</DeleteBtn>
+                <ChangeBtn onClick={() => {setIsSelect(true); setIdNumber(e.index)}}>수정</ChangeBtn>
+                <DeleteBtn onClick={() => {setIsSelect2(true); setIdNumber(e.index)}}>삭제</DeleteBtn>
               </div>
             }
           </BtnWrap>
         </CommentWrap>
-        {isSelect2 && (
+        {isSelect && (
           <Modal
-            onDelete={() => deleteComment()}
+            onEdit={() => editComment(idNumber)}
+            onClose={() => setIsSelect(false)}
+          />
+        )}
+        {isSelect2 && (
+          <Modal2
+            onDelete={() => deleteComment(idNumber)}
             onClose={() => setIsSelect2(false)}
           />
         )}
@@ -228,7 +264,7 @@ function Comments() {
             Post
           </button>
         </InputWrap>
-      
+      </PostComment>
       <CommentBox>
         <WirterPicture></WirterPicture>
         <CommentWrap>
@@ -259,7 +295,6 @@ function Comments() {
           />
         );
       })}
-      </PostComment>
       </GlobalWrap>
     </>
   );
