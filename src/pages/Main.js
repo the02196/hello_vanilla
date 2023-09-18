@@ -10,6 +10,8 @@ import TrueOrFalse from "../components/TrueOrFalse";
 import Footer from "../components/Footer";
 import Walk from "../components/Walk";
 import { NavLink } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faRocket } from "@fortawesome/free-solid-svg-icons";
 
 function Main() {
 
@@ -35,7 +37,7 @@ function Main() {
   `;
   const MainTopWrap = styled.div`
     display: flex;
-    padding: 300px 50px 0;
+    padding: 400px 50px 0;
     max-width: 100%;
     align-items: center;
     justify-content: center;
@@ -48,6 +50,32 @@ function Main() {
     background-image: url("../images/main/main_top_background.avif");
     justify-content: center;
   `;
+
+  const AboutWrap = styled.div`
+      width: 1780px;
+      height: 30px;
+      padding: 10px 20px;
+      position: absolute;
+      background-color: black;
+      top: 200px;
+      left: 50%;
+      border: 1px solid white;
+      transform: translateX(-50%);
+      z-index: 100;
+      @media screen and (max-width: 1920px){
+        width: 1400px;
+      }
+  `
+  const AboutContent = styled.div`
+      line-height: 30px;
+      font-size: 18px;
+      font-weight: 400;
+      color: white;
+      @media screen and (max-width: 1920px){
+        font-size: 15px;
+      }
+  `
+  
   const MiniBoxWrap = styled.div`
     width: 1810px;
     display: flex;
@@ -327,6 +355,9 @@ function PutSixthTestBox(){
     <>
       <MainWrap>
         <Nav />
+        <AboutWrap>
+          <AboutContent><FontAwesomeIcon style={{marginRight: "13px"}} icon={faRocket}></FontAwesomeIcon>즐거운 여정으로 바닐라 스크립트를 배워보세요!&nbsp; 입문자부터 전문가까지 모두를 위한 다양한 콘텐츠가 기다리고 있습니다.</AboutContent>
+        </AboutWrap>
         <MainTopWrap>
           <TestBox>
             <Easy>초급</Easy>

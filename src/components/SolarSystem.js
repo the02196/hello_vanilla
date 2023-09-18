@@ -45,7 +45,7 @@ const Li = styled.li`
     z-index: 8;
   }
   &:nth-child(4) {
-    animation-duration: 4s;
+    animation-duration: 7s;
     z-index: 7;
   }
   &:nth-child(5) {
