@@ -8,9 +8,9 @@ import Login_Email from '../components/Login_Email'
 function Login() {
   return (
     <>
-         <Login_test></Login_test> 
-          {/* <LoginMain></LoginMain> */}
-          {/* <Login_End></Login_End> */}
+          <Login_test></Login_test> 
+           {/* <LoginMain></LoginMain>  */}
+           {/* <Login_End></Login_End> */}
           {/* <Login_Email></Login_Email> */}
     </>
     

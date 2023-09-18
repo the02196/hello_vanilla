@@ -80,7 +80,10 @@ const CheckButton =styled.div`
 
 svg{
     position: absolute;
+    right: -12px;
+    bottom: 1px;
     color: #838383;
+    
 }
 ` 
 

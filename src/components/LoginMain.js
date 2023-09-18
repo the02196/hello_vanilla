@@ -146,21 +146,19 @@ svg{
 const CheckButton =styled.div`
     width: 400px;
     text-decoration: underline;
-    text-underline-offset: 10px;
+    text-underline-offset: 10px;  
     margin-top: 40px;
     display: flex;
     justify-content: end;
     cursor: pointer;
     position: relative;
     transition: 0.4s;
-    &:focus{
-        color: blue;
         
-    }
 svg{
     position: absolute;
     right: -15px;
     top: 4px;
+    color: gray;
 }
 ` 
 
@@ -192,7 +190,7 @@ function LoginMain() {
 
             <SignIn>로그인</SignIn>
 
-            <Id><p>아이디 또는 이메일을 입력하세요.</p><input type="text" name='user_id' id='user_id' /></Id>
+            <Id><p>아이디 또는 이메일을 입력하세요.</p><input  type="text" value={"#"} name='user_id' id='user_id' /></Id>
               
             <Password><p>비밀번호를 입력하세요.</p><Input><input type={eye[0] ? 'text' : "Password" && eye[1] ? 'password' : 'password' }  name='user_password' id='user_password'></input><FontAwesomeIcon icon={eye[0] ? faEye : faEyeSlash} onClick={()=> toggleEye(0)}/></Input></Password>
 
