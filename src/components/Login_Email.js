@@ -2,6 +2,7 @@ import React from 'react'
 import Login from '../pages/Login'
 import styled from 'styled-components'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { NavLink } from 'react-router-dom'
 
 
 const LoginBg = styled.div`
@@ -22,6 +23,17 @@ const LoginNav = styled.div`
     display: flex;
     justify-content: space-between;
     background: linear-gradient(black, white);
+`
+const LoginNav2 = styled.div`
+    width: 100%;
+    position: absolute;
+    height: 50px;
+    bottom: 0;
+    left: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    background: linear-gradient(transparent, lightgray );
 `
 const Logo = styled.nav`
 
@@ -78,7 +90,7 @@ function Login_Email() {
                                
         <LoginNav>
                 <Logo>HeLLO VanILLa</Logo>
-                <LoginBtn>로그인 / 회원가입</LoginBtn>
+                <LoginBtn><span>로그인</span><span> &nbsp; | &nbsp;  </span><span><NavLink to={"/login"}>회원가입</NavLink></span></LoginBtn>
         </LoginNav>
                    
                                    
@@ -94,7 +106,7 @@ function Login_Email() {
                    </FormBox>
     
     
-    
+        <LoginNav2 />
     </LoginBg>
     </>
   )
