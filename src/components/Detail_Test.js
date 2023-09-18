@@ -152,7 +152,7 @@ const CodeDescWrap = styled.div`
   align-items: center;
   margin: 100px auto;
 `;
-const CodeDesc = styled.div`
+const CodeDescLeft = styled.div`
   font-size: 20px;
   width: 50%;
   height: 300px;
@@ -160,6 +160,19 @@ const CodeDesc = styled.div`
   align-items: center;
   line-height: 30px;
 `;
+
+
+const CodeDescRight = styled.div`
+  font-size: 20px;
+  width: 50%;
+  height: 300px;
+  display: flex;
+  align-items: center;
+  line-height: 30px;
+  text-align: right;
+  justify-Content: flex-end;
+`;
+
 
 const GithubWrap = styled.div`
   width: 100%;
@@ -183,10 +196,7 @@ const GithubDownloadLink = styled.span`
   margin-right: 40px;
 `;
 
-
 function Detail_Test() {
-
-
   const CardContent = [
     {
       quiz: "quiz1",
@@ -203,8 +213,6 @@ function Detail_Test() {
         "Lorem ipsum dolor sit amet. Lorem ipsum dolor, sit amet consectetur adipisicing elit. Odio, minus.",
     },
   ];
-
-
 
   return (
     <>
@@ -261,24 +269,24 @@ function Detail_Test() {
             <Ball left="2" top="50" right="" bottom="" />
           </ExampleBallWrap>
           <CodeDescWrap>
-            <CodeDesc>
+            <CodeDescLeft>
               여기서 &lt;div&gt; 엘리먼트를 사용해 우리의 공을 만들었습니다.{" "}
               <br />
               이제 이 공을 움직이려면 JavaScript를 사용해야 해요.
-            </CodeDesc>
+            </CodeDescLeft>
             <CodeBlock width={"650"} height={"400"} value={"test"}></CodeBlock>
           </CodeDescWrap>
           <CodeDescWrap>
             <CodeBlock width={"650"} height={"400"} value={"test"}></CodeBlock>
-            <CodeDesc style={{ justifyContent: "flex-end" }}>
+            <CodeDescRight>
               우리가 만든 HTML에 JavaScript를 연결해보겠습니다.
               <br /> "script.js" 파일을 만들고 아래 코드를 추가하세요.
-            </CodeDesc>
+            </CodeDescRight>
           </CodeDescWrap>
           <CodeDescWrap>
-            <CodeDesc>
+            <CodeDescLeft>
               이제 "script.js" 파일을 통해 공을 움직일 수 있게 되었습니다.
-            </CodeDesc>
+            </CodeDescLeft>
             <CodeBlock width={"650"} height={"400"} value={"test"}></CodeBlock>
           </CodeDescWrap>
           <ExampleBallWrap style={{ marginBottom: "200px" }}>
@@ -293,14 +301,12 @@ function Detail_Test() {
         </GithubWrap>
       </GlobalWrap>
       <DetailFooter>
-                    {
-                        Array(10).fill().map((e, i) => {
-                            return (
-                                <div key={i}>Page {i + 1}</div>
-                            )
-                        })
-                    }
-                </DetailFooter>
+        {Array(10)
+          .fill()
+          .map((e, i) => {
+            return <div key={i}>Page {i + 1}</div>;
+          })}
+      </DetailFooter>
     </>
   );
 }
