@@ -285,7 +285,9 @@ function Detail_Test() {
             <CodeDescLeft>
               이제 "script.js" 파일을 통해 공을 움직일 수 있게 되었습니다.
             </CodeDescLeft>
-            <CodeBlock width={"650"} height={"400"} value={"test"}></CodeBlock>
+            <CodeBlock id="myTextarea" width={"650"} height={"400"} value={
+              `\<test\> \n      document \n            세번째 글`  
+              }></CodeBlock>
           </CodeDescWrap>
           <ExampleBallWrap style={{ marginBottom: "200px" }}>
             <Ball left="" top="50" right="2" bottom="" />
