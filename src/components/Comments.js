@@ -67,6 +67,7 @@ const InputWrap = styled.div`
     outline: none;
     font-size: 20px;
     box-sizing: border-box;
+    resize: none;
   }
   button {
     width: 1200px;
@@ -103,16 +104,29 @@ const Confirm = styled.div`
   background-color: #fff;
   z-index: 9999;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   font-size: 24px;
-  > button:nth-of-type(1) {
-    width: 100px;
-    height: 50px;
+  textarea{
+    width: 800px;
+    height: 500px;
+    background-color: #fff;
+    border: 0;
+    outline: none;
+    font-size: 20px;
+    box-sizing: border-box;
+    resize: none;
   }
-  > button:nth-of-type(2) {
-    width: 100px;
-    height: 50px;
+  div{
+    button:nth-of-type(1){
+      width: 100px;
+      height: 50px;
+    }
+    button:nth-of-type(2){
+      width: 100px;
+      height: 50px;
+    }
   }
 `;
 
@@ -130,6 +144,8 @@ function Comments() {
   const [editValue, setEditValue] = useState(comment);
   const [isEdit, setIsEdit] = useState(false);
 
+  const [editedComment, setEditedComment] = useState("");
+
   const [isValid, setIsValid] = useState(false);
 
   const post = (e) => {
@@ -141,10 +157,13 @@ function Comments() {
     setIsSelect2(false);
   };
   const editComment = (index) => {
-    // setIsSelect(index);
-    // setComment(feedComments[index]);
+    const updatedComments = [...feedComments];
+    updatedComments[index] = editedComment;
+    setFeedComments(updatedComments);
     setIsSelect(false);
     setIsSelect2(false);
+    setIsEdit(true);
+    setEditedComment("");
   };
   const deleteComment = (index) => {
     const newfeedComments = [...feedComments];
@@ -156,26 +175,31 @@ function Comments() {
   const Modal = ({onEdit, onClose, index}) => {
     return (
       <Confirm>
+        <textarea
+          type='text'
+          value={editedComment}
+          onChange={(e) => setEditedComment(e.target.value)}
+          placeholder="수정할 내용을 입력해주세요."
+        />
         <p>수정하시겠습니까?</p>
-        <button onClick={() => onEdit(index)}>수정</button>
-        <button onClick={onClose}>취소</button>
-      </Confirm>
+        <div>
+          <button onClick={() => onEdit(index)}>수정</button>
+          <button onClick={onClose}>취소</button>
+        </div>
+    </Confirm>
     );
   };
   const Modal2 = ({onDelete, onClose, index}) => {
     return (
       <Confirm>
         <p>삭제하시겠습니까?</p>
-        <button onClick={() => onDelete(index)}>삭제</button>
-        <button onClick={onClose}>취소</button>
+        <div>
+          <button onClick={() => onDelete(index)}>삭제</button>
+          <button onClick={onClose}>취소</button>
+        </div>
       </Confirm>
     );
   };
-  const EditWindow = (el) => {
-    return (
-      <></>
-    )
-  }
 
   const CommentList = (e) => {
     return (
@@ -191,7 +215,7 @@ function Comments() {
             <Share>share code</Share>
             {
               <div>
-                <ChangeBtn onClick={() => {setIsSelect(true); setIdNumber(e.index)}}>수정</ChangeBtn>
+                <ChangeBtn onClick={() => {setIsSelect(true); setIdNumber(e.index); setEditValue(e.userComment);}}>수정</ChangeBtn>
                 <DeleteBtn onClick={() => {setIsSelect2(true); setIdNumber(e.index)}}>삭제</DeleteBtn>
               </div>
             }
@@ -199,8 +223,8 @@ function Comments() {
         </CommentWrap>
         {isSelect && (
           <Modal
-            onEdit={() => {setIsSelect(false); editComment(idNumber); setIsEdit(true);}}
-            onClose={() => setIsSelect(false)}
+            onEdit={() => {editComment(idNumber, editValue); setIsSelect(false); setIsEdit(true); }}
+            onClose={() => setIsSelect(false)} index={idNumber}
           />
         )}
         {isSelect2 && (
@@ -279,8 +303,11 @@ function Comments() {
             userComment={el}
             key={index}
             index={index}
-            onDelete={() => deleteComment(index)}
-            onEdit={() => editComment(index)}
+            // editValue={editValue}
+            // onDelete={() => deleteComment(index)}
+            // onEdit={() => editComment(index)}
+            // isEdit={idNumber === index ? true : false}
+            editedComment={editedComment}
           />
         );
       })}
