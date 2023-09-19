@@ -33,11 +33,11 @@ function Side() {
   
   const Menus = [
     {
-      title: "menu1",
-      link : "quick/menu1"
+      title: "Tools",
+      link : "quick/tools"
     },
     {
-      title: "menu2",
+      title: "Education",
       link : "quick/menu2"
     },
     {
@@ -92,8 +92,10 @@ function Side() {
         </li>
 
       ))}
+      
       </ul>
     </Menu>
+    
     </>
   )
 }

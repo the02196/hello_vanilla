@@ -13,8 +13,7 @@ function Quick() {
   return (
     <>
     <Content>
-    <Middle/>
-    <Side/>
+    <Quick_Links_Test/>
     </Content>      
     </>
   )
