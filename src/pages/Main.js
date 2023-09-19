@@ -18,7 +18,6 @@ function Main() {
   const [work_VendingMachine, setWork_VendingMachine] = useState(false);
 
 
-
   const MainWrap = styled.div`
     width: 100%;
     position: relative;
@@ -59,7 +58,9 @@ function Main() {
       background-color: black;
       top: 200px;
       left: 50%;
-      border: 1px solid white;
+      border: 1px solid lightblue;
+      display: flex;
+      justify-content: space-between;
       transform: translateX(-50%);
       z-index: 100;
       @media screen and (max-width: 1920px){
@@ -71,6 +72,11 @@ function Main() {
       font-size: 18px;
       font-weight: 400;
       color: white;
+      &:nth-child(2){
+        font-size: 15px;
+        color: lightgray;
+        font-weight: 600;
+      }
       @media screen and (max-width: 1920px){
         font-size: 15px;
       }
@@ -364,6 +370,7 @@ function PutSixthTestBox(){
         <Nav />
         <AboutWrap>
           <AboutContent><FontAwesomeIcon style={{marginRight: "13px"}} icon={faRocket}></FontAwesomeIcon>즐거운 여정으로 바닐라 스크립트<img src="../images/main/js.svg"></img>를 배워보세요!&nbsp; 입문자부터 전문가까지 모두를 위한 다양한 콘텐츠가 기다리고 있습니다.</AboutContent>
+          <AboutContent>2023.09.18 &nbsp;새로운 업데이트 확인하기</AboutContent>
         </AboutWrap>
         <MainTopWrap>
           <TestBox>
