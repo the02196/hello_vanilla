@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
 import Test from '../components/Detail_Test'
 import Comments from '../components/Comments';
+import Detail_Comments from '../components/Detail_Comments';
 
 function Detail() {
   useEffect(() => {
@@ -9,7 +10,8 @@ function Detail() {
   return (
     <>  
     <Test />
-    <Comments />
+    {/* <Comments /> */}
+    <Detail_Comments />
     </>
   )
 }
