@@ -22,7 +22,6 @@ function App() {
         <Route path="/animation" element={<AnimationTest />}></Route>
         <Route path="/test" element={<Test />}></Route>
         <Route path="/obsidian" element={<Obsidian />}></Route>
-        <Route path="/jun" element={<Jun_test />}></Route>
       </Routes>
     </>
   );
