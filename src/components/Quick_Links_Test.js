@@ -7,7 +7,6 @@ import { styled } from 'styled-components'
 
 
 
-
   const Content = styled.div`
   
   margin-top: 90px;
@@ -39,24 +38,42 @@ import { styled } from 'styled-components'
   color: #8e8e8e;
   `
   const List = styled.div`
-   margin: 0 auto;
-   max-width: 1200px;  
-   position: relative;
-   height: 500px;
-   h3{margin-top: 150px; margin-bottom:30px}
-   >div{
-    display: flex;
-    p{max-width: 650px;} 
-    img{top: -100px; right: -10px;
-       position: absolute;
-       
+
+
+
+  margin: 0 auto;
+  max-width: 1200px;  
+  position: relative;
+  height: 500px;
+  
+  h3{margin-top: 150px; background-color:#343541; max-width:650px; color:#d9d9e3;padding:20px 20px; box-sizing:border-box;
+      border-radius: 10px 10px 0 0;  display: flex; justify-content: space-between; 
+      span>a{ text-decoration: none;
+        font-weight: 200; font-size: 14px; align-self: flex-end; cursor: pointer; color:#d9d9e3
+
       }
-   }
+  }
+   >div{
+  display: flex;
+  p{    background-color:#111111;  width: 650px; color:#00a67d; padding:30px; box-sizing: border-box;
+        line-height: 1.5rem;
+  } 
+  }
+  img{top: -100px; right: -10px;
+     position: absolute;
+ 
+    }
     
   `
 
   const CodeSite = 
   [
+    {       
+      "menu": "Tutorial",
+      "name": "jsfiddle",
+      "link": "https://jsfiddle.net/",
+      "description": "HTML, CSS, JavaScript로 작성된 코드를 실시간으로 실행하고 결과를 확인할 수 있는 웹 기반의 코드 실행 환경을 제공하는 플랫폼입니다. 사용자들은 작성된 코드를 저장하고 다른 사용자들과 공유할 수 있습니다."
+    },
     {       
         "menu": "Tools",
         "name": "jsfiddle",
@@ -206,10 +223,24 @@ import { styled } from 'styled-components'
     "title": "프로그래머스 Javascript",
     "link": "https://school.programmers.co.kr/learn/challenges?order=recent&statuses=solved&languages=javascript",
     "description": "프로그래머스는 코딩 테스트 및 연습을 목적으로 하는 플랫폼입니다. 자바스크립트 카테고리에서는 다양한 난이도의 문제들을 풀어보며 실력을 향상시킬 수 있습니다."
-  }
+  },
+  {
+    "menu": "FAQ",
+    "title": "함수와 클래스의 차이?",
+    "link": ""
+  },
+  {
+    "menu": "Git 사용가이드",
+    "title": "프로그래머스 Javascript",
+    "link": ""
+  },
   ]
 
-
+//   const getFaviconLink =(url) =>{
+//     const urlObject = new URL(url);
+//     return `${urlObject.origin}/favicon.ico`;
+// }
+// console.log(getFaviconLink)
   
 
 function Quick_Links_Test() {
@@ -248,7 +279,7 @@ function Quick_Links_Test() {
               {               
                 CodeSite.filter(el => el.menu === e).map((item,i)=>{
                   return (
-                    <Link to={i} spy={true} smooth={true}>
+                    <Link to={i} spy={true} smooth={true} offset={-50}>
                       <p>{item.name}</p>
                     </Link>
                   )
@@ -262,33 +293,27 @@ function Quick_Links_Test() {
     </Menu>
     </Content>
  
-        <List>
+    <List>
         {
           CodeSite.map((e,i)=>{
             return(
               <>
-              <h3 id={i}>{e.name}</h3>
+             
+              <h3 id={i}>{e.name} <span><a href={e.link} target='_blank'>Link</a></span></h3>
               <div>          
               <p>{e.description}</p>
-              {
-                Array(CodeSite.length).fill("https://via.placeholder.com/480x280").map((e,i) => {
-                  return(
-                    
-                    <img src={e} alt={i} />
-                  )
-                })
-
-              }
-              </div>   
+              <img src={getFaviconLink(e.link)} alt={i} />
+              </div>
+              
               </>       
             )
           })
         }
         
-      
+        </List>
         
           
-      </List>
+      
 
       
 
