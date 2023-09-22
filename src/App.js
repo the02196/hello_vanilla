@@ -8,6 +8,7 @@ import Login from "./pages/Login";
 import AnimationTest from "./pages/AnimationTest";
 import Test from "./pages/Test";
 import Obsidian from "./pages/Obsidian";
+import Jun_test from "./components/Jun_test";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
         <Route path="/animation" element={<AnimationTest />}></Route>
         <Route path="/test" element={<Test />}></Route>
         <Route path="/obsidian" element={<Obsidian />}></Route>
+        <Route path="/jun" element={<Jun_test />}></Route>
       </Routes>
     </>
   );
