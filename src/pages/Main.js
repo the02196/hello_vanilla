@@ -72,6 +72,9 @@ function Main() {
       font-size: 18px;
       font-weight: 400;
       color: white;
+      a{
+         color: white;
+      }
       &:nth-child(2){
         font-size: 15px;
         color: lightgray;
@@ -370,7 +373,7 @@ function PutSixthTestBox(){
         <Nav />
         <AboutWrap>
           <AboutContent><FontAwesomeIcon style={{marginRight: "13px"}} icon={faRocket}></FontAwesomeIcon>즐거운 여정으로 바닐라 스크립트<img src="../images/main/js.svg"></img>를 배워보세요!&nbsp; 입문자부터 전문가까지 모두를 위한 다양한 콘텐츠가 기다리고 있습니다.</AboutContent>
-          <AboutContent>2023.09.18 &nbsp;새로운 업데이트 확인하기</AboutContent>
+          <AboutContent><NavLink to={"/notice"}>2023.09.18 &nbsp;새로운 업데이트 확인하기</NavLink></AboutContent>
         </AboutWrap>
         <MainTopWrap>
           <TestBox>

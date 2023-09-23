@@ -29,7 +29,6 @@ import {
       li {
         display: flex;
         padding: 40px 0;
-        border-top: 1px solid #ededed;
         border-bottom: 1px solid #ededed;
       }
     }
