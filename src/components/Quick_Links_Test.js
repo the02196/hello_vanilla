@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import {NavLink} from 'react-router-dom'
 import { Link } from 'react-scroll'
 import { styled } from 'styled-components'
@@ -61,6 +61,8 @@ import { styled } from 'styled-components'
   }
   img{top: -100px; right: -10px;
      position: absolute;
+     width: 480px;
+     height: 280px;
  
     }
     
@@ -248,7 +250,27 @@ function Quick_Links_Test() {
   const menus = [...new Set(menu)]
   console.log(menus)
   const [activeMenu, setActiveMenu] = useState(null);
-  
+  const [imageUrl, setImageUrl] = useState(null);
+
+  // useEffect(()=>{
+  //   fetchImage = async() =>{
+  //     try{
+  //       const respone = await axios.get("url")
+  //       setImageUrl(respone.data.imageUrl);
+  //     }catch(error){
+
+  //       console.error('Error fetching image:', error);
+  //     }
+  //   }
+
+  // },[])
+
+  // if (!imageUrl) {
+  //   return <div>Loading...</div>;
+  // }
+
+
+
   const MenuClick = (index) => {
     if (activeMenu === index) {
       setActiveMenu(null);
@@ -302,7 +324,11 @@ function Quick_Links_Test() {
               <h3 id={i}>{e.name} <span><a href={e.link} target='_blank'>Link</a></span></h3>
               <div>          
               <p>{e.description}</p>
+
+              <img src={e.link} alt={i} />
+
               {/* <img src={getFaviconLink(e.link)} alt={i} /> */}
+
               </div>
               
               </>       
