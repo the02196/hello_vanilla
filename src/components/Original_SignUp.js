@@ -26,17 +26,6 @@ const LoginNav = styled.div`
     justify-content: space-between;
     background: linear-gradient(black, white);
 `
-const LoginNav2 = styled.div`
-    width: 100%;
-    position: absolute;
-    height: 50px;
-    bottom: 0;
-    left: 0;
-    z-index: 100;
-    display: flex;
-    justify-content: space-between;
-    background: linear-gradient(transparent, lightgray );
-`
 
 const Logo = styled.nav`
 
@@ -302,21 +291,13 @@ const loginHuman = styled.img`
 
 function Login_test() {
    
-const [eye,setEye] = useState([0,0]);
-    const [name, setName] = useState('');
-    const [email, setEmail] = useState('');
-     const [password, setPassword] = useState('');
-    const [passwordConfirm, setPasswordConfirm] = useState('');
-    const [error, setError] = useState('');
+    const [eye,setEye] = useState([0,0]);
 
     const toggleEye = (index) =>{
         const newEye = [...eye];
         newEye[index] = !newEye[index];
         setEye(newEye)
     }
-    
-    
-    
 
   return (
     <>
@@ -338,7 +319,7 @@ const [eye,setEye] = useState([0,0]);
                 <Id><p>사용할 아이디를 입력하세요.</p><input type="text" name='user_id' id='user_id' /></Id><span>6자 에서 12자사이 특수문자 사용 X</span>
               
                 
-                <Email><p>이메일을 입력하세요.</p><input type='email' placeholder='example@gmail.com' name='user_email' id='user_email'></input></Email>
+                <Email><p>이메일을 입력하세요.</p><input type='text' placeholder='example@gmail.com' name='user_email' id='user_email'></input></Email>
                
                 <Password><p>비밀번호를 입력하세요.</p><Input><input type={eye[0] ? 'text' : "Password"  }  name='user_password' id='user_password'></input><FontAwesomeIcon icon={eye[0] ? faEye : faEyeSlash} onClick={()=> toggleEye(0)}/></Input></Password><span>6자 에서 18자사이 특수문자 포함</span>
                
@@ -374,7 +355,6 @@ const [eye,setEye] = useState([0,0]);
                                                                         */}
                     
             </FormBox>
-            <LoginNav2></LoginNav2>
         </LoginBg>
             
 

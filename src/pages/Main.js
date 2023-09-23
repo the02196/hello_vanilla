@@ -9,11 +9,13 @@ import Nav from "../components/Nav";
 import TrueOrFalse from "../components/TrueOrFalse";
 import Footer from "../components/Footer";
 import Walk from "../components/Walk";
+import { NavLink } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faRocket } from "@fortawesome/free-solid-svg-icons";
 
 function Main() {
 
   const [work_VendingMachine, setWork_VendingMachine] = useState(false);
-
 
 
   const MainWrap = styled.div`
@@ -34,7 +36,7 @@ function Main() {
   `;
   const MainTopWrap = styled.div`
     display: flex;
-    padding: 300px 50px 0;
+    padding: 400px 50px 0;
     max-width: 100%;
     align-items: center;
     justify-content: center;
@@ -47,6 +49,48 @@ function Main() {
     background-image: url("../images/main/main_top_background.avif");
     justify-content: center;
   `;
+
+  const AboutWrap = styled.div`
+      width: 1780px;
+      height: 30px;
+      padding: 10px 20px;
+      position: absolute;
+      background-color: black;
+      top: 200px;
+      left: 50%;
+      border: 1px solid lightblue;
+      display: flex;
+      justify-content: space-between;
+      transform: translateX(-50%);
+      z-index: 100;
+      @media screen and (max-width: 1920px){
+        width: 1400px;
+      }
+  `
+  const AboutContent = styled.div`
+      line-height: 30px;
+      font-size: 18px;
+      font-weight: 400;
+      color: white;
+      a{
+         color: white;
+      }
+      &:nth-child(2){
+        font-size: 15px;
+        color: lightgray;
+        font-weight: 600;
+      }
+      @media screen and (max-width: 1920px){
+        font-size: 15px;
+      }
+      img {
+        width: 20px; 
+        vertical-align: middle; 
+        height: 20px; 
+        margin: 0px 10px 4px 10px;
+      }
+  `
+  
   const MiniBoxWrap = styled.div`
     width: 1810px;
     display: flex;
@@ -125,6 +169,11 @@ function Main() {
       width: 1810px;
       height: 300px;
       background-color: #f3fefd;
+      a{
+        &:visited{
+          color: black;
+        }
+      }
     }
     &:nth-child(6) {
       width: 1810px;
@@ -194,13 +243,14 @@ function Main() {
     left: 40px;
     font-family: "Inter", sans-serif;
     &.box_sixth_default{
-      left: 7%;
+      left: 50%;
+      transform: translateX(-50%);
+      text-align: center;
     }
     @media screen and (max-width: 1920px) {
       font-size: 30px;
       &.box_sixth_1920{
-        left: 9%;
-        font-size: 26px !important;
+        font-size: 24px !important;
       }
     }
     
@@ -237,55 +287,57 @@ function Main() {
     z-index: 200;
   `;
 
-  return (
+ const VeryEasy = styled.div`
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    padding: 5px 20px;
+    background-color: purple;
+    z-index: 500;
+    font-size: 15px;
+    color: white;
+ `
+
+  const Easy = styled.div`
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    padding: 5px 20px;
+    background-color: black;
+    color: white;
+    z-index: 500;
+    font-size: 15px;
+    box-sizing: border-box;
+  `
+
+  const Normal = styled.div`
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    padding: 5px 20px;
+    background-color: #515151;
+    color: white;
+    z-index: 500;
+    font-size: 15px;
+    box-sizing: border-box;
+  `
+
+  const Hard = styled.div`
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    padding: 5px 20px;
+    background-color: white;
+    color: black;
+    z-index: 500;
+    font-size: 15px;
+    font-weight: 500;
+    box-sizing: border-box;
+  `
+function PutSixthTestBox(){
+  return(
     <>
-      <MainWrap>
-        <Nav />
-        <MainTopWrap>
-          <TestBox>
-            <TrueOrFalse />
-            <TestBoxTitle>진실 혹은 거짓?</TestBoxTitle>
-            <TestBoxDesc>바닐라 스크립트로 진실과 거짓 구별하기</TestBoxDesc>
-            <TestBoxCode>true와 false</TestBoxCode>
-          </TestBox>
-          <TestBox>
-            <SolarSystem />
-            <TestBoxTitle style={{ color: "white" }}>광활한 우주</TestBoxTitle>
-            <TestBoxDesc style={{ left: "120px" }}>
-              바닐라 스크립트로 태양계 만들기
-            </TestBoxDesc>
-            {/* <TestBoxCode>array와 for문</TestBoxCode> */}
-          </TestBox>
-          <TestBox>
-            <Eye />
-            <TestBoxTitle style={{ color: "white" }}>더 깊이 보기</TestBoxTitle>
-            <TestBoxDesc>
-              바닐라 스크립트로 따라다니는 눈동자 만들기
-            </TestBoxDesc>
-            <TestBoxCode style={{ color: "lightgray" }}>
-              Math.cos와 Math.sin{" "}
-            </TestBoxCode>
-          </TestBox>
-          <TestBox onMouseEnter={() => {setWork_VendingMachine(!work_VendingMachine)}}>
-            <VendingMachine Work={work_VendingMachine} />
-            <TestBoxTitle>무엇이 들었을까?</TestBoxTitle>
-            <TestBoxDesc style={{ color: "black", left: "120px" }}>
-              바닐라 스크립트로 자판기 만들기
-            </TestBoxDesc>
-            <TestBoxCode style={{ color: "#4C4A4D" }}>Click Event </TestBoxCode>
-          </TestBox>
-          <TestBox>
-            <MovingBall />
-            <TestBoxTitle>움직임</TestBoxTitle>
-            <TestBoxDesc style={{ color: "black", left: "145px" }}>
-              바닐라 스크립트로 움직이는 공 만들기
-            </TestBoxDesc>
-            <TestBoxCode style={{ color: "darkgray" }}>
-              Keypress Event
-            </TestBoxCode>
-          </TestBox>
-          <TestBox>
-            <GrayFloor />
+     <GrayFloor />
             <WhiteFloor />
             <GrayFloor />
             <WhiteFloor />
@@ -311,6 +363,72 @@ function Main() {
             <GrayFloor />
             <WhiteFloor />
             <GrayFloor />
+    </>
+  )
+}
+
+  return (
+    <>
+      <MainWrap>
+        <Nav />
+        <AboutWrap>
+          <AboutContent><FontAwesomeIcon style={{marginRight: "13px"}} icon={faRocket}></FontAwesomeIcon>즐거운 여정으로 바닐라 스크립트<img src="../images/main/js.svg"></img>를 배워보세요!&nbsp; 입문자부터 전문가까지 모두를 위한 다양한 콘텐츠가 기다리고 있습니다.</AboutContent>
+          <AboutContent><NavLink to={"/notice"}>2023.09.18 &nbsp;새로운 업데이트 확인하기</NavLink></AboutContent>
+        </AboutWrap>
+        <MainTopWrap>
+          <TestBox>
+            <Easy>초급</Easy>
+            <TrueOrFalse />
+            <TestBoxTitle>진실 혹은 거짓?</TestBoxTitle>
+            <TestBoxDesc>바닐라 스크립트로 진실과 거짓 구별하기</TestBoxDesc>
+            <TestBoxCode>true와 false</TestBoxCode>
+          </TestBox>
+          <TestBox>
+            <Normal>중급</Normal>
+            <SolarSystem />
+            <TestBoxTitle style={{ color: "white" }}>광활한 우주</TestBoxTitle>
+            <TestBoxDesc style={{ left: "120px" }}>
+              바닐라 스크립트로 태양계 만들기
+            </TestBoxDesc>
+            {/* <TestBoxCode>array와 for문</TestBoxCode> */}
+          </TestBox>
+          <TestBox>
+            <Hard>고급</Hard>
+            <Eye />
+            <TestBoxTitle style={{ color: "white" }}>더 깊이 보기</TestBoxTitle>
+            <TestBoxDesc>
+              바닐라 스크립트로 따라다니는 눈동자 만들기
+            </TestBoxDesc>
+            <TestBoxCode style={{ color: "lightgray" }}>
+              Math.cos와 Math.sin{" "}
+            </TestBoxCode>
+          </TestBox>
+          {/* <TestBox onMouseEnter={() => {setWork_VendingMachine(!work_VendingMachine)}} onMouseOut={() => {setWork_VendingMachine(!work_VendingMachine)}} > */}
+          <TestBox>
+            <Easy>초급</Easy>
+            <VendingMachine Work={work_VendingMachine} />
+            <TestBoxTitle>무엇이 들었을까?</TestBoxTitle>
+            <TestBoxDesc style={{ color: "black", left: "120px" }}>
+              바닐라 스크립트로 자판기 만들기
+            </TestBoxDesc>
+            <TestBoxCode style={{ color: "#4C4A4D" }}>Click Event </TestBoxCode>
+          </TestBox>
+          <TestBox>
+            <VeryEasy>입문</VeryEasy>
+          <NavLink style={{display: "inline", width: "100%", height: "100%"}} to={"/detail"}>
+            <MovingBall />
+            <TestBoxTitle>움직임</TestBoxTitle>
+            <TestBoxDesc style={{ color: "black", left: "145px" }}>
+              바닐라 스크립트로 움직이는 공 만들기
+            </TestBoxDesc>
+            <TestBoxCode style={{ color: "darkgray" }}>
+              querySelector
+            </TestBoxCode>
+          </NavLink>
+          </TestBox>
+          <TestBox>
+            <Easy>초급</Easy>
+            <PutSixthTestBox />
             <TestBoxDesc className="box_sixth_1920" style={{ color: "black", left: "115px" }}>
               바닐라 스크립트로 걷기
             </TestBoxDesc>
@@ -331,6 +449,7 @@ function Main() {
               <TestBoxCode style={{ color: "darkgray", left: "20px" }}>
                 setinterval
               </TestBoxCode>
+              <Hard style={{border: "1px solid black"}}>고급</Hard>
             </TestBox>
             <TestBox></TestBox>
             <TestBox></TestBox>

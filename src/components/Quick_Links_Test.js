@@ -324,7 +324,11 @@ function Quick_Links_Test() {
               <h3 id={i}>{e.name} <span><a href={e.link} target='_blank'>Link</a></span></h3>
               <div>          
               <p>{e.description}</p>
+
               <img src={e.link} alt={i} />
+
+              {/* <img src={getFaviconLink(e.link)} alt={i} /> */}
+
               </div>
               
               </>       
@@ -332,7 +336,7 @@ function Quick_Links_Test() {
           })
         }
         
-        </List>
+    </List>
         
           
       
