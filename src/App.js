@@ -20,7 +20,6 @@ function App() {
         <Route path="/quick" element={<Quick />}></Route>
         <Route path="/login" element={<Login />}></Route>
         <Route path="/animation" element={<AnimationTest />}></Route>
-        <Route path="/test" element={<Test />}></Route>
         <Route path="/obsidian" element={<Obsidian />}></Route>
         <Route path="/notice" element={<Notice />}></Route>
       </Routes>
