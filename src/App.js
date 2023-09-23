@@ -7,6 +7,7 @@ import Quick from "./pages/Quick";
 import Login from "./pages/Login";
 import AnimationTest from "./pages/AnimationTest";
 import Obsidian from "./pages/Obsidian";
+import Notice from "./pages/Notice";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
         <Route path="/login" element={<Login />}></Route>
         <Route path="/animation" element={<AnimationTest />}></Route>
         <Route path="/obsidian" element={<Obsidian />}></Route>
+        <Route path="/notice" element={<Notice />}></Route>
       </Routes>
     </>
   );
