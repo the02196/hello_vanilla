@@ -16,7 +16,6 @@ const Container = styled.div`
 `;
 
 const InnerContainer = styled.div`
-  margin: 0 4px;
   max-width: 1280px;
   margin: 0 auto;
 `;
@@ -36,7 +35,7 @@ const Heading = styled.h3`
     width: 30px;
     height: 5px;
     margin-left: 0.5px;
-    background-color: #2ed090;
+    background-color: black;
     position: absolute;
     top: -6px;
     left: 0;
@@ -45,6 +44,7 @@ const Heading = styled.h3`
 `;
 
 const ContentWrapper = styled.div`
+   padding: 30px 0; 
   width: auto;
   height: auto;
   margin-top: 9px;
@@ -72,8 +72,7 @@ const TextInput = styled.input`
 
 const ContentInputWrapper = styled.div`
   width: auto;
-  margin-top: 20px;
-  margin-left: 70px;
+  margin: 20px 70px 0;
 `;
 
 const ContentLabel = styled.p`

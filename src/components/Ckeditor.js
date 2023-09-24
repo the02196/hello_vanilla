@@ -14,9 +14,8 @@ const ButtonWarp = styled.div`
     justify-content: space-between;
 `
 const Button = styled.button`
-    border-radius: 0%.5rem;
     margin: 20px 0px;
-    background-color: rgb(126,34,206);
+    background-color: black;
     padding: 0.625rem;
     font-size: 0.875rem;
     line-height: 1.25rem;
@@ -26,9 +25,6 @@ const Button = styled.button`
     outline: none;
     border: none;
     cursor: pointer;
-    &:nth-child(1){
-        background-color: rgb(29,78,216);
-    }
     a{color: #fff;}
     svg{margin-right:12px}
 `
