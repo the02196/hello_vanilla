@@ -36,19 +36,19 @@ const ButtonWrap = styled.div`
 const Button = styled.div`
     border-radius: 0.5rem;
     margin: 20px 0;
-    background-color: rgb(126,34,206);
+    background-color: black;
     padding: 0.6rem 1rem;
-    font-size: 1.25rem;
+    font-size: 1rem;
     font-weight: bold;
     color: #fff;
     display: flex; align-items: center;
     outline: none; border: none;
     cursor: pointer;
     &:nth-child(1){
-        background-color: rgba(29,78,216);
+        background-color: black;
     }
     a{color: #fff;}
-    svg{margin-right: 12px;}
+    svg{margin-right: 12px; font-size:13px;}
 `
 
 
