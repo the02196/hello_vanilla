@@ -12,6 +12,8 @@ import Walk from "../components/Walk";
 import { NavLink } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faRocket } from "@fortawesome/free-solid-svg-icons";
+import { firebaseAuth } from "../firebase";
+import { Firestore } from "firebase/firestore";
 
 function Main() {
 
