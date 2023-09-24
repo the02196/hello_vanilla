@@ -91,7 +91,7 @@ function Nav() {
       <NavWrap>
         <LogoText><NavLink to={"/main"}>Hello Vanilla</NavLink></LogoText>
         <TextWrap>
-        <span><NavLink to={"/quick"}>퀵링크 &nbsp;&nbsp;&nbsp;&nbsp;</NavLink></span><span>로그인</span><span> &nbsp; | &nbsp;  </span><span><NavLink to={"/login"}>회원가입</NavLink></span>
+        <span><NavLink to={"/quick"}>퀵링크 &nbsp;&nbsp;&nbsp;&nbsp;</NavLink></span><span><NavLink to={"/login"}>로그인</NavLink></span><span> &nbsp; | &nbsp;  </span><span><NavLink to={"/member"}>회원가입</NavLink></span>
         </TextWrap>
         {/* <ProfileImg /> */}
         <WelcomeTextWrap><WelcomeText>안녕하세요, 여행자님!</WelcomeText></WelcomeTextWrap>
