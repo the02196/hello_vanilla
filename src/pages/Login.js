@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { firebaseAuth, signInWithEmailAndPassword } from "./../firebase";
+import { GithubAuthProvider, GoogleAuthProvider, firebaseAuth, signInWithEmailAndPassword, signInWithPopup } from "./../firebase";
 import { NavLink, useNavigate } from "react-router-dom"; //로그인 성공시 이전페이지로 돌아가기 위해 필요함
 import { collection, doc, getDoc, getFirestore } from "firebase/firestore";
 import { useDispatch, useSelector } from "react-redux";
 import { logIn, loggedIn } from "../store";
-import Modal from "../components/Modal";
+
+
 
 const LoginBg = styled.div`
   width: 100%;
@@ -163,11 +164,45 @@ const Button = styled.button`
   box-sizing: border-box;
   color: #fff;
 `;
-
+const IconWrap = styled.div`
+    width: 200px;
+    display: flex;
+    justify-content: space-between;
+`
+const FacebookIcon = styled.img`
+    width: 25px;
+    height: 25px;
+    background-repeat: no-repeat;
+    background-size: cover;
+    margin-top: 3px;
+    background-color: #3A589B;
+    background-image: url("../images/login/facebook.png");
+   
+`
+const GitIcon = styled.img`
+     width: 25px;
+    height: 25px;
+    background-repeat: no-repeat;
+    background-size: cover;
+    margin-top: 3px;
+    background-image: url("../images/login/GitHub.png");
+    
+`
+const GoogleIcon = styled.img`
+    width: 25px;
+    height: 25px;
+    background-repeat: no-repeat;
+    background-size: cover;
+    margin-top: 3px;
+    background-color: #f5f5f5;
+    background-image: url("../images/login/google.png");
+  
+`
 function Login() {
-  const [email, setEmail] = useState();
-  const [password, setPassword] = useState();
-  const [error, setError] = useState();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const [newAccount, setNewAccount] = useState(true);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -211,6 +246,56 @@ function Login() {
       console.log(error.code);
     }
   };
+  const onChange = (event) => {
+    const {
+      target: { name, value },
+    } = event;
+    if (name === "email") {
+      setEmail(value);
+      console.log(email);
+    } else if (name === "password") {
+      setPassword(value);
+      console.log(password);
+    }
+  };
+
+  //TODO  submit의 새로고침 기능을 막자.
+  const onSubmit = async (event) => {
+    event.preventDefault();
+    try {
+      let data;
+      if (newAccount) {
+        // create account
+        data = await firebaseAuth.createUserWithEmailAndPassword(
+          email,
+          password
+        );
+      } else {
+        // log in
+        data = await firebaseAuth.signInWithEmailAndPassword(email, password);
+      }
+      console.log(data);
+    } catch (error) {
+      setError(error.message);
+    }
+  };
+
+  const toggleAccount = () => setNewAccount((prev) => !prev);
+  const onSocialClick = async (event) => {
+    const {
+      target: { name },
+    } = event;
+    let provider;
+    if (name === "google") {
+      provider = new GoogleAuthProvider();
+    } else if (name === "github") {
+      provider = new GithubAuthProvider();
+    }
+    const data = signInWithPopup(firebaseAuth, provider);
+    console.log(data);
+  };
+  
+  
 
   return (
     <>
@@ -223,16 +308,17 @@ function Login() {
         <SignUp>
           <Title>로그인</Title>
           {/* {email}{password} */}
-          <form onSubmit={LoginForm}>
+          <form onSubmit={onSubmit}>
             <InputWrapper>
               <Input
                 type="email"
                 className="email"
                 placeholder="이메일"
-                onChange={(e) => {
-                  setEmail(e.target.value);
-                }}
-                required
+                onChange={onChange}
+                // {(e) => {
+                //   setEmail(e.target.value);
+                // }}
+                // required
               />
               {/* required는 input에서 코드가 있는지 없는지 확인하는것 */}
               <Label>이메일</Label>
@@ -242,17 +328,19 @@ function Login() {
                 type="password"
                 className="password"
                 placeholder="비밀번호"
-                onChange={(e) => {
-                  setPassword(e.target.value);
-                }}
-                required
+                onChange={onChange}
+                // {(e) => {
+                //   setPassword(e.target.value);
+                // }}
+                // required
               />
               <Label>패스워드</Label>
             </InputWrapper>
-            <Button>로그인</Button>
+            <Button onClick={toggleAccount}>{newAccount ? "로그인" : "회원가입"}</Button>
           </form>
           {/* <p>{error}</p> */}
           <InputWrapper>
+            <GoogleIcon onClick={onSocialClick} /><FacebookIcon /><GitIcon />
             <NavLink to="/findemail">이메일/비밀번호 재설정</NavLink>
             <NavLink to="/member">회원가입</NavLink>
           </InputWrapper>
