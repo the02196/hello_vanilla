@@ -92,6 +92,7 @@ function App() {
         </NavLink>
         <NavLink to={"/mypage"}>
           <GlobalNavigationButton>Test</GlobalNavigationButton>
+          </NavLink>
         <NavLink to={"/auth"}>
           <GlobalNavigationButton>Auth Test</GlobalNavigationButton>
         </NavLink>
