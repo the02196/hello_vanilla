@@ -25,7 +25,8 @@ let user = createSlice({
             state.loggedIn = false;
             state.data = null;
             state.uid = null;
-        }
+        },
+
         
     }
     
