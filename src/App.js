@@ -21,6 +21,7 @@ import styled from "styled-components";
 import Service from "./pages/Service";
 import Notice from "./pages/service/Notice";
 import Notpage from "./pages/Notpage";
+import MyPage from "./pages/MyPage";
 
 const GlobalNavigation = styled.ul`
   position: fixed;
@@ -84,6 +85,9 @@ function App() {
         </NavLink>
         <NavLink to={"/quick"}>
           <GlobalNavigationButton>Quick Links</GlobalNavigationButton>
+        </NavLink>
+        <NavLink to={"/mypage"}>
+          <GlobalNavigationButton>Test</GlobalNavigationButton>
         </NavLink>
       </GlobalNavigation>
       <Provider store={store}>
@@ -152,6 +156,7 @@ function Inner() {
             }
           ></Route>
           <Route path="/member" element={<Member />}></Route>
+          <Route path="/mypage" element={<MyPage />}></Route>
           <Route path="/service" element={<Service />}>
             <Route path="notice" element={<Notice />}></Route>
           </Route>

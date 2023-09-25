@@ -2,10 +2,11 @@ import React, { useState } from 'react'
 import styled from 'styled-components'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {faTriangleExclamation } from '@fortawesome/free-solid-svg-icons';
+
 const Button =styled.button`
  width: 100%;
  padding: 10px;
- background-color: #007bff;
+ background-color: black;
  border-radius: 5px;
  border: none;
  cursor: pointer;
