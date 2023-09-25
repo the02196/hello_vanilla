@@ -39,9 +39,9 @@ const Left_Wrap = styled.div`
 `;
 
 const WorkInfo_GlobalWrap = styled.div`
-    border-bottom: 1px solid lightgray;
-    width: 100%;
-    padding-bottom: 20px;
+  border-bottom: 1px solid lightgray;
+  width: 100%;
+  padding-bottom: 20px;
 `;
 
 const WorkInfo_Wrap = styled.div`
@@ -75,30 +75,43 @@ const TextWrap_WorkInfo = styled.div`
 `;
 
 const Contacts_Wrap = styled.div`
-    width: 100%;
-    padding-top: 20px;
-    p{
-        margin-bottom: 20px;
-    }
-    p:nth-child(1){
-        font-weight: 600;
-    }
-    p:nth-child(2){
-        font-size: 15px;
-        color: slateblue;
-    }
-    p:nth-child(3){
-        font-size: 15px;
-        color: slateblue;
-    }
+  width: 100%;
+  padding-top: 20px;
+  margin-bottom: 20px;
+  border-bottom: 1px solid lightgray;
+  p {
+    margin-bottom: 20px;
+  }
+  p:nth-child(1) {
+    font-weight: 600;
+  }
+  p:nth-child(2) {
+    font-size: 15px;
+    color: slateblue;
+  }
+  p:nth-child(3) {
+    font-size: 15px;
+    color: slateblue;
+  }
 `;
 
 const Socials_Wrap = styled.div`
-
+  width: 100%;
+  p{
+    font-weight: 600;
+  }
 `;
 
 const IconWrap_Socials = styled.div`
+    margin-top: 20px;
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
   div {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    background-color: gray;
   }
 `;
 
@@ -138,9 +151,6 @@ function MyPage_Test() {
           <p>{workInfo_title}</p>
           <p>{workInfo_desc}</p>
         </TextWrap_WorkInfo>
-        <Socials_Wrap>
-            <IconWrap_Socials></IconWrap_Socials>
-        </Socials_Wrap>
       </WorkInfo_Wrap>
     );
   };
@@ -157,7 +167,7 @@ function MyPage_Test() {
     workInfo_desc_2,
     workInfo_desc_3,
     contact_number,
-    contact_email
+    contact_email,
   }) => {
     return (
       <Left_Wrap>
@@ -181,11 +191,20 @@ function MyPage_Test() {
             workInfo_icon={workInfo_icon_3}
           />
         </WorkInfo_GlobalWrap>
-          <Contacts_Wrap>
-            <p>Contacts</p>
-            <p>{contact_number}</p>
-            <p>{contact_email}</p>
-          </Contacts_Wrap>
+        <Contacts_Wrap>
+          <p>Contacts</p>
+          <p>{contact_number}</p>
+          <p>{contact_email}</p>
+        </Contacts_Wrap>
+        <Socials_Wrap>
+          <p>Socials</p>
+          <IconWrap_Socials>
+            <div style={{ backgroundImage: `url("../images/portraits/${bgImage}")` }}></div>
+            <div style={{ backgroundImage: `url("../images/portraits/${bgImage}")` }}></div>
+            <div style={{ backgroundImage: `url("../images/portraits/${bgImage}")` }}></div>
+            <div style={{ backgroundImage: `url("../images/portraits/${bgImage}")` }}></div>
+          </IconWrap_Socials>
+        </Socials_Wrap>
       </Left_Wrap>
     );
   };
