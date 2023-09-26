@@ -334,7 +334,7 @@ function Login() {
             <InputWrapper>
               <Input
                 type="email"
-                className="email"
+                className="email"y
                 placeholder="이메일"
                 onChange={(e) => {
                   setEmail(e.target.value);
@@ -377,7 +377,7 @@ function Login() {
         </SignUp>
         <LoginNav2></LoginNav2>
       </LoginBg>
-      <div>dummy</div>
+      
     </>
   );
 }
