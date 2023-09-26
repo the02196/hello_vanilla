@@ -8,6 +8,7 @@ import { logIn, loggedIn } from "../store";
 import { FacebookAuthProvider } from "firebase/auth";
 
 
+
 const LoginBg = styled.div`
   width: 100%;
   height: 100vh;
@@ -164,11 +165,47 @@ const Button = styled.button`
   box-sizing: border-box;
   color: #fff;
 `;
-
+const IconWrap = styled.div`
+    flex-basis: 25%;
+    display: flex;
+    justify-content: space-around;
+`
+const FacebookIcon = styled.img`
+    width: 25px;
+    height: 25px;
+    background-repeat: no-repeat;
+    background-size: cover;
+    margin-top: 3px;
+    background-color: #3A589B;
+    background-image: url("../images/login/facebook.png");
+    cursor: pointer;
+   
+`
+const GitIcon = styled.img`
+     width: 25px;
+    height: 25px;
+    background-repeat: no-repeat;
+    background-size: cover;
+    margin-top: 3px;
+    background-image: url("../images/login/GitHub.png");
+    cursor: pointer;
+    
+`
+const GoogleIcon = styled.img`
+    width: 25px;
+    height: 25px;
+    background-repeat: no-repeat;
+    background-size: cover;
+    margin-top: 3px;
+    background-color: #f5f5f5;
+    background-image: url("../images/login/google.png");
+    cursor: pointer;
+  
+`
 function Login() {
-  const [email, setEmail] = useState();
-  const [password, setPassword] = useState();
-  const [error, setError] = useState();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [newAccount, setNewAccount] = useState(true);
@@ -215,7 +252,6 @@ function Login() {
       console.log(error.code);
     }
   };
-
   const onChange = (event) => {
     const {
       target: { name, value },
@@ -281,7 +317,7 @@ function Login() {
       
 }
  
- 
+  
 
   return (
     <>
@@ -303,7 +339,12 @@ function Login() {
                 onChange={(e) => {
                   setEmail(e.target.value);
                 }} required/>
-           
+                
+                {/* // {(e) => {
+                //   setEmail(e.target.value);
+                // }}
+                // required */}
+              
               {/* required는 input에서 코드가 있는지 없는지 확인하는것 */}
               <Label>이메일</Label>
             </InputWrapper>
@@ -315,7 +356,11 @@ function Login() {
                 onChange={(e) => {
                   setPassword(e.target.value);
                 }} required
-     
+                
+                // {(e) => {
+                //   setPassword(e.target.value);
+                // }}
+                // required
               />
               <Label>패스워드</Label>
             </InputWrapper>
@@ -323,6 +368,9 @@ function Login() {
           </form>
           {/* <p>{error}</p> */}
           <InputWrapper>
+          <IconWrap>
+            <GoogleIcon onClick={()=> {snsLogin ('google')}} /><FacebookIcon onClick={()=> {snsLogin('facebook')}} /><GitIcon onClick={()=> {snsLogin('github')}} />
+          </IconWrap>
             <NavLink to="/findemail">이메일/비밀번호 재설정</NavLink>
             <NavLink to="/member">회원가입</NavLink>
           </InputWrapper>
