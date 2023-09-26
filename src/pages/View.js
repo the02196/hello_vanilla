@@ -79,7 +79,7 @@ function View() {
   const [message, setMessage] = useState("");
   const uid = sessionStorage.getItem("users");
   const memberProfile = useSelector(state => state.user);
-  const userState = useSelector(state => state.user);
+  // const userState = useSelector(state => state.user);
  
   useEffect(()=>{
     const postRef = doc(getFirestore(),board, view);
@@ -130,7 +130,7 @@ function View() {
     const commentRef = collection(postRef, "comments");
     addDoc(commentRef, {
       text: comment,
-      nickname : userState&&userState.data.nickname,
+      nickname : memberProfile && memberProfile.data.nickname,
       timestamp : serverTimestamp()
     })
   }
