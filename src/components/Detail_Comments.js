@@ -6,11 +6,12 @@ import {
   faShare,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { useId, useState } from "react";
+import React, { useEffect, useId, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import { textValue } from "../store";
 import TextArea from "./TextArea";
+import { addDoc, collection, doc, getDoc, getFirestore, increment, onSnapshot, orderBy, query, serverTimestamp, updateDoc } from "firebase/firestore";
 
 /*
   #### Wrappers ####
@@ -316,6 +317,11 @@ function Detail_Comments() {
   const [repliedUserProfileLink, setUserProfileLink] = useState("");
   const [repliedUserProfileLink2, setUserProfileLink2] = useState("");
   const [repliedUserProfileLink3, setUserProfileLink3] = useState("");
+  const [post, setPost] = useState();
+  const [postUid, setPostUid] = useState();
+  const [comment, setComment] = useState("");
+  const [comments, setComments] = useState("");
+  const userState = useSelector(state => state.user);
 
   /*
   #### Fetch Contents Functions
@@ -455,7 +461,6 @@ function Detail_Comments() {
         <ContentWrap>
           <FormWrapper method="post" onSubmit={handleSubmit}>
             <TextArea />
-            <button>보내기</button>
           </FormWrapper>
         </ContentWrap>
       </li>
@@ -478,6 +483,63 @@ function Detail_Comments() {
     console.log(formJson);
   }
 
+
+  useEffect(()=>{
+    // const postRef = doc(getFirestore(),"comments", view);
+    const commentRef = collection(getFirestore(), "comments");
+
+    const q = query(commentRef, orderBy("timestamp", "desc"));
+
+    const dataSnap = onSnapshot(q, (item)=>{
+      const fetchComment = item.docs.map(doc =>({
+        id: doc.id,
+        ...doc.data()
+      }))
+      setComments(fetchComment)
+    })
+    return dataSnap;
+  },[])
+
+
+  // const viewCnt = async(board, view) => {
+  //   const viewRef = doc(getFirestore(), board, view);
+  //   await updateDoc(viewRef,{
+  //     view : increment(1)
+  //   })
+  // }
+
+//   useEffect(()=>{    
+//     const fetchData = async () =>{
+//       const postRef = doc(getFirestore(),"comments", userState.uid);
+//       // const postRef = collection(getFirestore(), "comments");
+//       const postSnapShot = await getDoc(postRef);
+//       if(postSnapShot.exists()){
+//         setPost(postSnapShot.data())
+//         setPostUid(postSnapShot.data().uid)
+        
+//       }
+//     }
+//     fetchData()    
+// },[])
+
+  // function formateDate(data){
+  //   if(data){
+  //     const date = data.toDate();
+  //     const year = date.getFullYear();
+  //     const month = String(date.getMonth() + 1).padStart(2,"0")
+  //     const day = String(date.getDate()).padStart(2, "0");
+  //     return `${year}-${month}-${day}`
+  //   }
+  // }
+  // const deletePost = async () => {
+  //   if(window.confirm("정말로 삭제하시겠습니까?")){
+  //     const docRef = doc(getFirestore(), board, view);
+  //     await deleteDoc(docRef);
+  //     alert("게시물이 삭제 되었습니다.");
+  //     navigate(`/service/${board}`)
+  //   }
+  // }
+
   return (
     <>
       <GlobalWrap>
@@ -488,6 +550,7 @@ function Detail_Comments() {
             <FetchReply />
             <FetchReply />
             <FetchReply />
+          
           </ul>
         </CommentWrap>
       </GlobalWrap>
