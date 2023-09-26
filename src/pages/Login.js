@@ -5,6 +5,7 @@ import { NavLink, useNavigate } from "react-router-dom"; //로그인 성공시 �
 import { collection, doc, getDoc, getFirestore } from "firebase/firestore";
 import { useDispatch, useSelector } from "react-redux";
 import { logIn, loggedIn } from "../store";
+import { FacebookAuthProvider } from "firebase/auth";
 
 
 
@@ -165,9 +166,9 @@ const Button = styled.button`
   color: #fff;
 `;
 const IconWrap = styled.div`
-    width: 200px;
+    flex-basis: 25%;
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
 `
 const FacebookIcon = styled.img`
     width: 25px;
@@ -177,6 +178,7 @@ const FacebookIcon = styled.img`
     margin-top: 3px;
     background-color: #3A589B;
     background-image: url("../images/login/facebook.png");
+    cursor: pointer;
    
 `
 const GitIcon = styled.img`
@@ -186,6 +188,7 @@ const GitIcon = styled.img`
     background-size: cover;
     margin-top: 3px;
     background-image: url("../images/login/GitHub.png");
+    cursor: pointer;
     
 `
 const GoogleIcon = styled.img`
@@ -196,15 +199,18 @@ const GoogleIcon = styled.img`
     margin-top: 3px;
     background-color: #f5f5f5;
     background-image: url("../images/login/google.png");
+    cursor: pointer;
   
 `
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  const [newAccount, setNewAccount] = useState(true);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const userState = useSelector(state => state.user);
+console.log(userState)
+
 
   const errorMsg = (errorCode) => {
     const firebaseError = {
@@ -260,40 +266,56 @@ function Login() {
   };
 
   //TODO  submit의 새로고침 기능을 막자.
-  const onSubmit = async (event) => {
-    event.preventDefault();
-    try {
-      let data;
-      if (newAccount) {
-        // create account
-        data = await firebaseAuth.createUserWithEmailAndPassword(
-          email,
-          password
-        );
-      } else {
-        // log in
-        data = await firebaseAuth.signInWithEmailAndPassword(email, password);
-      }
-      console.log(data);
-    } catch (error) {
-      setError(error.message);
-    }
-  };
-
-  const toggleAccount = () => setNewAccount((prev) => !prev);
-  const onSocialClick = async (event) => {
-    const {
-      target: { name },
-    } = event;
+  const snsLogin  = async (data) =>{
     let provider;
-    if (name === "google") {
-      provider = new GoogleAuthProvider();
-    } else if (name === "github") {
-      provider = new GithubAuthProvider();
-    }
-    const data = signInWithPopup(firebaseAuth, provider);
-    console.log(data);
-  };
+    switch(data){
+      case 'google':
+        provider = 
+        new GoogleAuthProvider();
+      
+ 
+      break;
+
+      case 'github': 
+      provider =  
+      new GithubAuthProvider();
+
+      break;
+
+      case 'facebook':
+        provider = 
+        new FacebookAuthProvider();
+
+        break;
+
+      default:
+
+        return;
+      }
+      // async는 function 앞에 위치합니다.
+      // async가 붙은 함수는 반드시 프라미스를 반환하고, 프라미스가 아닌 것은 프라미스로 감싸 반환합니다. 그런데 async가 제공하는 기능은 이뿐만이 아닙니다. 또 다른 키워드 await는 async 함수 안에서만 동작합니다
+        
+      try{
+          const result = await signInWithPopup (firebaseAuth, provider);
+          const user = result.user;
+          console.log(user)
+          sessionStorage.setItem("users", user.uid)
+          dispatch(logIn(user.uid))
+          navigate("/member", {
+            state:
+            {
+              name: user.displayName,
+              email: user.email,
+              photoURL : user.photoURL
+            }
+          })
+
+
+        }catch(error){
+          setError(errorMsg(error))
+        }
+      
+}
   
   
 
@@ -308,7 +330,7 @@ function Login() {
         <SignUp>
           <Title>로그인</Title>
           {/* {email}{password} */}
-          <form onSubmit={onSubmit}>
+          <form onSubmit={LoginForm}>
             <InputWrapper>
               <Input
                 type="email"
@@ -336,11 +358,13 @@ function Login() {
               />
               <Label>패스워드</Label>
             </InputWrapper>
-            <Button onClick={toggleAccount}>{newAccount ? "로그인" : "회원가입"}</Button>
+            <Button>로그인</Button>
           </form>
           {/* <p>{error}</p> */}
           <InputWrapper>
-            <GoogleIcon onClick={onSocialClick} /><FacebookIcon /><GitIcon />
+          <IconWrap>
+            <GoogleIcon onClick={()=> {snsLogin ('google')}} /><FacebookIcon onClick={()=> {snsLogin('facebook')}} /><GitIcon onClick={()=> {snsLogin('github')}} />
+          </IconWrap>
             <NavLink to="/findemail">이메일/비밀번호 재설정</NavLink>
             <NavLink to="/member">회원가입</NavLink>
           </InputWrapper>

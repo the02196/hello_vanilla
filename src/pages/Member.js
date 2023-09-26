@@ -289,7 +289,7 @@ function Member() {
   
 
   if(errorMessage){
-    setError(errorMessage + "이(가) 비어 있습니다.")
+    setError(errorMessage + "을 입력해 주세요!.")
     //length가 숫자보다 작고 숫자보다 크다면 해서 조건걸어서 만들수도 있음
     setIsModal(!isModal)
     return;
@@ -358,7 +358,7 @@ function Member() {
       <LoginBg>
          <LoginNav>
           <Logo><NavLink to={"/main"}>HeLLO VanILLa</NavLink></Logo>
-          <LoginBtn><NavLink to={"/login"}>로그인</NavLink> &nbsp; | &nbsp; <NavLink to={"/main"}>메인 페이지로 가기</NavLink> </LoginBtn>
+          <LoginBtn><NavLink to={"/login"}>로그인</NavLink> &nbsp; | &nbsp; <NavLink to={"/main"}>메인 페이지로 가기</NavLink> </LoginBtn>
         </LoginNav>
         <SignUp>
           {
