@@ -353,7 +353,7 @@ function Member() {
     // </ModalBackground>
     }
     { 
-      userState.loggedIn && initialMode ?  <Modal error="이미 로그인 중입니다." onClose={()=> navigate("/")}/> :
+      userState.loggedIn && initialMode ?  <Modal error="이미 로그인 중입니다." onClose={()=> navigate("/signup")}/> :
       
       <LoginBg>
          <LoginNav>

@@ -208,8 +208,8 @@ function Login() {
   const [error, setError] = useState("");
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const userState = useSelector(state => state.user);
-console.log(userState)
+  const [newAccount, setNewAccount] = useState(true);
+
 
 
   const errorMsg = (errorCode) => {
@@ -316,7 +316,7 @@ console.log(userState)
         }
       
 }
-  
+ 
   
 
   return (
@@ -336,12 +336,15 @@ console.log(userState)
                 type="email"
                 className="email"
                 placeholder="이메일"
-                onChange={onChange}
-                // {(e) => {
+                onChange={(e) => {
+                  setEmail(e.target.value);
+                }} required/>
+                
+                {/* // {(e) => {
                 //   setEmail(e.target.value);
                 // }}
-                // required
-              />
+                // required */}
+              
               {/* required는 input에서 코드가 있는지 없는지 확인하는것 */}
               <Label>이메일</Label>
             </InputWrapper>
@@ -350,7 +353,10 @@ console.log(userState)
                 type="password"
                 className="password"
                 placeholder="비밀번호"
-                onChange={onChange}
+                onChange={(e) => {
+                  setPassword(e.target.value);
+                }} required
+                
                 // {(e) => {
                 //   setPassword(e.target.value);
                 // }}
