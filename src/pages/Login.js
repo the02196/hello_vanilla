@@ -5,6 +5,7 @@ import { NavLink, useNavigate } from "react-router-dom"; //로그인 성공시 �
 import { collection, doc, getDoc, getFirestore } from "firebase/firestore";
 import { useDispatch, useSelector } from "react-redux";
 import { logIn, loggedIn } from "../store";
+import { FacebookAuthProvider } from "firebase/auth";
 
 
 
@@ -165,9 +166,9 @@ const Button = styled.button`
   color: #fff;
 `;
 const IconWrap = styled.div`
-    width: 200px;
+    flex-basis: 25%;
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
 `
 const FacebookIcon = styled.img`
     width: 25px;
@@ -281,6 +282,12 @@ console.log(userState)
 
       break;
 
+      case 'facebook':
+        provider = 
+        new FacebookAuthProvider();
+
+        break;
+
       default:
 
         return;
@@ -355,7 +362,9 @@ console.log(userState)
           </form>
           {/* <p>{error}</p> */}
           <InputWrapper>
-            <GoogleIcon onClick={()=> {snsLogin ('google')}} /><FacebookIcon /><GitIcon onClick={()=> {snsLogin('github')}} />
+          <IconWrap>
+            <GoogleIcon onClick={()=> {snsLogin ('google')}} /><FacebookIcon onClick={()=> {snsLogin('facebook')}} /><GitIcon onClick={()=> {snsLogin('github')}} />
+          </IconWrap>
             <NavLink to="/findemail">이메일/비밀번호 재설정</NavLink>
             <NavLink to="/member">회원가입</NavLink>
           </InputWrapper>
