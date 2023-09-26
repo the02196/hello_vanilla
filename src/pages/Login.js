@@ -170,6 +170,9 @@ function Login() {
   const [error, setError] = useState();
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [newAccount, setNewAccount] = useState(true);
+
+
 
   const errorMsg = (errorCode) => {
     const firebaseError = {
@@ -212,6 +215,73 @@ function Login() {
     }
   };
 
+  const onChange = (event) => {
+    const {
+      target: { name, value },
+    } = event;
+    if (name === "email") {
+      setEmail(value);
+      console.log(email);
+    } else if (name === "password") {
+      setPassword(value);
+      console.log(password);
+    }
+  };
+
+  //TODO  submit의 새로고침 기능을 막자.
+  const snsLogin  = async (data) =>{
+    let provider;
+    switch(data){
+      case 'google':
+        provider = 
+        new GoogleAuthProvider();
+      
+ 
+      break;
+
+      case 'github': 
+      provider =  
+      new GithubAuthProvider();
+
+      break;
+
+      case 'facebook':
+        provider = 
+        new FacebookAuthProvider();
+
+        break;
+
+      default:
+
+        return;
+      }
+      // async는 function 앞에 위치합니다.
+      // async가 붙은 함수는 반드시 프라미스를 반환하고, 프라미스가 아닌 것은 프라미스로 감싸 반환합니다. 그런데 async가 제공하는 기능은 이뿐만이 아닙니다. 또 다른 키워드 await는 async 함수 안에서만 동작합니다
+        
+      try{
+          const result = await signInWithPopup (firebaseAuth, provider);
+          const user = result.user;
+          console.log(user)
+          sessionStorage.setItem("users", user.uid)
+          dispatch(logIn(user.uid))
+          navigate("/member", {
+            state:
+            {
+              name: user.displayName,
+              email: user.email,
+              photoURL : user.photoURL
+            }
+          })
+
+
+        }catch(error){
+          setError(errorMsg(error))
+        }
+      
+}
+ 
+ 
+
   return (
     <>
       <LoginBg>
@@ -231,9 +301,8 @@ function Login() {
                 placeholder="이메일"
                 onChange={(e) => {
                   setEmail(e.target.value);
-                }}
-                required
-              />
+                }} required/>
+           
               {/* required는 input에서 코드가 있는지 없는지 확인하는것 */}
               <Label>이메일</Label>
             </InputWrapper>
@@ -244,8 +313,8 @@ function Login() {
                 placeholder="비밀번호"
                 onChange={(e) => {
                   setPassword(e.target.value);
-                }}
-                required
+                }} required
+     
               />
               <Label>패스워드</Label>
             </InputWrapper>
