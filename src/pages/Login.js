@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { firebaseAuth, signInWithEmailAndPassword } from "./../firebase";
+import { GithubAuthProvider, GoogleAuthProvider, firebaseAuth, signInWithEmailAndPassword, signInWithPopup } from "./../firebase";
 import { NavLink, useNavigate } from "react-router-dom"; //로그인 성공시 이전페이지로 돌아가기 위해 필요함
 import { collection, doc, getDoc, getFirestore } from "firebase/firestore";
 import { useDispatch, useSelector } from "react-redux";
 import { logIn, loggedIn } from "../store";
-import Modal from "../components/Modal";
+import { FacebookAuthProvider } from "firebase/auth";
+
 
 const LoginBg = styled.div`
   width: 100%;
