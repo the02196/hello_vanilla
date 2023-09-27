@@ -25,6 +25,7 @@ import Notpage from "./pages/Notpage";
 import MyPage from "./pages/MyPage";
 
 import Auth from "./components/Auth";
+import Heart_Test from "./components/Heart_Test";
 
 
 const GlobalNavigation = styled.ul`
@@ -96,6 +97,9 @@ function App() {
         <NavLink to={"/auth"}>
           <GlobalNavigationButton>Auth Test</GlobalNavigationButton>
         </NavLink>
+        <NavLink to={"/heart"}>
+          <GlobalNavigationButton>Heart Test</GlobalNavigationButton>
+        </NavLink>
       </GlobalNavigation>
       <Provider store={store}>
         <Inner />
@@ -115,10 +119,10 @@ function Inner() {
     const fetchUser = async () => {
       if (!uid) return;
       const userDoc = doc(collection(getFirestore(), "users"), uid);
-      console.log(userDoc);
+      // console.log(userDoc);
       try {
         const docSnapshot = await getDoc(userDoc);
-        console.log(docSnapshot);
+        // console.log(docSnapshot);
         if (docSnapshot.exists()) {
           const userData = docSnapshot.data();
           dispatch(loggedIn(userData));
@@ -167,6 +171,7 @@ function Inner() {
           <Route path="/mypage" element={<MyPage />}></Route>
 
           <Route path="/auth" element={<Auth />}></Route>
+          <Route path="/heart" element={<Heart_Test />}></Route>
 
           <Route path="/service" element={<Service />}>
             <Route path="notice" element={<Notice />}></Route>
