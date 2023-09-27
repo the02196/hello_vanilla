@@ -554,7 +554,7 @@ function Detail_Comments() {
               comments &&
               comments.map((e,i)=>{
                 return (
-                  <li key={i}>{e.text}</li>
+                  <li key={i}><span>{e.text}</span></li>
                 )
               })
             }
