@@ -488,7 +488,7 @@ function Detail_Comments() {
     // const postRef = doc(getFirestore(),"comments", view);
     const commentRef = collection(getFirestore(), "comments");
 
-    const q = query(commentRef, orderBy("timestamp", "desc"));
+    const q = query(commentRef, orderBy("createdate", "desc"));
 
     const dataSnap = onSnapshot(q, (item)=>{
       const fetchComment = item.docs.map(doc =>({
@@ -550,7 +550,14 @@ function Detail_Comments() {
             <FetchReply />
             <FetchReply />
             <FetchReply />
-          
+            {
+              comments &&
+              comments.map((e,i)=>{
+                return (
+                  <li key={i}><span>{e.text}</span></li>
+                )
+              })
+            }
           </ul>
         </CommentWrap>
       </GlobalWrap>
