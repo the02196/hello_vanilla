@@ -1,8 +1,11 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 import { styled } from "styled-components";
 
 function Nav() {
+  const userState = useSelector(state => state.user);
+
   const NavWrap = styled.div`
     width: 100%;
     height: 400px;

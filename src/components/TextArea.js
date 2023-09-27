@@ -96,7 +96,6 @@ function TextArea() {
     
     // const postRef = doc(getFirestore(), "comments", memberProfile.uid);
     try {
-      alert("확인해!")
       await addDoc(collection(getFirestore(),"comments"), {
         text: commentValue,
         uid : memberProfile && memberProfile.uid,
@@ -108,7 +107,6 @@ function TextArea() {
         users: 0,
         likes: 0,
         links: 0
-        
       })
     }
     catch(error){
