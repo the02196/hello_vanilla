@@ -30,6 +30,7 @@ import FindEmail from "./pages/FindEmail";
 
 import Heart_Test from "./components/Heart_Test";
 import Dog_Test from "./components/Dog_Test";
+import Modify from "./pages/Modify";
 
 
 
@@ -183,6 +184,7 @@ function Inner() {
           <Route path="/mypage" element={<MyPage />}></Route>
 
           <Route path="/auth" element={<Auth />}></Route>
+          <Route path="/modify" element={<Modify />}></Route>
           <Route path="/heart" element={<Heart_Test />}></Route>
           <Route path="/dogtest" element={<Dog_Test />}></Route>
 
