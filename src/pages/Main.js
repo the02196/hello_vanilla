@@ -13,11 +13,11 @@ import { NavLink } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faRocket } from "@fortawesome/free-solid-svg-icons";
 import { firebaseAuth } from "../firebase";
-import { Firestore } from "firebase/firestore";
+import { Firestore, doc, getDoc, getFirestore } from "firebase/firestore";
+import { useSelector } from "react-redux";
 
 function Main() {
-
-  const [work_VendingMachine, setWork_VendingMachine] = useState(false);
+  const userState = useSelector((state) => state.user);
 
 
   const MainWrap = styled.div`
@@ -336,6 +336,8 @@ function Main() {
     font-weight: 500;
     box-sizing: border-box;
   `
+
+
 function PutSixthTestBox(){
   return(
     <>
@@ -372,7 +374,7 @@ function PutSixthTestBox(){
   return (
     <>
       <MainWrap>
-        <Nav />
+        <Nav userState={userState} />
         <AboutWrap>
           <AboutContent><FontAwesomeIcon style={{marginRight: "13px"}} icon={faRocket}></FontAwesomeIcon>즐거운 여정으로 바닐라 스크립트<img src="../images/main/js.svg"></img>를 배워보세요!&nbsp; 입문자부터 전문가까지 모두를 위한 다양한 콘텐츠가 기다리고 있습니다.</AboutContent>
           <AboutContent><NavLink to={"/service/notice"}>2023.09.18 &nbsp;새로운 업데이트 확인하기</NavLink></AboutContent>
@@ -408,7 +410,7 @@ function PutSixthTestBox(){
           {/* <TestBox onMouseEnter={() => {setWork_VendingMachine(!work_VendingMachine)}} onMouseOut={() => {setWork_VendingMachine(!work_VendingMachine)}} > */}
           <TestBox>
             <Easy>초급</Easy>
-            <VendingMachine Work={work_VendingMachine} />
+            <VendingMachine/>
             <TestBoxTitle>무엇이 들었을까?</TestBoxTitle>
             <TestBoxDesc style={{ color: "black", left: "120px" }}>
               바닐라 스크립트로 자판기 만들기
