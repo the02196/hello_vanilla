@@ -8,7 +8,7 @@ import Modal from '../components/Modal'
 
 
 function Logout() {
-    const dispatch=useDispatch();
+    const dispatch=useDispatch();      
     const navigate=useNavigate();
 
     const [isModal,setIsModal]=useState(true);
