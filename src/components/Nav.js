@@ -1,11 +1,11 @@
-import React from "react";
+import { doc, getDoc, getFirestore } from "firebase/firestore";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 import { styled } from "styled-components";
 
-function Nav() {
-  const userState = useSelector(state => state.user);
-
+function Nav({userState}) {
+  const [nickName, SetNickName] = useState("");
   const NavWrap = styled.div`
     width: 100%;
     height: 400px;
@@ -89,15 +89,28 @@ function Nav() {
       }
     `
 
+
+const FetchNickName = async () => {
+  
+  const userRef = doc(getFirestore(), "users", userState.uid);
+  const userSnapshot = await getDoc(userRef);
+  const userNickname = userSnapshot.data().nickname;
+  SetNickName(userNickname);
+}
+useEffect( () => {
+  FetchNickName()
+},[])
+
+
   return (
     <>
       <NavWrap>
         <LogoText><NavLink to={"/main"}>Hello Vanilla</NavLink></LogoText>
         <TextWrap>
-        <span><NavLink to={"/quick"}>퀵링크 &nbsp;&nbsp;&nbsp;&nbsp;</NavLink></span><span><NavLink to={"/login"}>로그인</NavLink></span><span> &nbsp; | &nbsp;  </span><span><NavLink to={"/member"}>회원가입</NavLink></span>
+        <span><NavLink to={"/quick"}>퀵링크 &nbsp;&nbsp;&nbsp;&nbsp;</NavLink></span><span><NavLink to={"/login"}>{userState ? "로그아웃" : "로그인"}</NavLink></span><span>{userState ? "" : " | "}</span><span><NavLink to={"/member"}>{userState ? "" : "회원가입"}</NavLink></span>
         </TextWrap>
         {/* <ProfileImg /> */}
-        <WelcomeTextWrap><WelcomeText>안녕하세요, 여행자님!</WelcomeText></WelcomeTextWrap>
+        <WelcomeTextWrap><WelcomeText>안녕하세요, {nickName} 여행자님!</WelcomeText></WelcomeTextWrap>
       </NavWrap>
     </>
   );
