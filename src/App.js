@@ -26,6 +26,7 @@ import MyPage from "./pages/MyPage";
 
 import Auth from "./components/Auth";
 import Heart_Test from "./components/Heart_Test";
+import Dog_Test from "./components/Dog_Test";
 
 
 const GlobalNavigation = styled.ul`
@@ -100,6 +101,9 @@ function App() {
         <NavLink to={"/heart"}>
           <GlobalNavigationButton>Heart Test</GlobalNavigationButton>
         </NavLink>
+        <NavLink to={"/dogtest"}>
+          <GlobalNavigationButton>Dog Test</GlobalNavigationButton>
+        </NavLink>
       </GlobalNavigation>
       <Provider store={store}>
         <Inner />
@@ -172,6 +176,7 @@ function Inner() {
 
           <Route path="/auth" element={<Auth />}></Route>
           <Route path="/heart" element={<Heart_Test />}></Route>
+          <Route path="/dogtest" element={<Dog_Test />}></Route>
 
           <Route path="/service" element={<Service />}>
             <Route path="notice" element={<Notice />}></Route>

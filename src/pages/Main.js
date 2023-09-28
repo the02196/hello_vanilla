@@ -18,7 +18,6 @@ import { useSelector } from "react-redux";
 
 function Main() {
   const userState = useSelector((state) => state.user);
-  const [work_VendingMachine, setWork_VendingMachine] = useState(false);
 
 
   const MainWrap = styled.div`
@@ -411,7 +410,7 @@ function PutSixthTestBox(){
           {/* <TestBox onMouseEnter={() => {setWork_VendingMachine(!work_VendingMachine)}} onMouseOut={() => {setWork_VendingMachine(!work_VendingMachine)}} > */}
           <TestBox>
             <Easy>초급</Easy>
-            <VendingMachine Work={work_VendingMachine} />
+            <VendingMachine/>
             <TestBoxTitle>무엇이 들었을까?</TestBoxTitle>
             <TestBoxDesc style={{ color: "black", left: "120px" }}>
               바닐라 스크립트로 자판기 만들기
