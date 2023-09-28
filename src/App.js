@@ -25,7 +25,11 @@ import Notpage from "./pages/Notpage";
 import MyPage from "./pages/MyPage";
 
 import Auth from "./components/Auth";
+
+import FindEmail from "./pages/FindEmail";
+
 import Heart_Test from "./components/Heart_Test";
+
 
 
 const GlobalNavigation = styled.ul`
@@ -78,6 +82,9 @@ function App() {
         </NavLink>
         <NavLink to={"/member"}>
           <GlobalNavigationButton>Sign In</GlobalNavigationButton>
+        </NavLink>
+        <NavLink to={"/member"}>
+          <GlobalNavigationButton>Modify</GlobalNavigationButton>
         </NavLink>
         <NavLink to={"/detail"}>
           <GlobalNavigationButton>detail</GlobalNavigationButton>
@@ -150,6 +157,7 @@ function Inner() {
           <Route path="/detail" element={<Detail />}></Route>
           <Route path="/quick" element={<Quick />}></Route>
           <Route path="/login" element={<Login />}></Route>
+          <Route path="/findemail" element={<FindEmail />}></Route>
           <Route path="/edit/:board/" element={<Write />}></Route>
           <Route path="/view/:board/:view" element={<View />}></Route>
           <Route path="/write/:board" element={<Write />}></Route>
