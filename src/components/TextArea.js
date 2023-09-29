@@ -96,7 +96,7 @@ function TextArea() {
     
     // const postRef = doc(getFirestore(), "comments", memberProfile.uid);
     try {
-      await addDoc(collection(getFirestore(),"comments"), {
+      const docRef = await addDoc(collection(getFirestore(),"comments"), {
         text: commentValue,
         uid : memberProfile && memberProfile.uid,
         nickname : memberProfile && memberProfile.data.nickname,
@@ -108,6 +108,7 @@ function TextArea() {
         likes: 0,
         links: 0
       })
+      setPostUid(docRef.id)
     }
     catch(error){
       console.log(error)

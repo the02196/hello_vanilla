@@ -18,6 +18,7 @@ import {
   doc,
   getCountFromServer,
   getDoc,
+  getDocs,
   getFirestore,
   increment,
   onSnapshot,
@@ -333,37 +334,42 @@ function Detail_Comments() {
   const [repliedUserProfileLink2, setUserProfileLink2] = useState("");
   const [repliedUserProfileLink3, setUserProfileLink3] = useState("");
   const [post, setPost] = useState();
-  const [postUid, setPostUid] = useState();
+  const [postUid, setPostUid] = useState(null);
   const [comment, setComment] = useState("");
-  const [comments, setComments] = useState("");
+  const [comments, setComments] = useState([]);
   const userState = useSelector((state) => state.user);
 
-  const addHeart = async (number) => {
-    const commentRef = doc(getFirestore(), "comments", number);
+  
 
-    const userRef = doc(getFirestore(), "users", userState.uid);
-    const userSnapshot = await getDoc(userRef);
-    const userNickname = userSnapshot.data().nickname;
+  const getComments = async () => {
+    const commentsSnapshot = await getDocs(collection(getFirestore(), 'comments'));
+    const comments = commentsSnapshot.docs.map(doc => ({ 
+      id: doc.id, 
+      ...doc.data() 
+    }));
+  return comments;
+  }
 
-    const db = getFirestore();
-    const expensesCol = collection(commentRef, "liked");
-    const snapshot = await getCountFromServer(expensesCol);
-    const totalCount = snapshot.data().count;
-
-    setHeartCount(totalCount)
+  useEffect(() => {
+    const fetchComments = async () => {
+      const data = await getComments();
+      setComments(data);
+    };
+    fetchComments();
+  }, []);
+  
+  const toggleLike = async (commentId, userId) => {
+    const commentRef = doc(getFirestore(), 'comments', commentId);
+    // const commentSnapshot = await getDoc(commentRef);
+    // const commentData = commentSnapshot.data();
     try {
-      const test1 = doc(commentRef, "liked", userState.uid);
-
+      const test1 = doc(commentRef, "like", userState.uid);
       const testSnap = await getDoc(test1);
-
       if (testSnap.exists()) {
-        await deleteDoc(doc(commentRef, "liked", userState.uid));
+        await deleteDoc(doc(commentRef, "like", userState.uid));
         return;
       }
-
-      await setDoc(doc(commentRef, "liked", userState.uid), {
-        nickname: userNickname,
-
+      await setDoc(doc(commentRef, "like", userState.uid), {
         liked: true,
       });
     } catch (error) {
@@ -371,6 +377,28 @@ function Detail_Comments() {
     }
   };
 
+  useEffect(() => {
+    const commentRef = collection(getFirestore(), "comments");
+
+    const q = query(commentRef, orderBy("createdate", "asc"));
+
+    const dataSnap = onSnapshot(q, (item) => {
+      const fetchComment = item.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+      setComments(fetchComment);
+    });
+    return dataSnap;
+  }, []);
+
+  const getLikeCount = async (commentId) => {
+    const commentRef = doc(getFirestore(), 'comments', commentId);
+    const likesCollection = collection(commentRef, "like");
+    const likesSnapshot = await getDocs(likesCollection);
+    return likesSnapshot.docs.length;
+  }
+  
   /*
   #### Fetch Contents Functions
   */
@@ -392,13 +420,13 @@ function Detail_Comments() {
     );
   };
 
-  const FetchContentBottom = () => {
+  const FetchContentBottom = ({onToggleLike, likeCount}) => {
     return (
       <ContentBottomWrap>
-        <Count>{heartCount}</Count>
+        <Count>{likeCount}</Count>
         <Love style={{cursor: "pointer"}} onClick={()=>{
-          addHeart()
-          setHeartCount(heartCount)
+          // setHeartCount(heartCount)
+          onToggleLike()
         }}>
           <FontAwesomeIcon icon={faHeart} />
         </Love>
@@ -480,6 +508,14 @@ function Detail_Comments() {
   };
 
   const FetchReply = ({ i, nickname, text, createdate }) => {
+    const [likeCount, setLikeCount] = useState(0);
+    useEffect(() => {
+      const fetchLikes = async () => {
+          const count = await getLikeCount(i);
+          setLikeCount(count);
+      };
+      fetchLikes();
+  }, [i]);
     return (
       <li key={i}>
         <ProfileWrap>
@@ -488,7 +524,7 @@ function Detail_Comments() {
         <ContentWrap>
           <FetchContentTop nickname={nickname} createdate={createdate} />
           <FetchContentCenter text={text} />
-          <FetchContentBottom />
+          <FetchContentBottom onToggleLike={()=>toggleLike(i)} likeCount={likeCount}/>
         </ContentWrap>
       </li>
     );
@@ -525,21 +561,7 @@ function Detail_Comments() {
     console.log(formJson);
   }
 
-  useEffect(() => {
-    // const postRef = doc(getFirestore(),"comments", view);
-    const commentRef = collection(getFirestore(), "comments");
-
-    const q = query(commentRef, orderBy("createdate", "asc"));
-
-    const dataSnap = onSnapshot(q, (item) => {
-      const fetchComment = item.docs.map((doc) => ({
-        id: doc.id,
-        ...doc.data(),
-      }));
-      setComments(fetchComment);
-    });
-    return dataSnap;
-  }, []);
+  
 
   // const viewCnt = async(board, view) => {
   //   const viewRef = doc(getFirestore(), board, view);
@@ -548,19 +570,6 @@ function Detail_Comments() {
   //   })
   // }
 
-  //   useEffect(()=>{
-  //     const fetchData = async () =>{
-  //       const postRef = doc(getFirestore(),"comments", userState.uid);
-  //       // const postRef = collection(getFirestore(), "comments");
-  //       const postSnapShot = await getDoc(postRef);
-  //       if(postSnapShot.exists()){
-  //         setPost(postSnapShot.data())
-  //         setPostUid(postSnapShot.data().uid)
-
-  //       }
-  //     }
-  //     fetchData()
-  // },[])
 
   // function formateDate(data){
   //   if(data){
@@ -596,17 +605,10 @@ function Detail_Comments() {
               createdate={"2023.09.26"}
               profile={"../images/portraits/woman_5.png"}
             />
-            {comments &&
-              comments.map((e, i) => {
-                return (
-                  <FetchReply
-                    key={i}
-                    nickname={e.nickname}
-                    text={e.text}
-                    createdate={"2023.09.28"}
-                  />
-                );
-              })}
+              {comments.map(e => (
+                <FetchReply key={e.id} text={e.text} nickname={e.nickname} i={e.id} onToggleLike={()=>toggleLike}>
+                </FetchReply>
+              ))}
           </ul>
         </CommentWrap>
       </GlobalWrap>
