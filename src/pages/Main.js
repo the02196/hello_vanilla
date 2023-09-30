@@ -18,7 +18,9 @@ import { useSelector } from "react-redux";
 
 function Main() {
   const userState = useSelector((state) => state.user);
-
+  const [wait, setWait] = useState(false);
+  const [wait2, setWait2] = useState(false);
+  const [wait3, setWait3] = useState(false);
 
   const MainWrap = styled.div`
     width: 100%;
@@ -53,46 +55,46 @@ function Main() {
   `;
 
   const AboutWrap = styled.div`
-      width: 1780px;
-      height: 30px;
-      padding: 10px 20px;
-      position: absolute;
-      background-color: black;
-      top: 200px;
-      left: 50%;
-      border: 1px solid lightblue;
-      display: flex;
-      justify-content: space-between;
-      transform: translateX(-50%);
-      z-index: 100;
-      @media screen and (max-width: 1920px){
-        width: 1400px;
-      }
-  `
+    width: 1780px;
+    height: 30px;
+    padding: 10px 20px;
+    position: absolute;
+    background-color: black;
+    top: 200px;
+    left: 50%;
+    border: 1px solid lightblue;
+    display: flex;
+    justify-content: space-between;
+    transform: translateX(-50%);
+    z-index: 100;
+    @media screen and (max-width: 1920px) {
+      width: 1400px;
+    }
+  `;
   const AboutContent = styled.div`
-      line-height: 30px;
-      font-size: 18px;
-      font-weight: 400;
+    line-height: 30px;
+    font-size: 18px;
+    font-weight: 400;
+    color: white;
+    a {
       color: white;
-      a{
-         color: white;
-      }
-      &:nth-child(2){
-        font-size: 15px;
-        color: lightgray;
-        font-weight: 600;
-      }
-      @media screen and (max-width: 1920px){
-        font-size: 15px;
-      }
-      img {
-        width: 20px; 
-        vertical-align: middle; 
-        height: 20px; 
-        margin: 0px 10px 4px 10px;
-      }
-  `
-  
+    }
+    &:nth-child(2) {
+      font-size: 15px;
+      color: lightgray;
+      font-weight: 600;
+    }
+    @media screen and (max-width: 1920px) {
+      font-size: 15px;
+    }
+    img {
+      width: 20px;
+      vertical-align: middle;
+      height: 20px;
+      margin: 0px 10px 4px 10px;
+    }
+  `;
+
   const MiniBoxWrap = styled.div`
     width: 1810px;
     display: flex;
@@ -116,18 +118,36 @@ function Main() {
     @media screen and (max-width: 1920px) {
       width: 1430px;
       div {
-      &:nth-child(1),
-      &:nth-child(2),
-      &:nth-child(3),
-      &:nth-child(4) {
-        width: 350px;
-        height: 350px;
-        margin: 0;
+        &:nth-child(1),
+        &:nth-child(2),
+        &:nth-child(3),
+        &:nth-child(4) {
+          width: 350px;
+          height: 350px;
+          margin: 0;
+        }
       }
     }
-  }
   `;
 
+  const PleaseWaitWrap = styled.div`
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  `;
+  const PleaseWait = styled.p`
+    font-size: 30px;
+    color: black;
+    font-weight: 600;
+    opacity: 0;
+    transition: 1s;
+    &.on {
+      opacity: 1;
+    }
+  `;
 
   const TestBox = styled.div`
     width: 900px;
@@ -171,8 +191,8 @@ function Main() {
       width: 1810px;
       height: 300px;
       background-color: #f3fefd;
-      a{
-        &:visited{
+      a {
+        &:visited {
           color: black;
         }
       }
@@ -244,18 +264,17 @@ function Main() {
     top: 40px;
     left: 40px;
     font-family: "Inter", sans-serif;
-    &.box_sixth_default{
+    &.box_sixth_default {
       left: 50%;
       transform: translateX(-50%);
       text-align: center;
     }
     @media screen and (max-width: 1920px) {
       font-size: 30px;
-      &.box_sixth_1920{
+      &.box_sixth_1920 {
         font-size: 24px !important;
       }
     }
-    
   `;
 
   const TestBoxDesc = styled.p`
@@ -270,10 +289,10 @@ function Main() {
       left: 450px;
     }
     @media screen and (max-width: 1920px) {
-      &.desc_seventh_1920{
+      &.desc_seventh_1920 {
         left: 320px;
       }
-      &.box_sixth_1920{
+      &.box_sixth_1920 {
         left: 6.3% !important;
       }
     }
@@ -289,7 +308,7 @@ function Main() {
     z-index: 200;
   `;
 
- const VeryEasy = styled.div`
+  const VeryEasy = styled.div`
     position: absolute;
     top: 15px;
     right: 15px;
@@ -298,7 +317,7 @@ function Main() {
     z-index: 500;
     font-size: 15px;
     color: white;
- `
+  `;
 
   const Easy = styled.div`
     position: absolute;
@@ -310,7 +329,7 @@ function Main() {
     z-index: 500;
     font-size: 15px;
     box-sizing: border-box;
-  `
+  `;
 
   const Normal = styled.div`
     position: absolute;
@@ -322,7 +341,7 @@ function Main() {
     z-index: 500;
     font-size: 15px;
     box-sizing: border-box;
-  `
+  `;
 
   const Hard = styled.div`
     position: absolute;
@@ -335,50 +354,62 @@ function Main() {
     font-size: 15px;
     font-weight: 500;
     box-sizing: border-box;
-  `
+  `;
 
-
-function PutSixthTestBox(){
-  return(
-    <>
-     <GrayFloor />
-            <WhiteFloor />
-            <GrayFloor />
-            <WhiteFloor />
-            <GrayFloor />
-            <WhiteFloor />
-            <GrayFloor>
-              <TestBoxTitle className="box_sixth_default box_sixth_1920"
-                style={{
-                  width: "100%",
-                  fontSize: "30px",
-                  color: "white",
-                }}
-              >
-                위대한 첫 걸음
-              </TestBoxTitle>
-            </GrayFloor>
-            <WhiteFloor />
-            <WhiteFloor />
-            <GrayFloor />
-            <WhiteFloor />
-            <GrayFloor />
-            <WhiteFloor />
-            <GrayFloor />
-            <WhiteFloor />
-            <GrayFloor />
-    </>
-  )
-}
+  function PutSixthTestBox() {
+    return (
+      <>
+        <GrayFloor />
+        <WhiteFloor />
+        <GrayFloor />
+        <WhiteFloor />
+        <GrayFloor />
+        <WhiteFloor />
+        <GrayFloor>
+          <TestBoxTitle
+            className="box_sixth_default box_sixth_1920"
+            style={{
+              width: "100%",
+              fontSize: "30px",
+              color: "white",
+            }}
+          >
+            위대한 첫 걸음
+          </TestBoxTitle>
+        </GrayFloor>
+        <WhiteFloor />
+        <WhiteFloor />
+        <GrayFloor />
+        <WhiteFloor />
+        <GrayFloor />
+        <WhiteFloor />
+        <GrayFloor />
+        <WhiteFloor />
+        <GrayFloor />
+      </>
+    );
+  }
 
   return (
     <>
+      <Nav userState={userState} />
+      <AboutWrap>
+        <AboutContent>
+          <FontAwesomeIcon
+            style={{ marginRight: "13px" }}
+            icon={faRocket}
+          ></FontAwesomeIcon>
+          즐거운 여정으로 바닐라 스크립트
+          <img src="../images/main/js.svg"></img>를 배워보세요!&nbsp; 입문자부터
+          전문가까지 모두를 위한 다양한 콘텐츠가 기다리고 있습니다.
+        </AboutContent>
+        <AboutContent>
+          <NavLink to={"/service/notice"}>
+            2023.09.18 &nbsp;새로운 업데이트 확인하기
+          </NavLink>
+        </AboutContent>
+      </AboutWrap>
       <MainWrap>
-        <Nav userState={userState} />
-        <AboutWrap>
-          <AboutContent><FontAwesomeIcon style={{marginRight: "13px"}} icon={faRocket}></FontAwesomeIcon>즐거운 여정으로 바닐라 스크립트<img src="../images/main/js.svg"></img>를 배워보세요!&nbsp; 입문자부터 전문가까지 모두를 위한 다양한 콘텐츠가 기다리고 있습니다.</AboutContent>
-          <AboutContent><NavLink to={"/service/notice"}>2023.09.18 &nbsp;새로운 업데이트 확인하기</NavLink></AboutContent>
-        </AboutWrap>
         <MainTopWrap>
           <TestBox>
             <Easy>초급</Easy>
@@ -410,7 +441,7 @@ function PutSixthTestBox(){
           {/* <TestBox onMouseEnter={() => {setWork_VendingMachine(!work_VendingMachine)}} onMouseOut={() => {setWork_VendingMachine(!work_VendingMachine)}} > */}
           <TestBox>
             <Easy>초급</Easy>
-            <VendingMachine/>
+            <VendingMachine />
             <TestBoxTitle>무엇이 들었을까?</TestBoxTitle>
             <TestBoxDesc style={{ color: "black", left: "120px" }}>
               바닐라 스크립트로 자판기 만들기
@@ -419,21 +450,27 @@ function PutSixthTestBox(){
           </TestBox>
           <TestBox>
             <VeryEasy>입문</VeryEasy>
-          <NavLink style={{display: "inline", width: "100%", height: "100%"}} to={"/detail"}>
-            <MovingBall />
-            <TestBoxTitle>움직임</TestBoxTitle>
-            <TestBoxDesc style={{ color: "black", left: "145px" }}>
-              바닐라 스크립트로 움직이는 공 만들기
-            </TestBoxDesc>
-            <TestBoxCode style={{ color: "darkgray" }}>
-              querySelector
-            </TestBoxCode>
-          </NavLink>
+            <NavLink
+              style={{ display: "inline", width: "100%", height: "100%" }}
+              to={"/detail"}
+            >
+              <MovingBall />
+              <TestBoxTitle>움직임</TestBoxTitle>
+              <TestBoxDesc style={{ color: "black", left: "145px" }}>
+                바닐라 스크립트로 움직이는 공 만들기
+              </TestBoxDesc>
+              <TestBoxCode style={{ color: "darkgray" }}>
+                querySelector
+              </TestBoxCode>
+            </NavLink>
           </TestBox>
           <TestBox>
             <Easy>초급</Easy>
             <PutSixthTestBox />
-            <TestBoxDesc className="box_sixth_1920" style={{ color: "black", left: "115px" }}>
+            <TestBoxDesc
+              className="box_sixth_1920"
+              style={{ color: "black", left: "115px" }}
+            >
               바닐라 스크립트로 걷기
             </TestBoxDesc>
             <TestBoxCode style={{ color: "lightgray" }}>
@@ -445,27 +482,40 @@ function PutSixthTestBox(){
             <TestBox>
               <Dog />
               <TestBoxTitle>무한한 식량</TestBoxTitle>
-              <TestBoxDesc className="desc_seventh_default desc_seventh_1920"
-                style={{color: "black", width: "100%" }}
+              <TestBoxDesc
+                className="desc_seventh_default desc_seventh_1920"
+                style={{ color: "black", width: "100%" }}
               >
                 바닐라 스크립트로 무한히 사료 주기
               </TestBoxDesc>
               <TestBoxCode style={{ color: "darkgray", left: "20px" }}>
                 setinterval
               </TestBoxCode>
-              <Hard style={{border: "1px solid black"}}>고급</Hard>
+              <Hard style={{ border: "1px solid black" }}>고급</Hard>
             </TestBox>
-            <TestBox></TestBox>
-            <TestBox></TestBox>
-            <TestBox></TestBox>
+            <TestBox>
+              <PleaseWaitWrap>
+                <PleaseWait></PleaseWait>
+              </PleaseWaitWrap>
+            </TestBox>
+            <TestBox>
+              <PleaseWaitWrap>
+                <PleaseWait></PleaseWait>
+              </PleaseWaitWrap>
+            </TestBox>
+            <TestBox>
+              <PleaseWaitWrap>
+                <PleaseWait></PleaseWait>
+              </PleaseWaitWrap>
+            </TestBox>
           </MiniBoxWrap>
           <WhiteGradientToTop />
         </MainTopWrap>
         <MainBottomWrap>
           <WhiteGradientToBottom />
         </MainBottomWrap>
-        <Footer />
       </MainWrap>
+      <Footer />
     </>
   );
 }

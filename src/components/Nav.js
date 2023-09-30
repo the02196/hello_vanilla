@@ -6,6 +6,7 @@ import { styled } from "styled-components";
 
 function Nav({userState}) {
   const [nickName, SetNickName] = useState("");
+  const uid = sessionStorage.getItem("users");
   const NavWrap = styled.div`
     width: 100%;
     height: 400px;
@@ -15,6 +16,7 @@ function Nav({userState}) {
     z-index: 100;
     display: flex;
     justify-content: space-between;
+    
   `;
 
   
@@ -97,9 +99,14 @@ const FetchNickName = async () => {
   const userNickname = userSnapshot.data().nickname;
   SetNickName(userNickname);
 }
+
 useEffect( () => {
-  FetchNickName()
-},[])
+  if(!userState.uid){
+    return;
+  }else{
+    FetchNickName()
+  }
+},[userState.uid])
 
 
   return (
@@ -107,7 +114,7 @@ useEffect( () => {
       <NavWrap>
         <LogoText><NavLink to={"/main"}>Hello Vanilla</NavLink></LogoText>
         <TextWrap>
-        <span><NavLink to={"/quick"}>퀵링크 &nbsp;&nbsp;&nbsp;&nbsp;</NavLink></span><span><NavLink to={"/login"}>{userState ? "로그아웃" : "로그인"}</NavLink></span><span>&nbsp; | &nbsp;</span><span><NavLink to={userState ? "/member" : "/modify"}>{userState ? "정보수정" : "회원가입"}</NavLink></span>
+        <span><NavLink to={"/quick"}>퀵링크 &nbsp;&nbsp;&nbsp;&nbsp;</NavLink></span><span><NavLink to={"/login"}>{uid ? "로그아웃" : "로그인"}</NavLink></span><span>&nbsp; | &nbsp;</span><span><NavLink to={uid ? "/member" : "/modify"}>{uid ? "정보수정" : "회원가입"}</NavLink></span>
         </TextWrap>
         {/* <ProfileImg /> */}
         <WelcomeTextWrap><WelcomeText>안녕하세요, {nickName} 여행자님!</WelcomeText></WelcomeTextWrap>

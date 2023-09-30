@@ -17,6 +17,8 @@ import {
 import React, { useContext, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+const db = getFirestore();
+
 
 function Heart_Test() {
   const userState = useSelector((state) => state.user);
@@ -36,7 +38,7 @@ function Heart_Test() {
     const myUid = doc(postRef, "liked", userState.uid)
     const UID = await getDoc(myUid && myUid);
     
-    const db = getFirestore();
+
     const expensesCol = collection(postRef, 'liked');
     const snapshot = await getCountFromServer(expensesCol);
     const totalCount = snapshot.data().count;
@@ -59,6 +61,9 @@ function Heart_Test() {
       console.log(error);
     }
   };
+
+
+
 
   return (
     <>
