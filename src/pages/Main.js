@@ -131,16 +131,21 @@ function Main() {
       animation-play-state: paused;
     }
     span {
+      height: 100%;
       padding: 20px 0px;
       color: white;
       line-height: 30px;
+      display: flex;
+      align-items: center;
       &:first-child {
         padding-top: 0px;
       }
       a{
+        height: 100%;
         color: white;
         display: flex;
       align-items: center;
+      display: inline-block;
         &:visited{
           color: white;
         }
@@ -150,7 +155,6 @@ function Main() {
       width: 20px;
       vertical-align: middle;
       height: 20px;
-      margin: 0px 10px 4px 10px;
     }
   `;
 
@@ -499,17 +503,25 @@ function Main() {
     return (
       <NoticeWrap>
         <span>
+        <FontAwesomeIcon
+              style={{ marginRight: "13px" }}
+              icon={faRocket}
+            ></FontAwesomeIcon>
           즐거운 여정으로 바닐라 스크립트
-          <img src="../images/main/js.svg" alt="icon"></img>를 배워보세요!
+          <img style={{margin: "0px 10px 2px 10px"}} src="../images/main/js.svg" alt="icon"></img>를 배워보세요!
           입문자부터 전문가까지 모두를 위한 다양한 콘텐츠가 기다리고 있습니다.
         </span>
-        <span><NavLink to={`/view/notice/${posts[0].id}`}>{posts[0].title} <span style={{marginLeft: "8px", display:"inline-block", width:"27px", backgroundImage:"url('../images/dog/dog_sprite.png')", backgroundSize:"cover" }}/></NavLink></span>
-        <span><NavLink to={`/view/notice/${posts[1].id}`}>{posts[1].title} <span style={{marginLeft: "8px", display:"inline-block", width:"20px", borderRadius:"50%", backgroundImage:"url('../images/detail/ball.png')", backgroundSize:"cover" }}/></NavLink></span>
-        <span><NavLink to={`/view/notice/${posts[2].id}`}>{posts[2].title} <img style={{marginLeft: "4px", width: "25px", height:"25px"}} src="../images/main/wing.png" alt="wing" /> </NavLink></span>
-        <span><NavLink to={`/view/notice/${posts[3].id}`}>{posts[3].title} <img style={{marginLeft: "8px", width: "25px", height:"25px"}} src="../images/main/spy_white.png" alt="wing" /> </NavLink></span>
+        <span><NavLink to={`/view/notice/${posts[0].id}`}><img style={{marginRight: "10px", paddingBottom: "2px", width: "25px", height:"20px"}} src="../images/main/dog_notice.png" alt="dog" /> {posts[0].title}</NavLink></span>
+        <span><NavLink to={`/view/notice/${posts[1].id}`}><img style={{marginRight: "10px", paddingBottom: "2px", width: "20px", height:"20px"}} src="../images/detail/ball.png" alt="ball" /> {posts[1].title}</NavLink></span>
+        <span><NavLink to={`/view/notice/${posts[2].id}`}><img style={{marginRight: "10px", paddingBottom: "2px", width: "25px", height:"25px"}} src="../images/main/wing.png" alt="wing" />{posts[2].title}  </NavLink></span>
+        <span><NavLink to={`/view/notice/${posts[3].id}`}><img style={{marginRight: "10px", paddingBottom: "2px", width: "22px", height:"22px"}} src="../images/main/spy_white.png" alt="wing" />{posts[3].title}</NavLink></span>
         <span>
+        <FontAwesomeIcon
+              style={{ marginRight: "13px" }}
+              icon={faRocket}
+            ></FontAwesomeIcon>
           즐거운 여정으로 바닐라 스크립트
-          <img src="../images/main/js.svg" alt="icon"></img>를 배워보세요!
+          <img style={{margin: "0px 10px 4px 10px"}} src="../images/main/js.svg" alt="icon"></img>를 배워보세요!
           입문자부터 전문가까지 모두를 위한 다양한 콘텐츠가 기다리고 있습니다.
         </span>
       </NoticeWrap>
@@ -522,10 +534,7 @@ function Main() {
       <AboutWrap>
         <div style={{ display: "flex" }}>
           <AboutContent>
-            <FontAwesomeIcon
-              style={{ marginRight: "13px" }}
-              icon={faRocket}
-            ></FontAwesomeIcon>
+            
           </AboutContent>
           <FetchNotices />
         </div>
