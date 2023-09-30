@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import VendingMachine from "../components/VendingMachine";
-import { styled } from "styled-components";
+import { keyframes, styled } from "styled-components";
 import Eye from "../components/Eye";
 import MovingBall from "../components/MovingBall";
 import Dog from "../components/Dog";
@@ -13,14 +13,25 @@ import { NavLink } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faRocket } from "@fortawesome/free-solid-svg-icons";
 import { firebaseAuth } from "../firebase";
-import { Firestore, doc, getDoc, getFirestore } from "firebase/firestore";
+import {
+  Firestore,
+  collection,
+  doc,
+  getDoc,
+  getDocs,
+  getFirestore,
+  orderBy,
+  query,
+} from "firebase/firestore";
 import { useSelector } from "react-redux";
+import { FetchPost } from "./service/Notice";
 
 function Main() {
   const userState = useSelector((state) => state.user);
   const [wait, setWait] = useState(false);
   const [wait2, setWait2] = useState(false);
   const [wait3, setWait3] = useState(false);
+  const [noticeCount, setNoticeCount] = useState(0);
 
   const MainWrap = styled.div`
     width: 100%;
@@ -67,6 +78,7 @@ function Main() {
     justify-content: space-between;
     transform: translateX(-50%);
     z-index: 100;
+    overflow: hidden;
     @media screen and (max-width: 1920px) {
       width: 1400px;
     }
@@ -86,6 +98,53 @@ function Main() {
     }
     @media screen and (max-width: 1920px) {
       font-size: 15px;
+    }
+  `;
+
+  const AutoPlayNotice = keyframes`
+0% {top: 0;}
+15% {top: 0;}
+16% {top: -70px;}
+35% {top: -70px;}
+36% {top: -140px;}
+55% {top: -140px;}
+56% {top: -210px;}
+75% {top: -210px;}
+76% {top: -280px;}
+95% {top: -280px;}
+96% {top: -350px;}
+100% {top: -350px;}
+`;
+
+  const NoticeWrap = styled.span`
+    line-height: 30px;
+    position: relative;
+    top: 0;
+    display: flex;
+    flex-direction: column;
+    animation: ${AutoPlayNotice};
+    animation-iteration-count: infinite;
+    animation-duration: 20s;
+    animation-timing-function: ease-out;
+    animation-fill-mode: forwards;
+    &:hover{
+      animation-play-state: paused;
+    }
+    span {
+      padding: 20px 0px;
+      color: white;
+      line-height: 30px;
+      &:first-child {
+        padding-top: 0px;
+      }
+      a{
+        color: white;
+        display: flex;
+      align-items: center;
+        &:visited{
+          color: white;
+        }
+      }
     }
     img {
       width: 20px;
@@ -390,19 +449,86 @@ function Main() {
     );
   }
 
+  const [posts, setPosts] = useState([]);
+
+  useEffect(() => {
+    const fetchPosts = async () => {
+      try {
+        const q = query(
+          collection(getFirestore(), "notice"),
+          orderBy("timestamp", "desc")
+        );
+        //desc - 내림차순 / asc -오름차순
+        const snapShot = await getDocs(q); //데이터 다 가져오는건 snapShot으로 해야함 무조건
+        const postArray = snapShot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+        //가져온 데이터를 반복문을 돌림 , id값은 임의로 데이터 값으로 추가해서 나오고 원래 데이터도 같이 나옴
+        setPosts(postArray);
+        console.log(postArray);
+        // console.log(snapShot)
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchPosts();
+  }, []);
+  if (posts.length === 0) {
+    return;
+  } // 데이터에 값이 없다면 로딩중으로 뜨게 만들기(로딩되고 있는 그림을 넣어보기 loading.io 사이트 참조하기)
+
+  // function autoShowNotices(){
+  //     setTimeout(() => {
+
+  //         if(noticeCount === 3){
+  //           setNoticeCount(0);
+  //         }else{
+  //           setNoticeCount(noticeCount + 1)
+  //         }
+  //         <AboutContent>posts[noticeCount].title</AboutContent>
+  //       }, 1000)
+  // }
+  // useEffect(()=>{
+  //   if(noticeCount){
+  //     autoShowNotices()
+  //   }
+  // },[noticeCount])
+
+  function FetchNotices() {
+    return (
+      <NoticeWrap>
+        <span>
+          즐거운 여정으로 바닐라 스크립트
+          <img src="../images/main/js.svg" alt="icon"></img>를 배워보세요!
+          입문자부터 전문가까지 모두를 위한 다양한 콘텐츠가 기다리고 있습니다.
+        </span>
+        <span><NavLink to={`/view/notice/${posts[0].id}`}>{posts[0].title} <span style={{marginLeft: "8px", display:"inline-block", width:"27px", backgroundImage:"url('../images/dog/dog_sprite.png')", backgroundSize:"cover" }}/></NavLink></span>
+        <span><NavLink to={`/view/notice/${posts[1].id}`}>{posts[1].title} <span style={{marginLeft: "8px", display:"inline-block", width:"20px", borderRadius:"50%", backgroundImage:"url('../images/detail/ball.png')", backgroundSize:"cover" }}/></NavLink></span>
+        <span><NavLink to={`/view/notice/${posts[2].id}`}>{posts[2].title} <img style={{marginLeft: "4px", width: "25px", height:"25px"}} src="../images/main/wing.png" alt="wing" /> </NavLink></span>
+        <span><NavLink to={`/view/notice/${posts[3].id}`}>{posts[3].title} <img style={{marginLeft: "8px", width: "25px", height:"25px"}} src="../images/main/spy_white.png" alt="wing" /> </NavLink></span>
+        <span>
+          즐거운 여정으로 바닐라 스크립트
+          <img src="../images/main/js.svg" alt="icon"></img>를 배워보세요!
+          입문자부터 전문가까지 모두를 위한 다양한 콘텐츠가 기다리고 있습니다.
+        </span>
+      </NoticeWrap>
+    );
+  }
+
   return (
     <>
       <Nav userState={userState} />
       <AboutWrap>
-        <AboutContent>
-          <FontAwesomeIcon
-            style={{ marginRight: "13px" }}
-            icon={faRocket}
-          ></FontAwesomeIcon>
-          즐거운 여정으로 바닐라 스크립트
-          <img src="../images/main/js.svg"></img>를 배워보세요!&nbsp; 입문자부터
-          전문가까지 모두를 위한 다양한 콘텐츠가 기다리고 있습니다.
-        </AboutContent>
+        <div style={{ display: "flex" }}>
+          <AboutContent>
+            <FontAwesomeIcon
+              style={{ marginRight: "13px" }}
+              icon={faRocket}
+            ></FontAwesomeIcon>
+          </AboutContent>
+          <FetchNotices />
+        </div>
         <AboutContent>
           <NavLink to={"/service/notice"}>
             2023.09.18 &nbsp;새로운 업데이트 확인하기

@@ -66,7 +66,7 @@ const Button = styled.button`
 
     const CommentWrap = styled.div``
     const Comment = styled.div``
-
+    
 function View() {
   const [comment, setComment] = useState("");
   const [comments, setComments] = useState("");
@@ -80,7 +80,7 @@ function View() {
   const uid = sessionStorage.getItem("users");
   const memberProfile = useSelector(state => state.user);
   // const userState = useSelector(state => state.user);
- 
+
   useEffect(()=>{
     const postRef = doc(getFirestore(),board, view);
     const commentRef = collection(postRef, "comments");
@@ -183,6 +183,7 @@ function View() {
       <div>로딩중</div>
     )
   }
+  
 
   return (
     <>
@@ -239,4 +240,5 @@ function View() {
     </>
   )
 }
+
 export default View
