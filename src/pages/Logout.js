@@ -28,7 +28,7 @@ function Logout() {
     <>
     {
         isModal &&
-        <Modal error ="로그아웃 되었습니다." onClose={()=>{setIsModal(false); navigate("/")}} > 
+        <Modal error ="로그아웃 되었습니다." onClose={()=>{setIsModal(false); navigate("/main")}} > 
         {/* 다른 컴포넌트에서는 직접적으로 onclick을 사용할 수 없음 */}
         </Modal>
 

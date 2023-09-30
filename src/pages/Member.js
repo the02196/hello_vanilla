@@ -362,7 +362,7 @@ function Member() {
       <LoginBg>
          <LoginNav>
           <Logo><NavLink to={"/main"}>HeLLO VanILLa</NavLink></Logo>
-          <LoginBtn><NavLink to={"/login"}>로그인</NavLink> &nbsp; | &nbsp; <NavLink to={"/main"}>메인 페이지로 가기</NavLink> </LoginBtn>
+          <LoginBtn><NavLink to={userState.loggedIn ? "/logout" : "/login"}>{userState.loggedIn ? "로그아웃" : "로그인"}</NavLink> &nbsp; | &nbsp; <NavLink to={"/main"}>메인 페이지로 가기</NavLink> </LoginBtn>
         </LoginNav>
         <SignUp>
           {
