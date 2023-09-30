@@ -339,16 +339,16 @@ function Detail_Comments() {
   const [comments, setComments] = useState([]);
   const userState = useSelector((state) => state.user);
 
+  
+
   const getComments = async () => {
-    const commentsSnapshot = await getDocs(
-      collection(getFirestore(), "comments")
-    );
-    const comments = commentsSnapshot.docs.map((doc) => ({
-      id: doc.id,
-      ...doc.data(),
+    const commentsSnapshot = await getDocs(collection(getFirestore(), 'comments'));
+    const comments = commentsSnapshot.docs.map(doc => ({ 
+      id: doc.id, 
+      ...doc.data() 
     }));
-    return comments;
-  };
+  return comments;
+  }
 
   useEffect(() => {
     const fetchComments = async () => {
@@ -357,43 +357,21 @@ function Detail_Comments() {
     };
     fetchComments();
   }, []);
-
-  const showLike = async () => {
-    const commentRef = doc(getFirestore(), "comments", userState.uid);
-    const expensesCol = collection(commentRef, 'liked');
-    const snapshot = await getCountFromServer(expensesCol);
-    const totalCount = snapshot.data().count;
-    try{
-      setHeartCount(totalCount);
-    }catch(error){
-      console.log(error)
-    }
-  }
-
-  useEffect(()=>{
-    showLike()
-  },[])
-
+  
   const toggleLike = async (commentId, userId) => {
-    const commentRef = doc(getFirestore(), "comments", commentId);
+    const commentRef = doc(getFirestore(), 'comments', commentId);
     // const commentSnapshot = await getDoc(commentRef);
     // const commentData = commentSnapshot.data();
-
-    const expensesCol = collection(commentRef, 'liked');
-    const snapshot = await getCountFromServer(expensesCol);
-    const totalCount = snapshot.data().count;
     try {
-      const test1 = doc(commentRef, "liked", userState.uid);
+      const test1 = doc(commentRef, "like", userState.uid);
       const testSnap = await getDoc(test1);
       if (testSnap.exists()) {
-        await deleteDoc(doc(commentRef, "liked", userState.uid));
-        setHeartCount(totalCount);
+        await deleteDoc(doc(commentRef, "like", userState.uid));
         return;
       }
-      await setDoc(doc(commentRef, "liked", userState.uid), {
+      await setDoc(doc(commentRef, "like", userState.uid), {
         liked: true,
       });
-      setHeartCount(totalCount);
     } catch (error) {
       console.log(error);
     }
@@ -415,12 +393,12 @@ function Detail_Comments() {
   }, []);
 
   const getLikeCount = async (commentId) => {
-    const commentRef = doc(getFirestore(), "comments", commentId);
+    const commentRef = doc(getFirestore(), 'comments', commentId);
     const likesCollection = collection(commentRef, "like");
     const likesSnapshot = await getDocs(likesCollection);
     return likesSnapshot.docs.length;
-  };
-
+  }
+  
   /*
   #### Fetch Contents Functions
   */
@@ -442,14 +420,14 @@ function Detail_Comments() {
     );
   };
 
-  const FetchContentBottom = ({ onToggleLike, heartCount }) => {
+  const FetchContentBottom = ({onToggleLike, likeCount}) => {
     return (
       <ContentBottomWrap>
-        <Count>{heartCount}</Count>
-        <Love
-          style={{ cursor: "pointer" }}
-          onClick={toggleLike}
-        >
+        <Count>{likeCount}</Count>
+        <Love style={{cursor: "pointer"}} onClick={()=>{
+          // setHeartCount(heartCount)
+          onToggleLike()
+        }}>
           <FontAwesomeIcon icon={faHeart} />
         </Love>
         <Share>
@@ -533,11 +511,11 @@ function Detail_Comments() {
     const [likeCount, setLikeCount] = useState(0);
     useEffect(() => {
       const fetchLikes = async () => {
-        const count = await getLikeCount(i);
-        setLikeCount(count);
+          const count = await getLikeCount(i);
+          setLikeCount(count);
       };
       fetchLikes();
-    }, [i]);
+  }, [i]);
     return (
       <li key={i}>
         <ProfileWrap>
@@ -546,10 +524,7 @@ function Detail_Comments() {
         <ContentWrap>
           <FetchContentTop nickname={nickname} createdate={createdate} />
           <FetchContentCenter text={text} />
-          <FetchContentBottom
-            onToggleLike={() => toggleLike(i)}
-            heartCount={heartCount}
-          />
+          <FetchContentBottom onToggleLike={()=>toggleLike(i)} likeCount={likeCount}/>
         </ContentWrap>
       </li>
     );
@@ -586,12 +561,15 @@ function Detail_Comments() {
     console.log(formJson);
   }
 
+  
+
   // const viewCnt = async(board, view) => {
   //   const viewRef = doc(getFirestore(), board, view);
   //   await updateDoc(viewRef,{
   //     view : increment(1)
   //   })
   // }
+
 
   // function formateDate(data){
   //   if(data){
@@ -611,6 +589,8 @@ function Detail_Comments() {
   //   }
   // }
 
+  
+
   return (
     <>
       <GlobalWrap>
@@ -625,15 +605,10 @@ function Detail_Comments() {
               createdate={"2023.09.26"}
               profile={"../images/portraits/woman_5.png"}
             />
-            {comments.map((e) => (
-              <FetchReply
-                key={e.id}
-                text={e.text}
-                nickname={e.nickname}
-                i={e.id}
-                // onToggleLike={() => toggleLike}
-              ></FetchReply>
-            ))}
+              {comments.map(e => (
+                <FetchReply key={e.id} text={e.text} nickname={e.nickname} i={e.id} onToggleLike={()=>toggleLike}>
+                </FetchReply>
+              ))}
           </ul>
         </CommentWrap>
       </GlobalWrap>
