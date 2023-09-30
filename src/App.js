@@ -31,6 +31,7 @@ import FindEmail from "./pages/FindEmail";
 import Heart_Test from "./components/Heart_Test";
 import Dog_Test from "./components/Dog_Test";
 import Modify from "./pages/Modify";
+import Logout from "./pages/Logout";
 
 
 
@@ -162,6 +163,7 @@ function Inner() {
           <Route path="/detail" element={<Detail />}></Route>
           <Route path="/quick" element={<Quick />}></Route>
           <Route path="/login" element={<Login />}></Route>
+          <Route path="/logout" element={<Logout />}></Route>        
           <Route path="/findemail" element={<FindEmail />}></Route>
           <Route path="/edit/:board/" element={<Write />}></Route>
           <Route path="/view/:board/:view" element={<View />}></Route>
@@ -184,7 +186,7 @@ function Inner() {
           <Route path="/mypage" element={<MyPage />}></Route>
 
           <Route path="/auth" element={<Auth />}></Route>
-          <Route path="/modify" element={<Modify />}></Route>
+          <Route path="/modify" element={<Member />}></Route>
           <Route path="/heart" element={<Heart_Test />}></Route>
           <Route path="/dogtest" element={<Dog_Test />}></Route>
 
