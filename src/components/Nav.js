@@ -114,7 +114,7 @@ useEffect( () => {
       <NavWrap>
         <LogoText><NavLink to={"/main"}>Hello Vanilla</NavLink></LogoText>
         <TextWrap>
-        <span><NavLink to={"/quick"}>퀵링크 &nbsp;&nbsp;&nbsp;&nbsp;</NavLink></span><span><NavLink to={"/login"}>{uid ? "로그아웃" : "로그인"}</NavLink></span><span>&nbsp; | &nbsp;</span><span><NavLink to={uid ? "/member" : "/modify"}>{uid ? "정보수정" : "회원가입"}</NavLink></span>
+        [Jun] [오후 12:58] <span><NavLink to={"/quick"}>퀵링크 &nbsp;&nbsp;&nbsp;&nbsp;</NavLink></span><span><NavLink to={userState?.data ? "/logout" : "/login"}>{userState?.data  ? "로그아웃" : "로그인"}</NavLink></span><span>&nbsp; | &nbsp;</span><span><NavLink to={userState?.data ? "/modify" : "/member"}>{userState?.data  ? "정보수정" : "회원가입"}</NavLink></span>
         </TextWrap>
         {/* <ProfileImg /> */}
         <WelcomeTextWrap><WelcomeText>안녕하세요, {nickName} 여행자님!</WelcomeText></WelcomeTextWrap>
