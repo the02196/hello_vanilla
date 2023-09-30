@@ -27,6 +27,13 @@ const BallWrap = styled.div`
   position: relative;
 `;
 
+const TransparentLayerForDebug = styled.div`
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  z-index: 20;
+`
+
 const Ball = styled.div`
   width: 150px;
   height: 150px;
@@ -35,7 +42,7 @@ const Ball = styled.div`
   background-size: cover;
   border-radius: 50%;
   position: relative;
-  z-index: 100;
+  z-index: 10;
   left: -18%; 
   &.on{
     animation: ${MoveBall} 1.3s forwards ease-in-out ;
@@ -80,6 +87,7 @@ const [moveBall, setMoveBall] = useState(false);
   return (
     <>
       <BallWrap onMouseEnter={() => {setMoveBall(!moveBall)}} onMouseOut={() => {setMoveBall(!setMoveBall)}}>
+       <TransparentLayerForDebug />
         <Ball className={moveBall && "on"}>
         </Ball>
           <TriangleWrap className={moveBall && "on"}>

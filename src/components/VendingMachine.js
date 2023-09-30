@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styled, { keyframes } from "styled-components";
 
+
 const refill = keyframes`
 0% { opacity: 1; }
 25% { transform: rotate(-15deg); opacity: 0.5; }
@@ -18,6 +19,14 @@ const move2 = keyframes`
 const Wrap = styled.div`
   width: 100%;
   height: 100%;
+  position: relative;
+`
+
+const TransparentLayerForDebug = styled.div`
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  z-index: 20;
 `
 
 const Can = styled.div`
@@ -60,7 +69,7 @@ transition: 1s;
     border: 4px solid rgb(225, 225, 225);
     margin: 0 auto;
     position: relative;
-    margin-top: 50px;
+    margin-top: 95px;
     @media screen and (max-width: 1920px) {
       transform: scale(0.9);
     }
@@ -121,6 +130,7 @@ const VendingMachine = () => {
 
   return (
     <Wrap  onMouseEnter={() => {setWork_VendingMachine(!work_VendingMachine)}} onMouseOut={() => {setWork_VendingMachine(!work_VendingMachine)}}>
+    <TransparentLayerForDebug />
     <Machine >
       <DrinkArea>
         <Drink>

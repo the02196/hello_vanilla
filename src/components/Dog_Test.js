@@ -41,9 +41,6 @@ function Dog_Test() {
     position: relative;
   `;
 
-  const Plate = styled.div`
-    background-color: rgb(120, 120, 120);
-  `;
 
   const Dog = styled.div`
     width: 118px;
@@ -130,26 +127,26 @@ function Dog_Test() {
   
 
 
-//   const AutoChangePixelBgColor = () => {
-//     let autoPlayTimer = Math.floor(Math.random() * 80 + 30);
-//     let c_Number = 1;
-//     let r_Number = Math.floor(Math.random() * 8 + 11);
-//     setColumn(c_Number);
-//     setRow(r_Number);
-//     const interval = setInterval(() => {
-//       setColumn(column + 1);
-//       if (row < 12) {
-//         setRow(12);
-//       } else if (column === 28) {
-//         clearInterval(interval);
-//       }
-//       // Add Foods
-//       setClassName(`pixel c-${column} r-${row} on`);
+  const AutoChangePixelBgColor = () => {
+    let autoPlayTimer = Math.floor(Math.random() * 80 + 30);
+    let c_Number = 1;
+    let r_Number = Math.floor(Math.random() * 8 + 11);
+    setColumn(c_Number);
+    setRow(r_Number);
+    const interval = setInterval(() => {
+      setColumn(column + 1);
+      if (row < 12) {
+        setRow(12);
+      } else if (column === 28) {
+        clearInterval(interval);
+      }
+      // Add Foods
+      setClassName(`pixel c-${column} r-${row} on`);
 
-//       // Remove Foods
-//       setClassName(`.pixel.c-${column - 1}.r-${row}`);
-//     }, autoPlayTimer);
-//   };
+      // Remove Foods
+      setClassName(`.pixel.c-${column - 1}.r-${row}`);
+    }, autoPlayTimer);
+  };
 
   //   function DrawPlate() {
   //     for (let i = 10; i < 21; i++) {
@@ -163,8 +160,9 @@ function Dog_Test() {
   //   }
 
   //   function RemoveAllFood() {
+//       const everyPixels = document.querySelector("pixels")
   //     pixels.forEach((pixel) => {
-  //       pixel.classList.remove("on");
+  //       setClassName("pixel");
   //     });
   //   }
 
