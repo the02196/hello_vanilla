@@ -135,7 +135,7 @@ function MyPage() {
   //   }
   // };
 
-  const addHeart = async (id) => {
+  const addHeart = async (id, index) => {
     const userRef = doc(getFirestore(), "users", userState.uid);
     const userSnapshot = await getDoc(userRef);
     const userNickname = userSnapshot.data().nickname;
@@ -150,20 +150,27 @@ function MyPage() {
     const expensesCol = collection(postRef, 'liked');
     const snapshot = await getCountFromServer(expensesCol);
     const totalCount = snapshot.data().count;
+
+    let copy;
+    let copy2;
     
     try {
       const test1 = doc(postRef, 'liked', userState.uid);
       const testSnap = await getDoc(test1)
       if(testSnap.exists()){
         await deleteDoc(doc(postRef, "liked", userState.uid));   
-        setlikeds(totalCount)
+       
+        copy = likeds[index] = likeds[index].totalcount - 1
+        setlikeds(...copy)
         return;
       }
       await setDoc(doc(postRef, "liked", userState.uid), {
         nickname: userNickname,
         liked: true
       });
-      setlikeds(totalCount)
+      copy2 = likeds[index] = likeds[index].totalcount + 1
+      setlikeds(...copy2)
+      
       
       
 
@@ -182,10 +189,10 @@ function MyPage() {
               {e.id} 요게 댓글이에요~
             </p>
               <button onClick={()=>{deletePost(e.id)}} style={{marginBottom: "20px", fontSize: "20px", marginRight: "20px"}}>삭제 버튼 </button>
-              <button onClick={()=>{addHeart(e.id)}} style={{marginBottom: "20px", fontSize: "20px"}}>하트 버튼</button>
+              <button onClick={()=>{addHeart(e.id, i)}} style={{marginBottom: "20px", fontSize: "20px"}}>하트 버튼</button>
               {likes[i].id}
-             <h2>{likeds && likeds[i]?.totalcount}</h2>
-       
+             <h2>{likeds[i]?.totalcount}</h2>
+       {/* likeds.id.includes(userState.uid) ? liked[i].totalcount - 1 ! liked[i].totalcount + 1   */}
           </>
         );
       })}
