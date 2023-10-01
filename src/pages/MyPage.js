@@ -160,16 +160,17 @@ function MyPage() {
       if(testSnap.exists()){
         await deleteDoc(doc(postRef, "liked", userState.uid));   
        
-        copy = likeds[index] = likeds[index].totalcount - 1
-        setlikeds(...copy)
-        return;
+        let copy = [...likeds];
+        copy[index].totalcount -= 1;
+        setlikeds(copy);
       }
       await setDoc(doc(postRef, "liked", userState.uid), {
         nickname: userNickname,
         liked: true
       });
-      copy2 = likeds[index] = likeds[index].totalcount + 1
-      setlikeds(...copy2)
+      let copy2 = [...likeds];
+      copy2[index].totalcount += 1;
+      setlikeds(copy2);
       
       
       
