@@ -19,7 +19,7 @@ import { useSelector } from "react-redux";
 function MyPage() {
   const userState = useSelector((state) => state.user);
   const [likes, setlikes] = useState([]);
-  const [likeds, setlikeds] = useState("");
+  const [likeds, setlikeds] = useState([]);
   const [heartCount, setHeartCount] = useState(0)
   const [comments, setComments] = useState([]);
   const [documentId, setDocumentId] = useState([]);
@@ -88,9 +88,9 @@ function MyPage() {
       }
     };
     fetchPosts();
-  },[])
+  },[]);
 
-  
+
   if (comments.length === 0) {
     return;
   } // 데이터에 값이 없다면 로딩중으로 뜨게 만들기(로딩되고 있는 그림을 넣어보기 loading.io 사이트 참조하기)
@@ -190,7 +190,6 @@ function MyPage() {
               <button onClick={()=>{addHeart(e.id, i)}} style={{marginBottom: "20px", fontSize: "20px"}}>하트 버튼</button>
               {likes[i].id}
              <h2>{likeds[i]?.totalcount}</h2>
-       {/* likeds.id.includes(userState.uid) ? liked[i].totalcount - 1 ! liked[i].totalcount + 1   */}
           </>
         );
       })}
