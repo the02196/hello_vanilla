@@ -145,8 +145,6 @@ function MyPage() {
     
     const myUid = doc(postRef, "liked", userState.uid)
     const UID = await getDoc(myUid && myUid);
-    
-    
 
     let copy;
     let copy2;
