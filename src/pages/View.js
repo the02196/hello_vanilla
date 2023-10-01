@@ -105,21 +105,21 @@ function View() {
     })
   }
 
+  const fetchData = async () =>{
+    const postRef = doc(getFirestore(),board,view);
+    const postSnapShot = await getDoc(postRef);
+    if(postSnapShot.exists()){
+      viewCnt(board,view)
+      setPost(postSnapShot.data())
+      setPostUid(postSnapShot.data().uid)
+      
+    }else{
+      setIsModal(true)
+      setMessage("해당 문서가 존재하지 않습니다.")
+      
+    }
+  }
   useEffect(()=>{    
-      const fetchData = async () =>{
-        const postRef = doc(getFirestore(),board,view);
-        const postSnapShot = await getDoc(postRef);
-        if(postSnapShot.exists()){
-          viewCnt(board,view)
-          setPost(postSnapShot.data())
-          setPostUid(postSnapShot.data().uid)
-          
-        }else{
-          setIsModal(true)
-          setMessage("해당 문서가 존재하지 않습니다.")
-          
-        }
-      }
       fetchData()    
   },[board,view])
 

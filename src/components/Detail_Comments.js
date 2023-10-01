@@ -350,11 +350,11 @@ function Detail_Comments() {
   return comments;
   }
 
+  const fetchComments = async () => {
+    const data = await getComments();
+    setComments(data);
+  };
   useEffect(() => {
-    const fetchComments = async () => {
-      const data = await getComments();
-      setComments(data);
-    };
     fetchComments();
   }, []);
   
@@ -509,11 +509,11 @@ function Detail_Comments() {
 
   const FetchReply = ({ i, nickname, text, createdate }) => {
     const [likeCount, setLikeCount] = useState(0);
+    const fetchLikes = async () => {
+        const count = await getLikeCount(i);
+        setLikeCount(count);
+    };
     useEffect(() => {
-      const fetchLikes = async () => {
-          const count = await getLikeCount(i);
-          setLikeCount(count);
-      };
       fetchLikes();
   }, [i]);
     return (
