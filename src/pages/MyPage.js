@@ -147,9 +147,6 @@ function MyPage() {
     const UID = await getDoc(myUid && myUid);
     
     
-    const expensesCol = collection(postRef, 'liked');
-    const snapshot = await getCountFromServer(expensesCol);
-    const totalCount = snapshot.data().count;
 
     let copy;
     let copy2;
@@ -170,9 +167,6 @@ function MyPage() {
       });
       copy2 = likeds[index] = likeds[index].totalcount + 1
       setlikeds(...copy2)
-      
-      
-      
 
     } catch (error) {
       console.log(error);
