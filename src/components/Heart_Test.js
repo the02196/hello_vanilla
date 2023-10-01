@@ -48,12 +48,14 @@ function Heart_Test() {
       const testSnap = await getDoc(test1)
       if(testSnap.exists()){
         await deleteDoc(doc(postRef, "liked", userState.uid));   
+        setHeartCount(totalCount)
         return;
       }
       await setDoc(doc(postRef, "liked", userState.uid), {
         nickname: userNickname,
         liked: true
       });
+      setHeartCount(totalCount)
       
       
 
