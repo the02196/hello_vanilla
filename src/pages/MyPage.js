@@ -84,7 +84,7 @@ function MyPage() {
     };
     FetchLiked();
     fetchPosts();
-  }, [likeds]);
+  }, []);
   if (comments.length === 0) {
     return;
   } // 데이터에 값이 없다면 로딩중으로 뜨게 만들기(로딩되고 있는 그림을 넣어보기 loading.io 사이트 참조하기)
