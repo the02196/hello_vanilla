@@ -27,64 +27,67 @@ function MyPage() {
   const [likedParam, setLikedParam] = useState([]);
 
   
+  const FetchLiked = async () => {
+    try {
+      const LikeCollection = collection(getFirestore(), "like");
+      const likeSnapShot = await getDocs(LikeCollection);
+      
+      const likedArray = await Promise.all(
+        likeSnapShot.docs.map(async (doc) => {
+          const likedCollection = collection(doc.ref, "liked");
+          const likedSnapshot = await getDocs(likedCollection);
+          const totalCount = likedSnapshot.size;
+          
+          return {
+            id: doc.id,
+            totalcount: totalCount,
+            ...doc.data(),
+          };
+        })
+      );
+      
+      setlikeds(likedArray);
+    } catch (error) {
+      alert(error);
+    }
+  };
+
   useEffect(() => {
-    const FetchLiked = async () => {
-      try {
-        const LikeCollection = collection(getFirestore(), "like");
-        const likeSnapShot = await getDocs(LikeCollection);
-    
-        const likedArray = await Promise.all(
-          likeSnapShot.docs.map(async (doc) => {
-            const likedCollection = collection(doc.ref, "liked");
-            const likedSnapshot = await getDocs(likedCollection);
-            const totalCount = likedSnapshot.size;
-    
-            return {
-              id: doc.id,
-              totalcount: totalCount,
-              ...doc.data(),
-            };
-          })
-        );
-    
-        setlikeds(likedArray);
-      } catch (error) {
-        alert(error);
-      }
-    };
-
-    const fetchPosts = async () => {
-      try {
-        const likeCollection = collection(getFirestore(), "like")
-        const likeSnapShot = await getDocs(likeCollection)
-        const likeArray = likeSnapShot.docs.map((doc)=>({
-          id: doc.id,
-          ...doc.data(),
-        }))
-        setlikes(likeArray);
-
-
-        const q = query(
-          collection(getFirestore(), "comments")
-          // orderBy("timestamp", "desc")
-        );
-        //desc - 내림차순 / asc -오름차순
-        const snapShot = await getDocs(q); //데이터 다 가져오는건 snapShot으로 해야함 무조건
-        const postArray = snapShot.docs.map((doc) => ({
-          id: doc.id,
-          ...doc.data(),
-        }));
-        //가져온 데이터를 반복문을 돌림 , id값은 임의로 데이터 값으로 추가해서 나오고 원래 데이터도 같이 나옴
-        setComments(postArray);
-        console.log(postArray);
-        // console.log(snapShot)
-      } catch (error) {
-        console.log(error);
-      }
-    };
     FetchLiked();
-    fetchPosts();
   }, []);
+
+  const fetchPosts = async () => {
+    try {
+      const likeCollection = collection(getFirestore(), "like");
+      const likeSnapShot = await getDocs(likeCollection);
+      const likeArray = likeSnapShot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+      setlikes(likeArray);
+      
+      const q = query(
+        collection(getFirestore(), "like")
+        // orderBy("timestamp", "desc")
+      );
+  
+      const snapShot = await getDocs(q);
+      const postArray = snapShot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+      
+      setComments(postArray);
+      console.log(postArray);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(()=>{
+    fetchPosts();
+  },[]);
+
   if (comments.length === 0) {
     return;
   } // 데이터에 값이 없다면 로딩중으로 뜨게 만들기(로딩되고 있는 그림을 넣어보기 loading.io 사이트 참조하기)
@@ -145,11 +148,6 @@ function MyPage() {
     
     const myUid = doc(postRef, "liked", userState.uid)
     const UID = await getDoc(myUid && myUid);
-    
-    
-    // const expensesCol = collection(postRef, 'liked');
-    // const snapshot = await getCountFromServer(expensesCol);
-    // const totalCount = snapshot.data().count;
 
     let copy;
     let copy2;
@@ -168,11 +166,10 @@ function MyPage() {
         nickname: userNickname,
         liked: true
       });
+
       let copy2 = [...likeds];
       copy2[index].totalcount += 1;
       setlikeds(copy2);
-      
-      
       
 
     } catch (error) {
