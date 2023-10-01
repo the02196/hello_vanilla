@@ -53,6 +53,11 @@ function MyPage() {
       }
     };
 
+    FetchLiked();
+  }, [likeds]);
+
+
+  useEffect(()=>{
     const fetchPosts = async () => {
       try {
         const likeCollection = collection(getFirestore(), "like")
@@ -65,7 +70,7 @@ function MyPage() {
 
 
         const q = query(
-          collection(getFirestore(), "comments")
+          collection(getFirestore(), "like")
           // orderBy("timestamp", "desc")
         );
         //desc - 내림차순 / asc -오름차순
@@ -82,9 +87,10 @@ function MyPage() {
         console.log(error);
       }
     };
-    FetchLiked();
     fetchPosts();
-  }, [likeds]);
+  },[])
+
+  
   if (comments.length === 0) {
     return;
   } // 데이터에 값이 없다면 로딩중으로 뜨게 만들기(로딩되고 있는 그림을 넣어보기 loading.io 사이트 참조하기)
