@@ -455,27 +455,27 @@ function Main() {
 
   const [posts, setPosts] = useState([]);
 
+  const fetchPosts = async () => {
+    try {
+      const q = query(
+        collection(getFirestore(), "notice"),
+        orderBy("timestamp", "asc")
+      );
+      //desc - 내림차순 / asc -오름차순
+      const snapShot = await getDocs(q); //데이터 다 가져오는건 snapShot으로 해야함 무조건
+      const postArray = snapShot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+      //가져온 데이터를 반복문을 돌림 , id값은 임의로 데이터 값으로 추가해서 나오고 원래 데이터도 같이 나옴
+      setPosts(postArray);
+      console.log(postArray);
+      // console.log(snapShot)
+    } catch (error) {
+      console.log(error);
+    }
+  };
   useEffect(() => {
-    const fetchPosts = async () => {
-      try {
-        const q = query(
-          collection(getFirestore(), "notice"),
-          orderBy("timestamp", "asc")
-        );
-        //desc - 내림차순 / asc -오름차순
-        const snapShot = await getDocs(q); //데이터 다 가져오는건 snapShot으로 해야함 무조건
-        const postArray = snapShot.docs.map((doc) => ({
-          id: doc.id,
-          ...doc.data(),
-        }));
-        //가져온 데이터를 반복문을 돌림 , id값은 임의로 데이터 값으로 추가해서 나오고 원래 데이터도 같이 나옴
-        setPosts(postArray);
-        console.log(postArray);
-        // console.log(snapShot)
-      } catch (error) {
-        console.log(error);
-      }
-    };
     fetchPosts();
   }, []);
   if (posts.length === 0) {

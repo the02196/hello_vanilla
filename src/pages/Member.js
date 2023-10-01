@@ -202,21 +202,21 @@ function Member() {
   },[initialMode])
 
 
+  const fetchUserData = async () =>{
+    const userRef = doc(getFirestore(), "users" ,userUid);
+    const userSnap = await getDoc(userRef);
+    // console.log(userSnap.data()); 
+    
+    if(userSnap.exists()){
+      const data= userSnap.data();
+      setName(data.name);
+      setNickname(data.nickname);
+      setPhoneNumber(data.phoneNumber);
+      setEmail(data.email);
+    }
+  }
   useEffect(()=>{
     if(!initialMode && userUid){
-      const fetchUserData = async () =>{
-        const userRef = doc(getFirestore(), "users" ,userUid);
-        const userSnap = await getDoc(userRef);
-        // console.log(userSnap.data()); 
-        
-        if(userSnap.exists()){
-          const data= userSnap.data();
-          setName(data.name);
-          setNickname(data.nickname);
-          setPhoneNumber(data.phoneNumber);
-          setEmail(data.email);
-        }
-      }
       fetchUserData();
     }
   },[initialMode,userUid])
