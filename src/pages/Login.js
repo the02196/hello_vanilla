@@ -44,6 +44,7 @@ const LoginNav2 = styled.div`
   background: linear-gradient(transparent, lightgray);
 `;
 
+
 const SignUp = styled.div`
   width: 35vw;
   padding: 20px;

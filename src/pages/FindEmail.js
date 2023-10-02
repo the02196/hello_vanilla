@@ -4,10 +4,75 @@ import { firebaseAuth, sendPasswordResetEmail } from '../firebase'
 import styled from 'styled-components'
 import Modal from '../components/Modal'
 import { useState } from 'react'
+import { NavLink } from 'react-router-dom'
 
 
 
 // <>를 그냥 쓰면 key값을 사용할 수 없어서 풀네임(React.Fragment)으로 써주면 key값을 넣을 수 있다.
+
+
+const LoginBg = styled.div`
+  width: 100%;
+  height: 100vh;
+  background-image: url();
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  background-color: #f5f5f5; //다크모드 불러와서 써야함
+  align-items: center; // 화면 정가운데로 옮기고 싶으면 height 값 주고 aic 하면됨
+`;
+const LoginNav = styled.div`
+  width: 100%;
+  position: absolute;
+  height: 200px;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  display: flex;
+  justify-content: space-between;
+  background: linear-gradient(black, transparent);
+`;
+
+
+const LoginNav2 = styled.div`
+  width: 100%;
+  position: absolute;
+  height: 100px;
+  bottom: 0;
+  left: 0;
+  z-index: 100;
+  background: linear-gradient(transparent, lightgray);
+`;
+const Logo = styled.nav`
+  a{
+    font-family: "Monofett", monospace;
+  font-size: 40px;
+  display: inline-block;
+  cursor: pointer;
+  margin-top: 40px;
+  margin-left: 30px;
+  right: 0;
+  position: relative;
+  z-index: 100;
+  color: whitesmoke;
+  @media screen and (max-width: 1920px) {
+          font-size: 32px;
+      }
+  }
+`;
+const LoginBtn = styled.span`
+  display: inline-block;
+  margin-top: 40px;
+  margin-right: 30px;
+  color: #fff;
+  margin-top: 47px;
+      margin-right: 30px;
+      a{
+        color: #fff;
+      }
+`;
 
 const Container =styled.div`
   height: calc(100vh - 86px);
@@ -21,7 +86,7 @@ const FindMail =styled.div`
   width: 35vw; padding: 20px;
   box-shadow: 0 0 10px rgba(0,0,0,0.1);
   background-color: #fff;
-  border-radius: 10px;
+  /* border-radius: 10px; */
   @media screen and (max-width: 1024px) { width: 60vw; 
   }
   @media screen and (max-width: 640px) { width: 70vw; 
@@ -33,7 +98,8 @@ font-size: 24px; text-align: center; margin-bottom: 20px;
 `
 const Input =styled.input`
   width: 100%; padding: 10px; margin-bottom: 10px; 
-  border: 1px solid #ddd; border-radius:  5px; 
+  border: 1px solid #ddd; 
+  /* border-radius:  5px;  */
   box-sizing: border-box;
   padding-left: 45px;
   transition: border color 0.4s;
@@ -57,7 +123,7 @@ const InputWrapper = styled.div`
         background-color: #40e0de;
         font-size: 14px;
         text-align: center; padding: 5px 20px;
-        border-radius: 5px;
+        /* border-radius: 5px; */
         color: #fff;
         &:last-child{
           background-color: #036;
@@ -82,13 +148,13 @@ const Label = styled.label`
 `
 
 const Button =styled.button`
-  width: 100%;
+ width: 100%;
   padding: 10px;
-  border-radius: 5px;
-  background-color: #007bff;
+  background-color: #000000;
   border: none;
-  color: #fff; cursor: pointer;
-
+  cursor: pointer;
+  box-sizing: border-box;
+  color: #fff;
 `
 
  
@@ -184,6 +250,14 @@ function Findemail() {
    
   return (
    <>
+   <LoginBg>
+        <LoginNav>
+          <Logo><NavLink to={"/main"}>HeLLO VanILLa</NavLink></Logo>
+          <LoginBtn><NavLink to={"/main"}>메인 페이지로 가기</NavLink></LoginBtn>
+        </LoginNav>
+
+
+
     <Container>
         <FindMail>
             
@@ -211,6 +285,9 @@ function Findemail() {
     </Container>
     
     {isModalOpen && <Modal error={message} onClose={()=>{setModalOpen(false)}}></Modal>}
+      
+      <LoginNav2></LoginNav2>
+     </LoginBg>
     
    </>
 
