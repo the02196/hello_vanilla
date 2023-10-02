@@ -28,6 +28,7 @@ import {
   setDoc,
   updateDoc,
 } from "firebase/firestore";
+import TextAreaEdit from "./TextAreaEdit";
 
 /*
   #### Wrappers ####
@@ -474,19 +475,7 @@ function Detail_Comments() {
     }
   };
 
-  const editComment = async (id) => {
-    if (window.confirm("정말 수정하시겠습니까?")) {
-      try {
-        const commentRef = doc(getFirestore(), "comments", id);
-        await updateDoc(commentRef, {
-          text: editText
-        });
-        setEditId(null)
-      }catch(error){
-        console.log(error)
-      }
-    }
-  }
+  
   /*
   #### Fetch Contents Functions
   */
@@ -504,7 +493,11 @@ function Detail_Comments() {
     return (
       <ContentCenterWrap>
         {editId === id ? 
-        <textarea value={editText} onChange={(e) => setEditText(e.target.value)}/>
+        <TextAreaEdit 
+          id={id}
+          text={text}
+          onCancel={()=> setEditId(null)}
+        />
         :
         <Comment>{text}</Comment>
         }
@@ -737,7 +730,7 @@ function Detail_Comments() {
                         nickname={e.nickname}
                         // createdate={e.createdate}
                       />
-                      <FetchContentCenter text={e.text} editing={editId} id={e.id}/>
+                      <FetchContentCenter text={e.text} id={e.id}/>
                       <ContentBottomWrap>
                         <Count>{likeds[i]?.totalcount}</Count>
                         <Love
@@ -755,12 +748,12 @@ function Detail_Comments() {
                         <Reply>
                           <FontAwesomeIcon icon={faShare} />
                         </Reply>
-                        {e.uid === userState.uid && editId === e.id &&
+                        {/* {e.uid === userState.uid && editId === e.id &&
                           <>
                             <button onClick={() => editComment(e.id)}>수정완료</button>
                             <button onClick={() => setEditId(null)}>취소</button>
                           </>
-                        } 
+                        }  */}
                         {e.uid === userState.uid && editId !== e.id &&
                           <>     
                             <button onClick={()=>setEditId(e.id)}>수정</button>

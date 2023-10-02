@@ -32,6 +32,7 @@ function Main() {
   const [wait2, setWait2] = useState(false);
   const [wait3, setWait3] = useState(false);
   const [noticeCount, setNoticeCount] = useState(0);
+  const [checkUserInfo, setCheckUserInfo] = useState("")
 
   const MainWrap = styled.div`
     width: 100%;
@@ -452,31 +453,38 @@ function Main() {
       </>
     );
   }
+  // const checkUserInfoGetOrNot = async () => {
+  //   const userRef =  doc(getFirestore(), "users", userState?.uid)
+  //   const userSnapshot = await getDoc(userRef);
+  //   const userNickname = userSnapshot.data().nickname;
+  //   setCheckUserInfo(userNickname);
+  // }
 
   const [posts, setPosts] = useState([]);
 
-  const fetchPosts = async () => {
-    try {
-      const q = query(
-        collection(getFirestore(), "notice"),
-        orderBy("timestamp", "asc")
-      );
-      //desc - 내림차순 / asc -오름차순
-      const snapShot = await getDocs(q); //데이터 다 가져오는건 snapShot으로 해야함 무조건
-      const postArray = snapShot.docs.map((doc) => ({
-        id: doc.id,
-        ...doc.data(),
-      }));
-      //가져온 데이터를 반복문을 돌림 , id값은 임의로 데이터 값으로 추가해서 나오고 원래 데이터도 같이 나옴
-      setPosts(postArray);
-      console.log(postArray);
-      // console.log(snapShot)
-    } catch (error) {
-      console.log(error);
-    }
-  };
   useEffect(() => {
+    const fetchPosts = async () => {
+      try {
+        const q = query(
+          collection(getFirestore(), "notice"),
+          orderBy("timestamp", "desc")
+        );
+        //desc - 내림차순 / asc -오름차순
+        const snapShot = await getDocs(q); //데이터 다 가져오는건 snapShot으로 해야함 무조건
+        const postArray = snapShot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+        //가져온 데이터를 반복문을 돌림 , id값은 임의로 데이터 값으로 추가해서 나오고 원래 데이터도 같이 나옴
+        setPosts(postArray);
+        console.log(postArray);
+        // console.log(snapShot)
+      } catch (error) {
+        console.log(error);
+      }
+    };
     fetchPosts();
+    // checkUserInfoGetOrNot();
   }, []);
   if (posts.length === 0) {
     return;
@@ -528,6 +536,10 @@ function Main() {
     );
   }
 
+ 
+  // if(!checkUserInfo){
+  //   return;
+  // }
   return (
     <>
       <Nav userState={userState} />
