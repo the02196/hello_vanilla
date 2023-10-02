@@ -7,7 +7,7 @@ const Button =styled.button`
  width: 100%;
  padding: 10px;
  background-color: black;
- border-radius: 5px;
+ /* border-radius: 5px; */
  border: none;
  cursor: pointer;
  color: #fff;
@@ -27,7 +27,7 @@ const ModalContent =styled.div`
  flex-basis: 360px;
  background-color: #f7fcfc;
  padding: 60px 20px 40px;
- border-radius: 8px;
+ /* border-radius: 8px; */
  display: flex;
  justify-content: center;
  flex-wrap: wrap;

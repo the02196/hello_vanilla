@@ -49,7 +49,7 @@ const SignUp = styled.div`
   padding: 20px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   background-color: #fff;
-  border-radius: 10px;
+  /* border-radius: 10px; */
   @media screen and (max-width: 1024px) {
     width: 60vw;
   }
@@ -109,7 +109,7 @@ const InputWrapper = styled.div`
       text-align: center;
       padding: 5px 20px;
       color: black;
-      border-radius: 5px;
+      /* border-radius: 5px; */
       &:last-child {
         color: white;
         background-color: #036;
@@ -132,7 +132,7 @@ const Input = styled.input`
   padding: 10px;
   margin-bottom: 10px;
   border: 1px solid #ddd;
-  border-radius: 5px;
+  /* border-radius: 5px; */
   box-sizing: border-box;
   padding-left: 45px;
   transition: border-color 0.4s;
@@ -159,7 +159,7 @@ const Button = styled.button`
   width: 100%;
   padding: 10px;
   background-color: #000000;
-  border-radius: 5px;
+  /* border-radius: 5px; */
   border: none;
   cursor: pointer;
   box-sizing: border-box;
