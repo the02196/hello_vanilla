@@ -93,7 +93,8 @@ function Write() {
   const [postData, setPostData] = useState(null);
   const [postUid, setPostUid] = useState();
   const uid = sessionStorage.getItem("users");
-  console.log(uid)
+  console.log(memberProfile)
+  console.log(memberProfile.data.admin)
   const fetchData = async () =>{
     const postRef = doc(getFirestore(),board,view);
     const postSnapShot = await getDoc(postRef);
@@ -117,9 +118,20 @@ function Write() {
     }
   },[board, view])
   
-  console.log(memberProfile.uid)
-  console.log(postUid)  
 
+
+
+  if(memberProfile.data.admin !== 'true'){
+    
+    return(
+      <>
+      {
+        isModal &&
+        <Modal error='권한이 없습니다.' onClose={()=>{setIsModal(false);navigate('/notice')}}/>
+      }
+      </>
+    )
+  }
 
   if(!memberProfile.loggedIn){
     
@@ -127,7 +139,7 @@ function Write() {
       <>
       {
         isModal &&
-        <Modal error='로그인 상태가 아닙니다.' onClose={()=>{setIsModal(false);navigate('/')}}/>
+        <Modal error='로그인 상태가 아닙니다.' onClose={()=>{setIsModal(false);navigate('/login')}}/>
       }
       </>
     )
