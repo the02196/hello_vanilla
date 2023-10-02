@@ -28,6 +28,7 @@ import {
   setDoc,
   updateDoc,
 } from "firebase/firestore";
+import TextAreaEdit from "./TextAreaEdit";
 
 /*
   #### Wrappers ####
@@ -339,44 +340,46 @@ function Detail_Comments() {
   const [comments, setComments] = useState([]);
   const userState = useSelector((state) => state.user);
   const [likeds, setlikeds] = useState("");
+  const [editId, setEditId] = useState(null)
+  const [editText, setEditText] = useState("")
 
-  const getComments = async () => {
-    const commentsSnapshot = await getDocs(
-      collection(getFirestore(), "comments")
-    );
-    const comments = commentsSnapshot.docs.map((doc) => ({
-      id: doc.id,
-      ...doc.data(),
-    }));
-    return comments;
-  };
+  // const getComments = async () => {
+  //   const commentsSnapshot = await getDocs(
+  //     collection(getFirestore(), "comments")
+  //   );
+  //   const comments = commentsSnapshot.docs.map((doc) => ({
+  //     id: doc.id,
+  //     ...doc.data(),
+  //   }));
+  //   return comments;
+  // };
 
-  useEffect(() => {
-    const fetchComments = async () => {
-      const data = await getComments();
-      setComments(data);
-    };
-    fetchComments();
-  }, []);
+  // const fetchComments = async () => {
+  //   const data = await getComments();
+  //   setComments(data);
+  // };
+  // useEffect(() => {
+  //   fetchComments();
+  // }, []);
 
-  const toggleLike = async (commentId, userId) => {
-    const commentRef = doc(getFirestore(), "comments", commentId);
-    // const commentSnapshot = await getDoc(commentRef);
-    // const commentData = commentSnapshot.data();
-    try {
-      const test1 = doc(commentRef, "like", userState.uid);
-      const testSnap = await getDoc(test1);
-      if (testSnap.exists()) {
-        await deleteDoc(doc(commentRef, "like", userState.uid));
-        return;
-      }
-      await setDoc(doc(commentRef, "like", userState.uid), {
-        liked: true,
-      });
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  // const toggleLike = async (commentId, userId) => {
+  //   const commentRef = doc(getFirestore(), "comments", commentId);
+  //   // const commentSnapshot = await getDoc(commentRef);
+  //   // const commentData = commentSnapshot.data();
+  //   try {
+  //     const test1 = doc(commentRef, "like", userState.uid);
+  //     const testSnap = await getDoc(test1);
+  //     if (testSnap.exists()) {
+  //       await deleteDoc(doc(commentRef, "like", userState.uid));
+  //       return;
+  //     }
+  //     await setDoc(doc(commentRef, "like", userState.uid), {
+  //       liked: true,
+  //     });
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
   useEffect(() => {
     const commentRef = collection(getFirestore(), "comments");
@@ -427,13 +430,6 @@ function Detail_Comments() {
     fetchPosts();
   }, []);
 
-  const getLikeCount = async (commentId) => {
-    const commentRef = doc(getFirestore(), "comments", commentId);
-    const likesCollection = collection(commentRef, "like");
-    const likesSnapshot = await getDocs(likesCollection);
-    return likesSnapshot.docs.length;
-  };
-
   const addHeart = async (id, index) => {
     const userRef = doc(getFirestore(), "users", userState.uid);
     const userSnapshot = await getDoc(userRef);
@@ -468,6 +464,18 @@ function Detail_Comments() {
     }
   };
 
+  const deleteComment = async (id) => {
+    if (window.confirm("정말 삭제하시겠습니까?")) {
+      try {
+        const commentRef = doc(getFirestore(), "comments", id);
+        await deleteDoc(commentRef);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  };
+
+  
   /*
   #### Fetch Contents Functions
   */
@@ -481,10 +489,18 @@ function Detail_Comments() {
     );
   };
 
-  const FetchContentCenter = ({ text }) => {
+  const FetchContentCenter = ({ text, id }) => {
     return (
       <ContentCenterWrap>
+        {editId === id ? 
+        <TextAreaEdit 
+          id={id}
+          text={text}
+          onCancel={()=> setEditId(null)}
+        />
+        :
         <Comment>{text}</Comment>
+        }
       </ContentCenterWrap>
     );
   };
@@ -714,7 +730,7 @@ function Detail_Comments() {
                         nickname={e.nickname}
                         // createdate={e.createdate}
                       />
-                      <FetchContentCenter text={e.text} />
+                      <FetchContentCenter text={e.text} id={e.id}/>
                       <ContentBottomWrap>
                         <Count>{likeds[i]?.totalcount}</Count>
                         <Love
@@ -732,11 +748,21 @@ function Detail_Comments() {
                         <Reply>
                           <FontAwesomeIcon icon={faShare} />
                         </Reply>
+                        {/* {e.uid === userState.uid && editId === e.id &&
+                          <>
+                            <button onClick={() => editComment(e.id)}>수정완료</button>
+                            <button onClick={() => setEditId(null)}>취소</button>
+                          </>
+                        }  */}
+                        {e.uid === userState.uid && editId !== e.id &&
+                          <>     
+                            <button onClick={()=>setEditId(e.id)}>수정</button>
+                            <button onClick={()=>deleteComment(e.id)}>삭제</button>
+                          </>
+                        }
                       </ContentBottomWrap>
                     </ContentWrap>
                   </li>
-
-
                 </>
               );
             })}

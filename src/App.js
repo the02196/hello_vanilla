@@ -28,7 +28,6 @@ import Auth from "./components/Auth";
 
 import FindEmail from "./pages/FindEmail";
 
-import Heart_Test from "./components/Heart_Test";
 import Dog_Test from "./components/Dog_Test";
 import Modify from "./pages/Modify";
 import Logout from "./pages/Logout";
@@ -128,27 +127,28 @@ function App() {
 function Inner() {
   const dispatch = useDispatch();
   const uid = sessionStorage.getItem("users");
+  if (uid) {
+    dispatch(logIn(uid));
+  }
+
+  const fetchUser = async () => {
+    if (!uid) return;
+    const userDoc = doc(collection(getFirestore(), "users"), uid);
+    // console.log(userDoc);
+    try {
+      const docSnapshot = await getDoc(userDoc);
+      // console.log(docSnapshot);
+      if (docSnapshot.exists()) {
+        const userData = docSnapshot.data();
+        dispatch(loggedIn(userData));
+        //로그인에서 로그아웃으로 바껴야하니깐 데이터를 불러옴
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   useEffect(() => {
-    if (uid) {
-      dispatch(logIn(uid));
-    }
-    const fetchUser = async () => {
-      if (!uid) return;
-      const userDoc = doc(collection(getFirestore(), "users"), uid);
-      // console.log(userDoc);
-      try {
-        const docSnapshot = await getDoc(userDoc);
-        // console.log(docSnapshot);
-        if (docSnapshot.exists()) {
-          const userData = docSnapshot.data();
-          dispatch(loggedIn(userData));
-          //로그인에서 로그아웃으로 바껴야하니깐 데이터를 불러옴
-        }
-      } catch (error) {
-        console.log(error);
-      }
-    };
     fetchUser();
   }, [dispatch, uid]); //0919-4 dispatch,uid를 추가해주면
 
@@ -191,7 +191,6 @@ function Inner() {
 
           <Route path="/auth" element={<Auth />}></Route>
           <Route path="/modify" element={<Member />}></Route>
-          <Route path="/heart" element={<Heart_Test />}></Route>
           <Route path="/dogtest" element={<Dog_Test />}></Route>
           <Route path="/avatar" element={<Avatar />}></Route>
 
