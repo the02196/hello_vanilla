@@ -409,7 +409,7 @@ function Detail_Comments() {
 
       const q = query(
         collection(getFirestore(), "comments"),
-        orderBy("createdate", "desc")
+        orderBy("createdate", "asc")
       );
       //desc - 내림차순 / asc -오름차순
       const snapShot = await getDocs(q); //데이터 다 가져오는건 snapShot으로 해야함 무조건
