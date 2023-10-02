@@ -208,21 +208,27 @@ function View() {
                   })
                 }
               </ul>
-              {
+              {/* {
                uid && 
               <Comment>
                 <textarea value={comment} onChange={(e)=> setComment(e.target.value)}/>
                 <Button onClick={()=>{addComment(view)}}>댓글달기</Button>
               </Comment>
-              }
+              } */}
             </CommentWrap>
                 <ButtonContent>
           <ButtonWarp>
             <Button onClick={()=>navigate(`/service/${board}`)}><FontAwesomeIcon icon={faList}/>목록</Button>
-            <Button onClick={()=>navigate(`/write/${board}`)}><FontAwesomeIcon icon={faPen}/>글쓰기</Button>
+            {
+              uid &&
+              memberProfile.data.admin === 'true' || postUid === memberProfile.uid ?
+            <Button onClick={()=>navigate(`/write/${board}`)}><FontAwesomeIcon icon={faPen}/>글쓰기</Button>:
+            ""
+            }
           </ButtonWarp>
             { uid &&
-             postUid  === memberProfile.uid || memberProfile.uid === "oeMjaK1cE2fNwki16sI2qB5Vixz2" ?
+             memberProfile.data.admin === 'true'  || postUid === memberProfile.uid ?
+             
           (<ButtonWarp>
                   <Button onClick={()=>navigate(`/edit/${board}/${view}`)}><FontAwesomeIcon icon={faPenSquare}/>수정</Button>
                   <Button onClick={deletePost}><FontAwesomeIcon icon={faTrash}/>삭제</Button>

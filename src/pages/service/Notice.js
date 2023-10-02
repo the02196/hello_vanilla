@@ -2,6 +2,7 @@ import { faPen } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { collection, getDocs, getFirestore, orderBy, query } from 'firebase/firestore'
 import React, { useEffect, useState } from 'react'
+import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 // getDocs => 게시판 글 다 가져와야 해서 , orderBy =>순서(최신순,등록순,날짜순...) , query => 프로그래밍에서 내가 필요한 부분만 가지고 올 수 있도록 하는거
@@ -54,6 +55,7 @@ const Button = styled.div`
 
 function Notice() {
   const [posts,setPosts] = useState([]);
+  const memberProfile = useSelector(state => state.user);
   
   const fetchPosts = async () =>{
     try{
@@ -109,9 +111,13 @@ function Notice() {
           })
 
         }
+      {
+        memberProfile.data.admin === 'true' ?
       <ButtonWrap>
         <Button><Link to="/write/notice"><FontAwesomeIcon icon={faPen}/>글쓰기</Link></Button>
-      </ButtonWrap>
+      </ButtonWrap>:
+      ""
+      }
       
     </BoardWrapper>
     </>
