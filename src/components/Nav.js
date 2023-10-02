@@ -125,13 +125,13 @@ function Nav({ userState }) {
             </NavLink>
           </span>
           <span>&nbsp; | &nbsp;</span>
-          <span style={{marginRight: "30px"}}>
+          <span style={userState?.data && {marginRight: "30px"}}>
             <NavLink to={userState?.data ? "/modify" : "/member"}>
               {userState?.data ? "정보수정" : "회원가입"}
             </NavLink>
           </span>
           <span>
-            <Avatar />
+            {userState?.data && <Avatar />}
           </span>
           </div>
         </TextWrap>
