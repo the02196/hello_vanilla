@@ -11,16 +11,16 @@ import {
 } from "firebase/storage";
 import { collection, doc, getDoc, getFirestore, updateDoc } from "firebase/firestore";
 
-const Wrapper = styled.div`
+const Wrapper = styled.span`
   display: flex;
   align-items: center;
   flex-direction: column;
   gap: 20px;
 `;
 const AvatarUpload = styled.label`
-  width: 80px;
+  width: 50px;
   overflow: hidden;
-  height: 80px;
+  height: 50px;
   border-radius: 50%;
   background-color: black;
   cursor: pointer;
@@ -113,7 +113,7 @@ function Avatar() {
         type="file"
         accept="image/*"
       />
-      <Name>{nickName ?? "Anonymous"}</Name>
+      {/* <Name>{nickName ?? "Anonymous"}</Name> */}
     </Wrapper>
   );
 }
