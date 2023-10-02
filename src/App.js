@@ -32,6 +32,7 @@ import Heart_Test from "./components/Heart_Test";
 import Dog_Test from "./components/Dog_Test";
 import Modify from "./pages/Modify";
 import Logout from "./pages/Logout";
+import Avatar from "./pages/Avatar";
 
 
 
@@ -101,18 +102,21 @@ function App() {
         <NavLink to={"/quick"}>
           <GlobalNavigationButton>Quick Links</GlobalNavigationButton>
         </NavLink>
-        <NavLink to={"/mypage"}>
+        <NavLink to={"/avatar"}>
+          <GlobalNavigationButton>Avatar</GlobalNavigationButton>
+        </NavLink>
+        {/* <NavLink to={"/mypage"}>
           <GlobalNavigationButton>Test</GlobalNavigationButton>
-          </NavLink>
-        <NavLink to={"/auth"}>
+          </NavLink> */}
+        {/* <NavLink to={"/auth"}>
           <GlobalNavigationButton>Auth Test</GlobalNavigationButton>
-        </NavLink>
-        <NavLink to={"/heart"}>
+        </NavLink> */}
+        {/* <NavLink to={"/heart"}>
           <GlobalNavigationButton>Heart Test</GlobalNavigationButton>
-        </NavLink>
-        <NavLink to={"/dogtest"}>
+        </NavLink> */}
+        {/* <NavLink to={"/dogtest"}>
           <GlobalNavigationButton>Dog Test</GlobalNavigationButton>
-        </NavLink>
+        </NavLink> */}
       </GlobalNavigation>
       <Provider store={store}>
         <Inner />
@@ -189,6 +193,7 @@ function Inner() {
           <Route path="/modify" element={<Member />}></Route>
           <Route path="/heart" element={<Heart_Test />}></Route>
           <Route path="/dogtest" element={<Dog_Test />}></Route>
+          <Route path="/avatar" element={<Avatar />}></Route>
 
           <Route path="/service" element={<Service />}>
             <Route path="notice" element={<Notice />}></Route>
