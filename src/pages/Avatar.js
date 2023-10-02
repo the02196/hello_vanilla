@@ -104,7 +104,7 @@ function Avatar() {
         {Boolean(URL) ? (
           <AvatarImg src={URL} />
         ) : (
-          <FontAwesomeIcon icon={faUserAstronaut}></FontAwesomeIcon>
+          <AvatarImg src={"../images/portraits/default_7.png"}></AvatarImg>
         )}
       </AvatarUpload>
       <AvatarInput
