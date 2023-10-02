@@ -31,13 +31,13 @@ function MyPage() {
     try {
       const LikeCollection = collection(getFirestore(), "like");
       const likeSnapShot = await getDocs(LikeCollection);
-      
+  
       const likedArray = await Promise.all(
         likeSnapShot.docs.map(async (doc) => {
           const likedCollection = collection(doc.ref, "liked");
           const likedSnapshot = await getDocs(likedCollection);
           const totalCount = likedSnapshot.size;
-          
+  
           return {
             id: doc.id,
             totalcount: totalCount,
@@ -45,7 +45,7 @@ function MyPage() {
           };
         })
       );
-      
+  
       setlikeds(likedArray);
     } catch (error) {
       alert(error);
@@ -58,27 +58,29 @@ function MyPage() {
 
   const fetchPosts = async () => {
     try {
-      const likeCollection = collection(getFirestore(), "like");
-      const likeSnapShot = await getDocs(likeCollection);
-      const likeArray = likeSnapShot.docs.map((doc) => ({
+      const likeCollection = collection(getFirestore(), "like")
+      const likeSnapShot = await getDocs(likeCollection)
+      const likeArray = likeSnapShot.docs.map((doc)=>({
         id: doc.id,
         ...doc.data(),
-      }));
+      }))
       setlikes(likeArray);
-      
+
+
       const q = query(
         collection(getFirestore(), "like")
         // orderBy("timestamp", "desc")
       );
-  
-      const snapShot = await getDocs(q);
+      //desc - 내림차순 / asc -오름차순
+      const snapShot = await getDocs(q); //데이터 다 가져오는건 snapShot으로 해야함 무조건
       const postArray = snapShot.docs.map((doc) => ({
         id: doc.id,
         ...doc.data(),
       }));
-      
+      //가져온 데이터를 반복문을 돌림 , id값은 임의로 데이터 값으로 추가해서 나오고 원래 데이터도 같이 나옴
       setComments(postArray);
       console.log(postArray);
+      // console.log(snapShot)
     } catch (error) {
       console.log(error);
     }
@@ -149,8 +151,6 @@ function MyPage() {
     const myUid = doc(postRef, "liked", userState.uid)
     const UID = await getDoc(myUid && myUid);
 
-    let copy;
-    let copy2;
     
     try {
       const test1 = doc(postRef, 'liked', userState.uid);
@@ -159,18 +159,17 @@ function MyPage() {
         await deleteDoc(doc(postRef, "liked", userState.uid));   
        
         let copy = [...likeds];
-        copy[index].totalcount -= 1;
-        setlikeds(copy);
+      copy[index].totalcount -= 1;
+      setlikeds(copy);
+        return;
       }
       await setDoc(doc(postRef, "liked", userState.uid), {
         nickname: userNickname,
         liked: true
       });
-
       let copy2 = [...likeds];
       copy2[index].totalcount += 1;
       setlikeds(copy2);
-      
 
     } catch (error) {
       console.log(error);
