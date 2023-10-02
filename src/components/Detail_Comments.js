@@ -338,17 +338,18 @@ function Detail_Comments() {
   const [comment, setComment] = useState("");
   const [comments, setComments] = useState([]);
   const userState = useSelector((state) => state.user);
-
-  
+  const [likeds, setlikeds] = useState("");
 
   const getComments = async () => {
-    const commentsSnapshot = await getDocs(collection(getFirestore(), 'comments'));
-    const comments = commentsSnapshot.docs.map(doc => ({ 
-      id: doc.id, 
-      ...doc.data() 
+    const commentsSnapshot = await getDocs(
+      collection(getFirestore(), "comments")
+    );
+    const comments = commentsSnapshot.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
     }));
-  return comments;
-  }
+    return comments;
+  };
 
   useEffect(() => {
     const fetchComments = async () => {
@@ -357,9 +358,9 @@ function Detail_Comments() {
     };
     fetchComments();
   }, []);
-  
+
   const toggleLike = async (commentId, userId) => {
-    const commentRef = doc(getFirestore(), 'comments', commentId);
+    const commentRef = doc(getFirestore(), "comments", commentId);
     // const commentSnapshot = await getDoc(commentRef);
     // const commentData = commentSnapshot.data();
     try {
@@ -387,18 +388,86 @@ function Detail_Comments() {
         id: doc.id,
         ...doc.data(),
       }));
+      FetchLiked();
       setComments(fetchComment);
     });
     return dataSnap;
   }, []);
 
+  const fetchPosts = async () => {
+    try {
+      // const likeCollection = collection(getFirestore(), "like")
+      // const likeSnapShot = await getDocs(likeCollection)
+      // const likeArray = likeSnapShot.docs.map((doc)=>({
+      //   id: doc.id,
+      //   ...doc.data(),
+      // }))
+      // setlikes(likeArray);
+
+      const q = query(
+        collection(getFirestore(), "comments"),
+        orderBy("createdate", "desc")
+      );
+      //desc - 내림차순 / asc -오름차순
+      const snapShot = await getDocs(q); //데이터 다 가져오는건 snapShot으로 해야함 무조건
+      const postArray = snapShot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+      //가져온 데이터를 반복문을 돌림 , id값은 임의로 데이터 값으로 추가해서 나오고 원래 데이터도 같이 나옴
+      setComments(postArray);
+      console.log(postArray);
+      // console.log(snapShot)
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchPosts();
+  }, []);
+
   const getLikeCount = async (commentId) => {
-    const commentRef = doc(getFirestore(), 'comments', commentId);
+    const commentRef = doc(getFirestore(), "comments", commentId);
     const likesCollection = collection(commentRef, "like");
     const likesSnapshot = await getDocs(likesCollection);
     return likesSnapshot.docs.length;
-  }
-  
+  };
+
+  const addHeart = async (id, index) => {
+    const userRef = doc(getFirestore(), "users", userState.uid);
+    const userSnapshot = await getDoc(userRef);
+    const userNickname = userSnapshot.data().nickname;
+
+    // 첫 번째 콜렉션과 첫 번째 도큐먼트를 생성하기 전에 설정(?) 해놓는 함수
+    const postRef = doc(getFirestore(), "comments", id);
+
+    // const myUid = doc(postRef, "liked", userState.uid)
+    // const UID = await getDoc(myUid && myUid);
+
+    try {
+      const test1 = doc(postRef, "liked", userState.uid);
+      const testSnap = await getDoc(test1);
+      if (testSnap.exists()) {
+        await deleteDoc(doc(postRef, "liked", userState.uid));
+
+        let copy = [...likeds];
+        copy[index].totalcount -= 1;
+        setlikeds(copy);
+        return;
+      }
+      await setDoc(doc(postRef, "liked", userState.uid), {
+        nickname: userNickname,
+        liked: true,
+      });
+      let copy2 = [...likeds];
+      copy2[index].totalcount += 1;
+      setlikeds(copy2);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   /*
   #### Fetch Contents Functions
   */
@@ -420,14 +489,17 @@ function Detail_Comments() {
     );
   };
 
-  const FetchContentBottom = ({onToggleLike, likeCount}) => {
+  const FetchContentBottom = ({ id, index }) => {
     return (
       <ContentBottomWrap>
-        <Count>{likeCount}</Count>
-        <Love style={{cursor: "pointer"}} onClick={()=>{
-          // setHeartCount(heartCount)
-          onToggleLike()
-        }}>
+        <Count>{likeds[index]?.totalcount}</Count>
+        <Love
+          style={{ cursor: "pointer" }}
+          onClick={() => {
+            // setHeartCount(heartCount)
+            addHeart(id, index);
+          }}
+        >
           <FontAwesomeIcon icon={faHeart} />
         </Love>
         <Share>
@@ -507,15 +579,15 @@ function Detail_Comments() {
     );
   };
 
-  const FetchReply = ({ i, nickname, text, createdate }) => {
-    const [likeCount, setLikeCount] = useState(0);
-    useEffect(() => {
-      const fetchLikes = async () => {
-          const count = await getLikeCount(i);
-          setLikeCount(count);
-      };
-      fetchLikes();
-  }, [i]);
+  const FetchReply = ({ key, i, nickname, text, createdate }) => {
+    //   const [likeCount, setLikeCount] = useState(0);
+    //   useEffect(() => {
+    //     const fetchLikes = async () => {
+    //         const count = await getLikeCount(i);
+    //         setLikeCount(count);
+    //     };
+    //     fetchLikes();
+    // }, [i]);
     return (
       <li key={i}>
         <ProfileWrap>
@@ -524,7 +596,7 @@ function Detail_Comments() {
         <ContentWrap>
           <FetchContentTop nickname={nickname} createdate={createdate} />
           <FetchContentCenter text={text} />
-          <FetchContentBottom onToggleLike={()=>toggleLike(i)} likeCount={likeCount}/>
+          <FetchContentBottom id={key} index={i} />
         </ContentWrap>
       </li>
     );
@@ -561,15 +633,12 @@ function Detail_Comments() {
     console.log(formJson);
   }
 
-  
-
   // const viewCnt = async(board, view) => {
   //   const viewRef = doc(getFirestore(), board, view);
   //   await updateDoc(viewRef,{
   //     view : increment(1)
   //   })
   // }
-
 
   // function formateDate(data){
   //   if(data){
@@ -589,7 +658,35 @@ function Detail_Comments() {
   //   }
   // }
 
-  
+  const FetchLiked = async () => {
+    try {
+      const LikeCollection = collection(getFirestore(), "comments");
+      const likeSnapShot = await getDocs(LikeCollection);
+
+      const likedArray = await Promise.all(
+        likeSnapShot.docs.map(async (doc) => {
+          const likedCollection = collection(doc.ref, "liked");
+          
+          const likedSnapshot = await getDocs(likedCollection);
+          const totalCount = likedSnapshot.size;
+
+          return {
+            id: doc.id,
+            totalcount: totalCount,
+            ...doc.data(),
+          };
+        })
+      );
+
+      setlikeds(likedArray);
+    } catch (error) {
+      alert(error);
+    }
+  };
+
+  // useEffect(() => {
+  //   FetchLiked();
+  // }, []);
 
   return (
     <>
@@ -605,10 +702,44 @@ function Detail_Comments() {
               createdate={"2023.09.26"}
               profile={"../images/portraits/woman_5.png"}
             />
-              {comments.map(e => (
-                <FetchReply key={e.id} text={e.text} nickname={e.nickname} i={e.id} onToggleLike={()=>toggleLike}>
-                </FetchReply>
-              ))}
+            {comments.map((e, i) => {
+              return (
+                <>
+                  <li key={i}>
+                    <ProfileWrap>
+                      <Profile />
+                    </ProfileWrap>
+                    <ContentWrap>
+                      <FetchContentTop
+                        nickname={e.nickname}
+                        // createdate={e.createdate}
+                      />
+                      <FetchContentCenter text={e.text} />
+                      <ContentBottomWrap>
+                        <Count>{likeds[i]?.totalcount}</Count>
+                        <Love
+                          style={{ cursor: "pointer" }}
+                          onClick={() => {
+                            // setHeartCount(heartCount)
+                            addHeart(e.id, i);
+                          }}
+                        >
+                          <FontAwesomeIcon icon={faHeart} />
+                        </Love>
+                        <Share>
+                          <FontAwesomeIcon icon={faLink} />
+                        </Share>
+                        <Reply>
+                          <FontAwesomeIcon icon={faShare} />
+                        </Reply>
+                      </ContentBottomWrap>
+                    </ContentWrap>
+                  </li>
+
+
+                </>
+              );
+            })}
           </ul>
         </CommentWrap>
       </GlobalWrap>
