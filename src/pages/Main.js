@@ -32,6 +32,7 @@ function Main() {
   const [wait2, setWait2] = useState(false);
   const [wait3, setWait3] = useState(false);
   const [noticeCount, setNoticeCount] = useState(0);
+  const [checkUserInfo, setCheckUserInfo] = useState("")
 
   const MainWrap = styled.div`
     width: 100%;
@@ -452,6 +453,12 @@ function Main() {
       </>
     );
   }
+  // const checkUserInfoGetOrNot = async () => {
+  //   const userRef =  doc(getFirestore(), "users", userState?.uid)
+  //   const userSnapshot = await getDoc(userRef);
+  //   const userNickname = userSnapshot.data().nickname;
+  //   setCheckUserInfo(userNickname);
+  // }
 
   const [posts, setPosts] = useState([]);
 
@@ -477,6 +484,7 @@ function Main() {
       }
     };
     fetchPosts();
+    // checkUserInfoGetOrNot();
   }, []);
   if (posts.length === 0) {
     return;
@@ -528,6 +536,10 @@ function Main() {
     );
   }
 
+ 
+  // if(!checkUserInfo){
+  //   return;
+  // }
   return (
     <>
       <Nav userState={userState} />
