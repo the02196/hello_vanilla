@@ -15,9 +15,9 @@ import { Navigate } from "react-router-dom";
 
 
 
-function TextArea({GetDocsFromComments, GetDocsFromUsers, FetchLiked}) {
+function TextArea({GetDocsFromComments, GetDocsFromUsers, FetchLiked, text}) {
   const memberProfile = useSelector((state) => state.user);
-  const [commentValue, setCommentValue] = useState("");
+  const [commentValue, setCommentValue] = useState(text);
   const [postData, setPostData] = useState(null);
   const [isModal, setIsModal] = useState(false);
   const [message, setMessage] = useState("");
@@ -92,7 +92,7 @@ function TextArea({GetDocsFromComments, GetDocsFromUsers, FetchLiked}) {
 
 
 
-  const addComment = async (e) =>{
+  const addComment = async () =>{
     // const postRef = doc(getFirestore(), "comments", memberProfile.uid);
     try {
       const docRef = await addDoc(collection(getFirestore(),"comments"), {
