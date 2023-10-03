@@ -112,12 +112,13 @@ function Notice() {
 
         }
       {
-        memberProfile.data.admin === 'true' ?
-      <ButtonWrap>
+        memberProfile?.data?.admin === 'true' ?
+        <ButtonWrap>
         <Button><Link to="/write/notice"><FontAwesomeIcon icon={faPen}/>글쓰기</Link></Button>
       </ButtonWrap>:
       ""
       }
+
       
     </BoardWrapper>
     </>

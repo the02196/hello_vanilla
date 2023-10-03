@@ -221,13 +221,13 @@ function View() {
             <Button onClick={()=>navigate(`/service/${board}`)}><FontAwesomeIcon icon={faList}/>목록</Button>
             {
               uid &&
-              memberProfile.data.admin === 'true' || postUid === memberProfile.uid ?
+              memberProfile?.data?.admin === 'true' ?
             <Button onClick={()=>navigate(`/write/${board}`)}><FontAwesomeIcon icon={faPen}/>글쓰기</Button>:
             ""
             }
           </ButtonWarp>
             { uid &&
-             memberProfile.data.admin === 'true'  || postUid === memberProfile.uid ?
+             memberProfile?.data?.admin === 'true' ?
              
           (<ButtonWarp>
                   <Button onClick={()=>navigate(`/edit/${board}/${view}`)}><FontAwesomeIcon icon={faPenSquare}/>수정</Button>
