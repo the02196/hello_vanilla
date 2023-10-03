@@ -18,11 +18,10 @@ const Wrapper = styled.span`
   gap: 20px;
 `;
 const AvatarUpload = styled.label`
-  width: 50px;
+  width: 70px;
   overflow: hidden;
-  height: 50px;
+  height: 70px;
   border-radius: 50%;
-  background-color: black;
   cursor: pointer;
   display: flex;
   justify-content: center;
@@ -43,7 +42,7 @@ const Name = styled.span`
   font-size: 22px;
 `;
 
-function Avatar() {
+function Avatar({width, height}) {
   const [nickName, setNickName] = useState("");
   const [URL, setURl] = useState("")
   const userState = useSelector((state) => state.user);
@@ -88,7 +87,7 @@ function Avatar() {
       FetchNickName()
       FetchAvatar()
     }
-  },[userState.uid])
+  },[])
 
   useEffect(() => {
     if(!userState.uid){
@@ -102,9 +101,9 @@ function Avatar() {
     <Wrapper>
       <AvatarUpload htmlFor="avatar">
         {Boolean(URL) ? (
-          <AvatarImg src={URL} />
+          <AvatarImg style={{width: {width}, height: {height}}} src={URL} />
         ) : (
-          <AvatarImg src={"../images/portraits/default_7.png"}></AvatarImg>
+          <AvatarImg style={{width: {width}, height: {height}}} src={"../images/portraits/default_7.png"}></AvatarImg>
         )}
       </AvatarUpload>
       <AvatarInput
