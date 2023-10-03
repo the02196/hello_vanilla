@@ -15,7 +15,7 @@ import { Navigate } from "react-router-dom";
 
 
 
-function TextArea() {
+function TextArea({GetDocsFromComments, GetDocsFromUsers, FetchLiked}) {
   const memberProfile = useSelector((state) => state.user);
   const [commentValue, setCommentValue] = useState("");
   const [postData, setPostData] = useState(null);
@@ -92,8 +92,7 @@ function TextArea() {
 
 
 
-  const addComment = async () =>{
-    
+  const addComment = async (e) =>{
     // const postRef = doc(getFirestore(), "comments", memberProfile.uid);
     try {
       const docRef = await addDoc(collection(getFirestore(),"comments"), {
@@ -141,7 +140,7 @@ function TextArea() {
       cols={40}
       value={commentValue}
     />
-    <button onClick={addComment}>보내기</button>
+    <button type="button" onClick={()=>{addComment(); GetDocsFromComments(); GetDocsFromUsers(); FetchLiked();}}>보내기</button>
     </>
   );
 }

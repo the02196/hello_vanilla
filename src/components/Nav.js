@@ -117,7 +117,7 @@ function Nav({ userState }) {
         <TextWrap>
           <div>
           <span>
-            <NavLink to={"/quick"}>퀵링크 &nbsp;&nbsp;&nbsp;&nbsp;</NavLink>
+            <NavLink to={"/quick"}>퀵 링크 &nbsp;&nbsp;&nbsp;&nbsp;</NavLink>
           </span>
           <span>
             <NavLink to={userState?.data ? "/logout" : "/login"}>

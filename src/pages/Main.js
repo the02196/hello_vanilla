@@ -552,7 +552,7 @@ function Main() {
         </div>
         <AboutContent>
           <NavLink to={"/service/notice"}>
-            2023.09.18 &nbsp;새로운 업데이트 확인하기
+            2023. 10. 10 &nbsp;최신 소식 확인하기
           </NavLink>
         </AboutContent>
       </AboutWrap>

@@ -12,6 +12,7 @@ import styled from "styled-components";
 import { textValue } from "../store";
 import TextArea from "./TextArea";
 import {
+  Timestamp,
   addDoc,
   collection,
   deleteDoc,
@@ -29,6 +30,7 @@ import {
   updateDoc,
 } from "firebase/firestore";
 import TextAreaEdit from "./TextAreaEdit";
+import Avatar from "../pages/Avatar";
 
 /*
   #### Wrappers ####
@@ -185,12 +187,9 @@ const FormWrapper = styled.div``;
   #### Profile ####
   */
 
-const Profile = styled.div`
+const Profile = styled.img`
   width: 70px;
   height: 70px;
-  background-image: url(${(props) => props.profile});
-  background-position: center;
-  background-size: cover;
   border-radius: 50%;
 `;
 
@@ -340,8 +339,66 @@ function Detail_Comments() {
   const [comments, setComments] = useState([]);
   const userState = useSelector((state) => state.user);
   const [likeds, setlikeds] = useState("");
-  const [editId, setEditId] = useState(null)
-  const [editText, setEditText] = useState("")
+  const [editId, setEditId] = useState(null);
+  const [editText, setEditText] = useState("");
+  const [commentsArray, setCommentArray] = useState([]);
+  const [usersArray, setUsersArray] = useState([]);
+
+  const GetDocsFromUsers = async () => {
+    try {
+      const ref = collection(getFirestore(), "users");
+      const snapShot = await getDocs(ref);
+      const array = snapShot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+      setUsersArray(array);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const GetDocsFromComments = async () => {
+    try {
+      const q = query(
+        collection(getFirestore(), "comments"),
+        orderBy("createdate", "asc")
+      );
+      const snapShot = await getDocs(q);
+      const array = snapShot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+      setCommentArray(array);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+useEffect(()=>{
+  GetDocsFromUsers();
+  GetDocsFromComments();
+},[])
+
+  const getPhotoURLForMatchingIds = (commentsArray, usersArray) => {
+    const matchedUsers = [];
+
+    for (const comment of commentsArray) {
+      const matchingUser = usersArray.find((user) => user.id === comment.uid);
+      if (matchingUser) {
+        matchedUsers.push({
+          id: comment.uid,
+          photoURL: matchingUser?.photoURL
+            ? matchingUser.photoURL
+            : "..images/portraits/default_3.png",
+        });
+      }
+    }
+
+    return matchedUsers;
+  };
+
+  const matchingUsers = getPhotoURLForMatchingIds(commentsArray, usersArray);
 
   // const getComments = async () => {
   //   const commentsSnapshot = await getDocs(
@@ -393,6 +450,7 @@ function Detail_Comments() {
       }));
       FetchLiked();
       setComments(fetchComment);
+      getPhotoURLForMatchingIds(commentsArray, usersArray);
     });
     return dataSnap;
   }, []);
@@ -469,13 +527,13 @@ function Detail_Comments() {
       try {
         const commentRef = doc(getFirestore(), "comments", id);
         await deleteDoc(commentRef);
+        FetchLiked();
       } catch (error) {
         console.log(error);
       }
     }
   };
 
-  
   /*
   #### Fetch Contents Functions
   */
@@ -492,15 +550,11 @@ function Detail_Comments() {
   const FetchContentCenter = ({ text, id }) => {
     return (
       <ContentCenterWrap>
-        {editId === id ? 
-        <TextAreaEdit 
-          id={id}
-          text={text}
-          onCancel={()=> setEditId(null)}
-        />
-        :
-        <Comment>{text}</Comment>
-        }
+        {editId === id ? (
+          <TextAreaEdit id={id} text={text} onCancel={() => setEditId(null)} />
+        ) : (
+          <Comment>{text}</Comment>
+        )}
       </ContentCenterWrap>
     );
   };
@@ -581,7 +635,7 @@ function Detail_Comments() {
     return (
       <li>
         <ProfileWrap>
-          <Profile profile={profile} />
+          <Profile src={"./images/portraits/woman_5.png"} />
         </ProfileWrap>
         <ContentWrap>
           <FetchContentTop nickname={nickname} createdate={createdate} />
@@ -622,7 +676,7 @@ function Detail_Comments() {
     return (
       <li>
         <ProfileWrap>
-          <Profile />
+          <Avatar width={"70px"} height={"70px"} />
         </ProfileWrap>
         <ContentWrap>
           <FormWrapper method="post" onSubmit={handleSubmit}>
@@ -676,16 +730,14 @@ function Detail_Comments() {
 
   const FetchLiked = async () => {
     try {
-      const LikeCollection = collection(getFirestore(), "comments");
+      const LikeCollection = query(collection(getFirestore(), "comments"), orderBy("createdate", "asc"));
       const likeSnapShot = await getDocs(LikeCollection);
 
       const likedArray = await Promise.all(
         likeSnapShot.docs.map(async (doc) => {
           const likedCollection = collection(doc.ref, "liked");
-          
           const likedSnapshot = await getDocs(likedCollection);
           const totalCount = likedSnapshot.size;
-
           return {
             id: doc.id,
             totalcount: totalCount,
@@ -709,7 +761,16 @@ function Detail_Comments() {
       <GlobalWrap>
         <CommentWrap>
           <ul>
-            <FetchTextBox />
+            <li>
+              <ProfileWrap>
+                <Avatar width={"70px"} height={"70px"} />
+              </ProfileWrap>
+              <ContentWrap>
+                <FormWrapper method="post" onSubmit={handleSubmit}>
+                  <TextArea GetDocsFromComments={GetDocsFromComments} GetDocsFromUsers={GetDocsFromUsers} FetchLiked={FetchLiked}/>
+                </FormWrapper>
+              </ContentWrap>
+            </li>
             <FetchComment
               text={
                 "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quod praesentium porro expedita deleniti itaque at quaerat modi, exercitationem vitae laboriosam."
@@ -723,14 +784,18 @@ function Detail_Comments() {
                 <>
                   <li key={i}>
                     <ProfileWrap>
-                      <Profile />
+                      <Profile
+                        src={matchingUsers[i].photoURL}
+                        alt={matchingUsers[i].id}
+                        key={matchingUsers[i].id}
+                      />
                     </ProfileWrap>
                     <ContentWrap>
                       <FetchContentTop
                         nickname={e.nickname}
                         // createdate={e.createdate}
                       />
-                      <FetchContentCenter text={e.text} id={e.id}/>
+                      <FetchContentCenter text={e.text} id={e.id} />
                       <ContentBottomWrap>
                         <Count>{likeds[i]?.totalcount}</Count>
                         <Love
@@ -754,12 +819,16 @@ function Detail_Comments() {
                             <button onClick={() => setEditId(null)}>취소</button>
                           </>
                         }  */}
-                        {e.uid === userState.uid && editId !== e.id &&
-                          <>     
-                            <button onClick={()=>setEditId(e.id)}>수정</button>
-                            <button onClick={()=>deleteComment(e.id)}>삭제</button>
+                        {e.uid === userState.uid && editId !== e.id && (
+                          <>
+                            <button onClick={() => setEditId(e.id)}>
+                              수정
+                            </button>
+                            <button onClick={() => deleteComment(e.id)}>
+                              삭제
+                            </button>
                           </>
-                        }
+                        )}
                       </ContentBottomWrap>
                     </ContentWrap>
                   </li>

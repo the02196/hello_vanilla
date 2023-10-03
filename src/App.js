@@ -32,6 +32,7 @@ import Dog_Test from "./components/Dog_Test";
 import Modify from "./pages/Modify";
 import Logout from "./pages/Logout";
 import Avatar from "./pages/Avatar";
+import Avatar_Comments from "./pages/Avatar_Comments";
 
 
 
@@ -101,9 +102,12 @@ function App() {
         <NavLink to={"/quick"}>
           <GlobalNavigationButton>Quick Links</GlobalNavigationButton>
         </NavLink>
-        <NavLink to={"/avatar"}>
+        {/* <NavLink to={"/avatarcomments"}>
+          <GlobalNavigationButton>Avatar for Comments</GlobalNavigationButton>
+        </NavLink> */}
+        {/* <NavLink to={"/avatar"}>
           <GlobalNavigationButton>Avatar</GlobalNavigationButton>
-        </NavLink>
+        </NavLink> */}
         {/* <NavLink to={"/mypage"}>
           <GlobalNavigationButton>Test</GlobalNavigationButton>
           </NavLink> */}
@@ -193,7 +197,8 @@ function Inner() {
           <Route path="/modify" element={<Member />}></Route>
           <Route path="/dogtest" element={<Dog_Test />}></Route>
           <Route path="/avatar" element={<Avatar />}></Route>
-
+          <Route path="/avatarcomments" element={<Avatar_Comments />}></Route>
+          
           <Route path="/service" element={<Service />}>
             <Route path="notice" element={<Notice />}></Route>
           </Route>
