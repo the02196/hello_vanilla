@@ -400,44 +400,6 @@ useEffect(()=>{
 
   const matchingUsers = getPhotoURLForMatchingIds(commentsArray, usersArray);
 
-  // const getComments = async () => {
-  //   const commentsSnapshot = await getDocs(
-  //     collection(getFirestore(), "comments")
-  //   );
-  //   const comments = commentsSnapshot.docs.map((doc) => ({
-  //     id: doc.id,
-  //     ...doc.data(),
-  //   }));
-  //   return comments;
-  // };
-
-  // const fetchComments = async () => {
-  //   const data = await getComments();
-  //   setComments(data);
-  // };
-  // useEffect(() => {
-  //   fetchComments();
-  // }, []);
-
-  // const toggleLike = async (commentId, userId) => {
-  //   const commentRef = doc(getFirestore(), "comments", commentId);
-  //   // const commentSnapshot = await getDoc(commentRef);
-  //   // const commentData = commentSnapshot.data();
-  //   try {
-  //     const test1 = doc(commentRef, "like", userState.uid);
-  //     const testSnap = await getDoc(test1);
-  //     if (testSnap.exists()) {
-  //       await deleteDoc(doc(commentRef, "like", userState.uid));
-  //       return;
-  //     }
-  //     await setDoc(doc(commentRef, "like", userState.uid), {
-  //       liked: true,
-  //     });
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
-
   useEffect(() => {
     const commentRef = collection(getFirestore(), "comments");
 
@@ -457,14 +419,6 @@ useEffect(()=>{
 
   const fetchPosts = async () => {
     try {
-      // const likeCollection = collection(getFirestore(), "like")
-      // const likeSnapShot = await getDocs(likeCollection)
-      // const likeArray = likeSnapShot.docs.map((doc)=>({
-      //   id: doc.id,
-      //   ...doc.data(),
-      // }))
-      // setlikes(likeArray);
-
       const q = query(
         collection(getFirestore(), "comments"),
         orderBy("createdate", "asc")
@@ -478,7 +432,6 @@ useEffect(()=>{
       //가져온 데이터를 반복문을 돌림 , id값은 임의로 데이터 값으로 추가해서 나오고 원래 데이터도 같이 나옴
       setComments(postArray);
       console.log(postArray);
-      // console.log(snapShot)
     } catch (error) {
       console.log(error);
     }
@@ -687,6 +640,11 @@ useEffect(()=>{
     );
   };
 
+  const TextBox = ({text}) => {
+    return (
+      <TextArea GetDocsFromComments={GetDocsFromComments} GetDocsFromUsers={GetDocsFromUsers} FetchLiked={FetchLiked} text={text}/>
+    )
+  }
   function handleSubmit(e) {
     // Prevent the browser from reloading the page
     e.preventDefault();
@@ -767,7 +725,7 @@ useEffect(()=>{
               </ProfileWrap>
               <ContentWrap>
                 <FormWrapper method="post" onSubmit={handleSubmit}>
-                  <TextArea GetDocsFromComments={GetDocsFromComments} GetDocsFromUsers={GetDocsFromUsers} FetchLiked={FetchLiked}/>
+                  <TextBox />
                 </FormWrapper>
               </ContentWrap>
             </li>
@@ -813,12 +771,6 @@ useEffect(()=>{
                         <Reply>
                           <FontAwesomeIcon icon={faShare} />
                         </Reply>
-                        {/* {e.uid === userState.uid && editId === e.id &&
-                          <>
-                            <button onClick={() => editComment(e.id)}>수정완료</button>
-                            <button onClick={() => setEditId(null)}>취소</button>
-                          </>
-                        }  */}
                         {e.uid === userState.uid && editId !== e.id && (
                           <>
                             <button onClick={() => setEditId(e.id)}>
