@@ -432,6 +432,7 @@ useEffect(()=>{
       //가져온 데이터를 반복문을 돌림 , id값은 임의로 데이터 값으로 추가해서 나오고 원래 데이터도 같이 나옴
       setComments(postArray);
       console.log(postArray);
+      // console.log(snapShot)
     } catch (error) {
       console.log(error);
     }
