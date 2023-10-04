@@ -124,7 +124,6 @@ function Ckeditor({title, postData}) {
                 <ButtonWarp>
                     <Button><Link to="/service/notice"><FontAwesomeIcon icon={faList}/>목록</Link></Button>
                     <Button onClick={dataSubmit}><FontAwesomeIcon icon={faPen}/>완료</Button>
-
                 </ButtonWarp>
     
     </>
