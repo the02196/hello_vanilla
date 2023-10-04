@@ -104,7 +104,7 @@ function Write() {
       setPostUid(postSnapShot.data().uid)
       console.log(postSnapShot.data().uid)
       
-    }else if(postSnapShot.data().uid !== memberProfile.uid){
+    }else if(memberProfile?.data?.admin !== "true"){
       setIsModal(true)
       setMessage("해당 문서가 존재하지 않습니다.")
 
@@ -122,8 +122,7 @@ function Write() {
 
   
 
-  if(!memberProfile.loggedIn){
-    
+  if(!memberProfile.loggedIn){    
     return(
       <>
       {

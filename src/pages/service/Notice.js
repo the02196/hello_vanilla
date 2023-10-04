@@ -56,7 +56,7 @@ const Button = styled.div`
 function Notice() {
   const [posts,setPosts] = useState([]);
   const memberProfile = useSelector(state => state.user);
-  
+  console.log(memberProfile)
   const fetchPosts = async () =>{
     try{
 
