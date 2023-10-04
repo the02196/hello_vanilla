@@ -93,8 +93,7 @@ function Write() {
   const [postData, setPostData] = useState(null);
   const [postUid, setPostUid] = useState();
   const uid = sessionStorage.getItem("users");
-  console.log(memberProfile)
-  console.log(memberProfile.data.admin)
+
   const fetchData = async () =>{
     const postRef = doc(getFirestore(),board,view);
     const postSnapShot = await getDoc(postRef);
@@ -105,7 +104,7 @@ function Write() {
       setPostUid(postSnapShot.data().uid)
       console.log(postSnapShot.data().uid)
       
-    }else if(postSnapShot.data().uid !== memberProfile.uid){
+    }else if(memberProfile?.data?.admin !== "true"){
       setIsModal(true)
       setMessage("해당 문서가 존재하지 않습니다.")
 
@@ -121,20 +120,9 @@ function Write() {
 
 
 
-  if(memberProfile.data.admin !== 'true'){
-    
-    return(
-      <>
-      {
-        isModal &&
-        <Modal error='권한이 없습니다.' onClose={()=>{setIsModal(false);navigate('/notice')}}/>
-      }
-      </>
-    )
-  }
+  
 
-  if(!memberProfile.loggedIn){
-    
+  if(!memberProfile.loggedIn){    
     return(
       <>
       {
@@ -153,6 +141,20 @@ function Write() {
       }
       </>
     )
+  }
+
+  
+  if(memberProfile?.data?.admin !== 'true' ){
+    
+    return(
+      <>
+      {
+        isModal &&
+        <Modal error='권한이 없습니다.' onClose={()=>{setIsModal(false);navigate('/notice')}}/>
+      }
+      </>
+    )
+
   }
 
 

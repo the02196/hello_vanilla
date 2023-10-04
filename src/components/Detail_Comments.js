@@ -6,7 +6,7 @@ import {
   faShare,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { useEffect, useId, useState } from "react";
+import React, { useCallback, useEffect, useId, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import { textValue } from "../store";
@@ -316,6 +316,15 @@ const RepliedUsers = styled.div`
   }
 `;
 
+const Pagenation = styled.div`
+  text-align: center;
+  padding: 50px;
+  font-size: 30px;
+  button{
+    padding: 20px;
+  }
+`
+
 function Detail_Comments() {
   const [nickName, SetNickName] = useState("");
   const [date, setDate] = useState("");
@@ -344,6 +353,23 @@ function Detail_Comments() {
   const [commentsArray, setCommentArray] = useState([]);
   const [usersArray, setUsersArray] = useState([]);
 
+  const [currentPage, setCurrentPage] = useState(1);
+  const [commentsPerPage, setCommentsPerPage] = useState(5);
+
+  const [currentArray, setCurrentArray] = useState([])
+
+  const indexOfLastComment = currentPage * commentsPerPage;
+  const indexOfFirstComment = indexOfLastComment - commentsPerPage;
+  const currentComments = comments.slice(indexOfFirstComment, indexOfLastComment);
+
+  const totalPages = Math.ceil(comments.length / commentsPerPage);
+
+  const newArray = commentsArray - (commentsPerPage * (totalPages-1));
+
+  const handlePageChange = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
+  
   const GetDocsFromUsers = async () => {
     try {
       const ref = collection(getFirestore(), "users");
@@ -417,30 +443,46 @@ useEffect(()=>{
     return dataSnap;
   }, []);
 
-  const fetchPosts = async () => {
-    try {
-      const q = query(
-        collection(getFirestore(), "comments"),
-        orderBy("createdate", "asc")
-      );
-      //desc - 내림차순 / asc -오름차순
-      const snapShot = await getDocs(q); //데이터 다 가져오는건 snapShot으로 해야함 무조건
-      const postArray = snapShot.docs.map((doc) => ({
-        id: doc.id,
-        ...doc.data(),
-      }));
-      //가져온 데이터를 반복문을 돌림 , id값은 임의로 데이터 값으로 추가해서 나오고 원래 데이터도 같이 나옴
-      setComments(postArray);
-      console.log(postArray);
-      // console.log(snapShot)
-    } catch (error) {
-      console.log(error);
-    }
-  };
+const setCommentsDatas = () => {
+  const commentRef = collection(getFirestore(), "comments");
 
-  useEffect(() => {
-    fetchPosts();
-  }, []);
+  const q = query(commentRef, orderBy("createdate", "asc"));
+
+  const dataSnap = onSnapshot(q, (item) => {
+    const fetchComment = item.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
+    FetchLiked();
+    setComments(fetchComment);
+    getPhotoURLForMatchingIds(commentsArray, usersArray);
+  });
+  return dataSnap;
+}
+
+  // const fetchPosts = async () => {
+  //   try {
+  //     const q = query(
+  //       collection(getFirestore(), "comments"),
+  //       orderBy("createdate", "asc")
+  //     );
+  //     //desc - 내림차순 / asc -오름차순
+  //     const snapShot = await getDocs(q); //데이터 다 가져오는건 snapShot으로 해야함 무조건
+  //     const postArray = snapShot.docs.map((doc) => ({
+  //       id: doc.id,
+  //       ...doc.data(),
+  //     }));
+  //     //가져온 데이터를 반복문을 돌림 , id값은 임의로 데이터 값으로 추가해서 나오고 원래 데이터도 같이 나옴
+  //     setComments(postArray);
+  //     console.log(postArray);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   fetchPosts();
+  // }, []);
 
   const addHeart = async (id, index) => {
     const userRef = doc(getFirestore(), "users", userState.uid);
@@ -626,20 +668,23 @@ useEffect(()=>{
     );
   };
 
-  const FetchTextBox = () => {
-    return (
-      <li>
-        <ProfileWrap>
-          <Avatar width={"70px"} height={"70px"} />
-        </ProfileWrap>
-        <ContentWrap>
-          <FormWrapper method="post" onSubmit={handleSubmit}>
-            <TextArea />
-          </FormWrapper>
-        </ContentWrap>
-      </li>
-    );
-  };
+  // const FetchTextBox = () => {
+  //   return (
+  //     <li>
+  //       <ProfileWrap>
+  //         <Avatar width={"70px"} height={"70px"} />
+  //       </ProfileWrap>
+  //       <ContentWrap>
+  //         <FormWrapper method="post" onSubmit={handleSubmit}>
+  //         <textarea
+  //                   value={comment}
+  //                   onChange={handleChange}
+  //                 />
+  //         </FormWrapper>
+  //       </ContentWrap>
+  //     </li>
+  //   );
+  // };
 
   const TextBox = ({text}) => {
     return (
@@ -738,7 +783,7 @@ useEffect(()=>{
               createdate={"2023.09.26"}
               profile={"../images/portraits/woman_5.png"}
             />
-            {comments.map((e, i) => {
+            {currentComments.map((e, i) => {
               return (
                 <>
                   <li key={i}>
@@ -788,6 +833,26 @@ useEffect(()=>{
                 </>
               );
             })}
+            <Pagenation>
+              {Array(totalPages).fill().map((_, index) => (
+                <button key={index + 1} onClick={ async () => {
+                  await handlePageChange(index + 1)
+                  try{
+                    GetDocsFromUsers()
+                     GetDocsFromComments();
+
+                     getPhotoURLForMatchingIds()
+                    setCommentsDatas()
+                  
+                  } catch(error){
+                  alert(error)
+                 }
+                }
+                }>
+                  {index + 1}
+                </button>
+              ))}
+            </Pagenation>
           </ul>
         </CommentWrap>
       </GlobalWrap>

@@ -359,6 +359,7 @@ function Member() {
       // userState.loggedIn && initialMode ?  <Modal error="이미 로그인 중입니다." onClose={()=> navigate("/signup")}/> :
 
       
+      
       <LoginBg>
          <LoginNav>
           <Logo><NavLink to={"/main"}>HeLLO VanILLa</NavLink></Logo>

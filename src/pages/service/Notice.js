@@ -56,7 +56,7 @@ const Button = styled.div`
 function Notice() {
   const [posts,setPosts] = useState([]);
   const memberProfile = useSelector(state => state.user);
-  
+  console.log(memberProfile)
   const fetchPosts = async () =>{
     try{
 
@@ -112,12 +112,13 @@ function Notice() {
 
         }
       {
-        memberProfile.data.admin === 'true' ?
-      <ButtonWrap>
+        memberProfile?.data?.admin === 'true' ?
+        <ButtonWrap>
         <Button><Link to="/write/notice"><FontAwesomeIcon icon={faPen}/>글쓰기</Link></Button>
       </ButtonWrap>:
       ""
       }
+
       
     </BoardWrapper>
     </>

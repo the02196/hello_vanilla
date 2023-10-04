@@ -95,7 +95,7 @@ function App() {
         </NavLink>
         <NavLink to={"/service/notice"}>
           <GlobalNavigationButton>Notice(View)</GlobalNavigationButton>
-        </NavLink>
+        </NavLink>        
         <NavLink to={"/write/notice"}>
           <GlobalNavigationButton>Notice(Write)</GlobalNavigationButton>
         </NavLink>
