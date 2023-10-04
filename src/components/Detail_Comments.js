@@ -361,9 +361,10 @@ function Detail_Comments() {
   const indexOfLastComment = currentPage * commentsPerPage;
   const indexOfFirstComment = indexOfLastComment - commentsPerPage;
   const currentComments = comments.slice(indexOfFirstComment, indexOfLastComment);
-
+  const currentLikeds = likeds.slice(indexOfFirstComment, indexOfLastComment);
+  
   const totalPages = Math.ceil(comments.length / commentsPerPage);
-
+ 
   const newArray = commentsArray - (commentsPerPage * (totalPages-1));
 
   const handlePageChange = (pageNumber) => {
@@ -732,6 +733,8 @@ const setCommentsDatas = () => {
   //   }
   // }
 
+  const currentProfiles = matchingUsers.slice(indexOfFirstComment, indexOfLastComment);
+  
   const FetchLiked = async () => {
     try {
       const LikeCollection = query(collection(getFirestore(), "comments"), orderBy("createdate", "asc"));
@@ -789,9 +792,10 @@ const setCommentsDatas = () => {
                   <li key={i}>
                     <ProfileWrap>
                       <Profile
-                        src={matchingUsers[i].photoURL}
-                        alt={matchingUsers[i].id}
-                        key={matchingUsers[i].id}
+                        // src={currentProfiles[i]?.photoURL}
+                        src={currentProfiles[i]?.photoURL}
+                        alt={currentProfiles[i]?.id}
+                        key={currentProfiles[i]?.id}
                       />
                     </ProfileWrap>
                     <ContentWrap>
@@ -801,7 +805,8 @@ const setCommentsDatas = () => {
                       />
                       <FetchContentCenter text={e.text} id={e.id} />
                       <ContentBottomWrap>
-                        <Count>{likeds[i]?.totalcount}</Count>
+                        {/* <Count>{likeds[i]?.totalcount}</Count> */}
+                        <Count>{currentLikeds[i]?.totalcount}</Count>
                         <Love
                           style={{ cursor: "pointer" }}
                           onClick={() => {
@@ -835,18 +840,8 @@ const setCommentsDatas = () => {
             })}
             <Pagenation>
               {Array(totalPages).fill().map((_, index) => (
-                <button key={index + 1} onClick={ async () => {
-                  await handlePageChange(index + 1)
-                  try{
-                    GetDocsFromUsers()
-                     GetDocsFromComments();
-
-                     getPhotoURLForMatchingIds()
-                    setCommentsDatas()
-                  
-                  } catch(error){
-                  alert(error)
-                 }
+                <button key={index + 1} onClick={ () => {
+                  handlePageChange(index + 1)    
                 }
                 }>
                   {index + 1}
