@@ -26,6 +26,15 @@ import MyPage from "./pages/MyPage";
 
 import Auth from "./components/Auth";
 
+import FindEmail from "./pages/FindEmail";
+
+import Dog_Test from "./components/Dog_Test";
+import Modify from "./pages/Modify";
+import Logout from "./pages/Logout";
+import Avatar from "./pages/Avatar";
+import Avatar_Comments from "./pages/Avatar_Comments";
+
+
 
 const GlobalNavigation = styled.ul`
   position: fixed;
@@ -78,6 +87,9 @@ function App() {
         <NavLink to={"/member"}>
           <GlobalNavigationButton>Sign In</GlobalNavigationButton>
         </NavLink>
+        <NavLink to={"/member"}>
+          <GlobalNavigationButton>Modify</GlobalNavigationButton>
+        </NavLink>
         <NavLink to={"/detail"}>
           <GlobalNavigationButton>detail</GlobalNavigationButton>
         </NavLink>
@@ -90,12 +102,24 @@ function App() {
         <NavLink to={"/quick"}>
           <GlobalNavigationButton>Quick Links</GlobalNavigationButton>
         </NavLink>
-        <NavLink to={"/mypage"}>
+        {/* <NavLink to={"/avatarcomments"}>
+          <GlobalNavigationButton>Avatar for Comments</GlobalNavigationButton>
+        </NavLink> */}
+        {/* <NavLink to={"/avatar"}>
+          <GlobalNavigationButton>Avatar</GlobalNavigationButton>
+        </NavLink> */}
+        {/* <NavLink to={"/mypage"}>
           <GlobalNavigationButton>Test</GlobalNavigationButton>
-          </NavLink>
-        <NavLink to={"/auth"}>
+          </NavLink> */}
+        {/* <NavLink to={"/auth"}>
           <GlobalNavigationButton>Auth Test</GlobalNavigationButton>
-        </NavLink>
+        </NavLink> */}
+        {/* <NavLink to={"/heart"}>
+          <GlobalNavigationButton>Heart Test</GlobalNavigationButton>
+        </NavLink> */}
+        {/* <NavLink to={"/dogtest"}>
+          <GlobalNavigationButton>Dog Test</GlobalNavigationButton>
+        </NavLink> */}
       </GlobalNavigation>
       <Provider store={store}>
         <Inner />
@@ -107,27 +131,28 @@ function App() {
 function Inner() {
   const dispatch = useDispatch();
   const uid = sessionStorage.getItem("users");
+  if (uid) {
+    dispatch(logIn(uid));
+  }
+
+  const fetchUser = async () => {
+    if (!uid) return;
+    const userDoc = doc(collection(getFirestore(), "users"), uid);
+    // console.log(userDoc);
+    try {
+      const docSnapshot = await getDoc(userDoc);
+      // console.log(docSnapshot);
+      if (docSnapshot.exists()) {
+        const userData = docSnapshot.data();
+        dispatch(loggedIn(userData));
+        //로그인에서 로그아웃으로 바껴야하니깐 데이터를 불러옴
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   useEffect(() => {
-    if (uid) {
-      dispatch(logIn(uid));
-    }
-    const fetchUser = async () => {
-      if (!uid) return;
-      const userDoc = doc(collection(getFirestore(), "users"), uid);
-      console.log(userDoc);
-      try {
-        const docSnapshot = await getDoc(userDoc);
-        console.log(docSnapshot);
-        if (docSnapshot.exists()) {
-          const userData = docSnapshot.data();
-          dispatch(loggedIn(userData));
-          //로그인에서 로그아웃으로 바껴야하니깐 데이터를 불러옴
-        }
-      } catch (error) {
-        console.log(error);
-      }
-    };
     fetchUser();
   }, [dispatch, uid]); //0919-4 dispatch,uid를 추가해주면
 
@@ -146,6 +171,8 @@ function Inner() {
           <Route path="/detail" element={<Detail />}></Route>
           <Route path="/quick" element={<Quick />}></Route>
           <Route path="/login" element={<Login />}></Route>
+          <Route path="/logout" element={<Logout />}></Route>        
+          <Route path="/findemail" element={<FindEmail />}></Route>
           <Route path="/edit/:board/" element={<Write />}></Route>
           <Route path="/view/:board/:view" element={<View />}></Route>
           <Route path="/write/:board" element={<Write />}></Route>
@@ -167,7 +194,11 @@ function Inner() {
           <Route path="/mypage" element={<MyPage />}></Route>
 
           <Route path="/auth" element={<Auth />}></Route>
-
+          <Route path="/modify" element={<Member />}></Route>
+          <Route path="/dogtest" element={<Dog_Test />}></Route>
+          <Route path="/avatar" element={<Avatar />}></Route>
+          <Route path="/avatarcomments" element={<Avatar_Comments />}></Route>
+          
           <Route path="/service" element={<Service />}>
             <Route path="notice" element={<Notice />}></Route>
           </Route>

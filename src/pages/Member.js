@@ -84,7 +84,7 @@ const SignUp =styled.div`
   padding: 20px;
   box-shadow: 0 0 10px rgba(0,0,0,0.1);
   background-color: #fff;
-  border-radius: 10px;
+  /* border-radius: 10px; */
   @media screen and (max-width: 1024px){
     width: 60vw;
   }
@@ -105,7 +105,7 @@ const Input =styled.input`
  padding: 10px;
  margin-bottom: 10px;
  border: 1px solid #ddd;
- border-radius: 5px;
+ /* border-radius: 5px; */
  box-sizing: border-box;
 `
 const Button =styled.button`
@@ -113,7 +113,7 @@ const Button =styled.button`
  padding: 10px;
  color: white;
  background-color: #000000;
- border-radius: 5px;
+ /* border-radius: 5px; */
  border: none;
  box-sizing: border-box;
  cursor: pointer;
@@ -202,21 +202,21 @@ function Member() {
   },[initialMode])
 
 
+  const fetchUserData = async () =>{
+    const userRef = doc(getFirestore(), "users" ,userUid);
+    const userSnap = await getDoc(userRef);
+    // console.log(userSnap.data()); 
+    
+    if(userSnap.exists()){
+      const data= userSnap.data();
+      setName(data.name);
+      setNickname(data.nickname);
+      setPhoneNumber(data.phoneNumber);
+      setEmail(data.email);
+    }
+  }
   useEffect(()=>{
     if(!initialMode && userUid){
-      const fetchUserData = async () =>{
-        const userRef = doc(getFirestore(), "users" ,userUid);
-        const userSnap = await getDoc(userRef);
-        // console.log(userSnap.data()); 
-        
-        if(userSnap.exists()){
-          const data= userSnap.data();
-          setName(data.name);
-          setNickname(data.nickname);
-          setPhoneNumber(data.phoneNumber);
-          setEmail(data.email);
-        }
-      }
       fetchUserData();
     }
   },[initialMode,userUid])
@@ -240,8 +240,8 @@ function Member() {
   const errorMsg = (errorCode) =>{
     const firebaseError= {
       'auth/admin-restricted-operation' :"빈 데이터가 있다.",
-      'auth/email-already-in-use' :"이미 사용중인 이메일 주소",
-      'auth/invalid-email':"유효하지 않은 이메일 주소",
+      'auth/email-already-in-use' :"이미 사용중인 이메일 주소 입니다",
+      'auth/invalid-email':"유효하지 않은 이메일 주소 입니다",
       'auth/operation-not-allowed' :"이메일/비밀번호 계정이 비활성화 되어있습니다. ",
       'auth/weak-password':"너무 짧은 비밀번호를 사용하였습니다.(6자리)",
       'invalid-argument' :'빈 데이터가 있다.' //데이터베이스와 에러메세지 두개를 동시에 사용하기 때문에 이름,닉네임,번호중에 하나라도 누락되면 invaild-argument 라고 뜸
@@ -353,12 +353,16 @@ function Member() {
     // </ModalBackground>
     }
     { 
-      userState.loggedIn && initialMode ?  <Modal error="이미 로그인 중입니다." onClose={()=> navigate("/signup")}/> :
+
+      userState.loggedIn && initialMode ?  <Modal error="이미 로그인 중입니다." onClose={()=> {navigate("/modify")}}/> :
+
+      // userState.loggedIn && initialMode ?  <Modal error="이미 로그인 중입니다." onClose={()=> navigate("/signup")}/> :
+
       
       <LoginBg>
          <LoginNav>
           <Logo><NavLink to={"/main"}>HeLLO VanILLa</NavLink></Logo>
-          <LoginBtn><NavLink to={"/login"}>로그인</NavLink> &nbsp; | &nbsp; <NavLink to={"/main"}>메인 페이지로 가기</NavLink> </LoginBtn>
+          <LoginBtn><NavLink to={userState.loggedIn ? "/logout" : "/login"}>{userState.loggedIn ? "로그아웃" : "로그인"}</NavLink> &nbsp; | &nbsp; <NavLink to={"/main"}>메인 페이지로 가기</NavLink> </LoginBtn>
         </LoginNav>
         <SignUp>
           {

@@ -66,7 +66,7 @@ const Button = styled.button`
 
     const CommentWrap = styled.div``
     const Comment = styled.div``
-
+    
 function View() {
   const [comment, setComment] = useState("");
   const [comments, setComments] = useState("");
@@ -80,7 +80,7 @@ function View() {
   const uid = sessionStorage.getItem("users");
   const memberProfile = useSelector(state => state.user);
   // const userState = useSelector(state => state.user);
- 
+
   useEffect(()=>{
     const postRef = doc(getFirestore(),board, view);
     const commentRef = collection(postRef, "comments");
@@ -105,21 +105,21 @@ function View() {
     })
   }
 
+  const fetchData = async () =>{
+    const postRef = doc(getFirestore(),board,view);
+    const postSnapShot = await getDoc(postRef);
+    if(postSnapShot.exists()){
+      viewCnt(board,view)
+      setPost(postSnapShot.data())
+      setPostUid(postSnapShot.data().uid)
+      
+    }else{
+      setIsModal(true)
+      setMessage("해당 문서가 존재하지 않습니다.")
+      
+    }
+  }
   useEffect(()=>{    
-      const fetchData = async () =>{
-        const postRef = doc(getFirestore(),board,view);
-        const postSnapShot = await getDoc(postRef);
-        if(postSnapShot.exists()){
-          viewCnt(board,view)
-          setPost(postSnapShot.data())
-          setPostUid(postSnapShot.data().uid)
-          
-        }else{
-          setIsModal(true)
-          setMessage("해당 문서가 존재하지 않습니다.")
-          
-        }
-      }
       fetchData()    
   },[board,view])
 
@@ -183,6 +183,7 @@ function View() {
       <div>로딩중</div>
     )
   }
+  
 
   return (
     <>
@@ -207,21 +208,27 @@ function View() {
                   })
                 }
               </ul>
-              {
+              {/* {
                uid && 
               <Comment>
                 <textarea value={comment} onChange={(e)=> setComment(e.target.value)}/>
                 <Button onClick={()=>{addComment(view)}}>댓글달기</Button>
               </Comment>
-              }
+              } */}
             </CommentWrap>
                 <ButtonContent>
           <ButtonWarp>
             <Button onClick={()=>navigate(`/service/${board}`)}><FontAwesomeIcon icon={faList}/>목록</Button>
-            <Button onClick={()=>navigate(`/write/${board}`)}><FontAwesomeIcon icon={faPen}/>글쓰기</Button>
+            {
+              uid &&
+              memberProfile?.data?.admin === 'true' ?
+            <Button onClick={()=>navigate(`/write/${board}`)}><FontAwesomeIcon icon={faPen}/>글쓰기</Button>:
+            ""
+            }
           </ButtonWarp>
             { uid &&
-             postUid  === memberProfile.uid || memberProfile.uid === "oeMjaK1cE2fNwki16sI2qB5Vixz2" ?
+             memberProfile?.data?.admin === 'true' ?
+             
           (<ButtonWarp>
                   <Button onClick={()=>navigate(`/edit/${board}/${view}`)}><FontAwesomeIcon icon={faPenSquare}/>수정</Button>
                   <Button onClick={deletePost}><FontAwesomeIcon icon={faTrash}/>삭제</Button>
@@ -239,4 +246,5 @@ function View() {
     </>
   )
 }
+
 export default View

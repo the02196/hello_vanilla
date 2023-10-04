@@ -93,33 +93,34 @@ function Write() {
   const [postData, setPostData] = useState(null);
   const [postUid, setPostUid] = useState();
   const uid = sessionStorage.getItem("users");
-  console.log(uid)
+
+  const fetchData = async () =>{
+    const postRef = doc(getFirestore(),board,view);
+    const postSnapShot = await getDoc(postRef);
+    if(postSnapShot.exists()){
+      setIsModal(false)
+      setPostData(postSnapShot.data())
+      // setTxtTitle(postSnapShot.data().title)         
+      setPostUid(postSnapShot.data().uid)
+      console.log(postSnapShot.data().uid)
+      
+    }else if(postSnapShot.data().uid !== memberProfile.uid){
+      setIsModal(true)
+      setMessage("해당 문서가 존재하지 않습니다.")
+
+    }        
+  }
   useEffect(()=>{
     if(board && view){
       //수정버튼 눌렀다는 뜻
-      const fetchData = async () =>{
-        const postRef = doc(getFirestore(),board,view);
-        const postSnapShot = await getDoc(postRef);
-        if(postSnapShot.exists()){
-          setIsModal(false)
-          setPostData(postSnapShot.data())
-          // setTxtTitle(postSnapShot.data().title)         
-          setPostUid(postSnapShot.data().uid)
-          console.log(postSnapShot.data().uid)
-          
-        }else if(postSnapShot.data().uid !== memberProfile.uid){
-          setIsModal(true)
-          setMessage("해당 문서가 존재하지 않습니다.")
-
-        }        
-      }
       fetchData()    
     }
   },[board, view])
   
-  console.log(memberProfile.uid)
-  console.log(postUid)  
 
+
+
+  
 
   if(!memberProfile.loggedIn){
     
@@ -127,7 +128,7 @@ function Write() {
       <>
       {
         isModal &&
-        <Modal error='로그인 상태가 아닙니다.' onClose={()=>{setIsModal(false);navigate('/')}}/>
+        <Modal error='로그인 상태가 아닙니다.' onClose={()=>{setIsModal(false);navigate('/login')}}/>
       }
       </>
     )
@@ -141,6 +142,20 @@ function Write() {
       }
       </>
     )
+  }
+
+  
+  if(memberProfile?.data?.admin !== 'true' ){
+    
+    return(
+      <>
+      {
+        isModal &&
+        <Modal error='권한이 없습니다.' onClose={()=>{setIsModal(false);navigate('/notice')}}/>
+      }
+      </>
+    )
+
   }
 
 

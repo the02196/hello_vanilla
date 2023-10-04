@@ -11,7 +11,26 @@ import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import { textValue } from "../store";
 import TextArea from "./TextArea";
-import { addDoc, collection, doc, getDoc, getFirestore, increment, onSnapshot, orderBy, query, serverTimestamp, updateDoc } from "firebase/firestore";
+import {
+  Timestamp,
+  addDoc,
+  collection,
+  deleteDoc,
+  doc,
+  getCountFromServer,
+  getDoc,
+  getDocs,
+  getFirestore,
+  increment,
+  onSnapshot,
+  orderBy,
+  query,
+  serverTimestamp,
+  setDoc,
+  updateDoc,
+} from "firebase/firestore";
+import TextAreaEdit from "./TextAreaEdit";
+import Avatar from "../pages/Avatar";
 
 /*
   #### Wrappers ####
@@ -168,12 +187,9 @@ const FormWrapper = styled.div``;
   #### Profile ####
   */
 
-const Profile = styled.div`
+const Profile = styled.img`
   width: 70px;
   height: 70px;
-  background-image: url("../images/portraits/man_1.png");
-  background-position: center;
-  background-size: cover;
   border-radius: 50%;
 `;
 
@@ -300,6 +316,15 @@ const RepliedUsers = styled.div`
   }
 `;
 
+const Pagenation = styled.div`
+  text-align: center;
+  padding: 50px;
+  font-size: 30px;
+  button{
+    padding: 20px;
+  }
+`
+
 function Detail_Comments() {
   const [nickName, SetNickName] = useState("");
   const [date, setDate] = useState("");
@@ -318,47 +343,229 @@ function Detail_Comments() {
   const [repliedUserProfileLink2, setUserProfileLink2] = useState("");
   const [repliedUserProfileLink3, setUserProfileLink3] = useState("");
   const [post, setPost] = useState();
-  const [postUid, setPostUid] = useState();
+  const [postUid, setPostUid] = useState(null);
   const [comment, setComment] = useState("");
-  const [comments, setComments] = useState("");
-  const userState = useSelector(state => state.user);
+  const [comments, setComments] = useState([]);
+  const userState = useSelector((state) => state.user);
+  const [likeds, setlikeds] = useState("");
+  const [editId, setEditId] = useState(null);
+  const [editText, setEditText] = useState("");
+  const [commentsArray, setCommentArray] = useState([]);
+  const [usersArray, setUsersArray] = useState([]);
 
+  const [currentPage, setCurrentPage] = useState(1);
+  const [commentsPerPage, setCommentsPerPage] = useState(5);
 
-  const handleChange = useCallback((event) => {
-    setComment(event.target.value);
+  const [currentArray, setCurrentArray] = useState([])
+
+  const indexOfLastComment = currentPage * commentsPerPage;
+  const indexOfFirstComment = indexOfLastComment - commentsPerPage;
+  const currentComments = comments.slice(indexOfFirstComment, indexOfLastComment);
+
+  const totalPages = Math.ceil(comments.length / commentsPerPage);
+
+  const newArray = commentsArray - (commentsPerPage * (totalPages-1));
+
+  const handlePageChange = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
+  
+  const GetDocsFromUsers = async () => {
+    try {
+      const ref = collection(getFirestore(), "users");
+      const snapShot = await getDocs(ref);
+      const array = snapShot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+      setUsersArray(array);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const GetDocsFromComments = async () => {
+    try {
+      const q = query(
+        collection(getFirestore(), "comments"),
+        orderBy("createdate", "asc")
+      );
+      const snapShot = await getDocs(q);
+      const array = snapShot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+      setCommentArray(array);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+useEffect(()=>{
+  GetDocsFromUsers();
+  GetDocsFromComments();
+},[])
+
+  const getPhotoURLForMatchingIds = (commentsArray, usersArray) => {
+    const matchedUsers = [];
+
+    for (const comment of commentsArray) {
+      const matchingUser = usersArray.find((user) => user.id === comment.uid);
+      if (matchingUser) {
+        matchedUsers.push({
+          id: comment.uid,
+          photoURL: matchingUser?.photoURL
+            ? matchingUser.photoURL
+            : "..images/portraits/default_3.png",
+        });
+      }
+    }
+
+    return matchedUsers;
+  };
+
+  const matchingUsers = getPhotoURLForMatchingIds(commentsArray, usersArray);
+
+  useEffect(() => {
+    const commentRef = collection(getFirestore(), "comments");
+
+    const q = query(commentRef, orderBy("createdate", "asc"));
+
+    const dataSnap = onSnapshot(q, (item) => {
+      const fetchComment = item.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+      FetchLiked();
+      setComments(fetchComment);
+      getPhotoURLForMatchingIds(commentsArray, usersArray);
+    });
+    return dataSnap;
   }, []);
+
+const setCommentsDatas = () => {
+  const commentRef = collection(getFirestore(), "comments");
+
+  const q = query(commentRef, orderBy("createdate", "asc"));
+
+  const dataSnap = onSnapshot(q, (item) => {
+    const fetchComment = item.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
+    FetchLiked();
+    setComments(fetchComment);
+    getPhotoURLForMatchingIds(commentsArray, usersArray);
+  });
+  return dataSnap;
+}
+
+  // const fetchPosts = async () => {
+  //   try {
+  //     const q = query(
+  //       collection(getFirestore(), "comments"),
+  //       orderBy("createdate", "asc")
+  //     );
+  //     //desc - 내림차순 / asc -오름차순
+  //     const snapShot = await getDocs(q); //데이터 다 가져오는건 snapShot으로 해야함 무조건
+  //     const postArray = snapShot.docs.map((doc) => ({
+  //       id: doc.id,
+  //       ...doc.data(),
+  //     }));
+  //     //가져온 데이터를 반복문을 돌림 , id값은 임의로 데이터 값으로 추가해서 나오고 원래 데이터도 같이 나옴
+  //     setComments(postArray);
+  //     console.log(postArray);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   fetchPosts();
+  // }, []);
+
+  const addHeart = async (id, index) => {
+    const userRef = doc(getFirestore(), "users", userState.uid);
+    const userSnapshot = await getDoc(userRef);
+    const userNickname = userSnapshot.data().nickname;
+
+    // 첫 번째 콜렉션과 첫 번째 도큐먼트를 생성하기 전에 설정(?) 해놓는 함수
+    const postRef = doc(getFirestore(), "comments", id);
+
+    // const myUid = doc(postRef, "liked", userState.uid)
+    // const UID = await getDoc(myUid && myUid);
+
+    try {
+      const test1 = doc(postRef, "liked", userState.uid);
+      const testSnap = await getDoc(test1);
+      if (testSnap.exists()) {
+        await deleteDoc(doc(postRef, "liked", userState.uid));
+
+        let copy = [...likeds];
+        copy[index].totalcount -= 1;
+        setlikeds(copy);
+        return;
+      }
+      await setDoc(doc(postRef, "liked", userState.uid), {
+        nickname: userNickname,
+        liked: true,
+      });
+      let copy2 = [...likeds];
+      copy2[index].totalcount += 1;
+      setlikeds(copy2);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const deleteComment = async (id) => {
+    if (window.confirm("정말 삭제하시겠습니까?")) {
+      try {
+        const commentRef = doc(getFirestore(), "comments", id);
+        await deleteDoc(commentRef);
+        FetchLiked();
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  };
 
   /*
   #### Fetch Contents Functions
   */
 
-  const FetchContentTop = () => {
+  const FetchContentTop = ({ nickname, createdate }) => {
     return (
       <ContentTopWrap>
-        <NickName>NickName</NickName>
-        <Date>Date</Date>
+        <NickName>{nickname}</NickName>
+        <Date>{createdate}</Date>
       </ContentTopWrap>
     );
   };
 
-  const FetchContentCenter = () => {
+  const FetchContentCenter = ({ text, id }) => {
     return (
       <ContentCenterWrap>
-        <Comment>
-          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Excepturi a
-          quos repellat cumque, consequuntur magnam obcaecati, reprehenderit
-          repudiandae odit adipisci autem quae voluptates veritatis! Asperiores
-          porro animi corrupti quo ut! lorem5
-        </Comment>
+        {editId === id ? (
+          <TextAreaEdit id={id} text={text} onCancel={() => setEditId(null)} />
+        ) : (
+          <Comment>{text}</Comment>
+        )}
       </ContentCenterWrap>
     );
   };
 
-  const FetchContentBottom = () => {
+  const FetchContentBottom = ({ id, index }) => {
     return (
       <ContentBottomWrap>
-        <Count>1</Count>
-        <Love>
+        <Count>{likeds[index]?.totalcount}</Count>
+        <Love
+          style={{ cursor: "pointer" }}
+          onClick={() => {
+            // setHeartCount(heartCount)
+            addHeart(id, index);
+          }}
+        >
           <FontAwesomeIcon icon={faHeart} />
         </Love>
         <Share>
@@ -420,15 +627,15 @@ function Detail_Comments() {
     );
   };
 
-  const FetchComment = () => {
+  const FetchComment = ({ nickname, text, createdate, profile }) => {
     return (
       <li>
         <ProfileWrap>
-          <Profile />
+          <Profile src={"./images/portraits/woman_5.png"} />
         </ProfileWrap>
         <ContentWrap>
-          <FetchContentTop />
-          <FetchContentCenter />
+          <FetchContentTop nickname={nickname} createdate={createdate} />
+          <FetchContentCenter text={text} />
           <FetchContentBottom />
           <TopicWrap>
             <FetchTopics />
@@ -438,43 +645,52 @@ function Detail_Comments() {
     );
   };
 
-  const FetchReply = () => {
+  const FetchReply = ({ key, i, nickname, text, createdate }) => {
+    //   const [likeCount, setLikeCount] = useState(0);
+    //   useEffect(() => {
+    //     const fetchLikes = async () => {
+    //         const count = await getLikeCount(i);
+    //         setLikeCount(count);
+    //     };
+    //     fetchLikes();
+    // }, [i]);
     return (
-      <li>
+      <li key={i}>
         <ProfileWrap>
           <Profile />
         </ProfileWrap>
         <ContentWrap>
-          <FetchContentTop />
-          <FetchContentCenter />
-          <FetchContentBottom />
+          <FetchContentTop nickname={nickname} createdate={createdate} />
+          <FetchContentCenter text={text} />
+          <FetchContentBottom id={key} index={i} />
         </ContentWrap>
       </li>
     );
   };
 
+  // const FetchTextBox = () => {
+  //   return (
+  //     <li>
+  //       <ProfileWrap>
+  //         <Avatar width={"70px"} height={"70px"} />
+  //       </ProfileWrap>
+  //       <ContentWrap>
+  //         <FormWrapper method="post" onSubmit={handleSubmit}>
+  //         <textarea
+  //                   value={comment}
+  //                   onChange={handleChange}
+  //                 />
+  //         </FormWrapper>
+  //       </ContentWrap>
+  //     </li>
+  //   );
+  // };
 
-
-
-
-  const FetchTextBox = () => {
+  const TextBox = ({text}) => {
     return (
-      <li>
-        <ProfileWrap>
-          <Profile />
-        </ProfileWrap>
-        <ContentWrap>
-          <FormWrapper method="post" onSubmit={handleSubmit}>
-          <textarea
-                    value={comment}
-                    onChange={handleChange}
-                  />
-          </FormWrapper>
-        </ContentWrap>
-      </li>
-    );
-  };
-
+      <TextArea GetDocsFromComments={GetDocsFromComments} GetDocsFromUsers={GetDocsFromUsers} FetchLiked={FetchLiked} text={text}/>
+    )
+  }
   function handleSubmit(e) {
     // Prevent the browser from reloading the page
     e.preventDefault();
@@ -491,44 +707,12 @@ function Detail_Comments() {
     console.log(formJson);
   }
 
-
-  useEffect(()=>{
-    // const postRef = doc(getFirestore(),"comments", view);
-    const commentRef = collection(getFirestore(), "comments");
-
-    const q = query(commentRef, orderBy("createdate", "desc"));
-
-    const dataSnap = onSnapshot(q, (item)=>{
-      const fetchComment = item.docs.map(doc =>({
-        id: doc.id,
-        ...doc.data()
-      }))
-      setComments(fetchComment)
-    })
-    return dataSnap;
-  },[])
-
-
   // const viewCnt = async(board, view) => {
   //   const viewRef = doc(getFirestore(), board, view);
   //   await updateDoc(viewRef,{
   //     view : increment(1)
   //   })
   // }
-
-//   useEffect(()=>{    
-//     const fetchData = async () =>{
-//       const postRef = doc(getFirestore(),"comments", userState.uid);
-//       // const postRef = collection(getFirestore(), "comments");
-//       const postSnapShot = await getDoc(postRef);
-//       if(postSnapShot.exists()){
-//         setPost(postSnapShot.data())
-//         setPostUid(postSnapShot.data().uid)
-        
-//       }
-//     }
-//     fetchData()    
-// },[])
 
   // function formateDate(data){
   //   if(data){
@@ -548,24 +732,127 @@ function Detail_Comments() {
   //   }
   // }
 
+  const FetchLiked = async () => {
+    try {
+      const LikeCollection = query(collection(getFirestore(), "comments"), orderBy("createdate", "asc"));
+      const likeSnapShot = await getDocs(LikeCollection);
+
+      const likedArray = await Promise.all(
+        likeSnapShot.docs.map(async (doc) => {
+          const likedCollection = collection(doc.ref, "liked");
+          const likedSnapshot = await getDocs(likedCollection);
+          const totalCount = likedSnapshot.size;
+          return {
+            id: doc.id,
+            totalcount: totalCount,
+            ...doc.data(),
+          };
+        })
+      );
+
+      setlikeds(likedArray);
+    } catch (error) {
+      alert(error);
+    }
+  };
+
+  // useEffect(() => {
+  //   FetchLiked();
+  // }, []);
+
   return (
     <>
       <GlobalWrap>
         <CommentWrap>
           <ul>
-            <FetchTextBox />
-            <FetchComment />
-            <FetchReply />
-            <FetchReply />
-            <FetchReply />
-            {
-              comments &&
-              comments.map((e,i)=>{
-                return (
-                  <li key={i}>{e.text}</li>
-                )
-              })
-            }
+            <li>
+              <ProfileWrap>
+                <Avatar width={"70px"} height={"70px"} />
+              </ProfileWrap>
+              <ContentWrap>
+                <FormWrapper method="post" onSubmit={handleSubmit}>
+                  <TextBox />
+                </FormWrapper>
+              </ContentWrap>
+            </li>
+            <FetchComment
+              text={
+                "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quod praesentium porro expedita deleniti itaque at quaerat modi, exercitationem vitae laboriosam."
+              }
+              nickname={"#db53632"}
+              createdate={"2023.09.26"}
+              profile={"../images/portraits/woman_5.png"}
+            />
+            {currentComments.map((e, i) => {
+              return (
+                <>
+                  <li key={i}>
+                    <ProfileWrap>
+                      <Profile
+                        src={matchingUsers[i].photoURL}
+                        alt={matchingUsers[i].id}
+                        key={matchingUsers[i].id}
+                      />
+                    </ProfileWrap>
+                    <ContentWrap>
+                      <FetchContentTop
+                        nickname={e.nickname}
+                        // createdate={e.createdate}
+                      />
+                      <FetchContentCenter text={e.text} id={e.id} />
+                      <ContentBottomWrap>
+                        <Count>{likeds[i]?.totalcount}</Count>
+                        <Love
+                          style={{ cursor: "pointer" }}
+                          onClick={() => {
+                            // setHeartCount(heartCount)
+                            addHeart(e.id, i);
+                          }}
+                        >
+                          <FontAwesomeIcon icon={faHeart} />
+                        </Love>
+                        <Share>
+                          <FontAwesomeIcon icon={faLink} />
+                        </Share>
+                        <Reply>
+                          <FontAwesomeIcon icon={faShare} />
+                        </Reply>
+                        {e.uid === userState.uid && editId !== e.id && (
+                          <>
+                            <button onClick={() => setEditId(e.id)}>
+                              수정
+                            </button>
+                            <button onClick={() => deleteComment(e.id)}>
+                              삭제
+                            </button>
+                          </>
+                        )}
+                      </ContentBottomWrap>
+                    </ContentWrap>
+                  </li>
+                </>
+              );
+            })}
+            <Pagenation>
+              {Array(totalPages).fill().map((_, index) => (
+                <button key={index + 1} onClick={ async () => {
+                  await handlePageChange(index + 1)
+                  try{
+                    GetDocsFromUsers()
+                     GetDocsFromComments();
+
+                     getPhotoURLForMatchingIds()
+                    setCommentsDatas()
+                  
+                  } catch(error){
+                  alert(error)
+                 }
+                }
+                }>
+                  {index + 1}
+                </button>
+              ))}
+            </Pagenation>
           </ul>
         </CommentWrap>
       </GlobalWrap>

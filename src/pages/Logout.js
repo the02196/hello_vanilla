@@ -8,7 +8,7 @@ import Modal from '../components/Modal'
 
 
 function Logout() {
-    const dispatch=useDispatch();
+    const dispatch=useDispatch();      
     const navigate=useNavigate();
 
     const [isModal,setIsModal]=useState(true);
@@ -28,7 +28,7 @@ function Logout() {
     <>
     {
         isModal &&
-        <Modal error ="로그아웃 되었습니다." onClose={()=>{setIsModal(false); navigate("/")}} > 
+        <Modal error ="로그아웃 되었습니다." onClose={()=>{setIsModal(false); navigate("/main")}} > 
         {/* 다른 컴포넌트에서는 직접적으로 onclick을 사용할 수 없음 */}
         </Modal>
 

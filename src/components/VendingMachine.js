@@ -1,5 +1,6 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import styled, { keyframes } from "styled-components";
+
 
 const refill = keyframes`
 0% { opacity: 1; }
@@ -15,6 +16,18 @@ const move2 = keyframes`
 100% { opacity: 1; }
 `;
 
+const Wrap = styled.div`
+  width: 100%;
+  height: 100%;
+  position: relative;
+`
+
+const TransparentLayerForDebug = styled.div`
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  z-index: 20;
+`
 
 const Can = styled.div`
 width: 13px;
@@ -56,9 +69,10 @@ transition: 1s;
     border: 4px solid rgb(225, 225, 225);
     margin: 0 auto;
     position: relative;
-    margin-top: 100px;
+    margin-top: 95px;
     @media screen and (max-width: 1920px) {
       transform: scale(0.9);
+      margin-top: 50px;
     }
   `;
 
@@ -112,13 +126,16 @@ transition: 1s;
   `;
 
 
-const VendingMachine = ({ Work }) => {
+const VendingMachine = () => {
+  const [work_VendingMachine, setWork_VendingMachine] = useState(false);
 
   return (
-    <Machine>
+    <Wrap  onMouseEnter={() => {setWork_VendingMachine(!work_VendingMachine)}} onMouseOut={() => {setWork_VendingMachine(!work_VendingMachine)}}>
+    <TransparentLayerForDebug />
+    <Machine >
       <DrinkArea>
         <Drink>
-          <Can className={Work === false ? "" : "on"} />
+          <Can className={work_VendingMachine === false ? "" : "on"} />
           <Can />
           <Can />
           <Can />
@@ -147,9 +164,10 @@ const VendingMachine = ({ Work }) => {
         </BtnArea>
       </DrinkArea>
       <Output>
-        <Paid className={Work === false ? "" : "on"}></Paid>
+        <Paid className={work_VendingMachine === false ? "" : "on"}></Paid>
       </Output>
     </Machine>
+    </Wrap>
   );
 };
 
