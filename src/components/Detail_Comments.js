@@ -6,7 +6,7 @@ import {
   faShare,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { useEffect, useId, useState } from "react";
+import React, { useCallback, useEffect, useId, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import { textValue } from "../store";
@@ -323,6 +323,11 @@ function Detail_Comments() {
   const [comments, setComments] = useState("");
   const userState = useSelector(state => state.user);
 
+
+  const handleChange = useCallback((event) => {
+    setComment(event.target.value);
+  }, []);
+
   /*
   #### Fetch Contents Functions
   */
@@ -460,7 +465,10 @@ function Detail_Comments() {
         </ProfileWrap>
         <ContentWrap>
           <FormWrapper method="post" onSubmit={handleSubmit}>
-            <TextArea />
+          <textarea
+                    value={comment}
+                    onChange={handleChange}
+                  />
           </FormWrapper>
         </ContentWrap>
       </li>
@@ -554,7 +562,7 @@ function Detail_Comments() {
               comments &&
               comments.map((e,i)=>{
                 return (
-                  <li key={i}><span>{e.text}</span></li>
+                  <li key={i}>{e.text}</li>
                 )
               })
             }
