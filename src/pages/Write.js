@@ -94,25 +94,25 @@ function Write() {
   const [postUid, setPostUid] = useState();
   const uid = sessionStorage.getItem("users");
 
-  const fetchData = async () =>{
-    const postRef = doc(getFirestore(),board,view);
-    const postSnapShot = await getDoc(postRef);
-    if(postSnapShot.exists()){
-      setIsModal(false)
-      setPostData(postSnapShot.data())
-      // setTxtTitle(postSnapShot.data().title)         
-      setPostUid(postSnapShot.data().uid)
-      console.log(postSnapShot.data().uid)
-      
-    }else if(memberProfile?.data?.admin !== "true"){
-      setIsModal(true)
-      setMessage("해당 문서가 존재하지 않습니다.")
-
-    }        
-  }
   useEffect(()=>{
     if(board && view){
       //수정버튼 눌렀다는 뜻
+      const fetchData = async () =>{
+        const postRef = doc(getFirestore(),board,view);
+        const postSnapShot = await getDoc(postRef);
+        if(postSnapShot.exists()){
+          setIsModal(false)
+          setPostData(postSnapShot.data())
+          // setTxtTitle(postSnapShot.data().title)         
+          setPostUid(postSnapShot.data().uid)
+          console.log(postSnapShot.data().uid)
+          
+        }else if(memberProfile?.data?.admin !== "true"){
+          setIsModal(true)
+          setMessage("해당 문서가 존재하지 않습니다.")
+
+        }        
+      }
       fetchData()    
     }
   },[board, view])

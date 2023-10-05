@@ -96,56 +96,47 @@ const Title =styled.h1`
 font-size: 24px; text-align: center; margin-bottom: 20px;
 
 `
-const Input =styled.input`
-  width: 100%; padding: 10px; margin-bottom: 10px; 
-  border: 1px solid #ddd; 
-  /* border-radius:  5px;  */
+const Input = styled.input`
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ddd;
+  /* border-radius: 5px; */
   box-sizing: border-box;
   padding-left: 45px;
-  transition: border color 0.4s;
-  &:focus{
-    border-color: #007bff;
-    /* &:focus 클릭했을때 효과 */
+  transition: border-color 0.4s;
+  &:focus {
+    border-color: #ededed;
     outline: none;
   }
-  &::placeholder{opacity: 0;}
-
-`
+  &::placeholder {
+    opacity: 0;
+  }
+`;
 const InputWrapper = styled.div`
-    position: relative;
-    margin-bottom: 20px;
-    &:last-child{
-      margin-bottom: 0; margin-top: 20px;
-      justify-content: flex-end;
-      display: flex;
-      column-gap: 20px;
-      a{
-        background-color: #40e0de;
-        font-size: 14px;
-        text-align: center; padding: 5px 20px;
-        /* border-radius: 5px; */
-        color: #fff;
-        &:last-child{
-          background-color: #036;
-        }
-      }
-    }
-    /* 마지막 요소 */
+  position: relative;
+  margin-top: 20px;
+  
   input:focus + label,
-  input:not(:placeholder-shown )+ label{
+  input:not(:placeholder-shown) + label {
+    //글자를 남겨두는거
     top: 4px;
     left: 4px;
     font-size: 8px;
-    color: #007bff;
+    font-weight: 600;
+    color: #000000;
+  
   }
-`
+`;
 const Label = styled.label`
-      position: absolute;
-      top: 10px; left: 10px;
-      font-size: 14px; color: #999;
-      transition: all 0.3s;
-      pointer-events: none;
-`
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  font-size: 14px;
+  color: #999;
+  transition: all 0.3s;
+  pointer-events: none;
+`;
 
 const Button =styled.button`
  width: 100%;
@@ -273,12 +264,14 @@ function Findemail() {
                 <Label htmlFor='phoneNumber'>전화번호</Label>            
             </InputWrapper>
         
-                <p>{message}</p>
+                {/* <p>{message}</p> */}
         
         <InputWrapper>
             <Button onClick={findID}>이메일 찾기</Button>       
         </InputWrapper>
+        <InputWrapper>
         {resultEmail && <Button onClick={passwordEdit}>패스워드 재설정</Button>}
+        </InputWrapper>
         {/* 가리기 위해 정규식으로 썼다. */}
         </FindMail>
        

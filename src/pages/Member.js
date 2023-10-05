@@ -248,12 +248,12 @@ function Member() {
     }
     return firebaseError[errorCode] || "알 수 없는 에러가 발생하였습니다."
   }
-//데이터가 다 비어있으면 튕궈내야함
 
-  const isValidPhone = (phoneNumber) =>{ //phone 대신 e라고 써도 됨
+
+  const isValidPhone = (phoneNumber) =>{ 
     const regex = /^01[0-9]-[0-9]{3,4}-[0-9]{4}$/
     return regex.test(phoneNumber);
-    //test는 정규식코드에 일치하는 코드가 있는지 확인하는것 => true or false 로 값이 나옴(전화번호 유효성 검사 페이지 참조하기!)
+   
 
   }
   const isValidEmail = (email) =>{
@@ -270,12 +270,12 @@ function Member() {
   }else if(nickname.length === 0){
     errorMessage="닉네임";
   }else if(!isValidPhone(phoneNumber)){
-    setError("유효한 전화번호를 입력해주세요.")
+    setError("전화번호 를 입력해주세요.")
     setIsModal(!isModal)
     return;
   }else if(!isValidEmail(email)){
     setError("유효한 이메일 주소를 입력해주세요.")
-    setIsModal(!isModal) //isModal을 true로 바꾸고 return 해야함!!
+    setIsModal(!isModal)
     return;
   }else if(password.length === 0 && initialMode){
     errorMessage = "비밀번호";
@@ -286,11 +286,10 @@ function Member() {
     setIsModal(!isModal)
     return;
   }
-  
 
   if(errorMessage){
     setError(errorMessage + "을 입력해 주세요!.")
-    //length가 숫자보다 작고 숫자보다 크다면 해서 조건걸어서 만들수도 있음
+    
     setIsModal(!isModal)
     return;
   }
@@ -300,15 +299,15 @@ function Member() {
         nickname,
         phoneNumber,
         email
-      }
-      //0922-2
-      if(initialMode){ //회원가입인 경우
+      }    
+      if(initialMode){ 
         const {user} = await createUserWithEmailAndPassword(firebaseAuth, email, password)
         await setDoc(doc(getFirestore(), "users",user.uid), userProfile);
-        //0919-1
-        sessionStorage.setItem("users",user.uid); //로그인 유지가 되어야하니깐
-        dispatch(logIn(user.uid)); //logIn import 해주기
+        
+        sessionStorage.setItem("users",user.uid); 
+        dispatch(logIn(user.uid)); 
         alert("회원가입이 완료 되었습니다.");
+      
       }else{ //정보수정인 경우
           if(userUid){
             const userRef = doc(getFirestore(), "users", userUid);
@@ -392,7 +391,7 @@ function Member() {
             <Button onClick={signUp}>
               { initialMode ? "가입" : "수정" }
             </Button>
-            <p>{error}</p>
+            {/* <p>{error}</p> */}
             
             
         </SignUp>
