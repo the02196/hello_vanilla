@@ -11,7 +11,6 @@ const TextBg = styled.div`
     padding: 30px 0;
 
 `
-
 const Picture = styled.div`
     width: 70px;
     height: 70px;
@@ -35,7 +34,6 @@ const Text = styled.div`
         font-size: 17px;
     }
 `
-
 const LeftTypingBox = ({ text, marginTop, marginBtm, leftStart  }) => {
     
     return (
@@ -51,14 +49,14 @@ const LeftTypingBox = ({ text, marginTop, marginBtm, leftStart  }) => {
                 ]}
                     wrapper="span"
                     speed={50}
-                    style={{ fontSize: '16px', display: 'inline-block' }} />
+                    style={{ fontSize: '18px', display: 'inline-block' }} />
                 }
                 
             </Text>
         </TextBg>
     )
 }
-const RightTypingBox = ({ text, marginTop, marginBtm  }) => {
+const RightTypingBox = ({ text, marginTop, marginBtm, rightStart }) => {
     const [testTwo, setTestTwo] = useState(false);
     setTimeout(() => {
         setTestTwo(true)
@@ -68,13 +66,13 @@ const RightTypingBox = ({ text, marginTop, marginBtm  }) => {
             <Text style={{alignItems: "flex-end"}}>
                 <h3>#romi6342</h3>
                 {
-                    testTwo && 
+                    rightStart && 
                 <TypeAnimation sequence={[
                     text, 1000,
                 ]}
                     wrapper="span"
                     speed={50}
-                    style={{ fontSize: '16px', display: 'inline-block' }} />
+                    style={{ fontSize: '18px', display: 'inline-block' }} />
                 }
             </Text>
             <Picture style={{ marginLeft: "30px", marginRight: "30px", backgroundImage: `url("../images/detail/profiles/Man_3.png")` }}></Picture>
