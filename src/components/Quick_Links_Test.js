@@ -107,8 +107,10 @@ li {
   `
   const Tryit = styled.a`
     text-decoration: none; display:inline-block;
-    font-weight: 300; font-size: 14px;  cursor: pointer; color:#d9d9e3;
-    background-color: #111111; padding: 5px 20px; border-radius: 30px;
+    font-weight: 300; font-size: 14px;  cursor: pointer;
+    color:#d9d9e3;    
+    background-color: #111111;
+     padding: 5px 20px; border-radius: 30px;
     margin-left: 30px;
 
   `
