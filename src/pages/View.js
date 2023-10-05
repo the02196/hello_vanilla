@@ -8,6 +8,7 @@ import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faList, faPen, faPenSquare, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { useSelector } from 'react-redux';
+import { deleteObject, getStorage, ref } from 'firebase/storage';
 
 const Container = styled.div`
   background-color: #f5f5f5;
@@ -66,7 +67,7 @@ const Button = styled.button`
 
     const CommentWrap = styled.div``
     const Comment = styled.div``
-    
+    // @param {string} imageName
 function View() {
   const [comment, setComment] = useState("");
   const [comments, setComments] = useState("");
@@ -112,7 +113,7 @@ function View() {
       viewCnt(board,view)
       setPost(postSnapShot.data())
       setPostUid(postSnapShot.data().uid)
-      
+      console.log(postSnapShot.data())
     }else{
       setIsModal(true)
       setMessage("해당 문서가 존재하지 않습니다.")
@@ -143,10 +144,14 @@ function View() {
       return `${year}-${month}-${day}`
     }
   }
-  const deletePost = async () => {
+  
+  const deletePost = async (imageName) => {
     if(window.confirm("정말로 삭제하시겠습니까?")){
       const docRef = doc(getFirestore(), board, view);
+      const storageRef = ref(getStorage(), `images/${imageName}`);
       await deleteDoc(docRef);
+      console.log(storageRef)
+      // await deleteObject(storageRef);
       alert("게시물이 삭제 되었습니다.");
       navigate(`/service/${board}`)
     }else{
