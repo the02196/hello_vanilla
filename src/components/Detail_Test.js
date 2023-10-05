@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { keyframes, styled } from "styled-components";
 import { TypeAnimation } from "react-type-animation";
 import { Slider } from "./Slider";
@@ -194,6 +194,32 @@ const GithubDownloadLink = styled.span`
 `;
 
 function Detail_Test() {
+  const [offsetY,setOffsetY] = useState(null)
+  const [leftStart, setLeftStart] = useState(false);
+  useEffect(() => {
+    
+    const scrollY = window.scrollY; // 스크롤 양
+    const headerPosition = Math.floor(scrollY + document.querySelector("#leftTypingBox").getBoundingClientRect().top); // 절대위치, Math.floor로 정수로 변환
+    setOffsetY(headerPosition)
+    
+
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll); //clean up
+    };
+
+  }, [offsetY]);
+  
+
+  function handleScroll(){
+
+    if(scrollY > offsetY-350){
+
+      setLeftStart(true)
+    }
+
+    
+  }
   const CardContent = [
     {
       quiz: "quiz1",
@@ -226,13 +252,16 @@ function Detail_Test() {
         </Creator>
         <MainBg>
           <TopBall></TopBall>
+          <div id="leftTypingBox">
           <LeftTypingBox
             text={
               "여기에 '공'이 있습니다. 공을 옮기는 방법을 한 번 상상해 보세요!"
             }
             marginTop={0}
             marginBtm={400}
+            leftStart={leftStart}
           ></LeftTypingBox>
+          </div>
           <HowMoveBall />
           <RightTypingBox
             text={"와, 다양한 방법이 있네요!"}
