@@ -331,7 +331,7 @@ function Detail_Comments() {
   const [contentText, SetContentText] = useState("");
   const [heartCount, setHeartCount] = useState("");
   const [createdDate, setCreatedDate] = useState("");
-  const [LastReplyDate, setLastReplyDate] = useState("");
+  const [LastReplyDate, setLastReplyDate] = useState(null);
   const [repliesCount, setRepliesCount] = useState("");
   const [viewsCount, SetViewsCount] = useState("");
   const [usersCount, setUsersCount] = useState("");
@@ -371,6 +371,26 @@ function Detail_Comments() {
     setCurrentPage(pageNumber);
   };
   
+  const TopicCommentData = async () => {
+    try{
+      const ref = collection(getFirestore(), "comments");
+      const q = query(
+        collection(getFirestore(), "comments"),
+        orderBy("createdate", "desc")
+      )
+      const snapshot = await getCountFromServer(ref)
+      const userSnapshot = await getDocs(q)
+      const uids = userSnapshot.docs.map(doc => doc.data().uid);
+      const uniqueUids = [...new Set(uids)];
+      const totalCount = snapshot.data().count;
+      setUsersCount(uniqueUids.length)
+      setRepliesCount(totalCount)
+      setLastReplyDate(userSnapshot.docs[0].data().createdate)
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  
   const GetDocsFromUsers = async () => {
     try {
       const ref = collection(getFirestore(), "users");
@@ -405,6 +425,7 @@ function Detail_Comments() {
 useEffect(()=>{
   GetDocsFromUsers();
   GetDocsFromComments();
+  TopicCommentData();
 },[])
 
   const getPhotoURLForMatchingIds = (commentsArray, usersArray) => {
@@ -444,22 +465,22 @@ useEffect(()=>{
     return dataSnap;
   }, []);
 
-const setCommentsDatas = () => {
-  const commentRef = collection(getFirestore(), "comments");
+// const setCommentsDatas = () => {
+//   const commentRef = collection(getFirestore(), "comments");
 
-  const q = query(commentRef, orderBy("createdate", "asc"));
+//   const q = query(commentRef, orderBy("createdate", "asc"));
 
-  const dataSnap = onSnapshot(q, (item) => {
-    const fetchComment = item.docs.map((doc) => ({
-      id: doc.id,
-      ...doc.data(),
-    }));
-    FetchLiked();
-    setComments(fetchComment);
-    getPhotoURLForMatchingIds(commentsArray, usersArray);
-  });
-  return dataSnap;
-}
+//   const dataSnap = onSnapshot(q, (item) => {
+//     const fetchComment = item.docs.map((doc) => ({
+//       id: doc.id,
+//       ...doc.data(),
+//     }));
+//     FetchLiked();
+//     setComments(fetchComment);
+//     getPhotoURLForMatchingIds(commentsArray, usersArray);
+//   });
+//   return dataSnap;
+// }
 
   // const fetchPosts = async () => {
   //   try {
@@ -531,6 +552,16 @@ const setCommentsDatas = () => {
     }
   };
 
+  function formatDate(data){
+    if(data){
+        const date = data.toDate();
+        const year = date.getFullYear();
+        const month = String(date.getMonth()+1).padStart(2, "0");
+        const day = String(date.getDate()).padStart(2, "0");
+        return `${year}-${month}-${day}`
+    }
+}
+
   /*
   #### Fetch Contents Functions
   */
@@ -593,11 +624,11 @@ const setCommentsDatas = () => {
           <p className="title">last reply</p>
           <div className="inner-wrap">
             <div className="profile"></div>
-            <p className="date-from">date</p>
+            <p className="date-from">{LastReplyDate && formatDate(LastReplyDate)}</p>
           </div>
         </LastReply>
         <Replies>
-          <p className="count">1</p>
+          <p className="count">{repliesCount}</p>
           <p className="title">replies</p>
         </Replies>
         <Views>
@@ -605,7 +636,7 @@ const setCommentsDatas = () => {
           <p className="title">views</p>
         </Views>
         <Users>
-          <p className="count">1</p>
+          <p className="count">{usersCount}</p>
           <p className="title">users</p>
         </Users>
         <Likes>
@@ -715,15 +746,6 @@ const setCommentsDatas = () => {
   //   })
   // }
 
-  // function formateDate(data){
-  //   if(data){
-  //     const date = data.toDate();
-  //     const year = date.getFullYear();
-  //     const month = String(date.getMonth() + 1).padStart(2,"0")
-  //     const day = String(date.getDate()).padStart(2, "0");
-  //     return `${year}-${month}-${day}`
-  //   }
-  // }
   // const deletePost = async () => {
   //   if(window.confirm("정말로 삭제하시겠습니까?")){
   //     const docRef = doc(getFirestore(), board, view);
