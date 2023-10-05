@@ -232,7 +232,7 @@ function Login() {
       "auth/wrong-password": "이메일 혹은 비밀번호가 잘못 되었습니다.",
       "auth/invalid-email": "이메일 혹은 비밀번호가 잘못 되었습니다.",
     };
-    return firebaseError[errorCode] || "알 수 없는 에러가 발생했습니다."; //firebaseError가 반환되거나 알수없는 에러가 발생했습니다 라고 둘중에 하나가 리턴이 됨
+    return firebaseError[errorCode] || "이메일 또는 비밀번호를 잘못 입력하셨습니다."; //firebaseError가 반환되거나 알수없는 에러가 발생했습니다 라고 둘중에 하나가 리턴이 됨
   };
   const LoginForm = async (e) => {
     //async: 함수내에서 만 사용가능하며, function 앞에 붙어서 사용함. 무엇가를 준비한다.
@@ -245,17 +245,16 @@ function Login() {
         email,
         password
       );
-      //await는 변수를 설정할때 같이 사용하는데 잠깐 기다리는라는 말임. (async랑 같이 사용해야만 함. )
-      // console.log(userLogin);
+
       const user = userLogin.user;
       console.log(user);
       sessionStorage.setItem("users", user.uid);
       dispatch(logIn(user.uid));
 
       const userDoc = doc(collection(getFirestore(), "users"), user.uid);
-      //collection은 데이터 하나만 가져온다는 뜻
+      
       const userDocSnapshot = await getDoc(userDoc);
-      // console.log(userDocSnapshot.data());
+      
       if (userDocSnapshot.exists()) {
         const userData = userDocSnapshot.data();
         dispatch(loggedIn(userData));
@@ -347,15 +346,9 @@ function Login() {
  
       console.log(snsUid);
       const result = await signInWithPopup(firebaseAuth, provider);
-      const user = result.user;
-        const getSnsInfo = () => {
-          setSnsName(user.displayName)
-          setSnsNickname(user.displayName)
-          setSnsEmail(user.email)
-          setSnsPhotoURL(user.photoURL)
-        }
-        await getSnsInfo();
-        console.log(user);
+      const user = result.user;      
+        
+      console.log(user);
         sessionStorage.setItem("users", user.uid);
         dispatch(logIn(user.uid));
         navigate("/main", {
@@ -373,12 +366,13 @@ function Login() {
           email : user.email,
         };
         await setDoc(doc(getFirestore(), "users", user.uid), userProfile);
-        sessionStorage.setItem("users", user.uid); //로그인 유지가 되어야하니깐
-        dispatch(logIn(user.uid)); //logIn import 해주기
+        sessionStorage.setItem("users", user.uid);
+        dispatch(logIn(user.uid));
     } catch (error) {
       console.log(error);
     }
   };
+  
 
 
   // useEffect(() => {
@@ -436,10 +430,11 @@ function Login() {
                 // required
               />
               <Label>패스워드</Label>
-            </InputWrapper>
+            </InputWrapper> 
+              <p>{error}</p>
             <Button>로그인 하기</Button>
           </form>
-          {/* <p>{error}</p> */}
+        
           <BottomWrap>
             <IconWrap>
               <GoogleIcon
