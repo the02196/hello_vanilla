@@ -20,12 +20,10 @@ function Modify() {
   
   console.log(userState.loggedIn)
   return (
-
-
    <>
     <Title>정보수정</Title>
     {
-      userState.loggedIn ?  <p>수정해야징</p> :
+      userState.loggedIn ?  <p>.</p> :
       
 
       <Modal error="로그인 후 이용해 주세요." onClose={()=>{navigate('/login')}}/>

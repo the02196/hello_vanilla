@@ -4,7 +4,7 @@ import {configureStore, createSlice} from "@reduxjs/toolkit" ;
 
 
 let user = createSlice({
-    name: "user", //변수명과 똑같이 만들어주면 안헷갈림
+    name: "user",
     initialState: {
         loggedIn : false,
         data: null,
@@ -15,7 +15,7 @@ let user = createSlice({
             state.loggedIn = true;
             state.uid= action.payload;
 
-        },// 데이터를 넘기는 방법은 action,payload는 보내진 어떤 데이터가 다 들어오는 redux에서 제공하는 기능임
+        },
 
         loggedIn :(state,action)=>{
             state.loggedIn = true;
