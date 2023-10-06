@@ -181,6 +181,8 @@ function Inner() {
             path="/view/:board"
             element={
               isModal && (
+
+                
                 <Modal
                   error="유효하지 않는 경로입니다."
                   onClose={() => {
