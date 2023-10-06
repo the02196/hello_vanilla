@@ -9,13 +9,43 @@ import {
 } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import styled from "styled-components";
 // getDocs => 게시판 글 다 가져와야 해서 , orderBy =>순서(최신순,등록순,날짜순...) , query => 프로그래밍에서 내가 필요한 부분만 가지고 올 수 있도록 하는거
 
+const Creator = styled.div`
+  padding: 10px 0;
+  background-color: black;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: fixed;
+  z-index: 2000;
+  top: 0;
+  div {
+    span {
+      font-family: Fira Code;
+      font-size: 16px;
+      margin-left: 25px;
+      color: #9d9d9d;
+    }
+  }
+  span {
+    a {
+      font-size: 16px;
+      margin-right: 20px;
+      color: #9f9f9f;
+      text-decoration: none;
+    }
+  }
+`;
+
+
 const BoardWrapper = styled.div`
-  max-width: 1920px;
+  max-width: 1600px;
   margin: 50px auto;
+  margin-top: 100px;
 `;
 const Title = styled.div`
   padding: 10px 20px;
@@ -29,7 +59,7 @@ const List = styled.ul`
   margin: 10px 0;
   &:nth-of-type(1) {
     li {
-      padding: 10px;
+      padding: 10px 20px;
       background-color: black;
       color: whitesmoke;
     }
@@ -37,7 +67,7 @@ const List = styled.ul`
 `;
 const ListItem = styled.li`
   padding: 20px 20px;
-  font-size: 25px;
+  font-size: 19px;
   text-align: center;
   flex-basis: 10%;
 
@@ -122,6 +152,15 @@ function Notice() {
 
   return (
     <>
+    <Creator>
+        <div>
+          <span>&lt;&gt; Quick Links</span>
+          <span>useful sites for you</span>
+        </div>
+        <span>
+          <NavLink style={{fontWeight: "bold"}} to={"/main"}>메인 페이지로 가기</NavLink>
+        </span>
+      </Creator>
       <BoardWrapper>
         <Title>공지사항</Title>
         <List>

@@ -33,8 +33,8 @@ const Creator = styled.div`
 `;
 
 const Wing = styled.div`
-  width: 180px;
-  height: 180px;
+  width: 130px;
+  height: 130px;
   margin: 0 auto;
   background-image: url("../images/main/wing.png");
   background-size: cover;
@@ -57,7 +57,7 @@ const Menu = styled.div`
   background-color: #111111;
   top: 0;
   position: fixed;
-  width: 300px;
+  width: 200px;
   height: 100vh;
   z-index: 1000;
 
@@ -67,7 +67,7 @@ const Menu = styled.div`
   }
   li {
     cursor: pointer;
-    font-size: 26px;
+    font-size: 21px;
     color: #fff;
     text-align: center;
     line-height: 2;
@@ -108,7 +108,7 @@ const MenuButton = styled.div`
 `;
 
 const AccordionCnt = styled.div`
-  font-size: 22px;
+  font-size: 18px;
   color: darkgray;
 `;
 const ListWrap = styled.ul`
@@ -130,19 +130,19 @@ const ListWrap = styled.ul`
 `;
 
 const TextWrap = styled.div`
-  width: 1600px;
+  width: 1300px;
   display: flex;
   flex-direction: column;
   > h3 {
     /* background-color:#343541; */
     color: #111;
     box-sizing: border-box;
-    font-size: 42px;
+    font-size: 30px;
   }
 `;
 const ImageBox = styled.div`
   margin-top: 50px;
-  width: 1600px;
+  width: 1300px;
   height: 400px;
   background-size: cover;
   position: relative;
@@ -179,8 +179,8 @@ const Tryit = styled.a`
   text-decoration: none;
   display: inline-block;
   font-weight: 300;
-  font-size: 23px;
-  width: 100px;
+  font-size: 18px;
+  width: 80px;
   text-align: center;
   cursor: pointer;
   color: whitesmoke;
@@ -188,6 +188,7 @@ const Tryit = styled.a`
   background-color: darkslateblue;
   padding: 8px 20px;
   border-radius: 30px;
+  
 `;
 
 const Desc = styled.p`
@@ -195,7 +196,7 @@ const Desc = styled.p`
   /* color: ${(props) => (props.Color ? "#111111" : "#fff")}; */
   padding: 30px 0px;
   width: 100%;
-  font-size: 25px;
+  font-size: 21px;
   box-sizing: border-box;
   line-height: 3rem;
 `;
@@ -222,7 +223,7 @@ const WhiteGradientToTop = styled.div`
 `;
 
 const GhostBox = styled.div`
-  width: 300px;
+  width: 200px;
   height: 100px;
 `;
 const Wrap = styled.div`
