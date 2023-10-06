@@ -252,7 +252,7 @@ function Findemail() {
     <Container>
         <FindMail>
             
-            <Title>이메일 및 비밀번호 재설정</Title>
+            <Title>이메일 찾기 및 비밀번호 재설정</Title>
             
             <InputWrapper>
                 < Input type='text' placeholder='이름을 입력해주세요' value={name} onChange={(e)=> setName(e.target.value)} />

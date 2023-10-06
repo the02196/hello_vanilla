@@ -109,7 +109,11 @@ const InputWrapper = styled.div`
     font-size: 8px;
     font-weight: 600;
     color: #000000;
+    p{
+    color: red;
+    }
   }
+ 
 `;
 
 const Input = styled.input`
