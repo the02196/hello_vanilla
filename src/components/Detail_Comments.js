@@ -31,6 +31,7 @@ import {
 } from "firebase/firestore";
 import TextAreaEdit from "./TextAreaEdit";
 import Avatar from "../pages/Avatar";
+import { CodeBlocke } from "./CodeBlock";
 
 /*
   #### Wrappers ####
@@ -668,6 +669,7 @@ useEffect(()=>{
         <ContentWrap>
           <FetchContentTop nickname={nickname} createdate={createdate} />
           <FetchContentCenter text={text} />
+          <CodeBlocke width={"650"} height={"800"} value={"test"}></CodeBlocke>
           <FetchContentBottom />
           <TopicWrap>
             <FetchTopics />
@@ -802,9 +804,9 @@ useEffect(()=>{
             </li>
             <FetchComment
               text={
-                "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quod praesentium porro expedita deleniti itaque at quaerat modi, exercitationem vitae laboriosam."
+                "안녕하세요, 이 페이지를 보고 움직이는 공을 만들어보고 있는데 잘 동작하지 않아서 막막한 상황입니다 ㅠㅠ.아래는 제가 작성한 코드입니다.."
               }
-              nickname={"#db53632"}
+              nickname={"#ljy04"}
               createdate={"2023.09.26"}
               profile={"../images/portraits/woman_5.png"}
             />
