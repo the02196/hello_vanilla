@@ -62,12 +62,13 @@ const ContentInner = styled.div`
 
 const Title = styled.h2`
   font-size: 20px;
+  margin-left:5.3%;
 `;
 
 const TextInput = styled.input`
   height: 40px;
   border: 1px solid #e5e7eb;
-  flex-basis: 75%;
+  flex-basis: 89%;
 `;
 
 const ContentInputWrapper = styled.div`
@@ -171,8 +172,8 @@ function Write() {
           <Heading>{board && view ? "글수정" : "글쓰기"}</Heading>
         </Header>
         <ContentWrapper>
-          <ContentInner>
             <Title>제목</Title>
+          <ContentInner>
             <TextInput defaultValue={postData && postData.title} type="text" onChange={(e)=>{setTxtTitle(e.target.value)}} />
           </ContentInner>
           <ContentInputWrapper>
