@@ -42,8 +42,11 @@ const ButtonWarp = styled.div`
   display: flex;
   justify-content: space-between;
   column-gap: 20px;
-  &:nth-child(2) > button:nth-child(1){background-color: #115e59;}
-  &:nth-child(2) > button:nth-child(2){background-color: #901c1c;}
+  &:nth-child(2) > button:nth-child(1){background-color: #8e8e8e;}
+  &:nth-child(2) > button:nth-child(2){background-color: #000;}
+  &:nth-child(1) > button:nth-child(1){background-color: #8e8e8e;}
+  &:nth-child(1) > button:nth-child(2){background-color: #000;}
+  
 `
 const Button = styled.button`
     border-radius: 0%.5rem;
@@ -147,10 +150,13 @@ function View() {
   
   const deletePost = async (imageName) => {
     if(window.confirm("정말로 삭제하시겠습니까?")){
-      const docRef = doc(getFirestore(), board, view);
-      const storageRef = ref(getStorage(), `images/${imageName}`);
-      await deleteDoc(docRef);
-      console.log(storageRef)
+      for(let i = 0; i < imageName.length; i++){
+        const docRef = doc(getFirestore(), board, view);
+        const storageRef = ref(getStorage(), `images/${imageName[i]}`);
+        await deleteDoc(docRef);
+        await deleteObject(storageRef);
+        console.log(storageRef)
+      }
       // await deleteObject(storageRef);
       alert("게시물이 삭제 되었습니다.");
       navigate(`/service/${board}`)
@@ -236,7 +242,9 @@ function View() {
              
           (<ButtonWarp>
                   <Button onClick={()=>navigate(`/edit/${board}/${view}`)}><FontAwesomeIcon icon={faPenSquare}/>수정</Button>
-                  <Button onClick={deletePost}><FontAwesomeIcon icon={faTrash}/>삭제</Button>
+                  <Button onClick={()=>{
+                    deletePost(post.fileName)
+                  }}><FontAwesomeIcon icon={faTrash}/>삭제</Button>
           </ButtonWarp>) :
           ""
           

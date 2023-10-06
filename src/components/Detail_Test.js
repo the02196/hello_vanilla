@@ -1,22 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { keyframes, styled } from "styled-components";
-import { TypeAnimation } from "react-type-animation";
 import { Slider } from "./Slider";
-import Aos from "./Aos";
 import BallLefttoRight from "./Animation";
-import CodeEditor from "@uiw/react-textarea-code-editor";
 import HowMoveBall from "./HowMoveBall";
 import { NavLink } from "react-router-dom";
 import CodeBlock from "./CodeBlock";
 import TopBall from "./TopBall";
-import { LeftTypingBox, RightTypingBox } from "./TypingBox";
+import { LeftTypingBox, LeftTypingBox1, LeftTypingBox2, RightTypingBox, RightTypingBox1 } from "./TypingBox";
 
 const GlobalWrap = styled.div`
   width: 100%;
   height: 100%;
   background-color: #fefefe;
 `;
-
 const Ball = styled.div`
   width: 130px;
   height: 130px;
@@ -31,7 +27,6 @@ const Ball = styled.div`
   bottom: ${(props) => props.bottom}%;
   transform: translate(0, -50%);
 `;
-
 const MainBg = styled.div`
   max-width: 1400px;
   margin: 0 auto;
@@ -63,7 +58,6 @@ const Creator = styled.div`
     }
   }
 `;
-
 const DetailFooter = styled.div`
   width: 100%;
   height: 30px;
@@ -86,23 +80,25 @@ const DetailFooter = styled.div`
     }
   }
 `;
-
 const CardWrap = styled.div`
   width: 100%;
   overflow: hidden;
-  margin: 400px auto;
+  margin: 200px auto;
   ul {
     display: flex;
     justify-content: space-between;
     position: relative;
+    column-gap: 80px;
   }
 `;
-
 const Card = styled.li`
-  background-color: #efefef;
+  background-color: #8AA6A3;
+  border-radius: 10px;
   width: 300px;
-  height: 300px;
-  font-size: 20px;
+  height: 200px;
+  font-size: 30px;
+  color: #fff;
+  font-weight: bold;
   text-align: center;
   z-index: 100;
   padding: 50px;
@@ -112,6 +108,13 @@ const Card = styled.li`
   transition: 0.5s;
   box-sizing: border-box;
   position: relative;
+  &:nth-child(3){
+    
+    background-color: #038C73;
+  }
+  &:nth-child(4){
+    background-color: #127369;
+  }
   &.on {
     background-color: #fff;
   }
@@ -134,7 +137,6 @@ const Desc = styled.div`
     font-size: 20px;
   }
 `;
-
 const ExampleBallWrap = styled.div`
   width: 100%;
   height: 220px;
@@ -157,8 +159,6 @@ const CodeDescLeft = styled.div`
   align-items: center;
   line-height: 30px;
 `;
-
-
 const CodeDescRight = styled.div`
   font-size: 20px;
   width: 50%;
@@ -169,8 +169,6 @@ const CodeDescRight = styled.div`
   text-align: right;
   justify-Content: flex-end;
 `;
-
-
 const GithubWrap = styled.div`
   width: 100%;
   background-color: black;
@@ -179,7 +177,6 @@ const GithubWrap = styled.div`
   align-items: center;
   justify-content: flex-end;
 `;
-
 const GithubLogo = styled.div`
   width: 40px;
   height: 40px;
@@ -187,62 +184,47 @@ const GithubLogo = styled.div`
   background-size: cover;
   margin-right: 20px;
 `;
-
 const GithubDownloadLink = styled.span`
   color: white;
   margin-right: 40px;
 `;
 
 function Detail_Test() {
-  const [offsetYL, setOffsetYL] = useState(0)
-  const [offsetYR, setOffsetYR] = useState(0)
+  const [offsetY, setOffsetY] = useState(0)
   const [leftStart, setLeftStart] = useState(false);
-  const [rightStart, setRightStart] = useState(false);
-
+  
   useEffect(() => {
     const scrollY = window.scrollY;
     const headerPosition = Math.floor(scrollY + document.querySelector("#leftTypingBox").getBoundingClientRect().top);
-    setOffsetYL(headerPosition)
+    setOffsetY(headerPosition)
     
     window.addEventListener('scroll', handleScroll);
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
-  },[offsetYL]);  
-  useEffect(() => {
-    const scrollY = window.scrollY;
-    const headerPosition = Math.floor(scrollY + document.querySelector("#rightTypingBox").getBoundingClientRect().top);
-    setOffsetYR(headerPosition)
-    window.addEventListener('scroll', handleScroll);
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
-  },[offsetYR]);  
+  },[offsetY]);  
 
   function handleScroll(){
     const scrollY = window.scrollY;
-    if(scrollY > offsetYL-500){
+    if(scrollY > offsetY-500){
       setLeftStart(true)
-    }
-    if(scrollY > offsetYR-400){
-      setRightStart(true)
     }
   }
   const CardContent = [
     {
       quiz: "quiz1",
-      answer: "Lorem ipsum dolor sit amet. ",
+      answer: "@Keyframe",
     },
     {
       quiz: "quiz2",
       answer:
-        "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Odio, minus.",
+        "Position",
     },
     {
       quiz: "quiz3",
       answer:
-        "Lorem ipsum dolor sit amet. Lorem ipsum dolor, sit amet consectetur adipisicing elit. Odio, minus.",
-    },
+        "ClickEvent"
+    }
   ];
 
   return (
@@ -263,7 +245,7 @@ function Detail_Test() {
           <div id="leftTypingBox">
           <LeftTypingBox
             text={
-              "안녕하세요, 여러분! 오늘은 동적인 움직임을 구현하는 방법에 대해 함께 이야기 해보려해요. 화면에 보이는 공을 움직이게 만들고 싶다면 어떻게 하면 될까요? 같이 상상력을 발휘해 볼까요?"
+              `안녕하세요, 여러분! 오늘은 동적인 움직임을 구현하는 방법에 대해 함께 이야기 해보려해요. 화면에 보이는 공을 움직이게 만들고 싶다면 어떻게 하면 될까요? 상상력을 발휘해 볼까요?`
             }
             marginTop={0}
             marginBtm={600}
@@ -271,21 +253,6 @@ function Detail_Test() {
           ></LeftTypingBox>
           </div>
           <HowMoveBall />
-          <div id="rightTypingBox">
-          <RightTypingBox
-            text={"상상력도 좋지만 저는 웹페이지에서 움직임을 줄 수 있는 코드로 구성하는 법을 알아보고 싶어요."}
-            marginTop={0}
-            marginBtm={0}
-            rightStart={rightStart}
-          ></RightTypingBox>
-          </div>
-          <LeftTypingBox
-            text={
-              "틀린 방법은 없습니다. 다른 방법들만이 있을 뿐이죠! 바닐라 자바스크립트로는 어떻게 옮길 수 있는지 볼까요?"
-            }
-            marginTop={100}
-            marginBtm={400}
-          ></LeftTypingBox>
           <CardWrap>
             <ul>
               {BallLefttoRight()}
@@ -295,23 +262,13 @@ function Detail_Test() {
             </ul>
           </CardWrap>
           <Desc>
-            <h1>바닐라 스크립트로 공 옮기기</h1>
-            <h2>1 : 공의 모험 시작 </h2>
+            <h1>같이 해보기</h1>
             <span>
-              한 번에 한 발자국씩, 공이 어떻게 움직일 수 있는지 알아보도록
-              해봅시다. 웹 페이지에 공을 그리기 위해 HTML을 사용할 거에요. 아래
-              예시와 코드를 보세요.
+            먼저 해야 할 일은 HTML 구조를 만드는 거예요. myBall이라는 class명을 가진 div태그 하나와 Button을 만든 후 CSS를 통해 조금만 꾸며볼까요?
             </span>
           </Desc>
-          <ExampleBallWrap>
-            <Ball left="2" top="50" right="" bottom="" />
-          </ExampleBallWrap>
           <CodeDescWrap>
-            <CodeDescLeft>
-              여기서 &lt;div&gt; 엘리먼트를 사용해 우리의 공을 만들었습니다.{" "}
-              <br />
-              이제 이 공을 움직이려면 JavaScript를 사용해야 해요.
-            </CodeDescLeft>
+            <CodeDescLeft/>
             <CodeBlock width={"650"} height={"400"} value={"test"}></CodeBlock>
           </CodeDescWrap>
           <CodeDescWrap>

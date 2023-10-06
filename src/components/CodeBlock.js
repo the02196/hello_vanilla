@@ -2,23 +2,23 @@ import React, { useEffect } from "react";
 import CodeMirror from "@uiw/react-codemirror";
 import { abcdef } from "@uiw/codemirror-themes-all";
 function CodeBlock({ width, height, value }) {
-  const CodeMirrorText = `<!DOCTYPE html>
-<html>
-    <head>
-        <title>공 옮기기</title>
-    </head>
-    <body>
-        <div id="playground">
-            <div 
-                id="ball" 
-                style="width: 50px; 
-                height: 50px; 
-                background-color: red; 
-                position: absolute;">
-            </div>
-        </div>
-    </body>
-</html>`;
+  const CodeMirrorText = `<html>
+  <head>
+  <style>
+    .myBall {
+	      width: 300px;
+		  height: 300px;
+		  border-radius: 50%;
+		  background-color: green;
+		  position:relative;
+		}
+  </style>
+  </head>
+  <body>
+    <div class="myBall"></div>
+    <button>Start Animation</button>
+  </body>
+  </html>`;
 
   const options = {
     theme: "monokai",
@@ -45,4 +45,5 @@ function CodeBlock({ width, height, value }) {
 
   );
 }
+
 export default CodeBlock;

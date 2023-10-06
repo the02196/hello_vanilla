@@ -37,7 +37,7 @@ const Ball = styled.div`
   transform: translateY(-50%);
   background-position: center;
   position: absolute;
-  animation: ${boxAnimation} 2s linear forwards;
+  animation: ${boxAnimation} 3s linear infinite forwards;
 `
   
   return(
