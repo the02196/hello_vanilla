@@ -15,16 +15,21 @@ import { Navigate } from "react-router-dom";
 
 
 
-function TextArea({GetDocsFromComments, GetDocsFromUsers, FetchLiked, text}) {
+function TextArea({GetDocsFromComments, GetDocsFromUsers, FetchLiked, text, setIsModal, setErrorMessage}) {
   const memberProfile = useSelector((state) => state.user);
   const [commentValue, setCommentValue] = useState(text);
   const [postData, setPostData] = useState(null);
-  const [isModal, setIsModal] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [message, setMessage] = useState("");
   const [postUid, setPostUid] = useState();
   const [comment, setComment] = useState("");
   const [comments, setComments] = useState("");
 
+
+  if(commentValue===undefined){
+    setCommentValue("")
+  }
+  
   // useEffect(() => {
   //   if (postData) {
   //     setCommentValue(postData.content);
@@ -93,7 +98,16 @@ function TextArea({GetDocsFromComments, GetDocsFromUsers, FetchLiked, text}) {
 
 
   const addComment = async () =>{
-    // const postRef = doc(getFirestore(), "comments", memberProfile.uid);
+    if (!memberProfile || !memberProfile.uid) {
+      setErrorMessage("로그인이 필요한 서비스입니다.")
+      setIsModal(true);
+      return;
+    }
+    if(commentValue.length===0){
+      setErrorMessage("댓글을 입력해주세요.");
+      setIsModal(true);
+      return;
+    }
     try {
       const docRef = await addDoc(collection(getFirestore(),"comments"), {
         text: commentValue,
@@ -112,6 +126,9 @@ function TextArea({GetDocsFromComments, GetDocsFromUsers, FetchLiked, text}) {
     catch(error){
       console.log(error)
     }
+    GetDocsFromComments();
+    GetDocsFromUsers();
+    FetchLiked();
   }
 
 
@@ -140,7 +157,7 @@ function TextArea({GetDocsFromComments, GetDocsFromUsers, FetchLiked, text}) {
       cols={40}
       value={commentValue}
     />
-    <button type="button" onClick={()=>{addComment(); GetDocsFromComments(); GetDocsFromUsers(); FetchLiked();}}>보내기</button>
+    <button type="button" onClick={()=>{addComment()}}>보내기</button>
     </>
   );
 }
