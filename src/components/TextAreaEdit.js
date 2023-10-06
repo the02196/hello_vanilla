@@ -15,36 +15,42 @@ import {
   
   
   
-  function TextAreaEdit({id, text, onCancel}) {
+  function TextAreaEdit({id, text, onCancel, setIsModal, setErrorMessage}) {
     
     const [editText, setEditText] = useState(text)
     
-  
+    // if(editText===undefined){
+    //   setEditText("")
+    // }
+    
     const editComment = async () => {
-        if (window.confirm("정말 수정하시겠습니까?")) {
-          try {
-            const commentRef = doc(getFirestore(), "comments", id);
-            await updateDoc(commentRef, {
-              text: editText
-            });
-            onCancel()
-          }catch(error){
-            console.log(error)
-          }
+      if(editText.length===0){
+        setErrorMessage("댓글을 입력해주세요.");
+        setIsModal(true);
+        return;
+      }
+      if (window.confirm("정말 수정하시겠습니까?")) {
+        try {
+          const commentRef = doc(getFirestore(), "comments", id);
+          await updateDoc(commentRef, {
+            text: editText
+          });
+          onCancel()
+        }catch(error){
+          console.log(error)
         }
+      }
     }
   
     return (
       <>
         <textarea
-            onChange={(e) => {
-                setEditText(e.target.value);
-            }}
-            // name="postContent"
-            // placeholder="댓글을 입력하세요!"
-            rows={4}
-            cols={40}
-            value={editText}
+          onChange={(e) => {
+              setEditText(e.target.value);
+          }}
+          rows={4}
+          cols={40}
+          value={editText}
         />   
         <button onClick={editComment}>수정완료</button>
         <button onClick={onCancel}>취소</button>

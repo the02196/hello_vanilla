@@ -15,7 +15,7 @@ import { Navigate } from "react-router-dom";
 
 
 
-function TextArea({GetDocsFromComments, GetDocsFromUsers, FetchLiked, text, setIsModal}) {
+function TextArea({GetDocsFromComments, GetDocsFromUsers, FetchLiked, text, setIsModal, setErrorMessage}) {
   const memberProfile = useSelector((state) => state.user);
   const [commentValue, setCommentValue] = useState(text);
   const [postData, setPostData] = useState(null);
@@ -25,6 +25,10 @@ function TextArea({GetDocsFromComments, GetDocsFromUsers, FetchLiked, text, setI
   const [comment, setComment] = useState("");
   const [comments, setComments] = useState("");
 
+
+  if(commentValue===undefined){
+    setCommentValue("")
+  }
   
   // useEffect(() => {
   //   if (postData) {
@@ -95,6 +99,12 @@ function TextArea({GetDocsFromComments, GetDocsFromUsers, FetchLiked, text, setI
 
   const addComment = async () =>{
     if (!memberProfile || !memberProfile.uid) {
+      setErrorMessage("로그인이 필요한 서비스입니다.")
+      setIsModal(true);
+      return;
+    }
+    if(commentValue.length===0){
+      setErrorMessage("댓글을 입력해주세요.");
       setIsModal(true);
       return;
     }

@@ -356,6 +356,7 @@ function Detail_Comments() {
   const [usersArray, setUsersArray] = useState([]);
 
   const [isModal, setIsModal] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
   const [currentPage, setCurrentPage] = useState(1);
   const [commentsPerPage, setCommentsPerPage] = useState(5);
@@ -367,7 +368,6 @@ function Detail_Comments() {
   
   const totalPages = Math.ceil(comments.length / commentsPerPage);
  
-  const newArray = commentsArray - (commentsPerPage * (totalPages-1));
 
   const navigate = useNavigate();
   
@@ -540,7 +540,7 @@ useEffect(()=>{
     return (
       <ContentCenterWrap>
         {editId === id ? (
-          <TextAreaEdit id={id} text={text} onCancel={() => setEditId(null)} />
+          <TextAreaEdit id={id} text={text} onCancel={() => setEditId(null)} setIsModal={setIsModal} setErrorMessage={setErrorMessage}/>
         ) : (
           <Comment>{text}</Comment>
         )}
@@ -639,7 +639,7 @@ useEffect(()=>{
 
   const TextBox = ({text}) => {
     return (
-      <TextArea GetDocsFromComments={GetDocsFromComments} GetDocsFromUsers={GetDocsFromUsers} FetchLiked={FetchLiked} text={text} setIsModal={setIsModal}/>
+      <TextArea GetDocsFromComments={GetDocsFromComments} GetDocsFromUsers={GetDocsFromUsers} FetchLiked={FetchLiked} text={text} setIsModal={setIsModal} setErrorMessage={setErrorMessage}/>
     )
   }
   function handleSubmit(e) {
@@ -736,8 +736,8 @@ useEffect(()=>{
                         >
                           {isModal && 
                             <Modal 
-                              error="로그인이 필요한 서비스입니다." 
-                              onClose={() => {setIsModal(false); navigate('/login');}} 
+                              error={errorMessage}
+                              onClose={() => {setIsModal(false); navigate(!userState.loggedIn && '/login');}} 
                             />
                           }
                           <FontAwesomeIcon icon={faHeart} />
