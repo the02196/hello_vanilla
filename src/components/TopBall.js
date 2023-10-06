@@ -53,7 +53,7 @@ const ShadowAnimation = keyframes`
 `
 
 const TopBallWrap = styled.div`
-    height: 900px;
+    height: 1000px;
     width: 100%;
     position: relative;
     display: flex;
@@ -66,7 +66,7 @@ const TopBallShadow = styled.div`
     height: 10px;
     background-color: darkgrey;
     position: absolute;
-    bottom: 372px;
+    bottom: 412px;
     opacity: 0;
     animation: ${ShadowAnimation} 1.8s forwards;
     
