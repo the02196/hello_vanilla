@@ -31,6 +31,8 @@ import {
 } from "firebase/firestore";
 import TextAreaEdit from "./TextAreaEdit";
 import Avatar from "../pages/Avatar";
+import { useNavigate } from 'react-router-dom'
+import Modal from "./Modal";
 
 /*
   #### Wrappers ####
@@ -353,10 +355,10 @@ function Detail_Comments() {
   const [commentsArray, setCommentArray] = useState([]);
   const [usersArray, setUsersArray] = useState([]);
 
+  const [isModal, setIsModal] = useState(false);
+
   const [currentPage, setCurrentPage] = useState(1);
   const [commentsPerPage, setCommentsPerPage] = useState(5);
-
-  const [currentArray, setCurrentArray] = useState([])
 
   const indexOfLastComment = currentPage * commentsPerPage;
   const indexOfFirstComment = indexOfLastComment - commentsPerPage;
@@ -366,6 +368,9 @@ function Detail_Comments() {
   const totalPages = Math.ceil(comments.length / commentsPerPage);
  
   const newArray = commentsArray - (commentsPerPage * (totalPages-1));
+
+  const navigate = useNavigate();
+  
 
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
@@ -430,7 +435,6 @@ useEffect(()=>{
 
   const getPhotoURLForMatchingIds = (commentsArray, usersArray) => {
     const matchedUsers = [];
-
     for (const comment of commentsArray) {
       const matchingUser = usersArray.find((user) => user.id === comment.uid);
       if (matchingUser) {
@@ -442,7 +446,6 @@ useEffect(()=>{
         });
       }
     }
-
     return matchedUsers;
   };
 
@@ -450,9 +453,7 @@ useEffect(()=>{
 
   useEffect(() => {
     const commentRef = collection(getFirestore(), "comments");
-
     const q = query(commentRef, orderBy("createdate", "asc"));
-
     const dataSnap = onSnapshot(q, (item) => {
       const fetchComment = item.docs.map((doc) => ({
         id: doc.id,
@@ -465,64 +466,16 @@ useEffect(()=>{
     return dataSnap;
   }, []);
 
-// const setCommentsDatas = () => {
-//   const commentRef = collection(getFirestore(), "comments");
-
-//   const q = query(commentRef, orderBy("createdate", "asc"));
-
-//   const dataSnap = onSnapshot(q, (item) => {
-//     const fetchComment = item.docs.map((doc) => ({
-//       id: doc.id,
-//       ...doc.data(),
-//     }));
-//     FetchLiked();
-//     setComments(fetchComment);
-//     getPhotoURLForMatchingIds(commentsArray, usersArray);
-//   });
-//   return dataSnap;
-// }
-
-  // const fetchPosts = async () => {
-  //   try {
-  //     const q = query(
-  //       collection(getFirestore(), "comments"),
-  //       orderBy("createdate", "asc")
-  //     );
-  //     //desc - 내림차순 / asc -오름차순
-  //     const snapShot = await getDocs(q); //데이터 다 가져오는건 snapShot으로 해야함 무조건
-  //     const postArray = snapShot.docs.map((doc) => ({
-  //       id: doc.id,
-  //       ...doc.data(),
-  //     }));
-  //     //가져온 데이터를 반복문을 돌림 , id값은 임의로 데이터 값으로 추가해서 나오고 원래 데이터도 같이 나옴
-  //     setComments(postArray);
-  //     console.log(postArray);
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   fetchPosts();
-  // }, []);
-
   const addHeart = async (id, index) => {
     const userRef = doc(getFirestore(), "users", userState.uid);
     const userSnapshot = await getDoc(userRef);
     const userNickname = userSnapshot.data().nickname;
-
-    // 첫 번째 콜렉션과 첫 번째 도큐먼트를 생성하기 전에 설정(?) 해놓는 함수
     const postRef = doc(getFirestore(), "comments", id);
-
-    // const myUid = doc(postRef, "liked", userState.uid)
-    // const UID = await getDoc(myUid && myUid);
-
     try {
       const test1 = doc(postRef, "liked", userState.uid);
       const testSnap = await getDoc(test1);
       if (testSnap.exists()) {
         await deleteDoc(doc(postRef, "liked", userState.uid));
-
         let copy = [...likeds];
         copy[index].totalcount -= 1;
         setlikeds(copy);
@@ -562,6 +515,14 @@ useEffect(()=>{
     }
 }
 
+  const LoginCheck = (e,i) => {
+    if(!userState.loggedIn){
+      setIsModal(true)
+    }else{
+      addHeart(e,i)
+    }
+  }
+
   /*
   #### Fetch Contents Functions
   */
@@ -594,7 +555,6 @@ useEffect(()=>{
         <Love
           style={{ cursor: "pointer" }}
           onClick={() => {
-            // setHeartCount(heartCount)
             addHeart(id, index);
           }}
         >
@@ -677,50 +637,9 @@ useEffect(()=>{
     );
   };
 
-  const FetchReply = ({ key, i, nickname, text, createdate }) => {
-    //   const [likeCount, setLikeCount] = useState(0);
-    //   useEffect(() => {
-    //     const fetchLikes = async () => {
-    //         const count = await getLikeCount(i);
-    //         setLikeCount(count);
-    //     };
-    //     fetchLikes();
-    // }, [i]);
-    return (
-      <li key={i}>
-        <ProfileWrap>
-          <Profile />
-        </ProfileWrap>
-        <ContentWrap>
-          <FetchContentTop nickname={nickname} createdate={createdate} />
-          <FetchContentCenter text={text} />
-          <FetchContentBottom id={key} index={i} />
-        </ContentWrap>
-      </li>
-    );
-  };
-
-  // const FetchTextBox = () => {
-  //   return (
-  //     <li>
-  //       <ProfileWrap>
-  //         <Avatar width={"70px"} height={"70px"} />
-  //       </ProfileWrap>
-  //       <ContentWrap>
-  //         <FormWrapper method="post" onSubmit={handleSubmit}>
-  //         <textarea
-  //                   value={comment}
-  //                   onChange={handleChange}
-  //                 />
-  //         </FormWrapper>
-  //       </ContentWrap>
-  //     </li>
-  //   );
-  // };
-
   const TextBox = ({text}) => {
     return (
-      <TextArea GetDocsFromComments={GetDocsFromComments} GetDocsFromUsers={GetDocsFromUsers} FetchLiked={FetchLiked} text={text}/>
+      <TextArea GetDocsFromComments={GetDocsFromComments} GetDocsFromUsers={GetDocsFromUsers} FetchLiked={FetchLiked} text={text} setIsModal={setIsModal}/>
     )
   }
   function handleSubmit(e) {
@@ -738,22 +657,6 @@ useEffect(()=>{
     const formJson = Object.fromEntries(formData.entries());
     console.log(formJson);
   }
-
-  // const viewCnt = async(board, view) => {
-  //   const viewRef = doc(getFirestore(), board, view);
-  //   await updateDoc(viewRef,{
-  //     view : increment(1)
-  //   })
-  // }
-
-  // const deletePost = async () => {
-  //   if(window.confirm("정말로 삭제하시겠습니까?")){
-  //     const docRef = doc(getFirestore(), board, view);
-  //     await deleteDoc(docRef);
-  //     alert("게시물이 삭제 되었습니다.");
-  //     navigate(`/service/${board}`)
-  //   }
-  // }
 
   const currentProfiles = matchingUsers.slice(indexOfFirstComment, indexOfLastComment);
   
@@ -781,10 +684,6 @@ useEffect(()=>{
     }
   };
 
-  // useEffect(() => {
-  //   FetchLiked();
-  // }, []);
-
   return (
     <>
       <GlobalWrap>
@@ -811,10 +710,12 @@ useEffect(()=>{
             {currentComments.map((e, i) => {
               return (
                 <>
+                  {e.uid === userState.uid &&
+                    <span>작성자</span>
+                  }
                   <li key={i}>
                     <ProfileWrap>
                       <Profile
-                        // src={currentProfiles[i]?.photoURL}
                         src={currentProfiles[i]?.photoURL}
                         alt={currentProfiles[i]?.id}
                         key={currentProfiles[i]?.id}
@@ -823,19 +724,22 @@ useEffect(()=>{
                     <ContentWrap>
                       <FetchContentTop
                         nickname={e.nickname}
-                        // createdate={e.createdate}
                       />
                       <FetchContentCenter text={e.text} id={e.id} />
                       <ContentBottomWrap>
-                        {/* <Count>{likeds[i]?.totalcount}</Count> */}
                         <Count>{currentLikeds[i]?.totalcount}</Count>
                         <Love
                           style={{ cursor: "pointer" }}
                           onClick={() => {
-                            // setHeartCount(heartCount)
-                            addHeart(e.id, i);
+                            LoginCheck(e.id, i)
                           }}
                         >
+                          {isModal && 
+                            <Modal 
+                              error="로그인이 필요한 서비스입니다." 
+                              onClose={() => {setIsModal(false); navigate('/login');}} 
+                            />
+                          }
                           <FontAwesomeIcon icon={faHeart} />
                         </Love>
                         <Share>

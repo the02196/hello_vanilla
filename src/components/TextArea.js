@@ -15,16 +15,17 @@ import { Navigate } from "react-router-dom";
 
 
 
-function TextArea({GetDocsFromComments, GetDocsFromUsers, FetchLiked, text}) {
+function TextArea({GetDocsFromComments, GetDocsFromUsers, FetchLiked, text, setIsModal}) {
   const memberProfile = useSelector((state) => state.user);
   const [commentValue, setCommentValue] = useState(text);
   const [postData, setPostData] = useState(null);
-  const [isModal, setIsModal] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [message, setMessage] = useState("");
   const [postUid, setPostUid] = useState();
   const [comment, setComment] = useState("");
   const [comments, setComments] = useState("");
 
+  
   // useEffect(() => {
   //   if (postData) {
   //     setCommentValue(postData.content);
@@ -93,7 +94,10 @@ function TextArea({GetDocsFromComments, GetDocsFromUsers, FetchLiked, text}) {
 
 
   const addComment = async () =>{
-    // const postRef = doc(getFirestore(), "comments", memberProfile.uid);
+    if (!memberProfile || !memberProfile.uid) {
+      setIsModal(true);
+      return;
+    }
     try {
       const docRef = await addDoc(collection(getFirestore(),"comments"), {
         text: commentValue,
@@ -112,6 +116,9 @@ function TextArea({GetDocsFromComments, GetDocsFromUsers, FetchLiked, text}) {
     catch(error){
       console.log(error)
     }
+    GetDocsFromComments();
+    GetDocsFromUsers();
+    FetchLiked();
   }
 
 
@@ -140,7 +147,7 @@ function TextArea({GetDocsFromComments, GetDocsFromUsers, FetchLiked, text}) {
       cols={40}
       value={commentValue}
     />
-    <button type="button" onClick={()=>{addComment(); GetDocsFromComments(); GetDocsFromUsers(); FetchLiked();}}>보내기</button>
+    <button type="button" onClick={()=>{addComment()}}>보내기</button>
     </>
   );
 }
