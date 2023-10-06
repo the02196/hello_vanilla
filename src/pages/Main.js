@@ -32,8 +32,44 @@ function Main() {
   const [wait2, setWait2] = useState(false);
   const [wait3, setWait3] = useState(false);
   const [noticeCount, setNoticeCount] = useState(0);
-  const [checkUserInfo, setCheckUserInfo] = useState("")
+  const [checkUserInfo, setCheckUserInfo] = useState("");
 
+  const QuickLinkBtn = styled.div`
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    cursor: pointer;
+    border: 1px solid white;
+    background-image: url("../images/main/wing.png");
+    background-size: cover;
+    background-color: black;
+    transition: 0.3s;
+    filter: contrast(1.5);
+    z-index: 999;
+    &:hover {
+      transform: rotate(360deg) scale(1.1);
+      box-shadow: rgb(85, 91, 255) 0px 0px 0px 3px,
+        rgb(31, 193, 27) 0px 0px 0px 6px, rgb(255, 217, 19) 0px 0px 0px 9px,
+        rgb(255, 156, 85) 0px 0px 0px 12px, rgb(255, 85, 85) 0px 0px 0px 15px;
+        span{
+          opacity: 1;
+        }
+    }
+    span{
+     position: absolute;
+     width: 50px;
+     color:white;
+     bottom: -40px;
+     left: 50%;
+     transition: 0.3s;
+     opacity: 0;
+     transform: translateX(-50%);
+     font-size: 15px;
+    }
+  `;
   const MainWrap = styled.div`
     width: 100%;
     position: relative;
@@ -128,7 +164,7 @@ function Main() {
     animation-duration: 20s;
     animation-timing-function: ease-out;
     animation-fill-mode: forwards;
-    &:hover{
+    &:hover {
       animation-play-state: paused;
     }
     span {
@@ -141,13 +177,13 @@ function Main() {
       &:first-child {
         padding-top: 0px;
       }
-      a{
+      a {
         height: 100%;
         color: white;
         display: flex;
-      align-items: center;
-      display: inline-block;
-        &:visited{
+        align-items: center;
+        display: inline-block;
+        &:visited {
           color: white;
         }
       }
@@ -511,43 +547,111 @@ function Main() {
     return (
       <NoticeWrap>
         <span>
-        <FontAwesomeIcon
-              style={{ marginRight: "13px" }}
-              icon={faRocket}
-            ></FontAwesomeIcon>
+          <FontAwesomeIcon
+            style={{ marginRight: "13px" }}
+            icon={faRocket}
+          ></FontAwesomeIcon>
           즐거운 여정으로 바닐라 스크립트
-          <img style={{margin: "0px 10px 2px 10px"}} src="../images/main/js.svg" alt="icon"></img>를 배워보세요!
-          입문자부터 전문가까지 모두를 위한 다양한 콘텐츠가 기다리고 있습니다.
+          <img
+            style={{ margin: "0px 10px 2px 10px" }}
+            src="../images/main/js.svg"
+            alt="icon"
+          ></img>
+          를 배워보세요! 입문자부터 전문가까지 모두를 위한 다양한 콘텐츠가
+          기다리고 있습니다.
         </span>
-        <span><NavLink to={`/view/notice/${posts[0].id}`}><img style={{marginRight: "10px", paddingBottom: "2px", width: "25px", height:"20px"}} src="../images/main/dog_notice.png" alt="dog" /> {posts[0].title}</NavLink></span>
-        <span><NavLink to={`/view/notice/${posts[1].id}`}><img style={{marginRight: "10px", paddingBottom: "2px", width: "20px", height:"20px"}} src="../images/detail/ball.png" alt="ball" /> {posts[1].title}</NavLink></span>
-        <span><NavLink to={`/view/notice/${posts[2].id}`}><img style={{marginRight: "10px", paddingBottom: "2px", width: "25px", height:"25px"}} src="../images/main/wing.png" alt="wing" />{posts[2].title}  </NavLink></span>
-        <span><NavLink to={`/view/notice/${posts[3].id}`}><img style={{marginRight: "10px", paddingBottom: "2px", width: "22px", height:"22px"}} src="../images/main/spy_white.png" alt="wing" />{posts[3].title}</NavLink></span>
         <span>
-        <FontAwesomeIcon
-              style={{ marginRight: "13px" }}
-              icon={faRocket}
-            ></FontAwesomeIcon>
+          <NavLink to={`/view/notice/${posts[0].id}`}>
+            <img
+              style={{
+                marginRight: "10px",
+                paddingBottom: "2px",
+                width: "25px",
+                height: "20px",
+              }}
+              src="../images/main/dog_notice.png"
+              alt="dog"
+            />{" "}
+            {posts[0].title}
+          </NavLink>
+        </span>
+        <span>
+          <NavLink to={`/view/notice/${posts[1].id}`}>
+            <img
+              style={{
+                marginRight: "10px",
+                paddingBottom: "2px",
+                width: "20px",
+                height: "20px",
+              }}
+              src="../images/detail/ball.png"
+              alt="ball"
+            />{" "}
+            {posts[1].title}
+          </NavLink>
+        </span>
+        <span>
+          <NavLink to={`/view/notice/${posts[2].id}`}>
+            <img
+              style={{
+                marginRight: "10px",
+                paddingBottom: "2px",
+                width: "25px",
+                height: "25px",
+              }}
+              src="../images/main/wing.png"
+              alt="wing"
+            />
+            {posts[2].title}{" "}
+          </NavLink>
+        </span>
+        <span>
+          <NavLink to={`/view/notice/${posts[3].id}`}>
+            <img
+              style={{
+                marginRight: "10px",
+                paddingBottom: "2px",
+                width: "22px",
+                height: "22px",
+              }}
+              src="../images/main/spy_white.png"
+              alt="wing"
+            />
+            {posts[3].title}
+          </NavLink>
+        </span>
+        <span>
+          <FontAwesomeIcon
+            style={{ marginRight: "13px" }}
+            icon={faRocket}
+          ></FontAwesomeIcon>
           즐거운 여정으로 바닐라 스크립트
-          <img style={{margin: "0px 10px 4px 10px"}} src="../images/main/js.svg" alt="icon"></img>를 배워보세요!
-          입문자부터 전문가까지 모두를 위한 다양한 콘텐츠가 기다리고 있습니다.
+          <img
+            style={{ margin: "0px 10px 4px 10px" }}
+            src="../images/main/js.svg"
+            alt="icon"
+          ></img>
+          를 배워보세요! 입문자부터 전문가까지 모두를 위한 다양한 콘텐츠가
+          기다리고 있습니다.
         </span>
       </NoticeWrap>
     );
   }
 
- 
   // if(!checkUserInfo){
   //   return;
   // }
   return (
     <>
+      <NavLink style={{ position: "relative" }} to={"/quick"}>
+        <QuickLinkBtn>
+          {/* <span>퀵 링크</span> */}
+        </QuickLinkBtn>
+      </NavLink>
       <Nav userState={userState} />
       <AboutWrap>
         <div style={{ display: "flex" }}>
-          <AboutContent>
-            
-          </AboutContent>
+          <AboutContent></AboutContent>
           <FetchNotices />
         </div>
         <AboutContent>
