@@ -42,12 +42,16 @@ const Wing = styled.div`
   transform: rotate(-10deg);
   right: 50px;
   margin-top: 30px;
-`;
+
+`
 
 const Content = styled.div`
   display: flex;
   position: relative;
   background-color: whitesmoke;
+  ::-webkit-scrollbar {
+    display: none;
+  }
 `;
 const Menu = styled.div`
   padding-top: 50px;
@@ -60,6 +64,15 @@ const Menu = styled.div`
   width: 200px;
   height: 100vh;
   z-index: 1000;
+  overflow-y: auto;
+  scrollbar-width: none;
+
+  ::-webkit-scrollbar-track{
+    background-color: #111111;
+  }
+  ::-webkit-scrollbar-thumb{
+    background-color: #111111;
+  }
 
   ul {
     height: 100%;
@@ -108,9 +121,13 @@ const MenuButton = styled.div`
 `;
 
 const AccordionCnt = styled.div`
-  font-size: 18px;
+  font-size: 14px;
   color: darkgray;
 `;
+
+const AccordionMenu = styled.p`
+font-weight: ${props => (props.underline ? 'bold' : '')};
+`
 const ListWrap = styled.ul`
   width: 100%;
   /* background-color: ${(props) => (props.bgColor ? "#efefef" : "#fff")}; */
@@ -237,6 +254,7 @@ function Quick_Links_Test() {
   const [activeMenu, setActiveMenu] = useState(null);
   const [isOpen, setIsOpen] = useState(false);
   const [menuName, setMenuName] = useState("");
+  const [underline, setUnderline] = useState(false);
 
   // useEffect(()=>{
   //   fetchImage = async() =>{
@@ -294,17 +312,19 @@ function Quick_Links_Test() {
                 >
                   <p
                     onClick={() => {
-                      setMenuName(e);
+                      setMenuName(e); {setUnderline("")}
                     }}
                   >
                     {e}
                   </p>
                   {activeMenu === index && (
-                    <AccordionCnt>
+                    <AccordionCnt >
                       {CodeSite.filter((el) => el.menu === e).map((item, i) => {
                         return (
                           <Link to={i} spy={true} smooth={true} offset={-130}>
-                            <p>{item.name}</p>
+                            <AccordionMenu 
+                            underline = {i === underline}
+                            onClick={()=>{setUnderline(i)}}>{item.name}</AccordionMenu>
                           </Link>
                         );
                       })}

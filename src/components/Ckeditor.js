@@ -39,7 +39,7 @@ function Ckeditor({title, postData}) {
     const [message, setMessage] = useState("");
     const [editorInstance,setEditorInstance] = useState(null);
     const [fileUrl, setFileUrl] = useState("");
-
+    const [fileArray, setFileArray] = useState([]);
 
     useEffect(()=>{
         if(postData){
@@ -83,6 +83,7 @@ function Ckeditor({title, postData}) {
                 title: title,
                 content: writeData,
                 view: 1,
+                fileName: fileArray,
                 uid: memberProfile.uid,
                 name: memberProfile.data.name,
                 email: memberProfile.data.email,
@@ -99,9 +100,25 @@ function Ckeditor({title, postData}) {
         setMessage(error);
     }
     }
+    useEffect(()=>{
+        console.log(fileArray)
+    }, fileArray)
+    const getCurrentDateTime = () => {
+        const now = new Date();
+    
+        const year = now.getFullYear();
+        const month = String(now.getMonth() + 1).padStart(2, '0'); // 월은 0부터 시작하기 때문에 +1이 필요합니다.
+        const day = String(now.getDate()).padStart(2, '0');
+        const hours = String(now.getHours()).padStart(2, '0');
+        const minutes = String(now.getMinutes()).padStart(2, '0');
+    
+        return `${year}${month}${day}${hours}${minutes}`;
+    }
+    console.log(getCurrentDateTime())
 
     const uploadToFirebase = async (file) =>{
-        const storageRef = ref(getStorage(), 'images/' + file.name);
+        
+        const storageRef = ref(getStorage(), 'images/' + getCurrentDateTime()+"_"+file.name);
         const upload = uploadBytesResumable(storageRef, file);
 
         return new Promise((resolve, reject)=>{
@@ -115,6 +132,7 @@ function Ckeditor({title, postData}) {
             },
             ()=>{
                 getDownloadURL(upload.snapshot.ref).then((result)=>{
+                    setFileArray(prevFileArray => [...prevFileArray, getCurrentDateTime()+"_"+file.name]);
                     resolve(result)
                     setFileUrl(result)
                 })
