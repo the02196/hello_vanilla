@@ -74,7 +74,7 @@ const GlobalNavigationButton = styled.li`
 function App() {
   return (
     <>
-      <GlobalNavigation>
+      {/* <GlobalNavigation>
         <NavLink to={"/"}>
           <GlobalNavigationButton>Loading</GlobalNavigationButton>
         </NavLink>
@@ -101,26 +101,26 @@ function App() {
         </NavLink>
         <NavLink to={"/quick"}>
           <GlobalNavigationButton>Quick Links</GlobalNavigationButton>
-        </NavLink>
+        </NavLink> */}
         {/* <NavLink to={"/avatarcomments"}>
           <GlobalNavigationButton>Avatar for Comments</GlobalNavigationButton>
-        </NavLink> */}
-        {/* <NavLink to={"/avatar"}>
+        </NavLink>
+        <NavLink to={"/avatar"}>
           <GlobalNavigationButton>Avatar</GlobalNavigationButton>
-        </NavLink> */}
-        {/* <NavLink to={"/mypage"}>
+        </NavLink>
+        <NavLink to={"/mypage"}>
           <GlobalNavigationButton>Test</GlobalNavigationButton>
-          </NavLink> */}
-        {/* <NavLink to={"/auth"}>
+          </NavLink>
+        <NavLink to={"/auth"}>
           <GlobalNavigationButton>Auth Test</GlobalNavigationButton>
-        </NavLink> */}
-        {/* <NavLink to={"/heart"}>
+        </NavLink>
+        <NavLink to={"/heart"}>
           <GlobalNavigationButton>Heart Test</GlobalNavigationButton>
-        </NavLink> */}
-        {/* <NavLink to={"/dogtest"}>
+        </NavLink>
+        <NavLink to={"/dogtest"}>
           <GlobalNavigationButton>Dog Test</GlobalNavigationButton>
         </NavLink> */}
-      </GlobalNavigation>
+      {/* </GlobalNavigation> */}
       <Provider store={store}>
         <Inner />
       </Provider>

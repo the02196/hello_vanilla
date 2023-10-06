@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 import { styled } from "styled-components";
 import Avatar from "../pages/Avatar";
+import AvatarMain from "../pages/AvatarMain";
 
 function Nav({ userState }) {
   const [nickName, SetNickName] = useState("");
@@ -116,28 +117,28 @@ function Nav({ userState }) {
         </LogoText>
         <TextWrap>
           <div>
-          <span>
+          {/* <span>
             <NavLink to={"/quick"}>퀵 링크 &nbsp;&nbsp;&nbsp;&nbsp;</NavLink>
-          </span>
+          </span> */}
           <span>
             <NavLink to={userState?.data ? "/logout" : "/login"}>
-              {userState?.data ? "로그아웃" : "로그인"}
+              {userState?.data ? "" : "로그인"}
             </NavLink>
           </span>
-          <span>&nbsp; | &nbsp;</span>
+          <span>&nbsp;{userState?.data ? "" : " | " }&nbsp;</span>
           <span style={userState?.data && {marginRight: "30px"}}>
             <NavLink to={userState?.data ? "/modify" : "/member"}>
-              {userState?.data ? "정보수정" : "회원가입"}
+              {userState?.data ? "" : "회원가입"}
             </NavLink>
           </span>
           <span>
-            {userState?.data && <Avatar />}
+            {userState?.data && <AvatarMain />}
           </span>
           </div>
         </TextWrap>
         {/* <ProfileImg /> */}
         <WelcomeTextWrap>
-          <WelcomeText>안녕하세요, {nickName} 여행자님!</WelcomeText>
+          <WelcomeText>안녕하세요, <strong>{nickName}</strong> 여행자님!</WelcomeText>
         </WelcomeTextWrap>
       </NavWrap>
     </>

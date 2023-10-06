@@ -9,25 +9,55 @@ import {
   uploadBytesResumable,
   getDownloadURL,
 } from "firebase/storage";
-import { collection, doc, getDoc, getFirestore, updateDoc } from "firebase/firestore";
+import {
+  collection,
+  doc,
+  getDoc,
+  getFirestore,
+  updateDoc,
+} from "firebase/firestore";
+import { Link, NavLink } from "react-router-dom";
+
+const AvatarListWrap = styled.ul`
+    height: ${(props)=> props.isActive === true ? "110px" : "0"};
+    overflow: hidden;
+    position: relative;
+    width: 96%;
+    top: -50px;
+    transition: 0.3s;
+    display: flex;
+    flex-direction: column; 
+    justify-content: flex-end;
+    border: 1px solid white;
+    align-items: center;
+    background-color: black;
+`;
+
+const Logout = styled.li`
+  margin-bottom: 15px;
+`;
+
+const Mypage = styled.li`
+ margin-bottom: 10px;
+`;
 
 const Wrapper = styled.span`
   display: flex;
-  padding: 20px 20px;
-  flex-direction: column;
-  justify-content: center;
   align-items: center;
-  margin-bottom: 10px;
+  flex-direction: column;
+  gap: 20px;
 `;
-const AvatarUpload = styled.label`
-  width: 100px;
+const AvatarWrap = styled.label`
+  width: 70px;
   overflow: hidden;
-  height: 100px;
+  height: 70px;
   border-radius: 50%;
   cursor: pointer;
   display: flex;
   justify-content: center;
   align-items: center;
+  position: relative;
+  z-index: 999;
   svg {
     color: white;
     width: 50px;
@@ -41,18 +71,16 @@ const AvatarInput = styled.input`
   display: none;
 `;
 const Name = styled.span`
-  margin-top: 13px;
-  font-size: 13.5px;
-  color: black;
-  font-weight: bold;
+  font-size: 22px;
 `;
 
-function Avatar({width, height}) {
+function AvatarMain({ width, height }) {
+  const [isActive, setIsActive] = useState(false);
   const [nickName, setNickName] = useState("");
-  const [URL, setURl] = useState("")
+  const [URL, setURl] = useState("");
   const userState = useSelector((state) => state.user);
   const [avatar, setAvatar] = useState(userState ? URL : null);
-  
+
   const onAvatarChange = async (e) => {
     const { files } = e.target;
     if (!userState) return;
@@ -63,63 +91,80 @@ function Avatar({width, height}) {
       const avatarUrl = await getDownloadURL(result.ref);
       setAvatar(avatarUrl);
 
-      const userDocRef = doc(collection(getFirestore(), "users"), userState.uid);
+      const userDocRef = doc(
+        collection(getFirestore(), "users"),
+        userState.uid
+      );
 
       await updateDoc(userDocRef, {
         photoURL: avatarUrl,
       });
     }
   };
-  
+
   const FetchNickName = async () => {
     const userRef = doc(getFirestore(), "users", userState.uid);
     const userSnapshot = await getDoc(userRef);
     const userNickname = userSnapshot.data().nickname;
     setNickName(userNickname);
-  }
+  };
 
   const FetchAvatar = async () => {
     const userRef = doc(getFirestore(), "users", userState.uid);
     const userSnapshot = await getDoc(userRef);
     const userAvatar = userSnapshot.data().photoURL;
     setURl(userAvatar);
-  }
-  
-  useEffect( () => {
-    if(!userState.uid){
-      return;
-    }else{
-      FetchNickName()
-      FetchAvatar()
-    }
-  },[])
+  };
 
   useEffect(() => {
-    if(!userState.uid){
+    if (!userState.uid) {
       return;
-    }else{
-      FetchAvatar()
+    } else {
+      FetchNickName();
+      FetchAvatar();
     }
-  }, [avatar])
+  }, []);
+
+  useEffect(() => {
+    if (!userState.uid) {
+      return;
+    } else {
+      FetchAvatar();
+    }
+  }, [avatar]);
 
   return (
     <Wrapper>
-      <AvatarUpload htmlFor="avatar">
+      <AvatarWrap onClick={()=>{setIsActive(!isActive)}}>
         {Boolean(URL) ? (
-          <AvatarImg style={{width: {width}, height: {height}}} src={URL} />
+          <AvatarImg
+            style={{ width: { width }, height: { height } }}
+            src={URL}
+          />
         ) : (
-          <AvatarImg style={{width: {width}, height: {height}}} src={"../images/portraits/default_7.png"}></AvatarImg>
+          <AvatarImg
+            style={{ width: { width }, height: { height } }}
+            src={"../images/portraits/default_7.png"}
+          ></AvatarImg>
         )}
-      </AvatarUpload>
+      </AvatarWrap>
+      <AvatarListWrap isActive={isActive}>
+        <Logout>
+          <Link style={{color: "white", fontSize: "13px", fontWeight: "semibold"}} to={"/logout"}>로그아웃</Link>
+        </Logout>
+        <Mypage>
+          <Link style={{color: "white", fontSize: "13px", fontWeight: "semibold"}} to={"/modify"}>정보수정</Link>
+        </Mypage>
+      </AvatarListWrap>
       <AvatarInput
         onChange={onAvatarChange}
         id="avatar"
         type="file"
         accept="image/*"
       />
-      <Name>나의 사진 변경하기</Name>
+      {/* <Name>{nickName ?? "Anonymous"}</Name> */}
     </Wrapper>
   );
 }
 
-export default Avatar;
+export default AvatarMain;
