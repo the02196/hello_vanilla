@@ -39,7 +39,7 @@ function Main() {
     height: 70px;
     border-radius: 50%;
     position: fixed;
-    bottom: 20%;
+    bottom: 30px;
     right: 30px;
     cursor: pointer;
     border: 1px solid white;
