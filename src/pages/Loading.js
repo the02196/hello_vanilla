@@ -15,7 +15,7 @@ const SkipBtn = styled.span`
   padding: 10px;
   border-radius: 10px;
   a{
-    font-size: 28px;
+    font-size: 27px;
     font-family: Fira Code;
     color: black;
     &:visited{
