@@ -31,6 +31,7 @@ import {
 } from "firebase/firestore";
 import TextAreaEdit from "./TextAreaEdit";
 import Avatar from "../pages/Avatar";
+import AvatarMain from "../pages/AvatarMain";
 
 /*
   #### Wrappers ####
@@ -792,7 +793,7 @@ useEffect(()=>{
           <ul>
             <li>
               <ProfileWrap>
-                <Avatar width={"70px"} height={"70px"} />
+                <AvatarMain width={"70px"} height={"70px"} />
               </ProfileWrap>
               <ContentWrap>
                 <FormWrapper method="post" onSubmit={handleSubmit}>
