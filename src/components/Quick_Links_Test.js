@@ -1,60 +1,101 @@
+import React, { useEffect, useState } from "react";
+import { NavLink } from "react-router-dom";
+import { Link } from "react-scroll";
+import { styled } from "styled-components";
+import { CodeSite } from "../data/data";
 
-import React, { useEffect, useState } from 'react'
-import {NavLink} from 'react-router-dom'
-import { Link } from 'react-scroll'
-import { styled } from 'styled-components'
-import {CodeSite} from "../data/data"
+const Creator = styled.div`
+  padding: 10px 0;
+  background-color: black;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: fixed;
+  z-index: 2000;
+  top: 0;
+  div {
+    span {
+      font-family: Fira Code;
+      font-size: 16px;
+      margin-left: 25px;
+      color: #9d9d9d;
+    }
+  }
+  span {
+    a {
+      font-size: 16px;
+      margin-right: 20px;
+      color: #9f9f9f;
+      text-decoration: none;
+    }
+  }
+`;
 
-
-
-
+const Wing = styled.div`
+  width: 130px;
+  height: 130px;
+  margin: 0 auto;
+  background-image: url("../images/main/wing.png");
+  background-size: cover;
+  filter: contrast(1.3);
+  transform: rotate(-10deg);
+  right: 50px;
+  margin-top: 30px;
+`;
 
 const Content = styled.div`
-  
-  margin-top: 90px;
   display: flex;
-  `
-const Menu = styled.div`
-transform: ${({ isOpen }) => (isOpen ? "translateX(0%)" : "translateX(-100%)")};
-transition: transform 0.3s ease-in-out;
-background-color: #111111;
-position: fixed;
-width: 200px;
-height: 1200px;
-border-radius: 100px;
-
-ul {
-  padding: 80px 45px;
-}
-li {
-  cursor: pointer;
-  color: #fff;
-  text-align: center;
-  line-height: 2;
-  > p {
-    color: #fff;
-  }
-}
-
-@media (min-width: 961px) {
-  transform: translateX(0%); /* 960px 초과에서는 메뉴를 항상 보여줍니다 */
-}
-@media (max-width: 960px) {
-    z-index: 99; top: 0; border-radius: 0px;
-  }
-
+  position: relative;
+  background-color: whitesmoke;
 `;
-  const MenuButton = styled.div`
-  display: none; /* 기본적으로 햄버거 버튼을 숨깁니다 */
-  position: absolute;
+const Menu = styled.div`
+  padding-top: 50px;
+  transform: ${({ isOpen }) =>
+    isOpen ? "translateX(0%)" : "translateX(-100%)"};
+  transition: transform 0.3s ease-in-out;
+  background-color: #111111;
+  top: 0;
+  position: fixed;
+  width: 200px;
+  height: 100vh;
+  z-index: 1000;
+
+  ul {
+    height: 100%;
+    padding: 80px 45px;
+  }
+  li {
+    cursor: pointer;
+    font-size: 21px;
+    color: #fff;
+    text-align: center;
+    line-height: 2;
+    /* p {
+      font-size: 25px;
+      color: #fff;
+    } */
+  }
+
+  @media (min-width: 961px) {
+    transform: translateX(0%);
+  }
+  @media (max-width: 960px) {
+    z-index: 99;
+    top: 0;
+    border-radius: 0px;
+  }
+`;
+const MenuButton = styled.div`
+  display: none;
+  /* position: absolute; */
   top: 20px;
   left: 20px;
   cursor: pointer;
   z-index: 100;
 
-  
   @media (max-width: 960px) {
-    display: block; /* 960px 이하에서만 햄버거 버튼을 보여줍니다 */
+    display: block;
   }
 
   div {
@@ -64,82 +105,138 @@ li {
     transition: all 0.3s;
     margin: 5px 0;
   }
-`
+`;
 
-  const AccordionCnt = styled.div`
-  font-size: 14px;
-  color: #8e8e8e;
-  `
-   const ListWrap = styled.div`
-   width: 100%;
-   background-color:${props => props.bgColor ? '#d9eee1' : '#04aa6d'};
-   height: 500px;
-   
-   `
-  const List = styled.div`
-  
-  margin: 0 auto;
-  max-width: 1200px;  
-  position: relative; 
-  padding-top: 100px;
-  
-  >h3{
-    /* background-color:#343541; */
-    margin-left: 10px;
-     max-width:650px; color:#111;padding:20px 20px; box-sizing:border-box;
-      border-radius: 10px 10px 0 0;  display: flex; justify-content: space-between; 
-      
+const AccordionCnt = styled.div`
+  font-size: 18px;
+  color: darkgray;
+`;
+const ListWrap = styled.ul`
+  width: 100%;
+  /* background-color: ${(props) => (props.bgColor ? "#efefef" : "#fff")}; */
+  display: flex;
+  flex-direction: column;
+  li {
+    padding-bottom: 100px;
+    &:nth-child(1) {
+      padding-top: 50px;
+    }
+    &:nth-child(2n + 1) {
+      background-color: #efefef;
+    }
+    ul {
+    }
   }
-   >div{
-  display: flex; position: relative;
-  /* p{    background-color:${props => props.bg ? 'pink' : '#111111'};
+`;
+
+const TextWrap = styled.div`
+  width: 1300px;
+  display: flex;
+  flex-direction: column;
+  > h3 {
+    /* background-color:#343541; */
+    color: #111;
+    box-sizing: border-box;
+    font-size: 30px;
+  }
+`;
+const ImageBox = styled.div`
+  margin-top: 50px;
+  width: 1300px;
+  height: 400px;
+  background-size: cover;
+  position: relative;
+  opacity: 0.9;
+  border: 3px solid lightgray;
+`;
+const List = styled.div`
+  width: 100%;
+  position: relative;
+  padding-top: 180px;
+  box-sizing: border-box;
+  &:nth-child(1) {
+    padding-top: 100px;
+  }
+
+  > div {
+    display: flex;
+    position: relative;
+    /* p{    background-color:${(props) => (props.bg ? "pink" : "#111111")};
       width: 650px; color:#00a67d; padding:30px; box-sizing: border-box;
         line-height: 1.5rem;
   }  */
-   }
-  img{ right: -100px; top: -60px;
-     position: absolute;
-     width: 480px;
-     height: 300px;
- 
-    }
-    
-  `
-  const Tryit = styled.a`
-    text-decoration: none; display:inline-block;
-    font-weight: 300; font-size: 14px;  cursor: pointer;
-    color:#d9d9e3;    
-    background-color: #111111;
-     padding: 5px 20px; border-radius: 30px;
-    margin-left: 30px;
+  }
+  /* img {
+    right: -300px;
+    top: 50%;
+    transform: translateY(-43%);
+    position: absolute;
+    width: 800px;
+    height: 400px;
+  } */
+`;
+const Tryit = styled.a`
+  text-decoration: none;
+  display: inline-block;
+  font-weight: 300;
+  font-size: 18px;
+  width: 80px;
+  text-align: center;
+  cursor: pointer;
+  color: whitesmoke;
+  font-weight: bold;
+  background-color: darkslateblue;
+  padding: 8px 20px;
+  border-radius: 30px;
+  
+`;
 
-  `
-
-  const Desc = styled.p`
-   /* background-color:${props => props.bg ? '#04aa6d' : '#111111'}; */
-    width: 650px; color:${props => props.Color ? '#111111' : "#fff"};
-    padding:30px; box-sizing: border-box;
-    line-height: 1.5rem;
-  `
-
-
-
+const Desc = styled.p`
+  /* background-color:${(props) => (props.bg ? "#04aa6d" : "#111111")}; */
+  /* color: ${(props) => (props.Color ? "#111111" : "#fff")}; */
+  padding: 30px 0px;
+  width: 100%;
+  font-size: 21px;
+  box-sizing: border-box;
+  line-height: 3rem;
+`;
 
 //   const getFaviconLink =(url) =>{
 //     const urlObject = new URL(url);
 //     return `${urlObject.origin}/favicon.ico`;
 // }
 // console.log(getFaviconLink)
-  
+
+const WhiteGradientToTop = styled.div`
+  width: 100%;
+  height: 300px;
+  position: fixed;
+  opacity: 0.6;
+  background: linear-gradient(
+    0deg,
+    rgba(255, 255, 255, 1) 0%,
+    rgba(251, 251, 251, 0.9) 50%,
+    transparent 100%
+  );
+  bottom: 0;
+  right: 0;
+`;
+
+const GhostBox = styled.div`
+  width: 200px;
+  height: 100px;
+`;
+const Wrap = styled.div`
+  display: flex;
+`;
 
 function Quick_Links_Test() {
-  const menu = CodeSite.map(obj => obj.menu)
-  const menus = [...new Set(menu)]
-  console.log(menus)
+  const menu = CodeSite.map((obj) => obj.menu);
+  const menus = [...new Set(menu)];
+  console.log(menus);
   const [activeMenu, setActiveMenu] = useState(null);
   const [isOpen, setIsOpen] = useState(false);
   const [menuName, setMenuName] = useState("");
-
 
   // useEffect(()=>{
   //   fetchImage = async() =>{
@@ -158,93 +255,109 @@ function Quick_Links_Test() {
   //   return <div>Loading...</div>;
   // }
 
-
-
   const MenuClick = (index) => {
     if (activeMenu === index) {
       setActiveMenu(null);
     } else {
       setActiveMenu(index);
-      
     }
   };
   return (
     <>
+      <Creator>
+        <div>
+          <span>&lt;&gt; Quick Links</span>
+          <span>useful sites for you</span>
+        </div>
+        <span>
+          <NavLink style={{fontWeight: "bold"}} to={"/main"}>메인 페이지로 가기</NavLink>
+        </span>
+      </Creator>
 
-  <Content>
-    <MenuButton isOpen={isOpen} onClick={() => setIsOpen(!isOpen)}>
-      {
-        Array(3).fill().map(e =>{
-          return(
-            <div></div>
-          )
-        })
-      }
-    </MenuButton>
-    <Menu isOpen={isOpen}>
-      <ul>
-      {
-      menus.map((e, index) => {      
-        return (
-        <li
-          key={index}
-          onClick={() => MenuClick(index)}
-          className={activeMenu === index ? 'active' : ''}
-        > 
-          <p onClick={()=>{setMenuName(e)}}>{e}
-          
-          </p>
-          {activeMenu === index && (
-            <AccordionCnt>
-              {               
-                CodeSite.filter(el => el.menu === e).map((item,i)=>{
-                  return (
-                    <Link to={i} spy={true} smooth={true} offset={-50}>
-                      <p>{item.name}</p>
-                    </Link>
-                  )
-                })
-              }
-            </AccordionCnt>)}
-              </li>
-      )})
-      }
-      </ul>
-    </Menu>
-    </Content>
-
-
-
-
-    
-        {
-          CodeSite.filter(menuName === "" ? e => e.menu === 'Tools' : e => e.menu === menuName ).map((e,i)=>{
-            return(              
+      <Content>
+        <MenuButton isOpen={isOpen} onClick={() => setIsOpen(!isOpen)}>
+          {Array(3)
+            .fill()
+            .map((e) => {
+              return <div></div>;
+            })}
+        </MenuButton>
+        <Menu isOpen={isOpen}>
+          <Wing />
+          <ul>
+            {menus.map((e, index) => {
+              return (
+                <li
+                  key={index}
+                  onClick={() => MenuClick(index)}
+                  className={activeMenu === index ? "active" : ""}
+                >
+                  <p
+                    onClick={() => {
+                      setMenuName(e);
+                    }}
+                  >
+                    {e}
+                  </p>
+                  {activeMenu === index && (
+                    <AccordionCnt>
+                      {CodeSite.filter((el) => el.menu === e).map((item, i) => {
+                        return (
+                          <Link to={i} spy={true} smooth={true} offset={-130}>
+                            <p>{item.name}</p>
+                          </Link>
+                        );
+                      })}
+                    </AccordionCnt>
+                  )}
+                </li>
+              );
+            })}
+          </ul>
+        </Menu>
+      </Content>
+      <Wrap>
+        <GhostBox />
+        <ListWrap>
+          {CodeSite.filter(
+            menuName === ""
+              ? (e) => e.menu === "학습"
+              : (e) => e.menu === menuName
+          ).map((e, i) => {
+            return (
               <React.Fragment key={i}>
-              <ListWrap bgColor={i % 2 === 0}>
-              <List>
-              <h3 id={i}>{e.name} </h3>
-              <div>          
-              <Desc Color={i % 2 === 0}>{e.description}</Desc>
-              {
-                e.img &&
-              <img src={`${process.env.PUBLIC_URL}/images/link/${e.img}`} alt={1} />
-              }
-              </div>
-              <Tryit href={e.link} target='_blank'>Try it!</Tryit>
-              </List>
-              </ListWrap>
-              </React.Fragment>       
-            )
-            
-          })
-        }
+                <li>
+                  <ul>
+                    <List>
+                      <TextWrap style={{ margin: "0 auto" }}>
+                        <h3 id={i}>{e.name} </h3>
+                        <Desc Color={i % 2 === 0}>{e.description}</Desc>
+                        <Tryit href={e.link} target="_blank">
+                          Try it!
+                        </Tryit>
+                      </TextWrap>
+                    </List>
 
-
-
+                    {e.img && (
+                      <ImageBox
+                        style={{
+                          backgroundImage: `url(${process.env.PUBLIC_URL}/images/link/${e.img})`,
+                          margin: "50px auto",
+                        }}
+                      >
+                        {/* <WhiteGradientToTop /> */}
+                      </ImageBox>
+                    )}
+                  </ul>
+                </li>
+              </React.Fragment>
+            );
+          })}
+        </ListWrap>
+      </Wrap>
+      {/* <WhiteGradientToTop /> */}
     </>
-  )
-};
+  );
+}
 
-
-export default Quick_Links_Test
+export default Quick_Links_Test;

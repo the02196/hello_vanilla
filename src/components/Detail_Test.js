@@ -194,31 +194,39 @@ const GithubDownloadLink = styled.span`
 `;
 
 function Detail_Test() {
-  const [offsetY,setOffsetY] = useState(null)
+  const [offsetYL, setOffsetYL] = useState(0)
+  const [offsetYR, setOffsetYR] = useState(0)
   const [leftStart, setLeftStart] = useState(false);
-  useEffect(() => {
-    
-    const scrollY = window.scrollY; // 스크롤 양
-    const headerPosition = Math.floor(scrollY + document.querySelector("#leftTypingBox").getBoundingClientRect().top); // 절대위치, Math.floor로 정수로 변환
-    setOffsetY(headerPosition)
-    
+  const [rightStart, setRightStart] = useState(false);
 
+  useEffect(() => {
+    const scrollY = window.scrollY;
+    const headerPosition = Math.floor(scrollY + document.querySelector("#leftTypingBox").getBoundingClientRect().top);
+    setOffsetYL(headerPosition)
+    
     window.addEventListener('scroll', handleScroll);
     return () => {
-      window.removeEventListener('scroll', handleScroll); //clean up
+      window.removeEventListener('scroll', handleScroll);
     };
-
-  }, [offsetY]);
-  
+  },[offsetYL]);  
+  useEffect(() => {
+    const scrollY = window.scrollY;
+    const headerPosition = Math.floor(scrollY + document.querySelector("#rightTypingBox").getBoundingClientRect().top);
+    setOffsetYR(headerPosition)
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  },[offsetYR]);  
 
   function handleScroll(){
-
-    if(scrollY > offsetY-350){
-
+    const scrollY = window.scrollY;
+    if(scrollY > offsetYL-500){
       setLeftStart(true)
     }
-
-    
+    if(scrollY > offsetYR-400){
+      setRightStart(true)
+    }
   }
   const CardContent = [
     {
@@ -255,19 +263,22 @@ function Detail_Test() {
           <div id="leftTypingBox">
           <LeftTypingBox
             text={
-              "여기에 '공'이 있습니다. 공을 옮기는 방법을 한 번 상상해 보세요!"
+              "안녕하세요, 여러분! 오늘은 동적인 움직임을 구현하는 방법에 대해 함께 이야기 해보려해요. 화면에 보이는 공을 움직이게 만들고 싶다면 어떻게 하면 될까요? 같이 상상력을 발휘해 볼까요?"
             }
             marginTop={0}
-            marginBtm={400}
+            marginBtm={600}
             leftStart={leftStart}
           ></LeftTypingBox>
           </div>
           <HowMoveBall />
+          <div id="rightTypingBox">
           <RightTypingBox
-            text={"와, 다양한 방법이 있네요!"}
+            text={"상상력도 좋지만 저는 웹페이지에서 움직임을 줄 수 있는 코드로 구성하는 법을 알아보고 싶어요."}
             marginTop={0}
             marginBtm={0}
+            rightStart={rightStart}
           ></RightTypingBox>
+          </div>
           <LeftTypingBox
             text={
               "틀린 방법은 없습니다. 다른 방법들만이 있을 뿐이죠! 바닐라 자바스크립트로는 어떻게 옮길 수 있는지 볼까요?"
