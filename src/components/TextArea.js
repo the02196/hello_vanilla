@@ -15,7 +15,7 @@ import { Navigate } from "react-router-dom";
 
 
 
-function TextArea({GetDocsFromComments, GetDocsFromUsers, FetchLiked, text, setIsModal, setErrorMessage}) {
+function TextArea({GetDocsFromComments, GetDocsFromUsers, FetchLiked, text, setIsModal, setErrorMessage, setIsReply, replyToNickname, isReply}) {
   const memberProfile = useSelector((state) => state.user);
   const [commentValue, setCommentValue] = useState(text);
   const [postData, setPostData] = useState(null);
@@ -24,7 +24,7 @@ function TextArea({GetDocsFromComments, GetDocsFromUsers, FetchLiked, text, setI
   const [postUid, setPostUid] = useState();
   const [comment, setComment] = useState("");
   const [comments, setComments] = useState("");
-
+  const [replyNickName, setReplyNickName] = useState(replyToNickname)
 
   if(commentValue===undefined){
     setCommentValue("")
@@ -131,6 +131,40 @@ function TextArea({GetDocsFromComments, GetDocsFromUsers, FetchLiked, text, setI
     FetchLiked();
   }
 
+  const addReply = async () =>{
+    if (!memberProfile || !memberProfile.uid) {
+      setErrorMessage("로그인이 필요한 서비스입니다.")
+      setIsModal(true);
+      return;
+    }
+    if(commentValue.length===0){
+      setErrorMessage("댓글을 입력해주세요.");
+      setIsModal(true);
+      return;
+    }
+    try {
+      const docRef = await addDoc(collection(getFirestore(),"comments"), {
+        text: commentValue,
+        uid : memberProfile && memberProfile.uid,
+        nickname : memberProfile && memberProfile.data.nickname,
+        createdate : serverTimestamp(),
+        lastreply: 0,
+        replies: 0,
+        views: 0,
+        users: 0,
+        likes: 0,
+        links: 0,
+        reply: replyNickName
+      })
+      setPostUid(docRef.id)
+    }
+    catch(error){
+      console.log(error)
+    }
+    GetDocsFromComments();
+    GetDocsFromUsers();
+    FetchLiked();
+  }
 
   // const addReply = () =>{
   //   const postRef = doc(getFirestore(), "comments", "여기 누른 댓글의 uid 값이 들어가야 됨");
@@ -157,7 +191,13 @@ function TextArea({GetDocsFromComments, GetDocsFromUsers, FetchLiked, text, setI
       cols={40}
       value={commentValue}
     />
-    <button type="button" onClick={()=>{addComment()}}>보내기</button>
+    <button type="button" onClick={ ()=>{
+      if(isReply === true){
+        addReply()
+        // setIsReply(false)
+        return;
+      } addComment()
+      }}>보내기</button>
     </>
   );
 }
