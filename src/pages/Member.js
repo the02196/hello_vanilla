@@ -40,7 +40,6 @@ const CheckEmail = styled.div`
   background-color: black;
   font-size: 15px;
   margin-bottom: 15px;
-  
 `;
 
 const Info = styled.div`
@@ -56,6 +55,7 @@ const LoginBg = styled.div`
   background-size: cover;
   position: relative;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   background-color: #f5f5f5; //다크모드 불러와서 써야함
   align-items: center; // 화면 정가운데로 옮기고 싶으면 height 값 주고 aic 하면됨
@@ -101,18 +101,25 @@ const Logo = styled.nav`
   }
 `;
 const LoginBtn = styled.span`
-  display: inline-block;
-  margin-top: 40px;
-  margin-right: 30px;
-  color: #fff;
-  margin-top: 47px;
-  margin-right: 30px;
+  width: 730px;
+  margin-top: 30px;
+  display: flex;
+  justify-content: center;
+  color: #aaa;
+  span{
+    color: lightgray;
+  }
   a {
-    color: white;
+    font-weight: 500;
+    color: #aaa;
+    &:visited{
+      color: #aaa;
+    }
   }
 `;
 
 const SignUp = styled.div`
+  margin-top: 50px;
   width: 35vw;
   padding: 30px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -413,12 +420,12 @@ function Member() {
             <Logo>
               <NavLink to={"/main"}>HeLLO VanILLa</NavLink>
             </Logo>
-            <LoginBtn>
+            {/* <LoginBtn>
               <NavLink to={userState.loggedIn ? "/logout" : "/login"}>
                 {userState.loggedIn ? "로그아웃" : "로그인"}
               </NavLink>{" "}
               &nbsp; | &nbsp; <NavLink to={"/main"}>메인 페이지로 가기</NavLink>{" "}
-            </LoginBtn>
+            </LoginBtn> */}
           </LoginNav>
           <SignUp>
             {initialMode ? <Title>회원가입</Title> : <Title>정보수정</Title>}
@@ -507,25 +514,33 @@ function Member() {
 
             <Button onClick={signUp}>{initialMode ? "가입" : "수정"}</Button>
             {/* <p>{error}</p> */}
-            { !initialMode &&
-            <div
-              style={{
-                marginTop: "10px",
-                fontWeight: "semibold",
-                fontSize: "15px",
-                width: "100%",
-                color: "#ccc",
-                display: "flex",
-                justifyContent: "flex-end",
-                cursor: "pointer"
-              }}
-              onClick={()=>{DeleteAccount()}}
-            >
-              <span>회원 탈퇴하기</span>
-            </div>
-          }
+            {!initialMode && (
+              <div
+                style={{
+                  marginTop: "10px",
+                  fontWeight: "semibold",
+                  fontSize: "15px",
+                  width: "100%",
+                  color: "#ccc",
+                  display: "flex",
+                  justifyContent: "flex-end",
+                  cursor: "pointer",
+                }}
+                onClick={() => {
+                  DeleteAccount();
+                }}
+              >
+                <span>회원 탈퇴하기</span>
+              </div>
+            )}
           </SignUp>
           <LoginNav2></LoginNav2>
+      <LoginBtn>
+        <NavLink to={userState.loggedIn ? "/logout" : "/login"}>
+          {userState.loggedIn ? "로그아웃" : "로그인"}
+        </NavLink>{" "}
+       <span>&nbsp; | &nbsp;</span> <NavLink to={"/main"}>메인 페이지로 가기</NavLink>{" "}
+      </LoginBtn>
         </LoginBg>
       )}
     </>
