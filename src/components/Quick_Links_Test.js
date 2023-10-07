@@ -290,7 +290,7 @@ function Quick_Links_Test() {
       <Creator>
         <div>
           <span>&lt;&gt; Quick Links</span>
-          <span>useful sites for you</span>
+          <span>빠르고 유용한 퀵 링크를 이용해보세요!</span>
         </div>
         <span>
           <NavLink style={{fontWeight: "bold"}} to={"/main"}>메인 페이지로 가기</NavLink>
