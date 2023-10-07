@@ -362,6 +362,10 @@ function Detail_Comments() {
   const [isModal, setIsModal] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
 
+  const [replyOpen, setReplyOpen] = useState(false);
+  const [replyText, setReplyText] = useState("");
+
+
   const [currentPage, setCurrentPage] = useState(1);
   const [commentsPerPage, setCommentsPerPage] = useState(5);
 
@@ -400,6 +404,12 @@ function Detail_Comments() {
     }
   }
   
+  const handleReply = () => {
+    setReplyText("");
+    setReplyOpen(false);
+  };
+
+
   const GetDocsFromUsers = async () => {
     try {
       const ref = collection(getFirestore(), "users");
@@ -646,6 +656,13 @@ useEffect(()=>{
       <TextArea GetDocsFromComments={GetDocsFromComments} GetDocsFromUsers={GetDocsFromUsers} FetchLiked={FetchLiked} text={text} setIsModal={setIsModal} setErrorMessage={setErrorMessage}/>
     )
   }
+
+  const ReplyBox = ({text}) => {
+    return (
+      <TextArea text={text}/>
+    )
+  }
+
   function handleSubmit(e) {
     // Prevent the browser from reloading the page
     e.preventDefault();
@@ -749,7 +766,10 @@ useEffect(()=>{
                         <Share>
                           <FontAwesomeIcon icon={faLink} />
                         </Share>
-                        <Reply>
+                        <Reply 
+                          style={{ cursor: "pointer" }}
+                          onClick={() => setReplyOpen(!replyOpen)}
+                        >
                           <FontAwesomeIcon icon={faShare} />
                         </Reply>
                         {e.uid === userState.uid && editId !== e.id && (
@@ -764,6 +784,11 @@ useEffect(()=>{
                         )}
                       </ContentBottomWrap>
                     </ContentWrap>
+                    {replyOpen && (
+                      <>
+                        <ReplyBox />
+                      </>
+                    )}
                   </li>
                 </>
               );
