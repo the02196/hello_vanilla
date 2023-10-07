@@ -40,7 +40,7 @@ function Main() {
     height: 70px;
     border-radius: 50%;
     position: fixed;
-    bottom: 30px;
+    bottom: 120px;
     right: 30px;
     cursor: pointer;
     border: 1px solid white;
