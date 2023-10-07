@@ -150,10 +150,10 @@ function View() {
   
   const deletePost = async (imageName) => {
     if(window.confirm("정말로 삭제하시겠습니까?")){
+      const docRef = doc(getFirestore(), board, view);
+      await deleteDoc(docRef);
       for(let i = 0; i < imageName.length; i++){
-        const docRef = doc(getFirestore(), board, view);
         const storageRef = ref(getStorage(), `images/${imageName[i]}`);
-        await deleteDoc(docRef);
         await deleteObject(storageRef);
         console.log(storageRef)
       }
