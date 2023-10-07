@@ -25,6 +25,7 @@ import {
 } from "firebase/firestore";
 import { useSelector } from "react-redux";
 import { FetchPost } from "./service/Notice";
+import UpDown from "../components/UpDown";
 
 function Main() {
   const userState = useSelector((state) => state.user);
@@ -459,6 +460,7 @@ function Main() {
   function PutSixthTestBox() {
     return (
       <>
+      
         <GrayFloor />
         <WhiteFloor />
         <GrayFloor />
@@ -486,6 +488,7 @@ function Main() {
         <GrayFloor />
         <WhiteFloor />
         <GrayFloor />
+        
       </>
     );
   }
@@ -767,6 +770,7 @@ function Main() {
         </MainBottomWrap>
       </MainWrap>
       <Footer />
+      <UpDown/>
     </>
   );
 }
