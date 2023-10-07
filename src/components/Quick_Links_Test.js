@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
-import { Link } from "react-scroll";
+import { Link, animateScroll as scroll} from "react-scroll";
 import { styled } from "styled-components";
 import { CodeSite } from "../data/data";
+import UpDown from "./UpDown";
 
 const Creator = styled.div`
   padding: 10px 0;
@@ -247,6 +248,8 @@ const Wrap = styled.div`
   display: flex;
 `;
 
+
+
 function Quick_Links_Test() {
   const menu = CodeSite.map((obj) => obj.menu);
   const menus = [...new Set(menu)];
@@ -255,6 +258,8 @@ function Quick_Links_Test() {
   const [isOpen, setIsOpen] = useState(false);
   const [menuName, setMenuName] = useState("");
   const [underline, setUnderline] = useState(false);
+
+
 
   // useEffect(()=>{
   //   fetchImage = async() =>{
@@ -285,7 +290,7 @@ function Quick_Links_Test() {
       <Creator>
         <div>
           <span>&lt;&gt; Quick Links</span>
-          <span>useful sites for you</span>
+          <span>빠르고 유용한 퀵 링크를 이용해보세요!</span>
         </div>
         <span>
           <NavLink style={{fontWeight: "bold"}} to={"/main"}>메인 페이지로 가기</NavLink>
@@ -376,6 +381,7 @@ function Quick_Links_Test() {
         </ListWrap>
       </Wrap>
       {/* <WhiteGradientToTop /> */}
+      <UpDown/>
     </>
   );
 }

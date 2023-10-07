@@ -21,6 +21,7 @@ const LoginBg = styled.div`
   background-size: cover;
   position: relative;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   background-color: #f5f5f5; //다크모드 불러와서 써야함
   align-items: center; // 화면 정가운데로 옮기고 싶으면 height 값 주고 aic 하면됨
@@ -50,6 +51,7 @@ const LoginNav2 = styled.div`
 const SignUp = styled.div`
   width: 35vw;
   padding: 50px 50px;
+  margin-top: 40px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   background-color: #fff;
   /* border-radius: 10px; */
@@ -86,13 +88,10 @@ const Logo = styled.nav`
 `;
 const LoginBtn = styled.span`
   display: inline-block;
-  margin-top: 40px;
-  margin-right: 30px;
-  color: #fff;
-  margin-top: 47px;
-  margin-right: 30px;
+  margin-top: 30px;
+  color: #aaa;
   a {
-    color: #fff;
+    color: #aaa;
   }
 `;
 
@@ -389,9 +388,6 @@ function Login() {
           <Logo>
             <NavLink to={"/main"}>HeLLO VanILLa</NavLink>
           </Logo>
-          <LoginBtn>
-            <NavLink to={"/main"}>메인 페이지로 가기</NavLink>
-          </LoginBtn>
         </LoginNav>
 
         <SignUp>
@@ -467,6 +463,9 @@ function Login() {
           </BottomWrap>
         </SignUp>
         <LoginNav2></LoginNav2>
+        <LoginBtn>
+            <NavLink to={"/main"}>메인 페이지로 가기</NavLink>
+          </LoginBtn>
       </LoginBg>
     </>
   );

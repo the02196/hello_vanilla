@@ -168,10 +168,18 @@ function Ckeditor({title, postData}) {
                      data = {writeData}
                     config={{
                          placeholder: "내용을 입력하세요.",
-                         extraPlugins: [UploadAdapter]
+                         extraPlugins: [UploadAdapter],
+                         
                      }}
                     onReady={ editor => {
-                        setEditorInstance(editor);
+                        setEditorInstance(editor);                        
+                        editor.editing.view.change(writer => {
+                            writer.setStyle(                  
+                                'height',
+                                '500px',
+                                editor.editing.view.document.getRoot()
+                            );
+                        });
                         // You can store the "editor" and use when it is needed.
                         console.log( 'Editor is ready to use!', editor );
                     } }
@@ -187,7 +195,7 @@ function Ckeditor({title, postData}) {
                         console.log( 'Focus.', editor );
                     } }
                 />
-                <input type="file" id="file" />
+                {/* <input type="file" id="file" /> */}
                 <ButtonWarp>
                     <Button><Link to="/service/notice"><FontAwesomeIcon icon={faList}/>목록</Link></Button>
                     <Button onClick={dataSubmit}><FontAwesomeIcon icon={faPen}/>완료</Button>

@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { keyframes, styled } from "styled-components";
-import { Slider } from "./Slider";
+import { styled } from "styled-components";
 import BallLefttoRight from "./Animation";
 import HowMoveBall from "./HowMoveBall";
 import { NavLink } from "react-router-dom";
-import CodeBlock from "./CodeBlock";
+import CodeBlock, { CodeBlocka, CodeBlockb, CodeBlockc, CodeBlockd } from "./CodeBlock";
 import TopBall from "./TopBall";
-import { LeftTypingBox, LeftTypingBox1, LeftTypingBox2, RightTypingBox, RightTypingBox1 } from "./TypingBox";
+import { LeftTypingBox, LeftTypingBox1 } from "./TypingBox";
 
 const GlobalWrap = styled.div`
   width: 100%;
@@ -84,6 +83,9 @@ const CardWrap = styled.div`
   width: 100%;
   overflow: hidden;
   margin: 200px auto;
+  h1{
+    padding-bottom: 70px;
+  }
   ul {
     display: flex;
     justify-content: space-between;
@@ -109,7 +111,6 @@ const Card = styled.li`
   box-sizing: border-box;
   position: relative;
   &:nth-child(3){
-    
     background-color: #038C73;
   }
   &:nth-child(4){
@@ -190,8 +191,10 @@ const GithubDownloadLink = styled.span`
 `;
 
 function Detail_Test() {
-  const [offsetY, setOffsetY] = useState(0)
+  const [offsetY, setOffsetY] = useState(0);
   const [leftStart, setLeftStart] = useState(false);
+  const [offsetY1, setOffsetY1] = useState(0);
+  const [leftStart1, setLeftStart1] = useState(false);
   
   useEffect(() => {
     const scrollY = window.scrollY;
@@ -204,16 +207,30 @@ function Detail_Test() {
     };
   },[offsetY]);  
 
+  useEffect(() => {
+    const scrollY = window.scrollY;
+    const headerPosition = Math.floor(scrollY + document.querySelector("#leftTypingBox1").getBoundingClientRect().top);
+    setOffsetY1(headerPosition)
+    
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  },[offsetY1]);    
+
   function handleScroll(){
     const scrollY = window.scrollY;
     if(scrollY > offsetY-500){
       setLeftStart(true)
     }
+    if(scrollY > offsetY1){
+      setLeftStart1(true)
+    }
   }
   const CardContent = [
     {
       quiz: "quiz1",
-      answer: "@Keyframe",
+      answer: "@Keyframes",
     },
     {
       quiz: "quiz2",
@@ -252,8 +269,10 @@ function Detail_Test() {
             leftStart={leftStart}
           ></LeftTypingBox>
           </div>
+          
           <HowMoveBall />
           <CardWrap>
+            <h1>요점 정리</h1>
             <ul>
               {BallLefttoRight()}
               {CardContent.map((e, i) => {
@@ -264,7 +283,7 @@ function Detail_Test() {
           <Desc>
             <h1>같이 해보기</h1>
             <span>
-            먼저 해야 할 일은 HTML 구조를 만드는 거예요. myBall이라는 class명을 가진 div태그 하나와 Button을 만든 후 CSS를 통해 조금만 꾸며볼까요?
+            먼저 해야 할 일은 HTML 구조를 만드는 거예요. myBall이라는 class명을 가진 div태그 하나와 Button을 만든 후 CSS를 통해 꾸며볼까요?
             </span>
           </Desc>
           <CodeDescWrap>
@@ -272,24 +291,42 @@ function Detail_Test() {
             <CodeBlock width={"650"} height={"400"} value={"test"}></CodeBlock>
           </CodeDescWrap>
           <CodeDescWrap>
-            <CodeBlock width={"650"} height={"400"} value={"test"}></CodeBlock>
+            <CodeBlocka width={"650"} height={"460"} value={"test"}></CodeBlocka>
             <CodeDescRight>
-              우리가 만든 HTML에 JavaScript를 연결해보겠습니다.
-              <br /> "script.js" 파일을 만들고 아래 코드를 추가하세요.
+            CSS에서 애니메이션을 만드는 방법은 '@keyframes'를 사용하는 건데요,<br/> animation을 설정해 준 후 'animate' 클래스에 애니메이션 세부사항을 적고나면<br/> 공이 화면에서 움직이게 될거에요.
             </CodeDescRight>
           </CodeDescWrap>
           <CodeDescWrap>
             <CodeDescLeft>
-              이제 "script.js" 파일을 통해 공을 움직일 수 있게 되었습니다.
+            이제 Javascript를 이용해 'Start Animation'버튼 클릭 시 'animate'클래스를 추가하여 애니메이션이 시작되도록 함수를 작성해볼거에요.
             </CodeDescLeft>
-            <CodeBlock id="myTextarea" width={"650"} height={"400"} value={
-              `\<test\> \n      document \n            세번째 글`  
-              }></CodeBlock>
+            <CodeBlockb width={"650"} height={"250"} value={"test"}></CodeBlockb>
           </CodeDescWrap>
-          <ExampleBallWrap style={{ marginBottom: "200px" }}>
-            <Ball left="" top="50" right="2" bottom="" />
-          </ExampleBallWrap>
+          <CodeDescWrap>
+            <CodeDescLeft>
+            이제 중요한 단계가 남았어요. 버튼에 우리가 만든 함수를 클릭하면 실행할 수 있는 기능을 달아줄거에요
+            </CodeDescLeft>
+            <CodeBlockc width={"650"} height={"30"} value={"test"}></CodeBlockc>
+          </CodeDescWrap>
+          <CodeDescWrap>
+            <CodeDescLeft>
+            최종적으로 완성된 코드는 다음과 같아요.
+            굴러가는 공을 바라보는 것도 좋겠지만, css속성에서 색깔을 바꿔본다던지 공을 꾸며보는 등 혼자만의 도전을 해보시면 더 도움이 될거에요!
+            </CodeDescLeft>
+            <CodeBlockd width={"650"} height={"800"} value={"test"}></CodeBlockd>
+          </CodeDescWrap>
+          
         </MainBg>
+        <div id="leftTypingBox1">
+          <LeftTypingBox1
+            text={
+              `기억하셔야 할 것은, 코드에는 정답이 없습니다. 우리가 앞으로 기술을 이용해 만들어나갈 세상은 여러분 앞에 무한히 펼쳐져 있습니다. 오늘 배운 내용을 시작으로 여러분만의 웹페이지, 웹어플리케이션을 구상해보세요!`
+            }
+            marginTop={0}
+            marginBtm={100}
+            leftStart1={leftStart1}
+          ></LeftTypingBox1>
+          </div>
         <GithubWrap>
           <GithubLogo />
           <GithubDownloadLink>

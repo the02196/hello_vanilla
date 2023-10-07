@@ -25,6 +25,7 @@ import {
 } from "firebase/firestore";
 import { useSelector } from "react-redux";
 import { FetchPost } from "./service/Notice";
+import UpDown from "../components/UpDown";
 
 function Main() {
   const userState = useSelector((state) => state.user);
@@ -39,7 +40,7 @@ function Main() {
     height: 70px;
     border-radius: 50%;
     position: fixed;
-    bottom: 30px;
+    bottom: 120px;
     right: 30px;
     cursor: pointer;
     border: 1px solid white;
@@ -214,6 +215,18 @@ function Main() {
       &:nth-child(3) {
         background-image: url("../images/main/dummy_background.avif");
       }
+      &:nth-child(4) {
+        div{
+          position: absolute;
+          width: 240px;
+          height: 350px;
+          background-image: url("../images/main/vanillaJS.png");
+          background-size: cover;
+          filter: saturate(2.3) contrast(1.2);
+        }
+  
+      }
+
     }
     @media screen and (max-width: 1920px) {
       width: 1430px;
@@ -456,9 +469,23 @@ function Main() {
     box-sizing: border-box;
   `;
 
+  const ModernJS = styled.p`
+   position: absolute;
+   width: 100%;
+   top: 40px;
+   display: flex;
+   justify-content: center;
+
+   font-size: 20px;
+   font-weight: bold;
+  `
+   
+
+
   function PutSixthTestBox() {
     return (
       <>
+      
         <GrayFloor />
         <WhiteFloor />
         <GrayFloor />
@@ -486,6 +513,7 @@ function Main() {
         <GrayFloor />
         <WhiteFloor />
         <GrayFloor />
+        
       </>
     );
   }
@@ -755,9 +783,7 @@ function Main() {
               </PleaseWaitWrap>
             </TestBox>
             <TestBox>
-              <PleaseWaitWrap>
-                <PleaseWait></PleaseWait>
-              </PleaseWaitWrap>
+              <div></div>
             </TestBox>
           </MiniBoxWrap>
           <WhiteGradientToTop />
@@ -767,6 +793,7 @@ function Main() {
         </MainBottomWrap>
       </MainWrap>
       <Footer />
+      <UpDown/>
     </>
   );
 }

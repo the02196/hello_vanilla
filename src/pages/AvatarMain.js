@@ -57,7 +57,7 @@ const AvatarWrap = styled.label`
   justify-content: center;
   align-items: center;
   position: relative;
-  z-index: 999;
+  z-index: 900;
   svg {
     color: white;
     width: 50px;
