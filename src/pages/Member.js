@@ -211,6 +211,7 @@ function Member() {
   const userState = useSelector((state) => state.user);
   console.log(userState);
   const [userUid, setUserUid] = useState(userState && userState.uid);
+  
 
   //삼항연산자를 사용할려면 항상 useState에 값을 저장해둬야함
   const dispatch = useDispatch();
@@ -352,12 +353,15 @@ function Member() {
         }
       }
 
-      navigate("/");
+      navigate("/main");
       //회원가입 완료시 알림창이 뜨고 메인페이지로 이동하게 됨!!!
     } catch (error) {
       setError(errorMsg(error.code));
       setIsModal(!isModal);
       console.log(error.code);
+
+
+
     }
   };
   const auth = getAuth();
@@ -455,7 +459,7 @@ function Member() {
                   setEmail(e.target.value);
                 }}
               />
-              {initialMode && <CheckEmail>중복 확인</CheckEmail>}
+              {initialMode && <CheckEmail >중복 확인</CheckEmail>}
             </EmailWrap>
             {initialMode && ( //회원가입일때 아래내용이 실행되어야함
               <>
