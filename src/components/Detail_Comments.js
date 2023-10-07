@@ -773,7 +773,7 @@ useEffect(()=>{
             <Pagenation>
               {Array(totalPages).fill().map((_, index) => (
                 <button key={index + 1} onClick={ () => {
-                  handlePageChange(index + 1)    
+                  handlePageChange(index + 1)  
                 }
                 }>
                   {index + 1}

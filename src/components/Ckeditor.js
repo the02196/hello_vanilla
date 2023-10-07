@@ -29,6 +29,9 @@ const Button = styled.button`
     a{color: #fff;}
     svg{margin-right:12px}
 `
+const FileUpload = styled.input`
+    margin-top: 10px;
+`
 
 function Ckeditor({title, postData}) {
     const memberProfile = useSelector(state => state.user);
@@ -45,7 +48,7 @@ function Ckeditor({title, postData}) {
         if(postData){
             setWriteData(postData.content);
         }
-    },[postData])
+    },postData)
     
     
     const dataSubmit = async ()=>{
@@ -72,7 +75,7 @@ function Ckeditor({title, postData}) {
             
             alert("게시글이 성공적으로 등록되었습니다.")
         }else{
-            const fileInput = document.querySelector("#file").files[0];
+            const fileInput = document.querySelector("#file").files;
             console.log(fileInput)
             if(fileInput){
 
@@ -97,7 +100,7 @@ function Ckeditor({title, postData}) {
         //어느게시판이던 지금 게시판으로 들어감
     }catch(error){
         setIsModal(!isModal);
-        setMessage(error);
+        setMessage(error.message);
     }
     }
     useEffect(()=>{
@@ -145,7 +148,7 @@ function Ckeditor({title, postData}) {
 
     function UploadAdapter(editor){
         editor.plugins.get("FileRepository").createUploadAdapter = (loader) =>{
-            return {
+            return {                
                 upload: async () =>{
                     const file = await loader.file
                     const downURL = await uploadToFirebase(file);
@@ -195,10 +198,10 @@ function Ckeditor({title, postData}) {
                         console.log( 'Focus.', editor );
                     } }
                 />
-                {/* <input type="file" id="file" /> */}
+                {/* <FileUpload type="file" id="file" /> */}
                 <ButtonWarp>
                     <Button><Link to="/service/notice"><FontAwesomeIcon icon={faList}/>목록</Link></Button>
-                    <Button onClick={dataSubmit}><FontAwesomeIcon icon={faPen}/>완료</Button>
+                    <Button type="file" id="file" onClick={dataSubmit}><FontAwesomeIcon icon={faPen}/>완료</Button>
                 </ButtonWarp>
     
     </>

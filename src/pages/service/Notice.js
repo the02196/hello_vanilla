@@ -118,10 +118,33 @@ const Button = styled.div`
   }
 `;
 
+const Pagenation = styled.div`
+  text-align: center;
+  font-size: 16px;
+  font-weight: ${props => (props.bold ? 'bold' : '')};
+
+`
+const PageButton = styled.button`
+  padding: 15px;
+  font-weight: ${props => (props.bold ? 'bold' : '')};
+
+`
+
 function Notice() {
   const [posts, setPosts] = useState([]);
   const memberProfile = useSelector((state) => state.user);
   console.log(memberProfile);
+  const [bold, setBold] = useState(1);
+  const [currentPage, setCurrentPage] = useState(1);
+  const postsPerPage = 5;
+  const indexOfLastPost = currentPage * postsPerPage;
+  const indexOfFirstPost = indexOfLastPost - postsPerPage;
+  const currentPosts = posts.slice(indexOfFirstPost, indexOfLastPost);
+  const handlePageChange = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
+  const totalPages = Math.ceil(posts.length / postsPerPage);
+
   const fetchPosts = async () => {
     try {
       const q = query(
@@ -170,7 +193,7 @@ function Notice() {
           <ListItem>작성일</ListItem>
           <ListItem>조회수</ListItem>
         </List>
-        {posts.map((e, i) => {
+        {currentPosts.map((e, i) => {
           return (
             <List key={i}>
               <ListItem>{posts.length - i}</ListItem>
@@ -185,6 +208,18 @@ function Notice() {
             </List>
           );
         })}
+       <Pagenation>
+              {Array(totalPages).fill().map((_, index) => (
+                <PageButton key={index + 1}
+                  bold = {index+1 === bold}
+                 onClick={ () => {
+                 handlePageChange(index + 1);setBold(index+1)
+                }
+                }>
+                  {index + 1}
+                </PageButton>
+              ))}
+      </Pagenation>
         {memberProfile?.data?.admin === "true" ? (
           <ButtonWrap>
             <Button>
