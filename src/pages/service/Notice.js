@@ -146,6 +146,7 @@ function Notice() {
   const indexOfLastPost = currentPage * postsPerPage;
   const indexOfFirstPost = indexOfLastPost - postsPerPage;
   const currentPosts = posts.slice(indexOfFirstPost, indexOfLastPost);
+  const [docCounts, SetDocCounts] = useState();
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
     if(pageNumber > endPage){
@@ -156,6 +157,17 @@ function Notice() {
       setEndPage(endPage - 5);
     }
   };
+
+  const noticeRef = collection(getFirestore(), "notice")
+  getDocs(noticeRef).then((snapshot) => {
+    // console.log(snapshot.docs.length);
+    SetDocCounts(snapshot.docs.length)
+}).catch((error) => {
+    console.error("Error fetching documents: ", error);
+});
+  
+
+
   const totalPages = Math.ceil(posts.length / postsPerPage);
   const prevCilck = () =>{
     if (currentPage === 1)return;
@@ -226,7 +238,7 @@ function Notice() {
         {currentPosts.map((e, i) => {
           return (
             <List key={i}>
-              <ListItem>{posts.length - i}</ListItem>
+              <ListItem>{docCounts - (i + (currentPage - 1) * postsPerPage)}</ListItem>
               {/* 번호를 역순으로 보여주게 할려면 최대개수 - 인덱스 번호를 하면 됨 */}
               <ListItem>
                 <Link to={`/view/notice/${e.id}`}>{e.title}</Link>
