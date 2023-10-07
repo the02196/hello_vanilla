@@ -23,7 +23,7 @@ function Modify() {
    <>
     <Title>정보수정</Title>
     {
-      userState.loggedIn ?  <p>.</p> :
+             userState.loggedIn       ?        <p>.</p> :
       
 
       <Modal error="로그인 후 이용해 주세요." onClose={()=>{navigate('/login')}}/>

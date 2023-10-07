@@ -1,4 +1,4 @@
-import { faPen } from "@fortawesome/free-solid-svg-icons";
+import { faAngleLeft, faAngleRight, faPen } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   collection,
@@ -118,10 +118,75 @@ const Button = styled.div`
   }
 `;
 
+const Pagenation = styled.div`
+  text-align: center;
+  font-size: 16px;
+  font-weight: ${props => (props.bold ? 'bold' : '')};
+
+  svg{
+    cursor: pointer;
+  }
+
+`
+const PageButton = styled.button`
+  padding: 15px;
+  font-weight: ${props => (props.bold ? 'bold' : '')};
+
+`
+
 function Notice() {
   const [posts, setPosts] = useState([]);
   const memberProfile = useSelector((state) => state.user);
   console.log(memberProfile);
+  const [bold, setBold] = useState(1);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [startPage, setStartPage] = useState(1);
+  const [endPage, setEndPage] = useState(5);
+  const postsPerPage = 5;
+  const indexOfLastPost = currentPage * postsPerPage;
+  const indexOfFirstPost = indexOfLastPost - postsPerPage;
+  const currentPosts = posts.slice(indexOfFirstPost, indexOfLastPost);
+  const [docCounts, SetDocCounts] = useState();
+  const handlePageChange = (pageNumber) => {
+    setCurrentPage(pageNumber);
+    if(pageNumber > endPage){
+      setStartPage(startPage + 5);
+      setEndPage(endPage + 5);
+    }else if(pageNumber < endPage){
+      setStartPage(startPage - 5);
+      setEndPage(endPage - 5);
+    }
+  };
+
+  const noticeRef = collection(getFirestore(), "notice")
+  getDocs(noticeRef).then((snapshot) => {
+    // console.log(snapshot.docs.length);
+    SetDocCounts(snapshot.docs.length)
+}).catch((error) => {
+    console.error("Error fetching documents: ", error);
+});
+  
+
+
+  const totalPages = Math.ceil(posts.length / postsPerPage);
+  const prevCilck = () =>{
+    if (currentPage === 1)return;
+    setBold(currentPage - 1)
+    setCurrentPage(currentPage - 1)
+    setStartPage(startPage - 5);
+    setEndPage(endPage - 5);
+  }
+  const nextCilck = () =>{
+    if (currentPage === totalPages)return;
+    setBold(currentPage + 1)
+    setCurrentPage(currentPage + 1)
+    setStartPage(startPage + 5);
+    setEndPage(endPage + 5);
+
+  }
+  
+
+
   const fetchPosts = async () => {
     try {
       const q = query(
@@ -147,7 +212,7 @@ function Notice() {
   }, []);
 
   if (posts.length === 0) {
-    return <div>로딩중</div>;
+    return <div></div>;
   } // 데이터에 값이 없다면 로딩중으로 뜨게 만들기(로딩되고 있는 그림을 넣어보기 loading.io 사이트 참조하기)
 
   return (
@@ -170,10 +235,10 @@ function Notice() {
           <ListItem>작성일</ListItem>
           <ListItem>조회수</ListItem>
         </List>
-        {posts.map((e, i) => {
+        {currentPosts.map((e, i) => {
           return (
             <List key={i}>
-              <ListItem>{posts.length - i}</ListItem>
+              <ListItem>{docCounts - (i + (currentPage - 1) * postsPerPage)}</ListItem>
               {/* 번호를 역순으로 보여주게 할려면 최대개수 - 인덱스 번호를 하면 됨 */}
               <ListItem>
                 <Link to={`/view/notice/${e.id}`}>{e.title}</Link>
@@ -185,6 +250,20 @@ function Notice() {
             </List>
           );
         })}
+       <Pagenation>     
+            <FontAwesomeIcon icon={faAngleLeft} onClick={prevCilck}/>
+              {Array(totalPages).fill().map((_, index) => (
+                <PageButton key={index + 1}
+                  bold = {index+1 === bold}
+                 onClick={ () => {
+                 handlePageChange(index + 1);setBold(index+1)
+                }
+                }>
+                  {index + 1}
+                </PageButton>
+              ))}
+              <FontAwesomeIcon icon={faAngleRight} onClick={nextCilck}/>
+      </Pagenation>
         {memberProfile?.data?.admin === "true" ? (
           <ButtonWrap>
             <Button>
