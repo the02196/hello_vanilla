@@ -55,5 +55,28 @@ const LeftTypingBox = ({ text, marginTop, marginBtm, leftStart  }) => {
         </TextBg>
     )
 }
+const LeftTypingBox1 = ({ text, marginTop, marginBtm, leftStart1  }) => {
+    
+    return (
+       
+        <TextBg style={{ margin: `${marginTop}px auto ${marginBtm}px`  }}>
+            <Picture style={{ marginLeft: "30px", marginRight: "30px", backgroundImage: `url("../images/detail/profiles/Woman_1.png")` }}></Picture>
+            <Text>
+                <h3>#dh3308</h3>
+                {
+                    leftStart1&&
+                <TypeAnimation sequence={[
+                    text, 1000,
+                ]}
+                    wrapper="span"
+                    speed={70}
+                    style={{ fontSize: '18px', display: 'inline-block' }} />
+                }
+                
+            </Text>
+        </TextBg>
+    )
+}
 
-export {LeftTypingBox};
+
+export {LeftTypingBox, LeftTypingBox1};
