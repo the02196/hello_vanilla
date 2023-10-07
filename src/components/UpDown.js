@@ -6,8 +6,8 @@ import { faAngleDown, faAngleUp, faArrowUp } from '@fortawesome/free-solid-svg-i
 
 const UpDownWrap = styled.div`
 position: fixed;
-bottom: 20px;
-right: 20px;
+bottom: 30px;
+right: 40px;
 width: 50px;
 height: 50px;
 cursor: pointer;
