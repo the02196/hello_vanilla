@@ -138,7 +138,7 @@ function Nav({ userState }) {
         </TextWrap>
         {/* <ProfileImg /> */}
         <WelcomeTextWrap>
-          <WelcomeText>안녕하세요, <span style={{fontFamily: "Fira code"}}>"{nickName}"</span> 여행자님!</WelcomeText>
+          <WelcomeText>안녕하세요, {userState?.data && <span style={{fontFamily: "Fira code"}}>"{nickName}"</span>} 여행자님!</WelcomeText>
         </WelcomeTextWrap>
       </NavWrap>
     </>
