@@ -9,6 +9,9 @@ import {
   collection,
   updateDoc,
   Firestore,
+  query,
+  where,
+  getDocs,
 } from "firebase/firestore";
 import { NavLink, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -23,6 +26,7 @@ import { logIn, logOut, loggedIn } from "../store";
 import { useEffect } from "react";
 import Avatar from "./Avatar";
 import { deleteUser, getAuth } from "firebase/auth";
+
 //사용하는 이유?
 
 const EmailWrap = styled.div`
@@ -40,6 +44,7 @@ const CheckEmail = styled.div`
   background-color: black;
   font-size: 15px;
   margin-bottom: 15px;
+  cursor: pointer;
 `;
 
 const Info = styled.div`
@@ -124,6 +129,8 @@ const SignUp = styled.div`
   padding: 30px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   background-color: #fff;
+  /* position: relative;
+  z-index: 222222222; */
   /* border-radius: 10px; */
   @media screen and (max-width: 1024px) {
     width: 60vw;
@@ -215,11 +222,17 @@ function Member() {
   const navigate = useNavigate();
   const [isModal, setIsModal] = useState(false);
   //0922-2
-  const userState = useSelector((state) => state.user);
+  
+       const userState = useSelector((state) => state.user);
+  
+  
+  
+  
+  
   console.log(userState);
   const [userUid, setUserUid] = useState(userState && userState.uid);
-  
 
+  
   //삼항연산자를 사용할려면 항상 useState에 값을 저장해둬야함
   const dispatch = useDispatch();
   //0922-1
@@ -305,13 +318,9 @@ function Member() {
       errorMessage = "이름";
     } else if (nickname.length === 0) {
       errorMessage = "닉네임";
-    } else if (!isValidPhone(phoneNumber)) {
-      setError("전화번호 를 입력해주세요.");
-      setIsModal(!isModal);
-      return;
     } else if (!isValidEmail(email)) {
-      setError("유효한 이메일 주소를 입력해주세요.");
-      setIsModal(!isModal);
+      setError("이메일 주소를 입력해주세요.");
+      setIsModal(!isModal);  
       return;
     } else if (password.length === 0 && initialMode) {
       errorMessage = "비밀번호";
@@ -320,11 +329,15 @@ function Member() {
     } else if (password !== passwordConfirm && initialMode) {
       setError("비밀번호가 일치하지 않습니다.");
       setIsModal(!isModal);
+      return; 
+    }else if (!isValidPhone(phoneNumber)) {
+      setError("전화번호 를 입력해주세요.");
+      setIsModal(!isModal);
       return;
-    }
+    } 
 
     if (errorMessage) {
-      setError(errorMessage + "을 입력해 주세요!.");
+      setError(errorMessage + "을 입력해 주세요 !");
 
       setIsModal(!isModal);
       return;
@@ -345,14 +358,24 @@ function Member() {
         await setDoc(doc(getFirestore(), "users", user.uid), userProfile);
 
         sessionStorage.setItem("users", user.uid);
+
+
         dispatch(logIn(user.uid));
+
+
+
         alert("회원가입이 완료 되었습니다.");
+
       } else {
         //정보수정인 경우
         if (userUid) {
           const userRef = doc(getFirestore(), "users", userUid);
-          await updateDoc(userRef, userProfile); //updateDoc는 변경되야할 부분을 적음
+          
+          
+          await updateDoc(userRef, userProfile)          
           alert("정보 수정이 완료 되었습니다.");
+        
+        
         } else {
           setError("회원정보가 완료되었습니다.");
           setIsModal(!isModal);
@@ -372,8 +395,11 @@ function Member() {
     }
   };
   const auth = getAuth();
+  
   const user = auth.currentUser;
 
+  
+  
   const DeleteAccount = async () => {
     if (window.confirm("계정을 삭제하시겠습니까?")) {
       try {
@@ -383,6 +409,27 @@ function Member() {
         alert(error);
       }
     }
+  };
+  const CheckedEmail = async (email) => {
+   
+    if (!isValidEmail(email)) {
+      setError("유효한 이메일 을 입력해 주세요");
+      return;
+    }
+    try{
+       const j = await query(collection(getFirestore(), 'users'), where("email", "==", email));
+       const querySnapshot = await getDocs(j);
+       if(querySnapshot.docs.length === 0){
+        setError("사용가능한 이메일입니다. ^-^");
+        setIsModal(!isModal);          
+      }else{
+         setError("중복된 이메일 입니다 다시 입력해 주세요. ㅜ_ㅜ");
+         setIsModal(!isModal);
+         return;
+       }
+     }catch(error){
+      console.log(error)
+     }          
   };
 
   return (
@@ -466,7 +513,7 @@ function Member() {
                   setEmail(e.target.value);
                 }}
               />
-              {initialMode && <CheckEmail >중복 확인</CheckEmail>}
+              {initialMode && <CheckEmail onClick={()=>{CheckedEmail(email)}}>중복 확인</CheckEmail>}
             </EmailWrap>
             {initialMode && ( //회원가입일때 아래내용이 실행되어야함
               <>
