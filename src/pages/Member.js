@@ -231,6 +231,7 @@ function Member() {
   
   console.log(userState);
   const [userUid, setUserUid] = useState(userState && userState.uid);
+  
 
   
   //삼항연산자를 사용할려면 항상 useState에 값을 저장해둬야함
@@ -514,7 +515,9 @@ function Member() {
                   setEmail(e.target.value);
                 }}
               />
+
               {initialMode && <CheckEmail onClick={()=>{CheckedEmail(email)}}>중복 확인</CheckEmail>}
+
             </EmailWrap>
             {initialMode && ( //회원가입일때 아래내용이 실행되어야함
               <>
