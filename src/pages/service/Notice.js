@@ -1,4 +1,4 @@
-import { faPen } from "@fortawesome/free-solid-svg-icons";
+import { faAngleLeft, faAngleRight, faPen } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   collection,
@@ -123,6 +123,10 @@ const Pagenation = styled.div`
   font-size: 16px;
   font-weight: ${props => (props.bold ? 'bold' : '')};
 
+  svg{
+    cursor: pointer;
+  }
+
 `
 const PageButton = styled.button`
   padding: 15px;
@@ -136,14 +140,40 @@ function Notice() {
   console.log(memberProfile);
   const [bold, setBold] = useState(1);
   const [currentPage, setCurrentPage] = useState(1);
+  const [startPage, setStartPage] = useState(1);
+  const [endPage, setEndPage] = useState(5);
   const postsPerPage = 5;
   const indexOfLastPost = currentPage * postsPerPage;
   const indexOfFirstPost = indexOfLastPost - postsPerPage;
   const currentPosts = posts.slice(indexOfFirstPost, indexOfLastPost);
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
+    if(pageNumber > endPage){
+      setStartPage(startPage + 5);
+      setEndPage(endPage + 5);
+    }else if(pageNumber < endPage){
+      setStartPage(startPage - 5);
+      setEndPage(endPage - 5);
+    }
   };
   const totalPages = Math.ceil(posts.length / postsPerPage);
+  const prevCilck = () =>{
+    if (currentPage === 1)return;
+    setBold(currentPage - 1)
+    setCurrentPage(currentPage - 1)
+    setStartPage(startPage - 5);
+    setEndPage(endPage - 5);
+  }
+  const nextCilck = () =>{
+    if (currentPage === totalPages)return;
+    setBold(currentPage + 1)
+    setCurrentPage(currentPage + 1)
+    setStartPage(startPage + 5);
+    setEndPage(endPage + 5);
+
+  }
+  
+
 
   const fetchPosts = async () => {
     try {
@@ -170,7 +200,7 @@ function Notice() {
   }, []);
 
   if (posts.length === 0) {
-    return <div>로딩중</div>;
+    return <div></div>;
   } // 데이터에 값이 없다면 로딩중으로 뜨게 만들기(로딩되고 있는 그림을 넣어보기 loading.io 사이트 참조하기)
 
   return (
@@ -208,7 +238,8 @@ function Notice() {
             </List>
           );
         })}
-       <Pagenation>
+       <Pagenation>     
+            <FontAwesomeIcon icon={faAngleLeft} onClick={prevCilck}/>
               {Array(totalPages).fill().map((_, index) => (
                 <PageButton key={index + 1}
                   bold = {index+1 === bold}
@@ -219,6 +250,7 @@ function Notice() {
                   {index + 1}
                 </PageButton>
               ))}
+              <FontAwesomeIcon icon={faAngleRight} onClick={nextCilck}/>
       </Pagenation>
         {memberProfile?.data?.admin === "true" ? (
           <ButtonWrap>
