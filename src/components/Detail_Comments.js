@@ -31,13 +31,8 @@ import {
 } from "firebase/firestore";
 import TextAreaEdit from "./TextAreaEdit";
 import Avatar from "../pages/Avatar";
-import { CodeBlocke } from "./CodeBlock";
-
 import { useNavigate } from 'react-router-dom'
 import Modal from "./Modal";
-
-import AvatarMain from "../pages/AvatarMain";
-
 
 /*
   #### Wrappers ####
@@ -360,12 +355,11 @@ function Detail_Comments() {
   const [commentsArray, setCommentArray] = useState([]);
   const [usersArray, setUsersArray] = useState([]);
 
+  const [isReply, setIsReply] = useState(false);
+  const [replyToNickname, setReplyToNickname] = useState("");
+
   const [isModal, setIsModal] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
-
-  const [replyOpen, setReplyOpen] = useState(false);
-  const [replyText, setReplyText] = useState("");
-
 
   const [currentPage, setCurrentPage] = useState(1);
   const [commentsPerPage, setCommentsPerPage] = useState(5);
@@ -384,6 +378,24 @@ function Detail_Comments() {
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
   };
+
+  const CommentNickname = (e) => {
+    setIsReply(true)
+    setReplyToNickname(e)
+  }
+
+  const ReplyClick = async(id, index) => {
+    const commentRef = doc(getFirestore, "comments", id)
+    const snapshot = await getDoc(commentRef);
+    const reply = snapshot.data().reply;    
+    try{
+      if(reply.exists()){
+        setReplyToNickname(reply)
+      }
+    }catch(error){
+
+    }
+  }
   
   const TopicCommentData = async () => {
     try{
@@ -405,12 +417,6 @@ function Detail_Comments() {
     }
   }
   
-  const handleReply = () => {
-    setReplyText("");
-    setReplyOpen(false);
-  };
-
-
   const GetDocsFromUsers = async () => {
     try {
       const ref = collection(getFirestore(), "users");
@@ -643,7 +649,6 @@ useEffect(()=>{
         <ContentWrap>
           <FetchContentTop nickname={nickname} createdate={createdate} />
           <FetchContentCenter text={text} />
-          <CodeBlocke width={"650"} height={"800"} value={"test"}></CodeBlocke>
           <FetchContentBottom />
           <TopicWrap>
             <FetchTopics />
@@ -655,16 +660,9 @@ useEffect(()=>{
 
   const TextBox = ({text}) => {
     return (
-      <TextArea GetDocsFromComments={GetDocsFromComments} GetDocsFromUsers={GetDocsFromUsers} FetchLiked={FetchLiked} text={text} setIsModal={setIsModal} setErrorMessage={setErrorMessage}/>
+      <TextArea GetDocsFromComments={GetDocsFromComments} GetDocsFromUsers={GetDocsFromUsers} FetchLiked={FetchLiked} text={text} setIsModal={setIsModal} setErrorMessage={setErrorMessage} setIsReply={setIsReply} isReply={isReply} replyToNickname={replyToNickname}/>
     )
   }
-
-  const ReplyBox = ({text}) => {
-    return (
-      <TextArea text={text}/>
-    )
-  }
-
   function handleSubmit(e) {
     // Prevent the browser from reloading the page
     e.preventDefault();
@@ -714,9 +712,12 @@ useEffect(()=>{
           <ul>
             <li>
               <ProfileWrap>
-                <AvatarMain width={"70px"} height={"70px"} />
+                <Avatar width={"70px"} height={"70px"} />
               </ProfileWrap>
               <ContentWrap>
+                {isReply &&                
+                  <p>{replyToNickname}에게 답글을 다는 중입니다…</p>
+                }
                 <FormWrapper method="post" onSubmit={handleSubmit}>
                   <TextBox />
                 </FormWrapper>
@@ -724,9 +725,9 @@ useEffect(()=>{
             </li>
             <FetchComment
               text={
-                "안녕하세요, 이 페이지를 보고 움직이는 공을 만들어보고 있는데 잘 동작하지 않아서 막막한 상황입니다 ㅠㅠ.아래는 제가 작성한 코드입니다.."
+                "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quod praesentium porro expedita deleniti itaque at quaerat modi, exercitationem vitae laboriosam."
               }
-              nickname={"#ljy04"}
+              nickname={"#db53632"}
               createdate={"2023.09.26"}
               profile={"../images/portraits/woman_5.png"}
             />
@@ -736,6 +737,12 @@ useEffect(()=>{
                   {e.uid === userState.uid &&
                     <span>작성자</span>
                   }
+                  { e.id &&
+                    e.reply !== undefined ?
+                    <p>{e.reply}의 답글입니다.</p>:''
+                  
+                  }
+                  {console.log(e.reply)}
                   <li key={i}>
                     <ProfileWrap>
                       <Profile
@@ -759,7 +766,7 @@ useEffect(()=>{
                         >
                           {isModal && 
                             <Modal 
-                              error={errorMessage}
+                              error={!userState.loggedIn ? "로그인이 필요한 페이지입니다.":errorMessage}
                               onClose={() => {setIsModal(false); navigate(!userState.loggedIn && '/login');}} 
                             />
                           }
@@ -768,9 +775,11 @@ useEffect(()=>{
                         <Share>
                           <FontAwesomeIcon icon={faLink} />
                         </Share>
-                        <Reply 
-                          style={{ cursor: "pointer" }}
-                          onClick={() => setReplyOpen(!replyOpen)}
+                        <Reply
+                          style={{ cursor: "pointer" }} 
+                          onClick={()=>{
+                            CommentNickname(e.nickname)
+                          }}
                         >
                           <FontAwesomeIcon icon={faShare} />
                         </Reply>
@@ -786,11 +795,6 @@ useEffect(()=>{
                         )}
                       </ContentBottomWrap>
                     </ContentWrap>
-                    {replyOpen && (
-                      <>
-                        <ReplyBox />
-                      </>
-                    )}
                   </li>
                 </>
               );
