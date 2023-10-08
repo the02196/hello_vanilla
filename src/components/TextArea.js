@@ -10,8 +10,17 @@ import {
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
+import styled from "styled-components";
 
-
+const ButtonWrap = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 10px;
+  button{
+    width: 100%;
+  }
+`
 
 
 
@@ -187,10 +196,11 @@ function TextArea({GetDocsFromComments, GetDocsFromUsers, FetchLiked, text, setI
       }}
       name="postContent"
       placeholder="댓글을 입력하세요!"
-      rows={4}
+      rows={7}
       cols={40}
       value={commentValue}
     />
+    <ButtonWrap>
     <button type="button" onClick={ ()=>{
       if(isReply === true){
         addReply()
@@ -198,6 +208,7 @@ function TextArea({GetDocsFromComments, GetDocsFromUsers, FetchLiked, text, setI
         return;
       } addComment()
       }}>보내기</button>
+      </ButtonWrap>
     </>
   );
 }

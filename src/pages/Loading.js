@@ -31,9 +31,9 @@ function Loading() {
       <Binary />
       <Alphabet />
       <Waiting />
+      <SkipBtn><NavLink to={"/main"}>스킵하기</NavLink></SkipBtn>
     </>
   );
 }
 
 export default Loading;
-{/* <SkipBtn><NavLink to={"/main"}>스킵하기</NavLink></SkipBtn> */}

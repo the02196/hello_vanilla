@@ -5,7 +5,9 @@ import HowMoveBall from "./HowMoveBall";
 import { NavLink } from "react-router-dom";
 import CodeBlock, { CodeBlocka, CodeBlockb, CodeBlockc, CodeBlockd } from "./CodeBlock";
 import TopBall from "./TopBall";
-import { LeftTypingBox, LeftTypingBox1 } from "./TypingBox";
+import { LeftTypingBox, LeftTypingBox1, LeftTypingBox2 } from "./TypingBox";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCode } from "@fortawesome/free-solid-svg-icons";
 
 const GlobalWrap = styled.div`
   width: 100%;
@@ -82,7 +84,8 @@ const DetailFooter = styled.div`
 const CardWrap = styled.div`
   width: 100%;
   overflow: hidden;
-  margin: 200px auto;
+  margin: 600px auto;
+  position: relative;
   h1{
     padding-bottom: 70px;
   }
@@ -95,14 +98,13 @@ const CardWrap = styled.div`
 `;
 const Card = styled.li`
   background-color: #8AA6A3;
-  border-radius: 10px;
+
   width: 300px;
   height: 200px;
   font-size: 30px;
   color: #fff;
-  font-weight: bold;
+  font-weight: 600;
   text-align: center;
-  z-index: 100;
   padding: 50px;
   display: flex;
   justify-content: center;
@@ -114,7 +116,9 @@ const Card = styled.li`
     background-color: #038C73;
   }
   &:nth-child(4){
-    background-color: #127369;
+    background-color: #e9bd15;
+    color: black;
+    font-weight: bold;
   }
   &.on {
     background-color: #fff;
@@ -126,10 +130,10 @@ const Card = styled.li`
 `;
 const Desc = styled.div`
   width: 100%;
-  margin: 100px auto;
+  margin: 100px auto 100px;
   h1 {
     font-size: 30px;
-    margin-bottom: 80px;
+    margin-bottom: 20px;
   }
   h2 {
     margin-bottom: 40px;
@@ -153,15 +157,19 @@ const CodeDescWrap = styled.div`
   margin: 100px auto;
 `;
 const CodeDescLeft = styled.div`
-  font-size: 20px;
+  font-size: 18px;
   width: 50%;
+  
   height: 300px;
   display: flex;
   align-items: center;
   line-height: 30px;
+  div{
+line-height: 2.2rem;
+  }
 `;
 const CodeDescRight = styled.div`
-  font-size: 20px;
+  font-size: 18px;
   width: 50%;
   height: 300px;
   display: flex;
@@ -169,6 +177,9 @@ const CodeDescRight = styled.div`
   line-height: 30px;
   text-align: right;
   justify-Content: flex-end;
+    div{
+line-height: 2.2rem;
+  }
 `;
 const GithubWrap = styled.div`
   width: 100%;
@@ -190,11 +201,24 @@ const GithubDownloadLink = styled.span`
   margin-right: 40px;
 `;
 
+const VanillaJS = styled.li`
+  width: 50px;
+  height: 50px;
+  position: absolute;
+  z-index: 50;
+  right: 15px;
+  top: 30px;
+  background-image: url("../images/main/JS.svg");
+  transform: rotate(20deg);
+`
+
 function Detail_Test() {
   const [offsetY, setOffsetY] = useState(0);
   const [leftStart, setLeftStart] = useState(false);
   const [offsetY1, setOffsetY1] = useState(0);
   const [leftStart1, setLeftStart1] = useState(false);
+  const [offsetY2, setOffsetY2] = useState(0);
+  const [leftStart2, setLeftStart2] = useState(false);
   
   useEffect(() => {
     const scrollY = window.scrollY;
@@ -209,6 +233,17 @@ function Detail_Test() {
 
   useEffect(() => {
     const scrollY = window.scrollY;
+    const headerPosition = Math.floor(scrollY + document.querySelector("#leftTypingBox2").getBoundingClientRect().top);
+    setOffsetY2(headerPosition)
+    
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  },[offsetY2]);  
+
+  useEffect(() => {
+    const scrollY = window.scrollY;
     const headerPosition = Math.floor(scrollY + document.querySelector("#leftTypingBox1").getBoundingClientRect().top);
     setOffsetY1(headerPosition)
     
@@ -220,11 +255,14 @@ function Detail_Test() {
 
   function handleScroll(){
     const scrollY = window.scrollY;
-    if(scrollY > offsetY-500){
+    if(scrollY > offsetY-300){
       setLeftStart(true)
     }
     if(scrollY > offsetY1){
       setLeftStart1(true)
+    }
+    if(scrollY > offsetY){
+      setLeftStart2(true)
     }
   }
   const CardContent = [
@@ -262,7 +300,8 @@ function Detail_Test() {
           <div id="leftTypingBox">
           <LeftTypingBox
             text={
-              `안녕하세요, 여러분! 오늘은 동적인 움직임을 구현하는 방법에 대해 함께 이야기 해보려해요. 화면에 보이는 공을 움직이게 만들고 싶다면 어떻게 하면 될까요? 상상력을 발휘해 볼까요?`
+              // `안녕하세요, 여러분! 오늘은 동적인 움직임을 구현하는 방법에 대해 함께 이야기 해보려해요. 화면에 보이는 공을 움직이게 만들고 싶다면 어떻게 하면 될까요? 상상력을 발휘해 볼까요?`
+              `화면에 보이는 공을 움직이게 만들고 싶다면 어떻게 하면 될까요? 함께 상상력을 발휘해 볼까요?`
             }
             marginTop={0}
             marginBtm={600}
@@ -271,59 +310,89 @@ function Detail_Test() {
           </div>
           
           <HowMoveBall />
+          <div id="leftTypingBox2">
+          <LeftTypingBox2 
+           text={
+            `다양한 방법이 있군요! 자 이제 바닐라 자바스크립트로 구현하는 방법을 알아볼까요?`
+          }
+          marginTop={600}
+          marginBtm={600}
+          leftStart2={leftStart2}
+          ></LeftTypingBox2>
+          </div>
           <CardWrap>
-            <h1>요점 정리</h1>
+            {/* <h1>요점 정리</h1> */}
             <ul>
               {BallLefttoRight()}
               {CardContent.map((e, i) => {
                 return <Card key={i}>{e.answer}</Card>;
               })}
+          <VanillaJS></VanillaJS>
             </ul>
           </CardWrap>
+          
           <Desc>
-            <h1>같이 해보기</h1>
-            <span>
-            먼저 해야 할 일은 HTML 구조를 만드는 거예요. myBall이라는 class명을 가진 div태그 하나와 Button을 만든 후 CSS를 통해 꾸며볼까요?
-            </span>
+            <h1><FontAwesomeIcon icon={faCode}></FontAwesomeIcon> &nbsp; 같이 해보기</h1>
+            <span>"첫 걸음 부터 차근차근, <strong>HTML</strong>부터 <strong>바닐라 스크립트</strong> 까지! 함께 코드를 짜볼까요?"</span>
           </Desc>
-          <CodeDescWrap>
-            <CodeDescLeft/>
+          <ExampleBallWrap>
+            <Ball left={"2"} top={"50"} ></Ball>
+          </ExampleBallWrap>
+          <CodeDescWrap>      
+            <CodeDescLeft>
+            <div>
+            먼저 해야 할 일은 <strong>html 구조</strong>를 만드는 거예요.<br></br> <span style={{textDecoration:"underline"}}>myBall 이라는 class명을 가진 div태그 하나와 Button을 만들어 볼까요?</span>
+            </div>
+            </CodeDescLeft>
             <CodeBlock width={"650"} height={"400"} value={"test"}></CodeBlock>
           </CodeDescWrap>
           <CodeDescWrap>
             <CodeBlocka width={"650"} height={"460"} value={"test"}></CodeBlocka>
             <CodeDescRight>
-            CSS에서 애니메이션을 만드는 방법은 '@keyframes'를 사용하는 건데요,<br/> animation을 설정해 준 후 'animate' 클래스에 애니메이션 세부사항을 적고나면<br/> 공이 화면에서 움직이게 될거에요.
+              <div>
+
+            CSS에서 애니메이션을 만드는 방법은 <strong>@keyframes</strong>를 사용하는 것입니다.<br/>'animate' 클래스에 애니메이션 세부사항을 적고나면, <br/> 공이 화면에서 움직이게 될거에요.
+              </div>
             </CodeDescRight>
           </CodeDescWrap>
           <CodeDescWrap>
             <CodeDescLeft>
-            이제 Javascript를 이용해 'Start Animation'버튼 클릭 시 'animate'클래스를 추가하여 애니메이션이 시작되도록 함수를 작성해볼거에요.
+              <div>
+            이제 <strong>Javascript</strong>를 이용해 'Start Animation'버튼 클릭 시<br></br>'animate'클래스를 추가하여 애니메이션이 시작되도록 <span style={{textDecoration:"underline"}}>함수를 작성</span>해볼거에요.
+              </div>
             </CodeDescLeft>
             <CodeBlockb width={"650"} height={"250"} value={"test"}></CodeBlockb>
           </CodeDescWrap>
           <CodeDescWrap>
-            <CodeDescLeft>
-            이제 중요한 단계가 남았어요. 버튼에 우리가 만든 함수를 클릭하면 실행할 수 있는 기능을 달아줄거에요
-            </CodeDescLeft>
             <CodeBlockc width={"650"} height={"30"} value={"test"}></CodeBlockc>
+            <CodeDescRight>
+              <div>
+
+            이제 <strong>가장 중요한 단계</strong>가 남았어요. <br/><span style={{textDecoration:"underline"}}>버튼에 우리가 만든 함수를 클릭하면 실행할 수 있는 기능을 달아줄거에요!</span>
+              </div>
+            </CodeDescRight>
           </CodeDescWrap>
           <CodeDescWrap>
             <CodeDescLeft>
-            최종적으로 완성된 코드는 다음과 같아요.
-            굴러가는 공을 바라보는 것도 좋겠지만, css속성에서 색깔을 바꿔본다던지 공을 꾸며보는 등 혼자만의 도전을 해보시면 더 도움이 될거에요!
+            최종적으로 완성된 코드는 다음과 같아요.<br></br><br></br>
+            굴러가는 공을 바라보는 것도 좋겠지만, css에서 색깔을 바꾸거나 공을 꾸며보는 등, <br></br>혼자만의 도전을 해보시면 더 도움이 될거에요!
             </CodeDescLeft>
             <CodeBlockd width={"650"} height={"800"} value={"test"}></CodeBlockd>
           </CodeDescWrap>
-          
+          <ExampleBallWrap>
+            <Ball right={"2"} top={"50"} ></Ball>
+          </ExampleBallWrap>
         </MainBg>
         <div id="leftTypingBox1">
+       
           <LeftTypingBox1
             text={
-              `기억하셔야 할 것은, 코드에는 정답이 없습니다. 우리가 앞으로 기술을 이용해 만들어나갈 세상은 여러분 앞에 무한히 펼쳐져 있습니다. 오늘 배운 내용을 시작으로 여러분만의 웹페이지, 웹어플리케이션을 구상해보세요!`
+              // `기억하셔야 할 것은, 코드에는 정답이 없습니다. 우리가 앞으로 기술을 이용해 만들어나갈 세상은 여러분 앞에 무한히 펼쳐져 있습니다. 오늘 배운 내용을 시작으로 여러분만의 웹페이지, 웹어플리케이션을 구상해보세요!`
+              `기억하셔야 할 것은, 코드에는 정답이 없습니다. 오늘 배운 내용을 시작으로 여러분만의 웹페이지, 웹어플리케이션을 구상해보세요!`
             }
-            marginTop={0}
-            marginBtm={100}
+            text2={""}
+            marginTop={200}
+            marginBtm={200}
             leftStart1={leftStart1}
           ></LeftTypingBox1>
           </div>
@@ -334,13 +403,13 @@ function Detail_Test() {
           </GithubDownloadLink>
         </GithubWrap>
       </GlobalWrap>
-      <DetailFooter>
+      {/* <DetailFooter>
         {Array(10)
           .fill()
           .map((e, i) => {
             return <div key={i}>Page {i + 1}</div>;
           })}
-      </DetailFooter>
+      </DetailFooter> */}
     </>
   );
 }

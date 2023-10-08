@@ -7,25 +7,12 @@ function BallLefttoRight(){
   0%{
     left: 5%;
   }
-  16.6666667%{
-    left: 14%;
-  }
-  33.3333333%{
-    left: 24%
-  }
-  50%{
-    left: 37%;
-  }
-  66.666667%{
-    left: 50%;
-  }
-  83.3333333%{
-    left: 66%;
-  }
+
   100%{
-    left: 80%
+    left: 80%;
+    transform: rotate(570deg);
   }
-  `
+`
 
 const Ball = styled.div`
   width: 130px;
@@ -33,8 +20,8 @@ const Ball = styled.div`
   border-radius: 50%;
   background-image: url("./images/detail/ball.png");
   background-size: cover;
-  top: 50%;
-  transform: translateY(-50%);
+  top: 19%;
+
   background-position: center;
   position: absolute;
   animation: ${boxAnimation} 3s linear infinite forwards;

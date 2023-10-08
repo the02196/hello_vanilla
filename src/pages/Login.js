@@ -50,10 +50,12 @@ const LoginNav2 = styled.div`
 
 const SignUp = styled.div`
   width: 35vw;
-  padding: 50px 50px;
+  padding:50px;
   margin-top: 40px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   background-color: #fff;
+  position: relative;
+  z-index: 500;
   /* border-radius: 10px; */
   /* @media screen and (max-width: 1024px) {
     width: 60vw;
@@ -118,7 +120,7 @@ const InputWrapper = styled.div`
 const Input = styled.input`
   width: 100%;
   padding: 10px;
-  margin-bottom: 10px;
+  margin-bottom: 5px;
   border: 1px solid #ddd;
   /* border-radius: 5px; */
   box-sizing: border-box;
@@ -158,6 +160,7 @@ const IconWrap = styled.div`
   width: 100%;
   display: flex;
   justify-content: flex-start;
+
 
    div {
     display: flex;
@@ -215,7 +218,7 @@ const SignInWrap = styled.div`
 const BottomWrap = styled.div`
   display: flex;
   align-items: center;
-  margin-top: 30px;
+  margin-top: 20px;
 `
 function Login() {
   const [email, setEmail] = useState("");

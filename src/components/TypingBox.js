@@ -33,12 +33,13 @@ const Text = styled.div`
         font-size: 17px;
     }
 `
+
 const LeftTypingBox = ({ text, marginTop, marginBtm, leftStart  }) => {
     
     return (
        
         <TextBg style={{ margin: `${marginTop}px auto ${marginBtm}px`  }}>
-            <Picture style={{ marginLeft: "30px", marginRight: "30px", backgroundImage: `url("../images/detail/profiles/Woman_1.png")` }}></Picture>
+            <Picture style={{ marginLeft: "30px", marginRight: "30px", backgroundImage: `url("../images/portraits/man_8.png")` }}></Picture>
             <Text>
                 <h3>#dh3308</h3>
                 {
@@ -55,12 +56,12 @@ const LeftTypingBox = ({ text, marginTop, marginBtm, leftStart  }) => {
         </TextBg>
     )
 }
-const LeftTypingBox1 = ({ text, marginTop, marginBtm, leftStart1  }) => {
+const LeftTypingBox1 = ({ text, marginTop, marginBtm, leftStart1, text2  }) => {
     
     return (
        
         <TextBg style={{ margin: `${marginTop}px auto ${marginBtm}px`  }}>
-            <Picture style={{ marginLeft: "30px", marginRight: "30px", backgroundImage: `url("../images/detail/profiles/Woman_1.png")` }}></Picture>
+            <Picture style={{ marginLeft: "30px", marginRight: "30px", backgroundImage: `url("../images/portraits/man_8.png")` }}></Picture>
             <Text>
                 <h3>#dh3308</h3>
                 {
@@ -78,5 +79,29 @@ const LeftTypingBox1 = ({ text, marginTop, marginBtm, leftStart1  }) => {
     )
 }
 
+const LeftTypingBox2 = ({ text, marginTop, marginBtm, leftStart2,}) => {
+    
+    return (
+       
+        <TextBg style={{ margin: `${marginTop}px auto ${marginBtm}px`  }}>
+            <Picture style={{ marginLeft: "30px", marginRight: "30px", backgroundImage: `url("../images/portraits/man_8.png")` }}></Picture>
+            <Text>
+                <h3>#dh3308</h3>
+                {
+                    leftStart2&&
+                <TypeAnimation sequence={[
+                    text, 500,
+                ]}
+                    wrapper="span"
+                    speed={70}
+                    style={{ fontSize: '18px', display: 'inline-block' }} />
+                }
+                
+            </Text>
+        </TextBg>
+    )
+}
 
-export {LeftTypingBox, LeftTypingBox1};
+
+
+export {LeftTypingBox, LeftTypingBox1, LeftTypingBox2};
