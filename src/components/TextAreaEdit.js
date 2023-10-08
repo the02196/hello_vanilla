@@ -10,9 +10,20 @@ import {
   import React, { useEffect, useState } from "react";
   import { useSelector } from "react-redux";
   import { Navigate } from "react-router-dom";
+import styled from "styled-components";
   
   
-  
+  const ButtonWrap = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 10px;
+  button{
+    &:nth-child(1){
+      margin-right: 3px;
+    }
+  }
+`
   
   
   function TextAreaEdit({id, text, onCancel, setIsModal, setErrorMessage}) {
@@ -48,12 +59,14 @@ import {
           onChange={(e) => {
               setEditText(e.target.value);
           }}
-          rows={4}
+          rows={5}
           cols={40}
           value={editText}
         />   
-        <button onClick={editComment}>수정완료</button>
-        <button onClick={onCancel}>취소</button>
+        <ButtonWrap>
+          <button onClick={editComment}>수정완료</button>
+          <button onClick={onCancel}>취소</button>
+        </ButtonWrap>
       </>
     );
   }

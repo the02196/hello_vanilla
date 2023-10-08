@@ -108,6 +108,8 @@ const Logo = styled.nav`
 const LoginBtn = styled.span`
   width: 730px;
   margin-top: 30px;
+  position: relative;
+  z-index: 500;
   display: flex;
   justify-content: center;
   color: #aaa;
@@ -131,7 +133,9 @@ const SignUp = styled.div`
   background-color: #fff;
 
   position: relative;
+
    z-index: 200; 
+
   /* border-radius: 10px; */
   @media screen and (max-width: 1024px) {
     width: 60vw;

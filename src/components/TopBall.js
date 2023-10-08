@@ -66,7 +66,7 @@ const TopBallShadow = styled.div`
     height: 10px;
     background-color: darkgrey;
     position: absolute;
-    bottom: 412px;
+    bottom: 422px;
     opacity: 0;
     animation: ${ShadowAnimation} 1.8s forwards;
     

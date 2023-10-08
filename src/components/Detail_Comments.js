@@ -1,6 +1,8 @@
 import {
   faAngleDown,
   faBookmark,
+  faComments,
+  faCopyright,
   faHeart,
   faLink,
   faShare,
@@ -31,7 +33,7 @@ import {
 } from "firebase/firestore";
 import TextAreaEdit from "./TextAreaEdit";
 import AvatarMain from "../pages/AvatarMain";
-import { useNavigate } from 'react-router-dom'
+import { useNavigate } from "react-router-dom";
 import Modal from "./Modal";
 import MyAvatarComment from "../pages/MyAvatarComment";
 
@@ -73,6 +75,7 @@ const ContentWrap = styled.div`
   padding: 0 25px;
   display: flex;
   flex-direction: column;
+  position: relative;
   textarea {
     width: 100%;
     resize: none;
@@ -90,17 +93,18 @@ const ContentTopWrap = styled.div`
   width: 100%;
   display: flex;
   justify-content: space-between;
-  margin-bottom: 35px;
+  margin-bottom: 30px;
 `;
 const ContentCenterWrap = styled.div`
   width: 100%;
-  margin-bottom: 60px;
+  margin-bottom: 40px;
 `;
 const ContentBottomWrap = styled.div`
   width: 100%;
   display: flex;
   justify-content: flex-end;
-  margin-bottom: 60px;
+  align-items: center;
+  margin-bottom: 10px;
   div {
     margin-left: 40px;
     line-height: 28px;
@@ -152,7 +156,8 @@ const TopicWrap = styled.div`
       p.date-from,
       p.date-wroten {
         font-size: 22px;
-        font-weight: 400;
+        font-weight: 600;
+        color: #555555;
         margin-left: 8px;
       }
     }
@@ -206,7 +211,8 @@ const NickName = styled.span`
 `;
 
 const Date = styled.span`
-  font-size: 18px;
+  font-size: 15px;
+  font-weight: bold;
 `;
 
 /*
@@ -222,6 +228,16 @@ const Comment = styled.p`
   #### Bottom Contents ####
   */
 
+const ButtonWrap = styled.div`
+
+  button {
+    padding: 8px 20px;
+    &:nth-child(1) {
+      margin-right: 3px;
+    }
+  }
+`;
+
 const Count = styled.div`
   font-size: 18px;
 `;
@@ -232,7 +248,9 @@ const Love = styled.div`
 
 const Share = styled.div``;
 
-const Reply = styled.div``;
+const Reply = styled.div`
+  transform: scaleX(-1);
+`;
 
 /*
   #### Topics ####
@@ -245,9 +263,14 @@ const Created = styled.div`
   }
   div.inner-wrap {
     div.profile {
-      background-image: url("../images/portraits/man_1.png");
+      background-image: url("../images/portraits/man_8.png");
+      background-size: cover;
     }
     div.date-wroten {
+    }
+    p.date{
+      font-size: 23px;
+      font-weight: bold;
     }
   }
 `;
@@ -260,6 +283,10 @@ const LastReply = styled.div`
       background-image: url("../images/portraits/woman_7.png");
     }
     div.date-from {
+    }
+    p.date{
+      font-size: 23px;
+      font-weight: bold;
     }
   }
 `;
@@ -322,11 +349,41 @@ const RepliedUsers = styled.div`
 const Pagenation = styled.div`
   text-align: center;
   padding: 50px;
-  font-size: 30px;
-  button{
+  font-weight: 500;
+  font-size: 25px;
+  button {
     padding: 20px;
   }
-`
+`;
+const MyComment = styled.div`
+  position: relative;
+  color: black;
+  font-weight: bold;
+  padding: 3px 5px;
+  font-size: 14px;
+  text-transform: uppercase;
+`;
+
+const MyCommentTag = styled.i`
+  width: 25px;
+  height: 25px;
+  position: absolute;
+  left: -30px;
+  top: -1px;
+
+  background-image: url("../images/detail/tag.svg");
+  background-size: cover;
+`;
+const CreatorTag = styled.i`
+  width: 25px;
+  height: 25px;
+  position: absolute;
+  left: -30px;
+  top: -1px;
+  z-index: 99;
+  background-image: url("../images/detail/creator.svg");
+  background-size: cover;
+`;
 
 function Detail_Comments() {
   const [nickName, SetNickName] = useState("");
@@ -367,57 +424,56 @@ function Detail_Comments() {
 
   const indexOfLastComment = currentPage * commentsPerPage;
   const indexOfFirstComment = indexOfLastComment - commentsPerPage;
-  const currentComments = comments.slice(indexOfFirstComment, indexOfLastComment);
+  const currentComments = comments.slice(
+    indexOfFirstComment,
+    indexOfLastComment
+  );
   const currentLikeds = likeds.slice(indexOfFirstComment, indexOfLastComment);
-  
+
   const totalPages = Math.ceil(comments.length / commentsPerPage);
- 
 
   const navigate = useNavigate();
-  
 
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
   };
 
   const CommentNickname = (e) => {
-    setIsReply(true)
-    setReplyToNickname(e)
-  }
+    setIsReply(true);
+    setReplyToNickname(e);
+  };
 
-  const ReplyClick = async(id, index) => {
-    const commentRef = doc(getFirestore, "comments", id)
+  const ReplyClick = async (id, index) => {
+    const commentRef = doc(getFirestore, "comments", id);
     const snapshot = await getDoc(commentRef);
-    const reply = snapshot.data().reply;    
-    try{
-      if(reply.exists()){
-        setReplyToNickname(reply)
+    const reply = snapshot.data().reply;
+    try {
+      if (reply.exists()) {
+        setReplyToNickname(reply);
       }
-    }catch(error){
+    } catch (error) {}
+  };
 
-    }
-  }
-  
   const TopicCommentData = async () => {
-    try{
+    try {
       const ref = collection(getFirestore(), "comments");
       const q = query(
         collection(getFirestore(), "comments"),
         orderBy("createdate", "desc")
-      )
-      const snapshot = await getCountFromServer(ref)
-      const userSnapshot = await getDocs(q)
-      const uids = userSnapshot.docs.map(doc => doc.data().uid);
+      );
+      const snapshot = await getCountFromServer(ref);
+      const userSnapshot = await getDocs(q);
+      const uids = userSnapshot.docs.map((doc) => doc.data().uid);
       const uniqueUids = [...new Set(uids)];
       const totalCount = snapshot.data().count;
-      setUsersCount(uniqueUids.length)
-      setRepliesCount(totalCount)
-      setLastReplyDate(userSnapshot.docs[0].data().createdate)
+      setUsersCount(uniqueUids.length);
+      setRepliesCount(totalCount);
+      setLastReplyDate(userSnapshot.docs[0].data().createdate.minute);
     } catch (error) {
       console.log(error);
     }
-  }
-  
+  };
+
   const GetDocsFromUsers = async () => {
     try {
       const ref = collection(getFirestore(), "users");
@@ -449,11 +505,11 @@ function Detail_Comments() {
     }
   };
 
-useEffect(()=>{
-  GetDocsFromUsers();
-  GetDocsFromComments();
-  TopicCommentData();
-},[])
+  useEffect(() => {
+    GetDocsFromUsers();
+    GetDocsFromComments();
+    TopicCommentData();
+  }, []);
 
   const getPhotoURLForMatchingIds = (commentsArray, usersArray) => {
     const matchedUsers = [];
@@ -527,23 +583,23 @@ useEffect(()=>{
     }
   };
 
-  function formatDate(data){
-    if(data){
-        const date = data.toDate();
-        const year = date.getFullYear();
-        const month = String(date.getMonth()+1).padStart(2, "0");
-        const day = String(date.getDate()).padStart(2, "0");
-        return `${year}-${month}-${day}`
-    }
-}
-
-  const LoginCheck = (e,i) => {
-    if(!userState.loggedIn){
-      setIsModal(true)
-    }else{
-      addHeart(e,i)
+  function formatDate(data) {
+    if (data) {
+      const date = data.toDate();
+      const year = date.getFullYear();
+      const month = String(date.getMonth() + 1).padStart(2, "0");
+      const day = String(date.getDate()).padStart(2, "0");
+      return `${month}-${day}`;
     }
   }
+
+  const LoginCheck = (e, i) => {
+    if (!userState.loggedIn) {
+      setIsModal(true);
+    } else {
+      addHeart(e, i);
+    }
+  };
 
   /*
   #### Fetch Contents Functions
@@ -562,7 +618,13 @@ useEffect(()=>{
     return (
       <ContentCenterWrap>
         {editId === id ? (
-          <TextAreaEdit id={id} text={text} onCancel={() => setEditId(null)} setIsModal={setIsModal} setErrorMessage={setErrorMessage}/>
+          <TextAreaEdit
+            id={id}
+            text={text}
+            onCancel={() => setEditId(null)}
+            setIsModal={setIsModal}
+            setErrorMessage={setErrorMessage}
+          />
         ) : (
           <Comment>{text}</Comment>
         )}
@@ -573,7 +635,8 @@ useEffect(()=>{
   const FetchContentBottom = ({ id, index }) => {
     return (
       <ContentBottomWrap>
-        <Count>{likeds[index]?.totalcount}</Count>
+        {/* <Count>{likeds[index]?.totalcount}</Count> */}
+         <Count>732</Count>
         <Love
           style={{ cursor: "pointer" }}
           onClick={() => {
@@ -592,21 +655,24 @@ useEffect(()=>{
     );
   };
 
-  const FetchTopics = () => {
+  const FetchTopics = ({LastReplyDate}) => {
     return (
       <>
         <Created>
           <p className="title">created</p>
           <div className="inner-wrap">
             <div className="profile"></div>
-            <p className="date-wroten">date</p>
+            <p className="date-from">&nbsp; 5d</p>
           </div>
         </Created>
         <LastReply>
           <p className="title">last reply</p>
           <div className="inner-wrap">
             <div className="profile"></div>
-            <p className="date-from">{LastReplyDate && formatDate(LastReplyDate)}</p>
+            {/* <p className="date-from">
+              {LastReplyDate && formatDate(LastReplyDate)}
+            </p> */}
+              <p className="date-from">&nbsp; 1d</p>
           </div>
         </LastReply>
         <Replies>
@@ -614,7 +680,7 @@ useEffect(()=>{
           <p className="title">replies</p>
         </Replies>
         <Views>
-          <p className="count">1</p>
+          <p className="count">1672</p>
           <p className="title">views</p>
         </Views>
         <Users>
@@ -622,7 +688,7 @@ useEffect(()=>{
           <p className="title">users</p>
         </Users>
         <Likes>
-          <p className="count">1</p>
+          <p className="count">732</p>
           <p className="title">likes</p>
         </Likes>
         <Link>
@@ -634,36 +700,60 @@ useEffect(()=>{
           <div className="large-profile"></div>
           <div className="large-profile"></div>
         </RepliedUsers>
-        <TopicButtonWrap>
+        {/* <TopicButtonWrap>
           <FontAwesomeIcon icon={faAngleDown} />
-        </TopicButtonWrap>
+        </TopicButtonWrap> */}
+      </>
+    );
+  };
+  const FetchComment = ({ nickname, text, createdate, profile }) => {
+    return (
+      <>
+        <MyComment style={{marginTop: "20px"}}>
+          <FontAwesomeIcon
+            style={{
+              fontSize: "25px",
+              color: "orangered",
+              position: "absolute",
+              left: "-30px",
+              top: "-1px",
+            }}
+            icon={faCopyright}
+          ></FontAwesomeIcon>
+          Creator
+        </MyComment>
+        <li>
+          <ProfileWrap>
+            <Profile src={profile} />
+          </ProfileWrap>
+          <ContentWrap>
+            <FetchContentTop nickname={nickname} createdate={createdate} />
+            <FetchContentCenter text={text} />
+            <FetchContentBottom />
+            <TopicWrap>
+              <FetchTopics LastReplyDate={LastReplyDate} />
+            </TopicWrap>
+          </ContentWrap>
+        </li>
       </>
     );
   };
 
-  const FetchComment = ({ nickname, text, createdate, profile }) => {
+  const TextBox = ({ text }) => {
     return (
-      <li>
-        <ProfileWrap>
-          <Profile src={"./images/portraits/woman_5.png"} />
-        </ProfileWrap>
-        <ContentWrap>
-          <FetchContentTop nickname={nickname} createdate={createdate} />
-          <FetchContentCenter text={text} />
-          <FetchContentBottom />
-          <TopicWrap>
-            <FetchTopics />
-          </TopicWrap>
-        </ContentWrap>
-      </li>
+      <TextArea
+        GetDocsFromComments={GetDocsFromComments}
+        GetDocsFromUsers={GetDocsFromUsers}
+        FetchLiked={FetchLiked}
+        text={text}
+        setIsModal={setIsModal}
+        setErrorMessage={setErrorMessage}
+        setIsReply={setIsReply}
+        isReply={isReply}
+        replyToNickname={replyToNickname}
+      />
     );
   };
-
-  const TextBox = ({text}) => {
-    return (
-      <TextArea GetDocsFromComments={GetDocsFromComments} GetDocsFromUsers={GetDocsFromUsers} FetchLiked={FetchLiked} text={text} setIsModal={setIsModal} setErrorMessage={setErrorMessage} setIsReply={setIsReply} isReply={isReply} replyToNickname={replyToNickname}/>
-    )
-  }
   function handleSubmit(e) {
     // Prevent the browser from reloading the page
     e.preventDefault();
@@ -680,11 +770,17 @@ useEffect(()=>{
     console.log(formJson);
   }
 
-  const currentProfiles = matchingUsers.slice(indexOfFirstComment, indexOfLastComment);
-  
+  const currentProfiles = matchingUsers.slice(
+    indexOfFirstComment,
+    indexOfLastComment
+  );
+
   const FetchLiked = async () => {
     try {
-      const LikeCollection = query(collection(getFirestore(), "comments"), orderBy("createdate", "asc"));
+      const LikeCollection = query(
+        collection(getFirestore(), "comments"),
+        orderBy("createdate", "asc")
+      );
       const likeSnapShot = await getDocs(LikeCollection);
 
       const likedArray = await Promise.all(
@@ -716,34 +812,52 @@ useEffect(()=>{
                 <MyAvatarComment width={"70px"} height={"70px"} />
               </ProfileWrap>
               <ContentWrap>
-                {isReply &&                
-                  <p>{replyToNickname}에게 답글을 다는 중입니다…</p>
-                }
+                {isReply && (
+                  <p style={{position: "absolute", top:"-30px", color: "#ddd"}}>
+                   <FontAwesomeIcon style={{color: "#ddd"}} icon={faComments}></FontAwesomeIcon> {replyToNickname} 님 에게 답글 다는 중...
+                  </p>
+                )}
                 <FormWrapper method="post" onSubmit={handleSubmit}>
                   <TextBox />
                 </FormWrapper>
               </ContentWrap>
             </li>
+
             <FetchComment
               text={
-                "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quod praesentium porro expedita deleniti itaque at quaerat modi, exercitationem vitae laboriosam."
+                "재밌게 콘텐츠를 즐기셨나요? 질문이 있다면 아래에 답글을 남겨주세요!"
               }
-              nickname={"#db53632"}
-              createdate={"2023.09.26"}
-              profile={"../images/portraits/woman_5.png"}
-            />
+              nickname={"#db3308"}
+              createdate={"Thu Oct 05 2023"}
+              profile={"../images/portraits/man_8.png"}
+            ></FetchComment>
             {currentComments.map((e, i) => {
               return (
                 <>
-                  {e.uid === userState.uid &&
-                    <span>작성자</span>
-                  }
-                  { e.id &&
-                    e.reply !== undefined ?
-                    <p>{e.reply}의 답글입니다.</p>:''
-                  
-                  }
-                  {console.log(e.reply)}
+                  <div
+                    style={{
+                      width: "100%",
+                      display: "flex",
+                      justifyContent: "space-between",
+                      marginTop: "15px",
+                    }}
+                  >
+                    {e.uid === userState.uid ? (
+                      <MyComment>
+                        My Comment
+                        <MyCommentTag></MyCommentTag>
+                      </MyComment>
+                    ) : (
+                      <span></span>
+                    )}
+                    {e.id && e.reply !== undefined ? (
+                      <p>
+                        <strong>{e.reply}</strong>님에게 남긴 답글입니다.
+                      </p>
+                    ) : (
+                      <p></p>
+                    )}
+                  </div>
                   <li key={i}>
                     <ProfileWrap>
                       <Profile
@@ -753,47 +867,54 @@ useEffect(()=>{
                       />
                     </ProfileWrap>
                     <ContentWrap>
-                      <FetchContentTop
-                        nickname={e.nickname}
-                      />
+                      <FetchContentTop nickname={e.nickname} createdate={e.createdate.toDate().toDateString()}/>
                       <FetchContentCenter text={e.text} id={e.id} />
                       <ContentBottomWrap>
                         <Count>{currentLikeds[i]?.totalcount}</Count>
                         <Love
                           style={{ cursor: "pointer" }}
                           onClick={() => {
-                            LoginCheck(e.id, i)
+                            LoginCheck(e.id, i);
                           }}
                         >
-                          {isModal && 
-                            <Modal 
-                              error={!userState.loggedIn ? "로그인이 필요한 페이지입니다.":errorMessage}
-                              onClose={() => {setIsModal(false); navigate(!userState.loggedIn && '/login');}} 
+                          {isModal && (
+                            <Modal
+                              error={
+                                !userState.loggedIn
+                                  ? "로그인이 필요한 페이지입니다."
+                                  : errorMessage
+                              }
+                              onClose={() => {
+                                setIsModal(false);
+                                navigate(!userState.loggedIn && "/login");
+                              }}
                             />
-                          }
+                          )}
                           <FontAwesomeIcon icon={faHeart} />
                         </Love>
-                        <Share>
+                        {/* <Share>
                           <FontAwesomeIcon icon={faLink} />
-                        </Share>
+                        </Share> */}
                         <Reply
-                          style={{ cursor: "pointer" }} 
-                          onClick={()=>{
-                            CommentNickname(e.nickname)
+                          style={{ cursor: "pointer" }}
+                          onClick={() => {
+                            CommentNickname(e.nickname);
                           }}
                         >
                           <FontAwesomeIcon icon={faShare} />
                         </Reply>
-                        {e.uid === userState.uid && editId !== e.id && (
-                          <>
-                            <button onClick={() => setEditId(e.id)}>
-                              수정
-                            </button>
-                            <button onClick={() => deleteComment(e.id)}>
-                              삭제
-                            </button>
-                          </>
-                        )}
+                          {e.uid === userState.uid && editId !== e.id && (
+                        <ButtonWrap>
+                            <>
+                              <button onClick={() => setEditId(e.id)}>
+                                수정
+                              </button>
+                              <button onClick={() => deleteComment(e.id)}>
+                                삭제
+                              </button>
+                            </>
+                        </ButtonWrap>
+                          )}
                       </ContentBottomWrap>
                     </ContentWrap>
                   </li>
@@ -801,14 +922,18 @@ useEffect(()=>{
               );
             })}
             <Pagenation>
-              {Array(totalPages).fill().map((_, index) => (
-                <button key={index + 1} onClick={ () => {
-                  handlePageChange(index + 1)  
-                }
-                }>
-                  {index + 1}
-                </button>
-              ))}
+              {Array(totalPages)
+                .fill()
+                .map((_, index) => (
+                  <button
+                    key={index + 1}
+                    onClick={() => {
+                      handlePageChange(index + 1);
+                    }}
+                  >
+                    {index + 1}
+                  </button>
+                ))}
             </Pagenation>
           </ul>
         </CommentWrap>
