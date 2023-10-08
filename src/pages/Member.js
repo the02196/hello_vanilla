@@ -129,8 +129,9 @@ const SignUp = styled.div`
   padding: 30px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   background-color: #fff;
-  /* position: relative;
-  z-index: 222222222; */
+
+  position: relative;
+  z-index: 222222222;
   /* border-radius: 10px; */
   @media screen and (max-width: 1024px) {
     width: 60vw;
