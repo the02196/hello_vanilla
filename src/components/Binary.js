@@ -152,6 +152,7 @@ const autoChangeBinaryCodes = (binaryCodes) => {
   const binaryWrap = document.querySelector(".binaryWrap");
   const binaryCodes = document.querySelectorAll(".binary");
   console.log(binaryCodes)
+  
   const animation = (binaryWrap, binaryCodes) => {
     setTimeout(() => {
       scaleUpBinaryCodes(binaryCodes)

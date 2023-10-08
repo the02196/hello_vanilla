@@ -30,9 +30,10 @@ import {
   updateDoc,
 } from "firebase/firestore";
 import TextAreaEdit from "./TextAreaEdit";
-import Avatar from "../pages/Avatar";
+import AvatarMain from "../pages/AvatarMain";
 import { useNavigate } from 'react-router-dom'
 import Modal from "./Modal";
+import MyAvatarComment from "../pages/MyAvatarComment";
 
 /*
   #### Wrappers ####
@@ -712,7 +713,7 @@ useEffect(()=>{
           <ul>
             <li>
               <ProfileWrap>
-                <Avatar width={"70px"} height={"70px"} />
+                <MyAvatarComment width={"70px"} height={"70px"} />
               </ProfileWrap>
               <ContentWrap>
                 {isReply &&                
