@@ -231,7 +231,6 @@ function Member() {
   
   console.log(userState);
   const [userUid, setUserUid] = useState(userState && userState.uid);
-  
 
   
   //삼항연산자를 사용할려면 항상 useState에 값을 저장해둬야함
@@ -319,10 +318,6 @@ function Member() {
       errorMessage = "이름";
     } else if (nickname.length === 0) {
       errorMessage = "닉네임";
-    } else if (!isValidPhone(phoneNumber)) {
-      setError("전화번호 를 입력해주세요.");
-      setIsModal(!isModal);
-      return;
     } else if (!isValidEmail(email)) {
       setError("이메일 주소를 입력해주세요.");
       setIsModal(!isModal);  
@@ -334,9 +329,12 @@ function Member() {
     } else if (password !== passwordConfirm && initialMode) {
       setError("비밀번호가 일치하지 않습니다.");
       setIsModal(!isModal);
+      return; 
+    }else if (!isValidPhone(phoneNumber)) {
+      setError("전화번호 를 입력해주세요.");
+      setIsModal(!isModal);
       return;
-    
-    }
+    } 
 
     if (errorMessage) {
       setError(errorMessage + "을 입력해 주세요 !");
@@ -515,9 +513,7 @@ function Member() {
                   setEmail(e.target.value);
                 }}
               />
-
               {initialMode && <CheckEmail onClick={()=>{CheckedEmail(email)}}>중복 확인</CheckEmail>}
-
             </EmailWrap>
             {initialMode && ( //회원가입일때 아래내용이 실행되어야함
               <>
