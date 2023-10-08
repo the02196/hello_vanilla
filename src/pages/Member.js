@@ -133,7 +133,9 @@ const SignUp = styled.div`
   background-color: #fff;
 
   position: relative;
-  z-index: 500;
+
+   z-index: 200; 
+
   /* border-radius: 10px; */
   @media screen and (max-width: 1024px) {
     width: 60vw;
@@ -423,10 +425,10 @@ function Member() {
        const j = await query(collection(getFirestore(), 'users'), where("email", "==", email));
        const querySnapshot = await getDocs(j);
        if(querySnapshot.docs.length === 0){
-        setError("사용가능한 이메일입니다. ^-^");
+        setError("사용가능한 이메일입니다.");
         setIsModal(!isModal);          
       }else{
-         setError("중복된 이메일 입니다 다시 입력해 주세요. ㅜ_ㅜ");
+         setError("중복된 이메일 입니다 다시 입력해 주세요.");
          setIsModal(!isModal);
          return;
        }
