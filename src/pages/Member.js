@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import styled from "styled-components";
 import { createUserWithEmailAndPassword, firebaseAuth } from "./../firebase";
 import {
@@ -416,6 +416,13 @@ function Member() {
       }
     }
   };
+  const currentUrl = window.location.href;   
+  useMemo(()=>{
+      if(currentUrl === "http://localhost:3000/modify"){
+        setIsPass(true)
+        return;
+      }
+    },[])
   const CheckedEmail = async (email) => {
    
     if (!isValidEmail(email)) {
