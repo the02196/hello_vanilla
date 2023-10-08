@@ -226,6 +226,7 @@ function Member() {
   const [eye, setEye] = useState([0, 0]); //눈이 2개라서 배열에 한번에 담기 위해서 ..
   const navigate = useNavigate();
   const [isModal, setIsModal] = useState(false);
+  const [pass, setIsPass] = useState(false);
   //0922-2
   
        const userState = useSelector((state) => state.user);
@@ -425,9 +426,11 @@ function Member() {
        const j = await query(collection(getFirestore(), 'users'), where("email", "==", email));
        const querySnapshot = await getDocs(j);
        if(querySnapshot.docs.length === 0){
+        setIsPass(true)
         setError("사용가능한 이메일입니다.");
         setIsModal(!isModal);          
       }else{
+        setIsPass(false)
          setError("중복된 이메일 입니다 다시 입력해 주세요.");
          setIsModal(!isModal);
          return;
@@ -567,8 +570,16 @@ function Member() {
               placeholder="전화번호를 입력하세요."
               maxLength={13}
             />
-
-            <Button onClick={signUp}>{initialMode ? "가입" : "수정"}</Button>
+            <div>
+            <Button onClick={(e)=>{
+              if(!pass){
+                return;
+              }
+              else if(pass){
+                signUp(e) 
+              }
+            }} style={{backgroundColor: pass ? "black" : "lightgray"}}>{initialMode ? "가입" : "수정"}</Button>
+            </div>
             {/* <p>{error}</p> */}
             {!initialMode && (
               <div
