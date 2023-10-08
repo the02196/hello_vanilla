@@ -229,7 +229,6 @@ const Comment = styled.p`
   */
 
 const ButtonWrap = styled.div`
-
   button {
     padding: 8px 20px;
     &:nth-child(1) {
@@ -268,23 +267,26 @@ const Created = styled.div`
     }
     div.date-wroten {
     }
-    p.date{
+    p.date {
       font-size: 23px;
       font-weight: bold;
     }
   }
 `;
 
+// const length = currentComments?.length + 1
+
+
 const LastReply = styled.div`
   width: 10%;
   align-items: flex-start !important;
   div.inner-wrap {
     div.profile {
-      background-image: url("../images/portraits/woman_7.png");
+      background-image: url("../images/portraits/man_4.png");
     }
     div.date-from {
     }
-    p.date{
+    p.date {
       font-size: 23px;
       font-weight: bold;
     }
@@ -492,7 +494,7 @@ function Detail_Comments() {
     try {
       const q = query(
         collection(getFirestore(), "comments"),
-        orderBy("createdate", "asc")
+        orderBy("createdate", "desc")
       );
       const snapShot = await getDocs(q);
       const array = snapShot.docs.map((doc) => ({
@@ -531,7 +533,7 @@ function Detail_Comments() {
 
   useEffect(() => {
     const commentRef = collection(getFirestore(), "comments");
-    const q = query(commentRef, orderBy("createdate", "asc"));
+    const q = query(commentRef, orderBy("createdate", "desc"));
     const dataSnap = onSnapshot(q, (item) => {
       const fetchComment = item.docs.map((doc) => ({
         id: doc.id,
@@ -608,7 +610,7 @@ function Detail_Comments() {
   const FetchContentTop = ({ nickname, createdate }) => {
     return (
       <ContentTopWrap>
-        <NickName>{nickname}</NickName>
+        <NickName>#{nickname}</NickName>
         <Date>{createdate}</Date>
       </ContentTopWrap>
     );
@@ -636,7 +638,7 @@ function Detail_Comments() {
     return (
       <ContentBottomWrap>
         {/* <Count>{likeds[index]?.totalcount}</Count> */}
-         <Count>732</Count>
+        <Count>732</Count>
         <Love
           style={{ cursor: "pointer" }}
           onClick={() => {
@@ -655,7 +657,7 @@ function Detail_Comments() {
     );
   };
 
-  const FetchTopics = ({LastReplyDate}) => {
+  const FetchTopics = ({ LastReplyDate }) => {
     return (
       <>
         <Created>
@@ -672,7 +674,7 @@ function Detail_Comments() {
             {/* <p className="date-from">
               {LastReplyDate && formatDate(LastReplyDate)}
             </p> */}
-              <p className="date-from">&nbsp; 1d</p>
+            <p className="date-from">&nbsp; 1d</p>
           </div>
         </LastReply>
         <Replies>
@@ -709,7 +711,7 @@ function Detail_Comments() {
   const FetchComment = ({ nickname, text, createdate, profile }) => {
     return (
       <>
-        <MyComment style={{marginTop: "20px"}}>
+        <MyComment style={{ marginTop: "20px" }}>
           <FontAwesomeIcon
             style={{
               fontSize: "25px",
@@ -779,7 +781,7 @@ function Detail_Comments() {
     try {
       const LikeCollection = query(
         collection(getFirestore(), "comments"),
-        orderBy("createdate", "asc")
+        orderBy("createdate", "desc")
       );
       const likeSnapShot = await getDocs(LikeCollection);
 
@@ -813,8 +815,18 @@ function Detail_Comments() {
               </ProfileWrap>
               <ContentWrap>
                 {isReply && (
-                  <p style={{position: "absolute", top:"-30px", color: "#ddd"}}>
-                   <FontAwesomeIcon style={{color: "#ddd"}} icon={faComments}></FontAwesomeIcon> {replyToNickname} 님 에게 답글 다는 중...
+                  <p
+                    style={{
+                      position: "absolute",
+                      top: "-30px",
+                      color: "#ddd",
+                    }}
+                  >
+                    <FontAwesomeIcon
+                      style={{ color: "#ddd" }}
+                      icon={faComments}
+                    ></FontAwesomeIcon>{" "}
+                    {replyToNickname} 님 에게 답글 다는 중...
                   </p>
                 )}
                 <FormWrapper method="post" onSubmit={handleSubmit}>
@@ -827,7 +839,7 @@ function Detail_Comments() {
               text={
                 "재밌게 콘텐츠를 즐기셨나요? 질문이 있다면 아래에 답글을 남겨주세요!"
               }
-              nickname={"#db3308"}
+              nickname={"db3308"}
               createdate={"Thu Oct 05 2023"}
               profile={"../images/portraits/man_8.png"}
             ></FetchComment>
@@ -842,6 +854,21 @@ function Detail_Comments() {
                       marginTop: "15px",
                     }}
                   >
+                    {(e.nickname === "dh3308") && 
+                        <MyComment style={{ marginTop: "20px" }}>
+                        <FontAwesomeIcon
+                          style={{
+                            fontSize: "25px",
+                            color: "orangered",
+                            position: "absolute",
+                            left: "-30px",
+                            top: "-1px",
+                          }}
+                          icon={faCopyright}
+                        ></FontAwesomeIcon>
+                        Creator
+                      </MyComment>
+                    }
                     {e.uid === userState.uid ? (
                       <MyComment>
                         My Comment
@@ -852,12 +879,13 @@ function Detail_Comments() {
                     )}
                     {e.id && e.reply !== undefined ? (
                       <p>
-                        <strong>{e.reply}</strong>님에게 남긴 답글입니다.
+                        <strong>#{e.reply}</strong>님에게 남긴 답글입니다.
                       </p>
                     ) : (
                       <p></p>
                     )}
                   </div>
+
                   <li key={i}>
                     <ProfileWrap>
                       <Profile
@@ -867,7 +895,10 @@ function Detail_Comments() {
                       />
                     </ProfileWrap>
                     <ContentWrap>
-                      <FetchContentTop nickname={e.nickname} createdate={e.createdate.toDate().toDateString()}/>
+                      <FetchContentTop
+                        nickname={e.nickname}
+                        createdate={e.createdate?.toDate().toDateString()}
+                      />
                       <FetchContentCenter text={e.text} id={e.id} />
                       <ContentBottomWrap>
                         <Count>{currentLikeds[i]?.totalcount}</Count>
@@ -903,18 +934,18 @@ function Detail_Comments() {
                         >
                           <FontAwesomeIcon icon={faShare} />
                         </Reply>
-                          {e.uid === userState.uid && editId !== e.id && (
+                        {e.uid === userState.uid && editId !== e.id && (
                         <ButtonWrap>
-                            <>
-                              <button onClick={() => setEditId(e.id)}>
-                                수정
-                              </button>
-                              <button onClick={() => deleteComment(e.id)}>
-                                삭제
-                              </button>
-                            </>
+                          <>
+                            <button onClick={() => setEditId(e.id)}>
+                              수정
+                            </button>
+                            <button onClick={() => deleteComment(e.id)}>
+                              삭제
+                            </button>
+                          </>
                         </ButtonWrap>
-                          )}
+                        )} 
                       </ContentBottomWrap>
                     </ContentWrap>
                   </li>
