@@ -1,7 +1,9 @@
-import React from 'react'
-import { styled } from 'styled-components'
+import React, { useState } from 'react'
+import { keyframes, styled } from 'styled-components'
 
 function Walk() {
+  const [isDust, setIsDust] = useState(false);
+
 
     const LeftFoot = styled.div`
          width: 49px;
@@ -34,10 +36,67 @@ function Walk() {
         }
     ` 
 
+
+const sandDustAnimation = keyframes`
+  0% {
+    transform: scale(0);
+    opacity: 0.5;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 0;
+  }
+`;
+
+ const SandDust = styled.div`
+  position: relative;
+  top: 100px;
+  right: 290px;
+  width: 0;
+  height: 0;
+  background: transparent;
+  border-radius: 50%;
+  &.active{
+    &:before,
+    &:after {
+      content: '';
+      position: absolute;
+      width: 1000px;
+      height: 50px;
+      top: 0;
+      left: 0;
+      z-index: 999;
+      background: black;
+      border-radius: 50%;
+      opacity: 1;
+      animation: ${sandDustAnimation} 0.5s forwards;
+    }
+  }
+  
+  &:before {
+    left: -50px;
+    top: -25px;
+  }
+  
+  &:after {
+    right: -50px;
+    bottom: -25px;
+  }
+`;
+
+const TransparentLayerForDebug = styled.div`
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  background-color: transparent;
+  z-index: 20;
+`
   return (
     <>
-     <LeftFoot/>
-     <RightFoot />
+     <TransparentLayerForDebug onMouseEnter={()=>{setIsDust(true)}} onMouseOut={()=>{setIsDust(false)}}></TransparentLayerForDebug>
+     <LeftFoot></LeftFoot>
+     <RightFoot><SandDust className={isDust && ".active"}></SandDust></RightFoot>
+     
     </>
   )
 }

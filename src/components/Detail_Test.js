@@ -289,7 +289,7 @@ function Detail_Test() {
           <div>
             <span>&lt;&gt; creator. #dh3308 & #romi6342</span>
             <span>how we can move ball with js?</span>
-            <span>"querySelector"</span>
+            <span>"addEventListener"</span>
           </div>
           <span>
             <NavLink to={"/main"}>메인 페이지로 가기</NavLink>

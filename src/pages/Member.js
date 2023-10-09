@@ -222,9 +222,9 @@ function Member() {
   const [passwordConfirm, setPasswordConfirm] = useState("");
   const [nickname, setNickname] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
-  const [error, setError] = useState("");
   const [eye, setEye] = useState([0, 0]); //눈이 2개라서 배열에 한번에 담기 위해서 ..
   const navigate = useNavigate();
+  const [error, setError] = useState("");
   const [isModal, setIsModal] = useState(false);
   const [pass, setIsPass] = useState(false);
   //0922-2

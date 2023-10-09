@@ -344,7 +344,7 @@ const RepliedUsers = styled.div`
     background-image: url("../images/portraits/man_4.png");
   }
   div.large-profile:nth-child(3) {
-    background-image: url("../images/portraits/woman_4.png");
+    background-image: url("../images/portraits/man_10.png");
   }
 `;
 
@@ -804,6 +804,16 @@ function Detail_Comments() {
     }
   };
 
+  var options = {
+      year: "numeric"
+      , month: "short"
+      , day: "numeric"
+      , weekday: "long"
+      , hour: "2-digit"
+      , minute: "2-digit"
+  };
+
+
   return (
     <>
       <GlobalWrap>
@@ -855,7 +865,7 @@ function Detail_Comments() {
                     }}
                   >
                     {(e.nickname === "dh3308") && 
-                        <MyComment style={{ marginTop: "20px" }}>
+                        <MyComment>
                         <FontAwesomeIcon
                           style={{
                             fontSize: "25px",
@@ -869,14 +879,12 @@ function Detail_Comments() {
                         Creator
                       </MyComment>
                     }
-                    {e.uid === userState.uid ? (
+                    {e.uid === userState.uid ?
                       <MyComment>
                         My Comment
                         <MyCommentTag></MyCommentTag>
-                      </MyComment>
-                    ) : (
-                      <span></span>
-                    )}
+                      </MyComment> : <span></span>
+                    }
                     {e.id && e.reply !== undefined ? (
                       <p>
                         <strong>#{e.reply}</strong>님에게 남긴 답글입니다.

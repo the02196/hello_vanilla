@@ -91,12 +91,12 @@ function Footer() {
   return (
     <>
         <FooterWrap>
-          <Greeting />
           <Mountain />
           <Mountain />
           <Mountain />
           <Mountain />   
           <Mountain />
+          <Greeting />
           <HouseRoof />
           <HouseBody />
           <InfoWrap>
