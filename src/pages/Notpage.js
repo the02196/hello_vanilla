@@ -26,17 +26,17 @@ const PageContent = styled.div`
  box-shadow: 0 15px 15px -10px rgba(0,0,0,0.1);
  text-align: center;
  h3{
-    font-size: 165px;
+    font-size: 130px;
     font-weight: bold;
-    margin-bottom: 50px;
+    margin-bottom: 10px;
     color: #262626;
     span{
-        color: lightskyblue;
+        color: red;
     }
  }
  p{
     margin-bottom: 20px;
-    font-size: 40px;
+    font-size: 30px;
     font-weight: bold;
  }
 `
@@ -46,6 +46,8 @@ background-color: #fff;
 border: 1px solid #ddd;
 padding: 10px 30px;
 border-radius: 5px;
+margin: 20px 0;
+font-size: 26px;
 cursor: pointer;
 `
 
