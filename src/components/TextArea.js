@@ -11,6 +11,7 @@ import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
 import styled from "styled-components";
+import Modal from "./Modal";
 
 const ButtonWrap = styled.div`
   width: 100%;
@@ -24,11 +25,13 @@ const ButtonWrap = styled.div`
 
 
 
-function TextArea({GetDocsFromComments, GetDocsFromUsers, FetchLiked, text, setIsModal, setErrorMessage, setIsReply, replyToNickname, isReply}) {
+function TextArea({GetDocsFromComments, GetDocsFromUsers, FetchLiked, text, setErrorMessage, setIsReply, replyToNickname, isReply}) {
   const memberProfile = useSelector((state) => state.user);
   const [commentValue, setCommentValue] = useState(text);
   const [postData, setPostData] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isModal, setIsModal] = useState(false);
+  const [error, setError] = useState("");
   const [message, setMessage] = useState("");
   const [postUid, setPostUid] = useState();
   const [comment, setComment] = useState("");
@@ -108,12 +111,12 @@ function TextArea({GetDocsFromComments, GetDocsFromUsers, FetchLiked, text, setI
 
   const addComment = async () =>{
     if (!memberProfile || !memberProfile.uid) {
-      setErrorMessage("로그인이 필요한 서비스입니다.")
+      setError("로그인이 필요한 서비스입니다.")
       setIsModal(true);
       return;
     }
     if(commentValue.length===0){
-      setErrorMessage("댓글을 입력해주세요.");
+      setError("댓글을 입력해주세요.");
       setIsModal(true);
       return;
     }
@@ -142,12 +145,12 @@ function TextArea({GetDocsFromComments, GetDocsFromUsers, FetchLiked, text, setI
 
   const addReply = async () =>{
     if (!memberProfile || !memberProfile.uid) {
-      setErrorMessage("로그인이 필요한 서비스입니다.")
+      setError("로그인이 필요한 서비스입니다.")
       setIsModal(true);
       return;
     }
     if(commentValue.length===0){
-      setErrorMessage("댓글을 입력해주세요.");
+      setError("댓글을 입력해주세요.");
       setIsModal(true);
       return;
     }
@@ -190,6 +193,17 @@ function TextArea({GetDocsFromComments, GetDocsFromUsers, FetchLiked, text, setI
 
   return (
     <>
+    {
+        isModal && (
+          <Modal
+            error={error}
+            onClose={() => {
+              setIsModal(false);
+            }}
+          />
+        )
+      
+      }
     <textarea
       onChange={(e) => {
         setCommentValue(e.target.value);

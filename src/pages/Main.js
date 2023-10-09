@@ -26,6 +26,8 @@ import {
 import { useSelector } from "react-redux";
 import { FetchPost } from "./service/Notice";
 import UpDown from "../components/UpDown";
+import Modal from "../components/Modal";
+import { faTriangleExclamation } from "@fortawesome/free-solid-svg-icons";
 
 function Main() {
   const userState = useSelector((state) => state.user);
@@ -34,7 +36,53 @@ function Main() {
   const [wait3, setWait3] = useState(false);
   const [noticeCount, setNoticeCount] = useState(0);
   const [checkUserInfo, setCheckUserInfo] = useState("");
+  const [error, setError] = useState("");
+  const [isModal, setIsModal] = useState(false);
+  const [isDust, setIsDust] = useState(false);
 
+  const Button =styled.button`
+ width: 100%;
+ padding: 10px;
+ background-color: black;
+ /* border-radius: 5px; */
+ border: none;
+ cursor: pointer;
+ color: #fff;
+
+`
+const ModalBackground =styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(255,255,255,0.3);
+  z-index: 999;
+  display: flex; justify-content: center; align-items: center;
+`
+const ModalContent =styled.div`
+ flex-basis: 360px;
+ background-color: #f7fcfc;
+ padding: 60px 20px 40px;
+ /* border-radius: 8px; */
+ display: flex;
+ justify-content: center;
+ flex-wrap: wrap;
+ >svg{
+  flex-basis: 100%;
+  font-size: 80px;
+  color:red;
+
+ }
+ >p{
+  font-size: 16px;
+  font-weight: bold;
+  margin:24px 0;
+
+ }
+
+`
+  
   const QuickLinkBtn = styled.div`
     width: 70px;
     height: 70px;
@@ -671,6 +719,18 @@ function Main() {
   // }
   return (
     <>
+    {
+        isModal && (
+          <ModalBackground> 
+          <ModalContent>
+            <FontAwesomeIcon icon={faTriangleExclamation}/>
+            <p>{error}</p>
+            <Button onClick={()=>{setIsModal(false)}}>확인</Button>
+          </ModalContent>
+        </ModalBackground>
+        )
+      
+      }
       <NavLink style={{ position: "relative" }} to={"/quick"}>
         <QuickLinkBtn>
           {/* <span>퀵 링크</span> */}
@@ -684,20 +744,26 @@ function Main() {
         </div>
         <AboutContent>
           <NavLink to={"/service/notice"}>
-            2023. 10. 10 &nbsp;최신 소식 확인하기
+            {posts[0].timestamp.toDate().toLocaleDateString()} &nbsp;최신 소식 확인하기
           </NavLink>
         </AboutContent>
       </AboutWrap>
       <MainWrap>
         <MainTopWrap>
-          <TestBox>
+          <TestBox onClick={()=>{
+            setIsModal(true)
+            setError("준비 중인 콘텐츠 입니다.")
+          }}>
             <Easy>초급</Easy>
             <TrueOrFalse />
             <TestBoxTitle>진실 혹은 거짓?</TestBoxTitle>
             <TestBoxDesc>바닐라 스크립트로 진실과 거짓 구별하기</TestBoxDesc>
             <TestBoxCode>true와 false</TestBoxCode>
           </TestBox>
-          <TestBox>
+          <TestBox onClick={()=>{
+            setIsModal(true)
+            setError("준비 중인 콘텐츠 입니다.")
+          }}>
             <Normal>중급</Normal>
             <SolarSystem />
             <TestBoxTitle style={{ color: "white" }}>광활한 우주</TestBoxTitle>
@@ -706,7 +772,10 @@ function Main() {
             </TestBoxDesc>
             {/* <TestBoxCode>array와 for문</TestBoxCode> */}
           </TestBox>
-          <TestBox>
+          <TestBox onClick={()=>{
+            setIsModal(true)
+            setError("준비 중인 콘텐츠 입니다.")
+          }}>
             <Hard>고급</Hard>
             <Eye />
             <TestBoxTitle style={{ color: "white" }}>더 깊이 보기</TestBoxTitle>
@@ -718,7 +787,10 @@ function Main() {
             </TestBoxCode>
           </TestBox>
           {/* <TestBox onMouseEnter={() => {setWork_VendingMachine(!work_VendingMachine)}} onMouseOut={() => {setWork_VendingMachine(!work_VendingMachine)}} > */}
-          <TestBox>
+          <TestBox onClick={()=>{
+            setIsModal(true)
+            setError("준비 중인 콘텐츠 입니다.")
+          }}>
             <Easy>초급</Easy>
             <VendingMachine />
             <TestBoxTitle>무엇이 들었을까?</TestBoxTitle>
@@ -739,11 +811,14 @@ function Main() {
                 바닐라 스크립트로 움직이는 공 만들기
               </TestBoxDesc>
               <TestBoxCode style={{ color: "darkgray" }}>
-                querySelector
+                addEventListener
               </TestBoxCode>
             </NavLink>
           </TestBox>
-          <TestBox>
+          <TestBox onClick={()=>{
+            setIsModal(true)
+            setError("준비 중인 콘텐츠 입니다.")
+          }}>
             <Easy>초급</Easy>
             <PutSixthTestBox />
             <TestBoxDesc
@@ -758,7 +833,10 @@ function Main() {
             <Walk />
           </TestBox>
           <MiniBoxWrap>
-            <TestBox>
+          <TestBox onClick={()=>{
+            setIsModal(true)
+            setError("준비 중인 콘텐츠 입니다.")
+          }}>
               <Dog />
               <TestBoxTitle>무한한 식량</TestBoxTitle>
               <TestBoxDesc
@@ -772,17 +850,26 @@ function Main() {
               </TestBoxCode>
               <Hard style={{ border: "1px solid black" }}>고급</Hard>
             </TestBox>
-            <TestBox>
+            <TestBox onClick={()=>{
+            setIsModal(true)
+            setError("준비 중인 콘텐츠 입니다.")
+          }}>
               <PleaseWaitWrap>
                 <PleaseWait></PleaseWait>
               </PleaseWaitWrap>
             </TestBox>
-            <TestBox>
+            <TestBox onClick={()=>{
+            setIsModal(true)
+            setError("준비 중인 콘텐츠 입니다.")
+          }}>
               <PleaseWaitWrap>
                 <PleaseWait></PleaseWait>
               </PleaseWaitWrap>
             </TestBox>
-            <TestBox>
+            <TestBox onClick={()=>{
+            setIsModal(true)
+            setError("준비 중인 콘텐츠 입니다.")
+          }}>
               <div></div>
             </TestBox>
           </MiniBoxWrap>
