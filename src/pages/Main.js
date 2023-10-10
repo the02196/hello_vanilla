@@ -630,7 +630,7 @@ const ModalContent =styled.div`
           즐거운 여정으로 바닐라 스크립트
           <img
             style={{ margin: "0px 10px 2px 10px" }}
-            src="../images/main/js.svg"
+            src="../images/main/JS.svg"
             alt="icon"
           ></img>
           를 배워보세요! 입문자부터 전문가까지 모두를 위한 다양한 콘텐츠가
