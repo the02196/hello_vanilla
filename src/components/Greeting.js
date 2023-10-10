@@ -38,7 +38,7 @@ const Like = styled.span`
     height: 20px;
     display: inline-block;
     border-radius: 50%;
-    background-image: url("../images/greeting/heart.png");
+    background-image: url("../images/greeting/heart.PNG");
     filter: saturate(2);
     background-position: center;
     background-size: cover;
