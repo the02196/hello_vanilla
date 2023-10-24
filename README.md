@@ -17,7 +17,7 @@
 </div><br/>
 
 <div style="display: flex;">
-<b>박민정</b> : Git 관리, Firebase 관리, 상세 페이지, 댓글 기능
+<b>박민정</b> : Git 관리, Firebase 관리, 상세 페이지(댓글)
 </div><br/>
 
 <div style="display: flex;">
@@ -25,7 +25,7 @@
 </div><br/>
 
 <div style="display: flex;">
-<b>김재완</b> : 상세페이지, 외부 라이브러리 구현, 페르소나 및 컨텐츠 제작
+<b>김재완</b> : 외부 라이브러리 구현, 페르소나 및 컨텐츠 제작, 상세 페이지(콘텐츠)
 </div><br/>
 
 <div style="display: flex;">
