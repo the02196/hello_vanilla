@@ -25,7 +25,7 @@
 </div><br/>
 
 <div style="display: flex;">
-<b>김재완</b> : 상세 페이지, 애니메이션 구현
+<b>김재완</b> : 상세페이지, 외부 라이브러리 구현, 페르소나 및 컨텐츠 제작
 </div><br/>
 
 <div style="display: flex;">
