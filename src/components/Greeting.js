@@ -235,7 +235,7 @@ function Greeting() {
       <CreatePersonLookRight position={"7.4"} message={"Vanilla is so Sweet"} bgImage={"woman_1.png"} heartCount={heart_3} plusHeart={setHeart_3}/>
       <CreatePersonLookLeft position={"1.4"} message={"코딩 초보 한 명 추가"} bgImage={"woman_7.png"} heartCount={heart_4} plusHeart={setHeart_4}/>
       <CreatePersonLookLeft position={"5"} message={"Hello, bros!"} bgImage={"man_9.png"} heartCount={heart_5} plusHeart={setHeart_5}/>
-      <CreatePersonLookLeft position={"8"} message={"대구 개발자 하트 눌러"} bgImage={"man_4.png"} heartCount={heart_6} plusHeart={setHeart_6}/>
+      {/* <CreatePersonLookLeft position={"8"} message={"대구 개발자 하트 눌러"} bgImage={"man_4.png"} heartCount={heart_6} plusHeart={setHeart_6}/> */}
     </>
   )
 }
