@@ -47,7 +47,7 @@ const Elephant = styled.div`
   background-size: cover;
   width: 430px;
   height: 300px;
-  background-image: url(../images/detail/Elephant.png);
+  background-image: url(../images/detail/elephant.png);
 `;
 const Player = styled.div`
   display: inline-block;
