@@ -42,6 +42,11 @@ function TextArea({GetDocsFromComments, GetDocsFromUsers, FetchLiked, text, setE
     setCommentValue("")
   }
   
+  const block = () => {
+    setIsModal(true);
+    setError("지금은 댓글을 작성할 수 없습니다.");
+  }
+
   // useEffect(() => {
   //   if (postData) {
   //     setCommentValue(postData.content);
@@ -193,7 +198,7 @@ function TextArea({GetDocsFromComments, GetDocsFromUsers, FetchLiked, text, setE
 
   return (
     <>
-    {
+      {
         isModal && (
           <Modal
             error={error}
@@ -202,26 +207,28 @@ function TextArea({GetDocsFromComments, GetDocsFromUsers, FetchLiked, text, setE
             }}
           />
         )
-      
       }
-    <textarea
-      onChange={(e) => {
-        setCommentValue(e.target.value);
-      }}
-      name="postContent"
-      placeholder="댓글을 입력하세요!"
-      rows={7}
-      cols={40}
-      value={commentValue}
-    />
-    <ButtonWrap>
-    <button type="button" onClick={ ()=>{
-      if(isReply === true){
-        addReply()
-        // setIsReply(false)
-        return;
-      } addComment()
-      }}>보내기</button>
+      <textarea
+        onClick={()=>block()}
+        // onChange={(e) => {
+        //   setCommentValue(e.target.value);
+        // }}
+        name="postContent"
+        placeholder="댓글을 입력하세요!"
+        rows={7}
+        cols={40}
+        // value={commentValue}
+      />
+      <ButtonWrap>
+        <button type="button" onClick={() => {
+          block()
+          if (isReply === true) {
+            // addReply()
+            // setIsReply(false)
+            return;
+          } 
+          // addComment()          
+        }}>보내기</button>
       </ButtonWrap>
     </>
   );
