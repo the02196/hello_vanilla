@@ -175,7 +175,7 @@ const IconWrap = styled.div`
 `;
 const FacebookIcon = styled.div`
   background-color: #3a589b;
-  background-image: url("../images/login/facebook.png");
+  background-image: url("../images/login/Facebook.png");
   cursor: pointer;
 `;
 const GitIcon = styled.div`
@@ -184,7 +184,7 @@ const GitIcon = styled.div`
 `;
 const GoogleIcon = styled.div`
   background-color: #f5f5f5;
-  background-image: url("../images/login/google.png");
+  background-image: url("../images/login/Google.png");
   cursor: pointer;
 `;
 

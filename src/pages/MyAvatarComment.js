@@ -144,7 +144,7 @@ function MyAvatarComment({ width, height }) {
         ) : (
           <AvatarImg
             style={{ width: { width }, height: { height } }}
-            src={"../images/portraits/default_7.png"}
+            src={"../images/portraits/Default_7.png"}
           ></AvatarImg>
         )}
       </AvatarWrap>
