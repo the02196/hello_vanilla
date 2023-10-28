@@ -4,6 +4,10 @@
 
 <img src="./public/images/main_screenshot.png" />
 
+## 배포 링크
+
+https://hello-vanilla.vercel.app
+
 ## 참고 사항
 
 현재 메인 페이지에서 <b>"움직임"</b> UI를 통해서만 상세 페이지로 진입할 수 있습니다. 
